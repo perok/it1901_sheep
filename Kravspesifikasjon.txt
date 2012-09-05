@@ -1,0 +1,45 @@
+Kravspesifikasjon prosjekt 1: Sau.
+-------------------------------------
+
+-Vise kart og psosisjon til sau på kartet.
+	-Må kunne ta imot gps-data og vise denne som punkt i kart.
+	-Høyoppløselig.
+	-Oppdal kommune
+	-Zoom-bart.
+	-Skille vanlig og alarmsau.
+	
+
+-Liste med sauer.
+	-Listen må kunne redigeres
+		-ID, Navn, Gård, Alarm, SisteAlarm.
+
+	-Søkemulighet etter ID og navn.
+	-Oversikt over hvilke sauer som har alarm.
+	-Alarmsau må skille seg ut på kartet. Rød ring etc.
+
+-Varsling til telefon ved alarm
+	-Sende ut alarmmelding til bonde og ev. andre med tilgangsrettigheter.
+
+
+-Profil for bonde
+	-Redigerbar
+	-Kunne gi tilgangsrettigheter til andre brukere for sine sauer.
+		-Velge fra en liste.
+		-To grader: "Admin" og "Bruker"
+
+-Hvis en sau har samme posisjon etter tre statusmeldinger, 24 timer, sende beskjed til bonde (Alarm?)
+
+-Statistikk
+	-Antall døde sauer iløpet av gitt tidsrom.
+	-Antall alarmmeldinger.
+	(-Total tilbakelagt distanse pr sau)
+
+GUI
+	-Hotkey-funksjon på knapper for å unngå overflødig bruk av mus.
+	-Dropdown meny om hvilken gård(er) du ser på ved tilgang til flere.
+	-Søkefelt for ID, Navn
+	-Kartområde.
+	-Login/logout.
+	-Område med info om hvem som er logget inn.
+	-Help, about.
+	
