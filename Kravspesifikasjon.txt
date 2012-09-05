@@ -11,8 +11,7 @@ Kravspesifikasjon prosjekt 1: Sau.
 
 -Liste med sauer.
 	-Listen må kunne redigeres
-		-ID, Navn, Gård, Alarm, SisteAlarm.
-
+		-ID, Navn, Gård, 
 	-Søkemulighet etter ID og navn.
 	-Oversikt over hvilke sauer som har alarm.
 	-Alarmsau må skille seg ut på kartet. Rød ring etc.
