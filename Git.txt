@@ -1,0 +1,8 @@
+Hvordan oppdatere git:
+1. git add . 					//Legger til alle filene du har endret
+2. git commit -m "Kommentar"	//Legger filene dine i staging-area. Kommenter gjerne hva du endrer
+3. git pull						//Laster ned alle endringer og merger disse med filene dine i staging-area
+4. git push origin master		//Laster opp alle filene til repo'n
+
+Andre nyttige commands:
+1. git status 					//Viser spesifikt hva som har blitt endret i forhold til repo'n
