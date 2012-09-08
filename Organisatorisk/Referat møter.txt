@@ -1,0 +1,171 @@
+
+
+30.08.12
+Første møte Prosjekt 1 
+
+Alf var ikke med på møtet. Har ikke svart på mail.
+Snakket om å koordinere når vi kan møtes. Vi har ikke mulighet til å møtes hver dag, men ønsker å finne en fast tid.
+Bestemte å møtes lørdag kl 12 for å kartlegge problemstillinger og arbeidsoppgaver og fordele disse.
+Estimere tidsbruk på de forskjellige oppgavene og starte på det overordnede designet.
+Håper alle kan komme :)
+
+Per Øyvind foreslo "Trello" som oversiktsprogram a la SCRUM-oversikt.
+Vi ønsker å bruke GIT som versjonskontroll.
+
+Forslag om å gi overordnet ansvar for de ulike delene av prosjektet.
+
+Konstruktivt og ryddig. Alle virker som OK folk som kan Java.
+
+Starte med rapport tidlig.
+Sette deadline to uker før innleveringsfrist i tilfelle fuck up.
+
+
+
+31.08.12
+Andre møte.
+
+Møtestart 12.15.
+Jørgen, Per Øyvind, Tor, Anders, Svenn.
+
+Fant ut at Alf egentlig heter Lars Erik.
+
+Valg av ScrumMaster:
+Alle sa sine tanker om å være ScrumMaster. 
+Per Øyvind ble valgt siden han har kontroll på kaffen, og mente han kunne holde kontrollen ellers.
+
+Prosjektet består av disse overordnede delene:
+	-GUI
+	-Databaser
+	-Rapportansvarlig
+	-Programmeringsansvarlig
+	-Kart
+
+Fordeling
+	- Svenn:		Kart
+	- Anders:	 	GUI
+	- Tor:			Programmering
+	- Jørgen:		Databaser
+	- Per Øyvind:		ScrumMaster
+	- Alf (Lars Erik) 	Dokumentasjon / Rapport
+
+Diskusjon om problemstillingene i prosjektet.
+Idémyldring
+	-Kobling mellom simle og lam.
+	-Sortering etter alder
+	-Hvilke data sendes fra overvåkningssystmet.
+		-GPS
+		-Puls
+		-Batteristatus
+	-Backend som samler inn data fortløpende fra sauene.
+		-Sender data videre 3 ganger om dagen til frontend.
+		-Kan sende alarmmeldinger hvis:
+			-En sau har veldig høy puls OG er separert fra flokken.
+			-Mange sauer i en flokk har veldig høy puls.
+			-Sau uten puls.
+	-Frontend
+		-Sporingsfunskjon. Vise forflytning over tid. Gå inn på hver sau for å sjekke data?
+
+Hvilken programvare?
+	-Java som språk
+	-Qt? (GUI)
+	-MySql
+	-GIT
+	
+Satte opp SCRUM-oversikt over hvilke deler som må jobbes med, men venter med tidsestimater til vi vet mer om prosjektet.
+
+Generell hjemmelekse til alle.
+	Sette seg inn i GIT. SQL.
+Anders ser på Qt (GUI)
+Per Øyvind snakker med und.ass om data fra sau og sette opp GIT-server
+
+Svenn legger ut referat på Dropbox.
+
+
+Neste møte: Sjekke med Doodle når det passer for folk. (sette opp faste møtetider)
+
+Møteslutt 14.00
+
+
+
+
+05.09.12
+Møte 3
+
+Møtestart 12.15
+Tor, Anders, Svenn, Lare Erik.
+Per Øyvind hadde sett feil på timeplanen og var opptatt på øving. Jørgen fikk jobbplan sent og måtte på jobb.
+
+Vurderer program for ER-modell og systemmodellering. Lars Erik har erfaring med DB og systemutvikling. 
+Foreslår å bruke:
+
+ER-modeller.
+DIA (systemutviklingsverktøy)
+
+Bestemt at vi koder på engelsk. Forutsatt ingen innsigelser og protester.
+
+Startet på ER-modell. Lars Erik sin erfaring er nyttig. Konstruktiv tenking og idemyldring.
+Satte opp første kravspesifikasjon.
+Begynte å bruke ER-modeller og GIT.
+
+Sprint 1: Ferdig til onsdag 12.09
+
+Ferdig ER-modell.
+Kravspesifikasjon
+
+.
+Neste møte lørdag 08.09.12 kl 12 på P15, 3 etasje.
+
+Møteslutt 13.40.
+
+
+
+08.09.12
+Møte 4
+
+Møtestart 09.35
+Svenn, Anders, Tor, Jørgen, Per Øyvind.
+
+Vi skulle starte kl 09.00, men Svenn og Per Øyvind forsov seg. Lars Eirik manglet da møtet startet.
+Lars Erik kom ca kl 10.00
+Folk brukte ventetiden på å sette opp git og andre nødvendige program.
+
+Begynte å bruke Trello for å holde styr på sprinter og scrum-oppsett.
+
+
+
+Planla første sprint. Skal være ferdig 19.09.12.
+
+ER-modell.
+Kravspesifikasjon.
+Sette opp databasen til prosjektet. (MySQL)
+Prototype til GUI-design ferdig
+Svenn lese seg opp på kart-API.
+
+
+
+
+Omfordelte ansvarsområder:
+
+Database		Lars Erik
+Programmering		Tor
+Dokumentasjon/rapport	Jørgen
+Kart			Svenn
+GUI			Anders
+ScrumMaster		Per Øyvind
+
+
+11.20: Jørgen måtte på jobb.
+
+Begynte å modellere systemet. Bruker DIA.
+
+12.30: Svenn må gå. Pakke før flytting.
+
+
+
+
+
+
+
+
+
+
