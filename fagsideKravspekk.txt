@@ -57,3 +57,13 @@ Input:
  Systemet implementeres som et klient / server system.
 
  Systemet implementeres i JAVA.
+
+
+ ______
+< Bæææ >
+ ------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
