@@ -1,0 +1,69 @@
+                            
+ m    m                     
+ #  m"   m mm   mmm   m   m 
+ #m#     #"  " "   #  "m m"    ====
+ #  #m   #     m"""#   #m#    
+ #   "m  #     "mm"#    #   
+                                                                                                                
+                               "      m""    "    #                       "                
+  mmm   mmmm    mmm    mmm   mmm    mm#mm  mmm    #   m   mmm    mmm    mmm    mmm   m mm  
+ #   "  #" "#  #"  #  #   "    #      #      #    # m"   "   #  #   "     #   #" "#  #"  # 
+  """m  #   #  #""""   """m    #      #      #    #"#    m"""#   """m     #   #   #  #   # 
+ "mmm"  ##m#"  "#mm"  "mmm"  mm#mm    #    mm#mm  #  "m  "mm"#  "mmm"     #   "#m#"  #   # 
+        #                                                                 #                
+        "                                                               ""                 
+
+Input: 
+ Input om lokalisering av de enkelte sau kommer inn normalfordelt over et døgn.
+
+ Bønder logger seg på systemet ved brukernavn og passord.
+
+ Forespørsler: 
+
+ Responstid på forespørsler fra bønder skal maksimalt to 2 sekunder.
+
+ Responstid på innleggelse av lokaliseringsinformasjon om en sau skal maksimalt ta 0,5 sekund.
+
+ Dimensjonering: 
+
+ Hver sau rapporterer sin lokalisering 3 ganger per døgn
+
+ Hver bonde forespør lokaliseringsinformasjon om sine sauer 2 ganger i døgnet.
+
+ Alarmer: 
+
+ Innkommende alarm fra en sau gis prioritet.
+
+ Alarmmeldinger sendes bonde og en han har valt ut i tillegg.
+
+ Alarmmelding sendes ut som email, SMS, og mobil forsøkes ringt opp.
+
+ Dimensjonering: 
+
+ Maksimalt 200 bønder kan samtidig aksessere systemet.
+
+ Maksimalt 10000 sauer kan handteres av systemet.
+
+ Feilsituasjoner: 
+
+ Ved systemfeil tillates systemet å være utilgjengelig i inntil 3 timer.
+
+ Systemet skal ha en oppetid på minimum 95% av tiden.
+
+ Systemet skal være operativt døgnkontinuerlig.
+
+ Implementasjon: 
+
+ Systemet implementeres som et klient / server system.
+
+ Systemet implementeres i JAVA.
+
+
+ ______
+< Bæææ >
+ ------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
