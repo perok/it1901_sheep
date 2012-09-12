@@ -1,0 +1,6 @@
+Kart
+======
+
+Skala fra 1:50000 til ~1:1800
+
+Prikk m/radius over feilmagin til GPS-data.
