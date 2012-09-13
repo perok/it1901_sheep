@@ -8,15 +8,15 @@ import com.trolltech.qt.gui.*;
 public class Name extends QGraphicsView 
 {
 	//TODO: This class is 100 % copy, understand and purge excessive code.
-    private static class RoundRectItem extends QGraphicsRectItem {
-
+    private static class RoundRectItem extends QGraphicsRectItem 
+    {
         private QColor qcCol;
         private QTimeLine timeLine = new QTimeLine(75);
         private double lastVal = 0;
         private double opa = 1;
         /** A proxy-layer to simplify handling */
         private QGraphicsProxyWidget proxyWidget;
-        private QPixmap pix;
+        private QPixmap pix = null;
         // QPixmap is best for showing images on screen, as opposed to QImages
 
         public Signal0 activated = new Signal0();
@@ -40,7 +40,6 @@ public class Name extends QGraphicsView
          * @param option
          * @param widget
          */
-        //TODO: put the image where it belongs!
         public void paint(QPainter painter, QStyleOptionGraphicsItem option, QWidget widget) 
         {
             QTransform x = painter.worldTransform();
@@ -86,10 +85,12 @@ public class Name extends QGraphicsView
 
             /* Draw the pixmap, if it is given */
             if (pix != null) {
-                //painter.scale(1.95, 1.95);
+                //painter.scale(.70, .70);
             	/* drawPixmap at positiion x, y, with given pixmap */
-            	painter.drawPixmap(80, 80, (int)Name.RECT_WIDTH - 15, (int)Name.RECT_HEIGHT - 15, pix);
-            	
+            	//painter.drawPixmap(0, 0, (int)Name.RECT_WIDTH - 15, (int)Name.RECT_HEIGHT - 15, pix);
+                //HARDCODE:
+                painter.drawPixmap(-(int)Name.RECT_WIDTH / 2 + 17, -(int)Name.RECT_HEIGHT / 2 - 22, (int)Name.RECT_WIDTH - 14, (int)Name.RECT_HEIGHT - 15, pix);
+                
             }
         }
 
@@ -190,6 +191,8 @@ public class Name extends QGraphicsView
     {
     	//HARDCODE:
     	((RoundRectItem) this.menuGrid[0][SELECTED_COL]).setPixmap("ImageArt/txtKart.png");
+    	((RoundRectItem) this.menuGrid[1][SELECTED_COL]).setPixmap("ImageArt/txtStatistikk.png");
+    	((RoundRectItem) this.menuGrid[2][SELECTED_COL]).setPixmap("../../../Pictures/barbecue-tux-gentleman-1891.png");
     }
     
     /** Handle key-strokes.
@@ -199,7 +202,13 @@ public class Name extends QGraphicsView
     public void keyPressEvent(QKeyEvent event)
     {
     	/* The enter key is better handled by qt.core */
-    	if (event.key() == Qt.Key.Key_Return.value()) { super.keyPressEvent(event); return; }
+    	if (event.key() == Qt.Key.Key_Return.value()) 
+    	{ 
+    		if(menuGrid[0][0].hasFocus()) System.out.println("hey");
+    		
+    		super.keyPressEvent(event); 
+    		return; 
+    	}
     	
     	/* Obtain what row to go to, based upon whether user hits up or down arrow */
     	iSelectedRow = (iSelectedRow + NUM_BOXES_HEIGHT
@@ -207,7 +216,7 @@ public class Name extends QGraphicsView
     				   - (event.key() == Qt.Key.Key_Up.  value() ? KEY_PRESSED : KEY_NOT_PRESSED)) % NUM_BOXES_HEIGHT;
     	
     	/* Set focus to selected box */
-    	menuGrid[iSelectedRow][SELECTED_COL].setFocus(Qt.FocusReason.OtherFocusReason);
+    	menuGrid[iSelectedRow][SELECTED_COL].setFocus(Qt.FocusReason.MenuBarFocusReason);
     	
     	/* Animation timer and positions */
     	qtlSelectionTimeLine.stop();
@@ -232,6 +241,7 @@ public class Name extends QGraphicsView
         // HARDCODE:
         this.backgroundRect = new RoundRectItem(bounds, new QColor(226, 255, 92, 64), null);
         this.backgroundRect.setRoundRectOpacity(1);
+        this.backgroundRect.setPixmap("ImageArt/geeks.jpg");
         this.qgsScene.addItem(backgroundRect);
               
         /* Selector */
