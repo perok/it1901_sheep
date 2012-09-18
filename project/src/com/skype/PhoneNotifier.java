@@ -6,6 +6,11 @@ import com.skype.tutorial.appkeypair.AppKeyPairMgr;
 import com.skype.tutorial.util.MySession;
 import com.skype.tutorial.util.SignInMgr;
 
+/**
+ * 
+ * @author Lars Erik G-K
+ *
+ */
 public class PhoneNotifier {
 	public static String TAG = "SMS_TAG";
 	public static String APPKEYPATH = "appkey\\skypekit-cert.pem";
@@ -20,15 +25,20 @@ public class PhoneNotifier {
 	private AppKeyPairMgr appKey = new AppKeyPairMgr();
 	MySession mySession = new MySession();
 	
-	public static void main(String[] args) {
-		PhoneNotifier a = new PhoneNotifier();
-		if(a.runSkypekit()){
-			if(a.connect()){
-				a.sendSMS();
-			}
-		}
-	}
 	
+	/**
+	 * 
+	 * @param Settings settings
+	 * @return PhoneNotifier
+	 */
+	public PhoneNotifier() {
+		
+	}
+
+	/**Starts the skype runtime in order to use the sdk. Requiered to use PhoneNotifier
+	 * 
+	 * @return void
+	 */
 	public boolean runSkypekit()
 	{
 		try
@@ -175,5 +185,17 @@ public class PhoneNotifier {
 			}
 		}
 	}
+	/**Used to test module
+	 * 
+	 * @param args
+	 */
+//	public static void main(String[] args) {
+//		PhoneNotifier a = new PhoneNotifier();
+//		if(a.runSkypekit()){
+//			if(a.connect()){
+//				a.sendSMS();
+//			}
+//		}
+//	}
 }
 
