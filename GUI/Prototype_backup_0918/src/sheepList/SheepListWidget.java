@@ -7,7 +7,7 @@ import com.trolltech.qt.gui.*;
  * 
  * @author andesil
  */
-public class SheepListWidget extends QDockWidget
+public class SheepListWidget extends QWidget
 {
 	/** A class that acts a way to filter and sort data passed between a model and a view
 	 */
@@ -51,8 +51,8 @@ public class SheepListWidget extends QDockWidget
 		this.qtvModelView.setSortingEnabled(true);
 		this.mainLayout.addWidget(qtvModelView);
 		
-		//super.setLayout(this.mainLayout);
-		super.setWidget(qtvModelView);
+		super.setLayout(this.mainLayout);
+		//super.setWidget(qtvModelView);
 	}
 	
 	public static void main(String[] args)
