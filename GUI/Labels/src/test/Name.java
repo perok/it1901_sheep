@@ -40,7 +40,6 @@ public class Name extends QGraphicsView
          * @param option
          * @param widget
          */
-        //TODO: put the image where it belongs!
         public void paint(QPainter painter, QStyleOptionGraphicsItem option, QWidget widget) 
         {
             QTransform x = painter.worldTransform();

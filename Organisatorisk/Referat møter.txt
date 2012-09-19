@@ -160,6 +160,42 @@ Begynte å modellere systemet. Bruker DIA.
 
 12.30: Svenn må gå. Pakke før flytting.
 
+Møteslutt: 13.00
+
+
+12.09.12
+Møte 5
+Møtestart 14.15
+Svenn, Jørgen, Anders, Tor, Lars Erik, Per Øyvind
+
+Møte med stud.ass.
+Stilte spørsmål ang.
+	-Kartskala	1:50000 -> 1:1800
+	-Visning av sau		Grupere sau når det zoomes ut. Ev filtrere ut sauer nært hverandre.
+	-Verktøy	Stud.ass mente vi hadde god kontroll, og våre valg ville kunne funke bra.
+	-Kravspekk	Blir oppdatert på nettsiden snart. Faglærer tenker for stort. SMS/Oppringing trenger vi ikke.
+	-Er-modell	
+	-Systemmodell
+	-Dokumentasjon
+		-Javadoc
+	-Levere i kjørbar .jar-fil
+
+Vi må dokumentere alt. Hvorfor vi tar de valgene vi tar (programvare)
+
+Vi må føre timeliste. Hver fører individuell timeliste.
+
+
+Flyttet oss til R-52 for å kunne jobbe uten andre rundt oss.
+Lars Erik fikk satt opp database på stud-server. Kan flytte den til fag-server senere om det trengs.
+Anders jobber videre med GUI.
+Svenn ser på WMS-kart og hvordan hvis det i appen.
+
+
+
+16.00 Jørgen og Tor må gå.
+
+
+Møteslutt: 17.00
 
 
 
