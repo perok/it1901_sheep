@@ -51,7 +51,6 @@ public class MainWindow extends QMainWindow
         createStatisticsWidget();
         
         /* Mdi-areas - */
-        super.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, this.slwSheepList);
         initMdi();
     }
     
@@ -62,7 +61,7 @@ public class MainWindow extends QMainWindow
     	//this.qmaSheep.addSubWindow(new SideWidget());
     	this.qmaSheep.addSubWindow(this.mwWidget, Qt.WindowType.Widget);
     	this.qmaSheep.addSubWindow(this.swStatistics, Qt.WindowType.Widget);
-    	//this.qmaSheep.addSubWindow(this.slwSheepList, Qt.WindowType.Widget);
+    	this.qmaSheep.addSubWindow(this.slwSheepList, Qt.WindowType.Widget);
     	this.qmaSheep.tileSubWindows();
         	
       	super.setCentralWidget(this.qmaSheep);

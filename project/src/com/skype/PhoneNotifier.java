@@ -5,30 +5,37 @@ import com.skype.api.Sms;
 import com.skype.tutorial.appkeypair.AppKeyPairMgr;
 import com.skype.tutorial.util.MySession;
 import com.skype.tutorial.util.SignInMgr;
+import core.settings.Settings;
+
 
 public class PhoneNotifier {
-	public static String TAG = "SMS_TAG";
-	public static String APPKEYPATH = "appkey\\skypekit-cert.pem";
-	public static String SKYPEKITPATH = "skypesdk\\windows-x86-skypekit.exe";
-	public static String ACCOUNTNAME = "";
-	public static String PASSWORD = "";
-	public static String MESSAGE = "Sau under angrep! Dette er en test";
-	public static int SMS_SEND_TIMEOUT_LIMIT = 30;
+	private static final String TAG = "SMS_TAG";
+	private static final int SMS_SEND_TIMEOUT_LIMIT = 30;
+	private static final String APPKEYPATH = "appkey\\skypekit-cert.pem";
+	private static final String SKYPEKITPATH = "skypesdk\\windows-x86-skypekit.exe";
 	
-	private String[] numbers = {"004797565328"};
+	private String username;
+	private String password;
+	private String message = "Sau under angrep! Dette er en test";
+	private String[] numbers = new String[1];
 	
 	private AppKeyPairMgr appKey = new AppKeyPairMgr();
 	MySession mySession = new MySession();
 	
-	public static void main(String[] args) {
-		PhoneNotifier a = new PhoneNotifier();
-		if(a.runSkypekit()){
-			if(a.connect()){
-				a.sendSMS();
-			}
-		}
-	}
 	
+	/**
+	 * 
+	 * @param Settings settings
+	 * @return PhoneNotifier
+	 */
+	public PhoneNotifier(Settings settings) {
+		
+	}
+
+	/**Starts the skype runtime in order to use the sdk. Requiered to use PhoneNotifier
+	 * 
+	 * @return void
+	 */
 	public boolean runSkypekit()
 	{
 		try
@@ -52,9 +59,9 @@ public class PhoneNotifier {
 			return false;
 		}
 		
-		mySession.doCreateSession(TAG, ACCOUNTNAME, APPKEYPATH);
+		mySession.doCreateSession(TAG, username, APPKEYPATH);
 		
-		if(mySession.mySignInMgr.Login(TAG, mySession, PASSWORD))
+		if(mySession.mySignInMgr.Login(TAG, mySession, password))
 		{
 			System.out.println("Connected");
 			return true;
@@ -85,7 +92,7 @@ public class PhoneNotifier {
 		
 		Sms sms = mySession.mySkype.createOutgoingSms();
 		
-		Sms.SetBodyResponse smsBodyResponse = sms.setBody(MESSAGE);
+		Sms.SetBodyResponse smsBodyResponse = sms.setBody(message);
 		
 		if (smsBodyResponse.result != Sms.SetBodyResult.BODY_OK) 
 		{
@@ -159,7 +166,7 @@ public class PhoneNotifier {
         return(true);
 	}
 	
-	public void callUser() {
+	public void callPhone() {
 		Conversation myConversation = (Conversation)mySession.mySkype.getConversationByParticipants(numbers, true, true);
 		
 		myConversation.ringOthers(numbers, false, "LOLOLOL");
@@ -175,5 +182,17 @@ public class PhoneNotifier {
 			}
 		}
 	}
+	/**Used to test module
+	 * 
+	 * @param args
+	 */
+//	public static void main(String[] args) {
+//		PhoneNotifier a = new PhoneNotifier();
+//		if(a.runSkypekit()){
+//			if(a.connect()){
+//				a.sendSMS();
+//			}
+//		}
+//	}
 }
 

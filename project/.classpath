@@ -5,5 +5,8 @@
 	<classpathentry kind="lib" path="E:/Lars Erik/Workspace/it1901_sheep/project/libs/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="lib" path="E:/Lars Erik/Workspace/it1901_sheep/project/libs/skypeapi.jar"/>
 	<classpathentry kind="lib" path="E:/Lars Erik/Workspace/it1901_sheep/project/libs/skypetutorials.jar"/>
+	<classpathentry kind="lib" path="libs/skypeapi.jar"/>
+	<classpathentry kind="lib" path="libs/skypetutorials.jar"/>
+	<classpathentry kind="lib" path="libs/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
