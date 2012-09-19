@@ -29,7 +29,7 @@
 </entity>
 <entity id="3" is_weak="false" name="Access rights" x="442" y="149">
 <attributes>
-<attribute is_hidden="false" is_key="true" name="farmer_id" type="Integer"/>
+<attribute is_hidden="false" is_key="true" name="user_id" type="Integer"/>
 <attribute is_hidden="false" is_key="true" name="farm_id" type="Integer"/>
 </attributes>
 </entity>
