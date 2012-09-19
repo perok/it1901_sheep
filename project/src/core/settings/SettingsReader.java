@@ -1,4 +1,4 @@
-package core.settings;
+package core.settings;	
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
