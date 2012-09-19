@@ -8,6 +8,7 @@ import com.trolltech.qt.gui.*;
  * @author andesil
  */
 public class SheepListWidget extends QDockWidget
+//public class SheepListWidget extends QWidget
 {
 	/** A class that acts a way to filter and sort data passed between a model and a view
 	 */

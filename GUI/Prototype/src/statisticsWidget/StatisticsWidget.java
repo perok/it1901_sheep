@@ -1,5 +1,7 @@
 package statisticsWidget;
 
+import sheepList.SheepListWidget;
+
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
 

@@ -11,10 +11,10 @@ public class MapWidget extends QWidget
 	public MapWidget()
 	{
 		//HARDCODE:
-		QPixmap testImage = new QPixmap("imageArt/sheep.jpg");
+		QPixmap testImage = new QPixmap("imageArt/sheep.png");
 		QLabel tmp = new QLabel(this);
 		
-		testImage.scaled(100, 1000);
+		testImage.scaled(100, 100);
 		tmp.setPixmap(testImage);
 	}
 
