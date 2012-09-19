@@ -198,6 +198,61 @@ Svenn ser på WMS-kart og hvordan hvis det i appen.
 Møteslutt: 17.00
 
 
+19.09.12
+Møte 6
+Møtestart 12.15
+Svenn, Per Øyvind, Lars Erik, Jørgen, Anders
+Fikk ikke kontakt med Tor, selv om han hadde svart på Facebook
+
+Lars Erik foreslår å bruke IceScrum i stedet for Trello. IceScrum har innebygde funksjoner for grafer of Scrum boards og vil gjøre jobben vår enklere.
+Alle er enige i å ta dette i bruk hvis Lars Erik får det til å kjøre stabilt.
+IscScrum er et serverbasert Scrum-program som gjør det enklere å holde styr på sprinter og hele scrum-opplegget.
+
+I forkant av møtet har Svenn bedt om hjelp på kartdelen av prosjektet. Dette kommer til å bli en stor del og Per Øyvind meldte seg til å være med å finne ut av det.
+
+Gjennomgang av sprint 1:
+	-GUI: Anders har prototypen klar. Vetca hvilke klasser som trengs. Trenger et par timer til for å sette seg inn i UML-notasjon, som vil inngå i Sprint 2.
+	-Systemdesign: Vi har en del igjen her.
+		Mangler sekvensdiagram, aktivitetsdiagram, en del igjen i klassediagrammet. Mangler klassene for kartimplementeringen.
+	-Kart: Svenn ba om hjelp, Per Øyvind trår til. Sett på frameworks for oppkobling mot Qt. Må finne ut mer hva som må gjøres.
+	-Research: Å få ringesignal ved opprop er vanskelig. Vi sier oss fornøyd med SMS-varsling.
+	-Valg av verktøy er ferdig.
+	-Databasen er oppe og går. Dvs ER-modellen er også ferdig.
+	
+Oppretter Sprint 2:
+	-GUI: Begynne på programmering av GUI.
+	-Programmering: 
+		-DatabaseConnector.
+		-Start av skype avhengigheter med tanke på platform.
+	-Systemdesig: Ordne manglende klasser
+	-Kart: Vise et kartbilde i Qt.
+
+Tor kom 13.27
+
+14:18 Svenn dro på jobb
+
+
+	
+
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -6,6 +6,7 @@ import statisticsWidget.StatisticsWidget;
 
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.core.Qt.DockWidgetArea;
+import com.trolltech.qt.core.Qt.WindowFlags;
 import com.trolltech.qt.gui.*;
 
 public class MainWindow extends QMainWindow
@@ -48,25 +49,56 @@ public class MainWindow extends QMainWindow
         /* Widgets - */
         createSheepList();
         createMapWidget();
-        createStatisticsWidget();
+        createStatisticsWidget();	
         
         /* Mdi-areas - */
-        super.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, this.slwSheepList);
         initMdi();
+        super.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, this.slwSheepList);
+
+        /* Clever fix to remove (pesky) titlebars. */
+        // Possible to consider autohiding the taskbar, but showing it
+        // when the user holds the cursor over the dockwidget
+
+        // QWidget test = new QWidget(this);
+        // this.slwSheepList.setTitleBarWidget(test);
+        
+        //this.setCentralWidget(new MainWidget());
     }
     
+    // FIXME: Hardcoded version - merely used to show the group a protoype
+    // TODO: QDockWidget is the preferred option, however,
+    //		  it does not like resizing within the window frame.
+    //		  Is there a way to implement the following design
+    //		  AND (furthermore) have intelligent resizing of windows?
+    //
+    //		  __________________________________
+    //		 |          |		   2			|
+    //		 |	  1		|_______________________|
+    //		 |			|		   3			|
+    //		 |__________|_______________________|
     private void initMdi()
     {
     	this.qmaSheep = new QMdiArea();
+    	QMdiSubWindow mapWindow = new QMdiSubWindow(this.qmaSheep);
+    	QMdiSubWindow statWindow = new QMdiSubWindow(this.qmaSheep);
     	
-    	//this.qmaSheep.addSubWindow(new SideWidget());
-    	this.qmaSheep.addSubWindow(this.mwWidget, Qt.WindowType.Widget);
-    	this.qmaSheep.addSubWindow(this.swStatistics, Qt.WindowType.Widget);
-    	//this.qmaSheep.addSubWindow(this.slwSheepList, Qt.WindowType.Widget);
-    	this.qmaSheep.tileSubWindows();
-        	
-      	super.setCentralWidget(this.qmaSheep);
+    	mapWindow.setWidget(this.mwWidget);
+    	statWindow.setWidget(this.swStatistics);
+    	
+    	mapWindow.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred);
+    	statWindow.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred);
+    	
+    	mapWindow.setMinimumWidth(600);
+    	statWindow.setMinimumWidth(600);
+    	
+    	mapWindow.setMinimumHeight(350);    	
+    	statWindow.move(0, mapWindow.height());
+    	statWindow.setMinimumHeight(350);
+    	
+    	super.setCentralWidget(this.qmaSheep);
     }
+    
+    // QMdiSubwindow...
 
     private void createSheepList()
     {
