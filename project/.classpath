@@ -2,11 +2,22 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="E:/Lars Erik/Workspace/it1901_sheep/project/libs/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="lib" path="E:/Lars Erik/Workspace/it1901_sheep/project/libs/skypeapi.jar"/>
 	<classpathentry kind="lib" path="E:/Lars Erik/Workspace/it1901_sheep/project/libs/skypetutorials.jar"/>
 	<classpathentry kind="lib" path="libs/skypeapi.jar"/>
 	<classpathentry kind="lib" path="libs/skypetutorials.jar"/>
 	<classpathentry kind="lib" path="libs/mysql-connector-java-5.0.8-bin.jar"/>
+=======
+	<classpathentry kind="lib" path="libs/skypeapi.jar"/>
+	<classpathentry kind="lib" path="libs/skypetutorials.jar"/>
+	<classpathentry kind="lib" path="libs/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/perok/Dropbox/NTNU/Fag/itprosj/sau/IT1901 sheep/it1901_sheep/project/libs/qtjambi-4.6.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/perok/Dropbox/NTNU/Fag/itprosj/sau/IT1901 sheep/it1901_sheep/project/libs/qtjambi-designer-4.6.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/perok/Dropbox/NTNU/Fag/itprosj/sau/IT1901 sheep/it1901_sheep/project/libs/qtjambi-examples-4.6.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/perok/Dropbox/NTNU/Fag/itprosj/sau/IT1901 sheep/it1901_sheep/project/libs/qtjambi-linux32-gcc-4.6.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/perok/Dropbox/NTNU/Fag/itprosj/sau/IT1901 sheep/it1901_sheep/project/libs/qtjambi-util-4.6.3.jar"/>
+>>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04
 	<classpathentry kind="output" path="bin"/>
 </classpath>

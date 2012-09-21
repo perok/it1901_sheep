@@ -9,4 +9,10 @@ lillelam
 //Skype user
 skypeshield
 //Skype password
+<<<<<<< HEAD
 lillelam1337
+=======
+lillelam1337
+//Phonenumber
+004797654693
+>>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04

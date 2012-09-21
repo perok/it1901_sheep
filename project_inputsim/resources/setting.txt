@@ -1,0 +1,8 @@
+//DB url
+mysql.stud.ntnu.no
+//DB name
+grasdalk_it1901
+//DB user
+grasdalk_it1901
+//DB password
+lillelam

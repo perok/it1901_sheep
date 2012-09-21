@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+=======
+/*
+ *  Wanted design
+    		  __________________________________
+    		 |          |		   2			|
+    		 |	  1		|_______________________|
+    		 |			|		   3			|
+    		 |__________|_______________________|
+ * 
+ */
+
+>>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04
 package main;
 
 import mapWidget.MapWidget;
@@ -23,10 +36,20 @@ public class MainWindow extends QMainWindow
     private QMenu helpMenu;
     
     private QMdiArea qmaSheep;
+<<<<<<< HEAD
+=======
+    private QMdiSubWindow qmswMapWindow;
+    private QMdiSubWindow qmswStatWindow;
+>>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04
     
     private MapWidget mwWidget;
     private SheepListWidget slwSheepList;
     private StatisticsWidget swStatistics;
+<<<<<<< HEAD
+=======
+    
+    private static final int SHEEP_WIDGET_SIZE = (int) (SCREEN_WIDTH * 0.2);
+>>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04
 
     public static void main(String[] args) 
     {
@@ -55,12 +78,17 @@ public class MainWindow extends QMainWindow
         initMdi();
         super.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, this.slwSheepList);
 
+<<<<<<< HEAD
         /* Clever fix to remove (pesky) titlebars. */
+=======
+        /* Remove (pesky) titlebars. */
+>>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04
         // Possible to consider autohiding the taskbar, but showing it
         // when the user holds the cursor over the dockwidget
 
         // QWidget test = new QWidget(this);
         // this.slwSheepList.setTitleBarWidget(test);
+<<<<<<< HEAD
         
         //this.setCentralWidget(new MainWidget());
     }
@@ -94,10 +122,33 @@ public class MainWindow extends QMainWindow
     	mapWindow.setMinimumHeight(350);    	
     	statWindow.move(0, mapWindow.height());
     	statWindow.setMinimumHeight(350);
+=======
+    }
+
+    private void initMdi()
+    {
+    	this.qmaSheep = new QMdiArea();
+    	this.qmswMapWindow = new QMdiSubWindow(this.qmaSheep);
+    	this.qmswStatWindow = new QMdiSubWindow(this.qmaSheep);
+    	
+    	this.qmaSheep.setFixedSize(SCREEN_WIDTH - SHEEP_WIDGET_SIZE, SCREEN_HEIGHT);    	
+    	
+    	this.qmswMapWindow.setWidget(this.mwWidget);
+    	this.qmswMapWindow.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred);
+    	this.qmswMapWindow.setMinimumWidth(((QMdiArea) this.qmswMapWindow.parent()).width());
+    	this.qmswMapWindow.setMinimumHeight(((QMdiArea) this.qmswMapWindow.parent()).height() / 2);    	
+    	
+    	this.qmswStatWindow.setWidget(this.swStatistics);    	
+    	this.qmswStatWindow.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred);    	
+    	this.qmswStatWindow.setMinimumWidth(((QMdiArea) this.qmswMapWindow.parent()).width());
+    	this.qmswStatWindow.move(0, qmswMapWindow.height());
+    	this.qmswStatWindow.setMinimumHeight(((QMdiArea) this.qmswMapWindow.parent()).height() / 2);
+>>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04
     	
     	super.setCentralWidget(this.qmaSheep);
     }
     
+<<<<<<< HEAD
     // QMdiSubwindow...
 
     private void createSheepList()
@@ -105,6 +156,14 @@ public class MainWindow extends QMainWindow
     	this.slwSheepList = new SheepListWidget();
     }
     
+=======
+    private void createSheepList()
+    {
+    	this.slwSheepList = new SheepListWidget();
+    	this.slwSheepList.setFixedWidth(SHEEP_WIDGET_SIZE);
+    }
+        
+>>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04
     private void createStatisticsWidget()
     {
     	this.swStatistics = new StatisticsWidget();
@@ -168,4 +227,9 @@ public class MainWindow extends QMainWindow
     }
 }
 
+<<<<<<< HEAD
+=======
+// Is the following design OK as long as it is intelligent with resizing and adjusting?
+
+>>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04
 /* EOF */
