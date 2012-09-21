@@ -244,6 +244,8 @@ DatabaseConnector er "ferdig(trenger andre klasser for testing)" og Lars er sekr
 Tor og Jørgen har laget en flowchart for GUI-design.
 Anders har komt godt i gang med GUI. Per Øyvind assisterer.
 Det luftes ideer om å kunne overføre sauer mellom gårder.
+Det jobbes med design og programmering samt merging av prosjektene.
+Inputsimulator er påbegynt.
 	
 
 
