@@ -6,9 +6,3 @@ grasdalk_it1901
 grasdalk_it1901
 //DB password
 lillelam
-//Skype user
-skypeshield
-//Skype password
-lillelam1337
-//Phonenumber
-004797654693

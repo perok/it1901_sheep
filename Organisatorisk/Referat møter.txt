@@ -232,12 +232,18 @@ Tor kom 13.27
 14:18 Svenn dro på jobb
 
 
+21.09.12
+Møte 7
+Møtestart 11.15
+Lars Erik, Tor, Jørgen, Per Øyvind, Anders
+Svenn er på jobb
 	
-
-	
-	
-	
-	
+Gruppen har byttet ut trello til fordel for icescrum. Icescrum er hostet på kord.dyndns.org:8080/icescrum. Icescrum er bedre fordi det er ment spesifikt på scrum
+og har burndown charts, backlogs, release plans etc. 
+DatabaseConnector er "ferdig(trenger andre klasser for testing)" og Lars er sekretær/arbeidsledig.
+Tor og Jørgen har laget en flowchart for GUI-design.
+Anders har komt godt i gang med GUI. Per Øyvind assisterer.
+Det luftes ideer om å kunne overføre sauer mellom gårder.
 	
 
 
