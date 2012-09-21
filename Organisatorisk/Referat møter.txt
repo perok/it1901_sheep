@@ -198,6 +198,8 @@ Svenn ser på WMS-kart og hvordan hvis det i appen.
 Møteslutt: 17.00
 
 
+<<<<<<< HEAD
+=======
 19.09.12
 Møte 6
 Møtestart 12.15
@@ -261,6 +263,7 @@ Inputsimulator er påbegynt.
 
 
 
+>>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04
 
 
 

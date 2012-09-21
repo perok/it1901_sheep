@@ -1,6 +1,6 @@
-package statisticsWidget;
+package com.gui.statisticsWidget;
 
-import sheepList.SheepListWidget;
+import com.gui.sheepList.SheepListWidget;
 
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;

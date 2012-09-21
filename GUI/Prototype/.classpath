@@ -2,10 +2,18 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+<<<<<<< HEAD
+	<classpathentry kind="lib" path="/home/andesil/Documents/IT1901/GUI/Java/qtjambi-linux32-community-4.6.3/qtjambi-4.6.3.jar"/>
+	<classpathentry kind="lib" path="/home/andesil/Documents/IT1901/GUI/Java/qtjambi-linux32-community-4.6.3/qtjambi-designer-4.6.3.jar"/>
+	<classpathentry kind="lib" path="/home/andesil/Documents/IT1901/GUI/Java/qtjambi-linux32-community-4.6.3/qtjambi-examples-4.6.3.jar"/>
+	<classpathentry kind="lib" path="/home/andesil/Documents/IT1901/GUI/Java/qtjambi-linux32-community-4.6.3/qtjambi-linux32-gcc-4.6.3.jar"/>
+	<classpathentry kind="lib" path="/home/andesil/Documents/IT1901/GUI/Java/qtjambi-linux32-community-4.6.3/qtjambi-util-4.6.3.jar"/>
+=======
 	<classpathentry kind="lib" path="/home/andesil/Programmering/Java/qtjambi-linux64-community-4.6.3/qtjambi-4.6.3.jar"/>
 	<classpathentry kind="lib" path="/home/andesil/Programmering/Java/qtjambi-linux64-community-4.6.3/qtjambi-designer-4.6.3.jar"/>
 	<classpathentry kind="lib" path="/home/andesil/Programmering/Java/qtjambi-linux64-community-4.6.3/qtjambi-examples-4.6.3.jar"/>
 	<classpathentry kind="lib" path="/home/andesil/Programmering/Java/qtjambi-linux64-community-4.6.3/qtjambi-linux64-gcc-4.6.3.jar"/>
 	<classpathentry kind="lib" path="/home/andesil/Programmering/Java/qtjambi-linux64-community-4.6.3/qtjambi-util-4.6.3.jar"/>
+>>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04
 	<classpathentry kind="output" path="bin"/>
 </classpath>

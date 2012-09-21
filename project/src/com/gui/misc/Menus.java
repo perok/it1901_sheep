@@ -41,7 +41,7 @@
  **
  ****************************************************************************/
 
-package misc;
+package com.gui.misc;
 
 import com.trolltech.qt.core.Qt.AlignmentFlag;
 import com.trolltech.qt.gui.*;

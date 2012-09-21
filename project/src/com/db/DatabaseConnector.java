@@ -3,7 +3,10 @@ package com.db;
 import core.settings.*;
 import java.io.File;
 import java.sql.*;
+<<<<<<< HEAD
+=======
 import java.util.ArrayList;
+>>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04
 
 public class DatabaseConnector {
 	private String sqlUrl;
@@ -31,6 +34,8 @@ public class DatabaseConnector {
 		}
 	}
 	
+<<<<<<< HEAD
+=======
 	public User loginQuery(String username, String password) {
 		String[][] r = processQuery("SELECT * FROM user WHERE password = '" + user.getPassword() + "'");
 		for (int i = 0; i < r.length; i++) {
@@ -114,6 +119,7 @@ public class DatabaseConnector {
 	}
 	
 	
+>>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04
 	private String[][] processQuery(String str) {
 		try {
 			Statement s = conn.createStatement();
