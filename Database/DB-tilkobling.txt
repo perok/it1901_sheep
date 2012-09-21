@@ -1,0 +1,4 @@
+url: https://www.itea.ntnu.no/mysql
+username: grasdalk_it1901
+database: grasdalk_it1901
+password: lillelam1337
