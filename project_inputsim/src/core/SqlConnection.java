@@ -29,6 +29,13 @@ public class SqlConnection {
 		}
 	}
 	
+	public void insertSheepStatus() {
+		
+	}
+	
+	public void insertSheepAlert() {
+		
+	}
 	
 	private String[][] processQuery(String str) {
 		try {

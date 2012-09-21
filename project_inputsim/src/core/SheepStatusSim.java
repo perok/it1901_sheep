@@ -10,7 +10,7 @@ public class SheepStatusSim {
 	
 	public SheepStatusSim() {
 		timerInterval = 60;
-		new Timer(timerInterval*1000, taskPerformer).start();
+		new Timer(timerInterval*1000, updateStatus).start();
 	}
 	
 	public SheepStatusSim(int interval) {
@@ -27,7 +27,7 @@ public class SheepStatusSim {
 		
 	}
 
-	ActionListener taskPerformer = new ActionListener() {
+	ActionListener updateStatus = new ActionListener() {
 	      public void actionPerformed(ActionEvent evt) {
 	          
 	      }
