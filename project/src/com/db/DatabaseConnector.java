@@ -32,6 +32,9 @@ public class DatabaseConnector {
 	}
 	
 	public User loginQuery(String username, String password) {
+		String[][] r = processQuery("SELECT * FROM user WHERE password = '" + user.getPassword() + "'");
+		for (int i = 0; i < r.length; i++) {
+			list.add(new Sheep(r[i][0],r[i][1],r[i][2],r[i][3],r[i][4],r[i][5]));
 		return null;
 	}
 	
