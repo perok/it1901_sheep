@@ -14,14 +14,14 @@ public class SheepListWidget extends QDockWidget
 	 */
 	private class SortSheep extends QSortFilterProxyModel
 	{
-		/** Compare one table entry to the next
+		@Override
+		/** Compare one entry to the next
 		 * 
 		 * @param qmiLeft first entry in the list, or "left-most-entry" relative to param right
 		 * @param qmiRight second entry in the list, or "rigt-most-entry" relative to param left
-		 * @usage used autonomously via super-methods from QSortFilterProxyModel
+		 * @usage dealt autonomously with from super-methods from QSortFilterProxyModel
 		 * @return true if left string is greater than rightstring
 		 */
-		@Override
 		protected boolean lessThan(QModelIndex qmiLeft, QModelIndex qmiRight)
 		{
 		   Object leftData = sourceModel().data(qmiLeft);
@@ -56,7 +56,6 @@ public class SheepListWidget extends QDockWidget
 		super.setWidget(qtvModelView);
 	}
 	
-	// For test and debugging purposes
 	public static void main(String[] args)
 	{
 		QApplication.initialize(args);

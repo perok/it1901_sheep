@@ -1,13 +1,3 @@
-/*
- *  Wanted design
-    		  __________________________________
-    		 |          |		   2			|
-    		 |	  1		|_______________________|
-    		 |			|		   3			|
-    		 |__________|_______________________|
- * 
- */
-
 package main;
 
 import mapWidget.MapWidget;
@@ -33,14 +23,10 @@ public class MainWindow extends QMainWindow
     private QMenu helpMenu;
     
     private QMdiArea qmaSheep;
-    private QMdiSubWindow qmswMapWindow;
-    private QMdiSubWindow qmswStatWindow;
     
     private MapWidget mwWidget;
     private SheepListWidget slwSheepList;
     private StatisticsWidget swStatistics;
-    
-    private static final int SHEEP_WIDGET_SIZE = (int) (SCREEN_WIDTH * 0.2);
 
     public static void main(String[] args) 
     {
@@ -69,42 +55,56 @@ public class MainWindow extends QMainWindow
         initMdi();
         super.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, this.slwSheepList);
 
-        /* Remove (pesky) titlebars. */
+        /* Clever fix to remove (pesky) titlebars. */
         // Possible to consider autohiding the taskbar, but showing it
         // when the user holds the cursor over the dockwidget
 
         // QWidget test = new QWidget(this);
         // this.slwSheepList.setTitleBarWidget(test);
+        
+        //this.setCentralWidget(new MainWidget());
     }
-
+    
+    // FIXME: Hardcoded version - merely used to show the group a protoype
+    // TODO: QDockWidget is the preferred option, however,
+    //		  it does not like resizing within the window frame.
+    //		  Is there a way to implement the following design
+    //		  AND (furthermore) have intelligent resizing of windows?
+    //
+    //		  __________________________________
+    //		 |          |		   2			|
+    //		 |	  1		|_______________________|
+    //		 |			|		   3			|
+    //		 |__________|_______________________|
     private void initMdi()
     {
     	this.qmaSheep = new QMdiArea();
-    	this.qmswMapWindow = new QMdiSubWindow(this.qmaSheep);
-    	this.qmswStatWindow = new QMdiSubWindow(this.qmaSheep);
+    	QMdiSubWindow mapWindow = new QMdiSubWindow(this.qmaSheep);
+    	QMdiSubWindow statWindow = new QMdiSubWindow(this.qmaSheep);
     	
-    	this.qmaSheep.setFixedSize(SCREEN_WIDTH - SHEEP_WIDGET_SIZE, SCREEN_HEIGHT);    	
+    	mapWindow.setWidget(this.mwWidget);
+    	statWindow.setWidget(this.swStatistics);
     	
-    	this.qmswMapWindow.setWidget(this.mwWidget);
-    	this.qmswMapWindow.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred);
-    	this.qmswMapWindow.setMinimumWidth(((QMdiArea) this.qmswMapWindow.parent()).width());
-    	this.qmswMapWindow.setMinimumHeight(((QMdiArea) this.qmswMapWindow.parent()).height() / 2);    	
+    	mapWindow.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred);
+    	statWindow.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred);
     	
-    	this.qmswStatWindow.setWidget(this.swStatistics);    	
-    	this.qmswStatWindow.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Preferred);    	
-    	this.qmswStatWindow.setMinimumWidth(((QMdiArea) this.qmswMapWindow.parent()).width());
-    	this.qmswStatWindow.move(0, qmswMapWindow.height());
-    	this.qmswStatWindow.setMinimumHeight(((QMdiArea) this.qmswMapWindow.parent()).height() / 2);
+    	mapWindow.setMinimumWidth(600);
+    	statWindow.setMinimumWidth(600);
+    	
+    	mapWindow.setMinimumHeight(350);    	
+    	statWindow.move(0, mapWindow.height());
+    	statWindow.setMinimumHeight(350);
     	
     	super.setCentralWidget(this.qmaSheep);
     }
     
+    // QMdiSubwindow...
+
     private void createSheepList()
     {
     	this.slwSheepList = new SheepListWidget();
-    	this.slwSheepList.setFixedWidth(SHEEP_WIDGET_SIZE);
     }
-        
+    
     private void createStatisticsWidget()
     {
     	this.swStatistics = new StatisticsWidget();
@@ -167,7 +167,5 @@ public class MainWindow extends QMainWindow
         QMessageBox.information(this, "Info", "baa! baa! baa! baa! baa! baa! baa! baa! baa! ");
     }
 }
-
-// Is the following design OK as long as it is intelligent with resizing and adjusting?
 
 /* EOF */
