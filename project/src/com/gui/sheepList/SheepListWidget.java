@@ -1,4 +1,4 @@
-package sheepList;
+package com.gui.sheepList;
 
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
