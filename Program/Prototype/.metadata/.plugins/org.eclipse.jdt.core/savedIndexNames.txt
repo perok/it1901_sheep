@@ -1,1 +1,0 @@
-INDEX VERSION 1.126+C:\Users\perok\Dropbox\NTNU\Fag\itprosj\sau\IT1901 sheep\it1901_sheep\GUI\Prototype\.metadata\.plugins\org.eclipse.jdt.core

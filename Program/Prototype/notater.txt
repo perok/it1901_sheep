@@ -1,5 +1,0 @@
-problem..
-	Dersom man skal ha vinduer som er "avhengige" av hverandre
-	så må man ha dem i en form for layout
-	
-	QDockWidget 
