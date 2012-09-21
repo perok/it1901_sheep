@@ -1,0 +1,10 @@
+INDEX VERSION 1.126+C:\Users\perok\Dropbox\NTNU\Fag\itprosj\sau\IT1901 sheep\it1901_sheep\.metadata\.plugins\org.eclipse.jdt.core
+1624716660.index
+2595820933.index
+3118250013.index
+1120746483.index
+3581163120.index
+122237967.index
+198593473.index
+1981772603.index
+2762095160.index
