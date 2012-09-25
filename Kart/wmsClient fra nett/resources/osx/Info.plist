@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>wmsClient</string>
+	<key>CFBundleIconFile</key>
+	<string>wmsClient.icns</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.1</string>
+        <key>CFBundleVersion</key>
+        <string>1.2 (c) 2002</string>
+        <key>CFBundleGetInfoString</key>
+        <string>wmsClient</string>
+        <key>CFBundleShortVersionString</key>
+        <string>1.2</string>
+        <key>CFBundleName</key>
+        <string>OGC WMS Client</string>
+	<key>Java</key>
+	<dict>
+		<key>ClassPath</key>
+		<array>
+			<string>$JAVAROOT/WMSClient.jar</string>
+		</array>
+		<key>MainClass</key>
+		<string>wmsClient.startup.wmsClientStartup</string>
+		<key>Properties</key>
+		<dict>
+			<key>com.apple.macos.useScreenMenuBar</key>
+			<string>false</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

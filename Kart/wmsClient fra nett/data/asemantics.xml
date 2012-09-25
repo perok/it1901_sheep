@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding="ISO-8859-1" standalone="no" ?>
+<!DOCTYPE WMT_MS_Capabilities SYSTEM "http://www.digitalearth.gov/wmt/xml/capabilities_1_1_0.dtd"
+ [
+ <!ELEMENT VendorSpecificCapabilities EMPTY>
+ ]>  <!-- end of DOCTYPE declaration -->
+
+<WMT_MS_Capabilities version="1.1.0" updateSequence="0">
+<Service> <!-- a service IS a MapServer mapfile -->
+  <Name>GetMap</Name> <!-- WMT defined -->
+  <Title>UMN MapServer Itasca Demo</Title>
+  <Abstract>This is the UMN MapServer demonstration application for Itasca County located in north central Minnesota.</Abstract>
+  <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.asemantics.com/mapserv/mapserv.cgi?map=/usr/local/www/data/asemantics/mapserv/itasca/demo.map"/>
+  <ContactInformation>
+  </ContactInformation>
+  <AccessConstraints>none</AccessConstraints>
+</Service>
+
+<Capability>
+  <Request>
+    <GetCapabilities>
+      <Format>application/vnd.ogc.wms_xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.asemantics.com/mapserv/mapserv.cgi?map=/usr/local/www/data/asemantics/mapserv/itasca/demo.map"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.asemantics.com/mapserv/mapserv.cgi?map=/usr/local/www/data/asemantics/mapserv/itasca/demo.map"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetCapabilities>
+    <GetMap>
+      <Format>image/gif</Format>
+      <Format>image/png</Format>
+      <Format>image/jpeg</Format>
+      <Format>image/wbmp</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.asemantics.com/mapserv/mapserv.cgi?map=/usr/local/www/data/asemantics/mapserv/itasca/demo.map"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.asemantics.com/mapserv/mapserv.cgi?map=/usr/local/www/data/asemantics/mapserv/itasca/demo.map"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetMap>
+    <GetFeatureInfo>
+      <Format>text/plain</Format>
+      <Format>text/html</Format>
+      <Format>application/vnd.ogc.gml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.asemantics.com/mapserv/mapserv.cgi?map=/usr/local/www/data/asemantics/mapserv/itasca/demo.map"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.asemantics.com/mapserv/mapserv.cgi?map=/usr/local/www/data/asemantics/mapserv/itasca/demo.map"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetFeatureInfo>
+  </Request>
+  <Exception>
+    <Format>application/vnd.ogc.se_xml</Format>
+    <Format>application/vnd.ogc.se_inimage</Format>
+    <Format>application/vnd.ogc.se_blank</Format>
+  </Exception>
+  <VendorSpecificCapabilities />
+  <Layer>
+    <Name>DEMO</Name>
+    <Title>UMN MapServer Itasca Demo</Title>
+    <SRS>EPSG:26915</SRS>
+    <LatLonBoundingBox minx="388108" miny="5.20312e+06" maxx="500896" maxy="5.31024e+06" />
+    <BoundingBox SRS="EPSG:26915"
+                minx="388108" miny="5.20312e+06" maxx="500896" maxy="5.31024e+06" />
+    <ScaleHint min="0.498903" max="773.299" />
+    <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>ctybdpy2</Name>
+        <Title>County Boundary</Title>
+        <Abstract>Itasca County boundary shapefile. See http://deli.dnr.state.mn.us/metadata/full/ctybdne2.html for more information.</Abstract>
+        <SRS>EPSG:26915</SRS>
+        <LatLonBoundingBox minx="189775" miny="4.81631e+06" maxx="761662" maxy="5.47241e+06" />
+        <BoundingBox SRS="EPSG:26915"
+                    minx="189775" miny="4.81631e+06" maxx="761662" maxy="5.47241e+06" />
+    </Layer>
+    <Layer>
+      <Name>cities</Name>
+<!-- WARNING: Mandatory metadata 'WMS_GROUP_TITLE' was missing in this context. -->
+      <Title>cities</Title>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>mcd90py2</Name>
+        <Title>Minor Civil Divisions</Title>
+        <Abstract>Minor civil divisions for Itasca County. (boundaries only)</Abstract>
+        <SRS>EPSG:26915</SRS>
+        <LatLonBoundingBox minx="393234" miny="5.20799e+06" maxx="495770" maxy="5.30537e+06" />
+        <BoundingBox SRS="EPSG:26915"
+                    minx="393234" miny="5.20799e+06" maxx="495770" maxy="5.30537e+06" />
+      </Layer>
+    </Layer>
+    <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>twprgpy3</Name>
+        <Title>Township Boundaries</Title>
+        <Abstract>Pulic Land Survey (PLS) township boundaries for Itasca County. See http://deli.dnr.state.mn.us/metadata/full/twprgne2.html for more information.</Abstract>
+        <SRS>EPSG:26915</SRS>
+        <LatLonBoundingBox minx="393234" miny="5.20799e+06" maxx="495770" maxy="5.30537e+06" />
+        <BoundingBox SRS="EPSG:26915"
+                    minx="393234" miny="5.20799e+06" maxx="495770" maxy="5.30537e+06" />
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>lakespy2</Name>
+        <Title>Lakes and Rivers</Title>
+        <Abstract>DLG lake and river polygons for Itasca County. See http://deli.dnr.state.mn.us/metadata/full/dlglkpy2.html for more information.</Abstract>
+        <SRS>EPSG:26915</SRS>
+        <LatLonBoundingBox minx="393234" miny="5.20817e+06" maxx="495403" maxy="5.30396e+06" />
+        <BoundingBox SRS="EPSG:26915"
+                    minx="393234" miny="5.20817e+06" maxx="495403" maxy="5.30396e+06" />
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>dlgstln2</Name>
+        <Title>Streams</Title>
+        <Abstract>DLG streams for Itasca County. See http://deli.dnr.state.mn.us/metadata/full/dlgstln2.html for more information.</Abstract>
+        <SRS>EPSG:26915</SRS>
+        <LatLonBoundingBox minx="393381" miny="5.20799e+06" maxx="495758" maxy="5.30537e+06" />
+        <BoundingBox SRS="EPSG:26915"
+                    minx="393381" miny="5.20799e+06" maxx="495758" maxy="5.30537e+06" />
+    </Layer>
+    <Layer>
+      <Name>roads</Name>
+<!-- WARNING: Mandatory metadata 'WMS_GROUP_TITLE' was missing in this context. -->
+      <Title>roads</Title>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>ctyrdln3</Name>
+        <Title>County Roads</Title>
+        <Abstract>County roads. (lines only)  Derived from MNDOT roads layer, see http://deli.dnr.state.mn.us/metadata/full/dotrdln2.html for more information.</Abstract>
+        <SRS>EPSG:26915</SRS>
+        <LatLonBoundingBox minx="393588" miny="5.208e+06" maxx="495770" maxy="5.30511e+06" />
+        <BoundingBox SRS="EPSG:26915"
+                    minx="393588" miny="5.208e+06" maxx="495770" maxy="5.30511e+06" />
+        <ScaleHint min="0" max="149.671" />
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>ctyrdln3_anno</Name>
+        <Title>County Roads</Title>
+        <Abstract>County roads. (shields only)  Derived from MNDOT roads layer, see http://deli.dnr.state.mn.us/metadata/full/dotrdln2.html for more information.</Abstract>
+        <SRS>EPSG:26915</SRS>
+        <LatLonBoundingBox minx="393588" miny="5.208e+06" maxx="495770" maxy="5.30511e+06" />
+        <BoundingBox SRS="EPSG:26915"
+                    minx="393588" miny="5.208e+06" maxx="495770" maxy="5.30511e+06" />
+        <ScaleHint min="0" max="149.671" />
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>majrdln3</Name>
+        <Title>Highways</Title>
+        <Abstract>Highways- state, US and interstate. (lines only)  Derived from MNDOT roads layer, see http://deli.dnr.state.mn.us/metadata/full/dotrdln2.html for more information.</Abstract>
+        <SRS>EPSG:26915</SRS>
+        <LatLonBoundingBox minx="393732" miny="5.20809e+06" maxx="494784" maxy="5.30537e+06" />
+        <BoundingBox SRS="EPSG:26915"
+                    minx="393732" miny="5.20809e+06" maxx="494784" maxy="5.30537e+06" />
+        <ScaleHint min="0" max="299.342" />
+      </Layer>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>majrdln3_anno</Name>
+        <Title>Highways</Title>
+        <Abstract>Highways- state, US and interstate. (shields only)  Derived from MNDOT roads layer, see http://deli.dnr.state.mn.us/metadata/full/dotrdln2.html for more information.</Abstract>
+        <SRS>EPSG:26915</SRS>
+        <LatLonBoundingBox minx="393732" miny="5.20809e+06" maxx="494784" maxy="5.30537e+06" />
+        <BoundingBox SRS="EPSG:26915"
+                    minx="393732" miny="5.20809e+06" maxx="494784" maxy="5.30537e+06" />
+        <ScaleHint min="0" max="299.342" />
+      </Layer>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>airports</Name>
+        <Title>Airports</Title>
+        <Abstract>Airport runways for Itasca County.</Abstract>
+        <SRS>EPSG:26915</SRS>
+        <LatLonBoundingBox minx="434634" miny="5.22872e+06" maxx="496393" maxy="5.29193e+06" />
+        <BoundingBox SRS="EPSG:26915"
+                    minx="434634" miny="5.22872e+06" maxx="496393" maxy="5.29193e+06" />
+    </Layer>
+    <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>cities</Name>
+        <Title>Minor Civil Divisions</Title>
+        <Abstract>Minor civil divisions for Itasca County. (annotation only)</Abstract>
+        <SRS>EPSG:26915</SRS>
+        <LatLonBoundingBox minx="393234" miny="5.20799e+06" maxx="495770" maxy="5.30537e+06" />
+        <BoundingBox SRS="EPSG:26915"
+                    minx="393234" miny="5.20799e+06" maxx="495770" maxy="5.30537e+06" />
+    </Layer>
+  </Layer>
+</Capability>
+</WMT_MS_Capabilities>

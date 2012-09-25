@@ -1,0 +1,74 @@
+
+wmsClient 1.2
+  by  Marcelo Emmerich (me@em-motion.com)
+  and Sebastian Mancke (mancke@mancke-software.de)
+
+
+This is a Client vor viewing Maps from an WMS-Serer.
+It is oriented on the WMS 1.0 Specification from
+the Open GIS Consortium (www.ogc.org)
+
+You can get the latest version form:
+ http://www.mancke-software.de/wmsClient/
+
+******************************************************************
+* Licence 
+* The application and the source are free for non commercial use,
+* if the following condition is met:
+* The end-user documentation included with the redistribution, if
+* any, must include the following acknowlegement:
+*   "This product includes software developed 
+*      by  Marcelo Emmerich (me@em-motion.com)
+*      and Sebastian Mancke (mancke@mancke-software.de)
+*    See http://www.mancke-software.de/wmsClient/ for details."
+* 
+* For commercial use you have to get the permission. So if you want to
+* use this product in commercial context, redistribute it for profit,
+* or use the code in commercial applications please contact us.
+********************************************************************
+
+We are interessted in feedback, so if you use the code or the application,
+please let us know.
+
+
+This product uses other free software, please look at:
+ LICENSE_MinML  
+ LICENSE_SkinLF  
+ LICENSE_nanoxml
+for more Information
+
+
+Suggestion and fixes came from
+  Dirk-Willem van Gulik, <dirkx@asemantics.com>, Senior Partner, The Asemantics Group SRL
+  Dag Diesen, <dag.diesen@itek.norut.no>, NORUT Information Technology Ltd
+
+
+#################################################################
+Running the application
+
+ If you have the compiled package, you only have to start the application,
+ otherwise you may compile ist first (see Build Section):
+
+ 1. cd wmsClient/bin/
+ 2. java -jar WMSClient.jar
+
+
+
+#################################################################
+Build the application
+
+ For the building, the build-tool ant, developed by the Apache group is
+ recommended. (www.apache.org)
+
+ 1. Get and install ant (If you are interesstet in Java, you should do anyway)
+ 2. cd wmsClient
+ 3. ant <taskname>
+
+ There are defined several tasks:
+ clean              Brings the package in virgin state
+ compile            Compiles the sources to ./build
+ dist               Builds an distributable application in ./bin
+ dist-osx           Builds an distributable application for Mac OS X in ./bin
+ dist-without-skin  Builds an distributable application with the default java look and feel
+ doku               Creates the api-documentation in ./docs/api
+ run                Compiles and runs the application
