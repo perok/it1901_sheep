@@ -1,0 +1,11 @@
+Kart
+======
+Kartverket: Topografisk norgeskart 2 WMS (ev. gråtone)
+Skala fra 1:50000 til ~1:1800
+
+Prikk m/radius over feilmagin til GPS-data.
+Filtrere ut sau som er nærme hverandre i stor skala. Ev ring med tall over ant. sau over.
+
+
+
+Legge posisjonsdataene i en WMS og oppdatere denne hvert x minutt? + oppdatere WMS ved alert?
