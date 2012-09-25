@@ -249,7 +249,19 @@ Det luftes ideer om å kunne overføre sauer mellom gårder.
 Det jobbes med design og programmering samt merging av prosjektene.
 Inputsimulator er påbegynt.
 	
+	
+	
+25.09.12
+Møte 8
+Møtestart 12.15
+Svenn, Lars Erik, Tor, Jørgen, Per Øyvind, Anders
 
+Starter møtet med å finne ut at vi ikke får kontakt med koden i git-repoet.
+Prøvde flere rollbacks som ikke funket, men Ander hadde en lokal versjon som ble pushet opp og alt var på plass igjen.
+
+Per Øyvind sliter med et virus som har gjort pc-en hans til en mursein, men klarer å få liv i den igjen ilpet av møtet.
+
+Diskuterer andre alternativ til Qt. Qt Jambi krever et binding layer mellom javakode og C++ kode. Potensielt mye jobb for å få det til å funke
 
 
 
