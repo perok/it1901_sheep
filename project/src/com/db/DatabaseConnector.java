@@ -119,7 +119,7 @@ public class DatabaseConnector {
 	}
 	
 	
->>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04
+
 	private String[][] processQuery(String str) {
 		try {
 			Statement s = conn.createStatement();

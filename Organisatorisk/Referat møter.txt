@@ -264,22 +264,3 @@ Per Øyvind sliter med et virus som har gjort pc-en hans til en mursein, men klar
 Diskuterer andre alternativ til Qt. Qt Jambi krever et binding layer mellom javakode og C++ kode. Potensielt mye jobb for å få det til å funke
 
 
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> 1efcda16656a885ca904e4df3f165cc118d18b04
-
-
-
-
-
-
-
