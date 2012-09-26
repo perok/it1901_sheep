@@ -318,3 +318,15 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.e
 
 !ENTRY org.eclipse.core.resources 2 10035 2012-09-26 11:17:01.808
 !MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.jdt.core 4 0 2012-09-26 11:46:41.784
+!MESSAGE Invalid ZIP archive: dlmiles-qtjambi-community-awtbridge/win32-msvc2005/com_trolltech_research_qtjambiawtbridge_generated.dll [in TestAwtJambi]
+
+!ENTRY org.eclipse.jdt.core 4 0 2012-09-26 11:46:58.446
+!MESSAGE Invalid ZIP archive: dlmiles-qtjambi-community-awtbridge/win32-msvc2005/com_trolltech_research_qtjambiawtbridge_generated.dll [in TestAwtJambi]
+
+!ENTRY org.eclipse.jdt.core 4 0 2012-09-26 11:48:20.486
+!MESSAGE Invalid ZIP archive: dlmiles-qtjambi-community-awtbridge/win32-msvc2005/com_trolltech_research_qtjambiawtbridge_generated.dll [in TestAwtJambi]
+
+!ENTRY org.eclipse.jdt.core 4 0 2012-09-26 11:49:12.353
+!MESSAGE Invalid ZIP archive: dlmiles-qtjambi-community-awtbridge/win32-msvc2005/com_trolltech_research_qtjambiawtbridge_generated.dll [in TestAwtJambi]
