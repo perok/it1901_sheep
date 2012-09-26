@@ -271,6 +271,36 @@ Anders har klart å få JPanel og generelt flere Swing-komponenter integrert i Qt 
 14.14
 Jørgen og Anders må på forelesning.
 
+Per Øyvind klarer å sette opp repoet på nytt igjen. Vi har mistet ca 150 linjer kode i DatabaseConnector.java.
+
+
+Møteslutt 15.30
+
+
+26.09.12
+Møte 9
+Møtestart 12.15
+Jørgen, Tor, Svenn, Per Øyvind, stud.ass
+Anders og Lars Erik er borte på andre møter.
+
+
+Møte med studass. Går gjennom hva vi har gjort til nå.
+
+Per Øyvind prøvde å får vist GUI men hadde problemer siden Qt ikke takler Java 64 bit. Anders har det lokalt på sin maskin.
+
+Fikk ikke gjort så mye programmering.
+
+
+Møteslutt 14.00
+
+
+
+
+
+
+
+
+
 
 
 
