@@ -1,8 +1,8 @@
-package main;
+package com.gui.main;
 
-import mapWidget.MapWidget;
-import sheepList.SheepListWidget;
-import statisticsWidget.StatisticsWidget;
+import com.gui.mapWidget.MapWidget;
+import com.gui.sheepList.SheepListWidget;
+import com.gui.statisticsWidget.StatisticsWidget;
 
 import com.trolltech.qt.core.QMimeData;
 import com.trolltech.qt.gui.*;
