@@ -16,11 +16,10 @@ public class SqlConnection {
 	public SqlConnection() {
 		try
 		{
-			String userName = settings.getDbUser();
-			String password = settings.getDbPassword();
+			settings = new Settings();
 			Class.forName ("com.mysql.jdbc.Driver").newInstance ();
-			String url = "jdbc:mysql://" + settings.getDbUrl() + "/" + settings.getDbDatabase();
-			conn = DriverManager.getConnection (url, userName, password);
+			String url = "jdbc:mysql://" + settings.getDbUrl() +"/" + settings.getDbDatabase();
+			conn = DriverManager.getConnection (url, settings.getDbUser(), settings.getDbPassword());
 			System.out.println ("Database connection established");
 		}
 		catch (Exception e)
@@ -37,6 +36,25 @@ public class SqlConnection {
 		
 	}
 	
+	public int getNumberOfSheep() {
+		String[][] results = processQuery("SELECT * FROM sheep");
+		return results.length;
+	}
+	
+	public void insertSheep(String[][] sheep) {
+		try {
+			Statement s = conn.createStatement();
+			for (int i = 0; i < sheep.length; i++) {
+				s.executeUpdate("INSERT INTO sheep (id,name,farm_id,date_of_birth,alive,weight" +
+						") VALUES (" + ""+sheep[i][0]+"," + "'"+sheep[i][1]+"'," + ""+sheep[i][2]+"," +
+						""+sheep[i][3]+"," + ""+sheep[i][4]+"," + ""+sheep[i][5]+");");
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		
+	}
 	private String[][] processQuery(String str) {
 		try {
 			Statement s = conn.createStatement();
