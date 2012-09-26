@@ -8,6 +8,11 @@ public class Settings {
 	private String dbPassword;
 	 
 	public Settings() {
+		init();
+		
+	}
+	
+	private void init() {
 		SettingsReader reader = new SettingsReader();
 		String[] settings = reader.readSettings();
 		dbUrl = settings[0];
@@ -50,6 +55,10 @@ public class Settings {
 
 	public void setDbUser(String dbUser) {
 		this.dbUser = dbUser;
+	}
+	
+	public String toString() {
+		return dbUrl + "  " + dbDatabase + "  " + dbUser + "  " + dbPassword;
 	}
 
 }
