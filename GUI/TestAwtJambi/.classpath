@@ -6,6 +6,8 @@
 	<classpathentry kind="lib" path="qtjambi-4.6.3-win32/qtjambi-4.6.3/qtjambi-designer-4.6.3.jar"/>
 	<classpathentry kind="lib" path="qtjambi-4.6.3-win32/qtjambi-4.6.3/qtjambi-examples-4.6.3.jar"/>
 	<classpathentry kind="lib" path="qtjambi-4.6.3-win32/qtjambi-4.6.3/qtjambi-win32-msvc2005-4.6.3.jar"/>
-	<classpathentry kind="lib" path="dlmiles-qtjambi-community-awtbridge/pregenerated/qtjambiawtbridge.jar"/>
+	<classpathentry kind="lib" path="qtjambi-4.6.3-win32/qtjambi-4.6.3.jar"/>
+	<classpathentry kind="lib" path="dlmiles-qtjambi-community-awtbridge/win32-msvc2005/com_trolltech_research_qtjambiawtbridge_generated.dll"/>
+	<classpathentry kind="lib" path="dlmiles-qtjambi-community-awtbridge/qtjambiawtbridge.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
