@@ -289,9 +289,9 @@ Møte med studass. Går gjennom hva vi har gjort til nå.
 Per Øyvind prøvde å får vist GUI men hadde problemer siden Qt ikke takler Java 64 bit. Anders har det lokalt på sin maskin.
 
 Fikk ikke gjort så mye programmering.
+Har fått tak i en WMS-klient skrevet i Java vi kan se på og finne ut hvordan kartvisning er implementert der.
 
-
-Møteslutt 14.00
+Møteslutt 14.30
 
 
 

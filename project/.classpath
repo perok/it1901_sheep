@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="libs/skypetutorials.jar"/>
 	<classpathentry kind="lib" path="libs/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="lib" path="libs/qtjambi-util-4.6.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lars Erik/workspace-pcjava/it1901_sheep/project/libs/qtjambi-4.6.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
