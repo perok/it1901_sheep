@@ -1,0 +1,40 @@
+
+This is a client vor viewing Maps from an WMS (Web Map Server),
+oriented on the WMS 1.0 Specification of the Open GIS Consortium 
+(See: www.opengis.org for further information.) 
+
+
+Infos an downloads: http://www.mancke-software.de/wmsClient/
+
+
+The client was initiali created by:
+
+        Sebastian Mancke 
+        mancke@mancke-software.de 
+        http://www.mancke-software.de 
+and 
+        em | Motion, Marcelo Emmerich 
+        me@em-motion.com 
+        http://www.em-motion.com
+
+Sebastian Mancke ist the maintainer now.
+
+
+
+Licence:
+The application and the source are free for non commercial use, 
+if the following condition is met:
+
+    The end-user documentation included with the redistribution, 
+    if any, must include the following acknowlegement: 
+
+    "This product includes software developed 
+     by  Marcelo Emmerich (me@em-motion.com)
+     and Sebastian Mancke (mancke@mancke-software.de)
+     See http://www.mancke-software.de/wmsClient/ for details."
+
+For commercial use you have to get the permission. So if you 
+want to use this product in commercial context, redistribute it 
+for profit, or use the code in commercial applications please 
+contact us.
+
