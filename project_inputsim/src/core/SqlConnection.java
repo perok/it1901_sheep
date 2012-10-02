@@ -13,12 +13,16 @@ public class SqlConnection {
 	private Connection conn;
 	private Settings settings;
 	
+	/**
+	 * Constructor
+	 */
 	public SqlConnection() {
 		try
 		{
 			settings = new Settings();
 			Class.forName ("com.mysql.jdbc.Driver").newInstance ();
 			String url = "jdbc:mysql://" + settings.getDbUrl() +"/" + settings.getDbDatabase();
+			System.out.println(settings.toString());
 			conn = DriverManager.getConnection (url, settings.getDbUser(), settings.getDbPassword());
 			System.out.println ("Database connection established");
 		}
