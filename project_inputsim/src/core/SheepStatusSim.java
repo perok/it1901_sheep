@@ -72,7 +72,7 @@ public class SheepStatusSim {
 	ActionListener updateStatus = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {
 			System.out.println("Action registered");
-			addStatus();
+//			addStatus();
 		}
 	};
 
