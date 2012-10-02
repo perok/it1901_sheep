@@ -40,7 +40,7 @@ public class DatabaseConnector {
 	
 	public ArrayList<Sheep> getShepp(Farm farm) {
 		ArrayList<Sheep> list = new ArrayList<Sheep>();
-		String[][] r = processQuery("SELECT * FROM sheep WHERE farm_id = '" + farm.getFarmId() + "'");
+		String[][] r = processQuery("SELECT * FROM sheep WHERE farm_id = " + farm.getFarmId() + "");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new Sheep(r[i][0],r[i][1],r[i][2],r[i][3],r[i][4],r[i][5]));
 		}
@@ -49,12 +49,12 @@ public class DatabaseConnector {
 	
 	public boolean removeSheep(Sheep sheep) {
 		Statement s = conn.createStatement();
-		s.executeUpdate("DELETE FROM sheep WHERE id = '" + sheep.getId + "'");
+		s.executeUpdate("DELETE FROM sheep WHERE id = " + sheep.getId + "");
 	}
 	
 	public ArrayList<Farm> getFarms(User user) {
 		ArrayList<Farm> list = new ArrayList<Farm>();
-		String[][] r = processQuery("SELECT * FROM access_rights WHERE user_id = '" + user.getUserId + "'");
+		String[][] r = processQuery("SELECT * FROM access_rights WHERE user_id = " + user.getUserId + "");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new Farm(r[i][0],r[i][1]));
 		}
@@ -64,7 +64,7 @@ public class DatabaseConnector {
 	public boolean addAccessRights(User user, Farm farm) {
 		Statement s = conn.createStatement();
 		try{
-			s.executeUpdate("INSERT INTO access_rights (user_id,farm_id) VALUES('" + user.getUserId + "','" + farm.getFarmId + "')");
+			s.executeUpdate("INSERT INTO access_rights (user_id,farm_id) VALUES(" + user.getUserId + "," + farm.getFarmId + ")");
 		}
 		catch(Exception e){
 			return false;
@@ -75,7 +75,7 @@ public class DatabaseConnector {
 	public boolean removeAccessRights(User user, Farm farm) {
 		Statement s = conn.createStatement();
 		try{
-			s.executeUpdate("DELETE FROM access_rights WHERE '" + user.getUserId + "' = user_id AND '" + farm.getFarmId + "' = farm_id");
+			s.executeUpdate("DELETE FROM access_rights WHERE " + user.getUserId + " = user_id AND " + farm.getFarmId + " = farm_id");
 		}
 		catch(Exception e){
 			return false;
@@ -86,8 +86,8 @@ public class DatabaseConnector {
 	public boolean editUser(int userId, User user) {
 		Statement s = conn.createStatement();
 		try{
-			s.executeUpdate("UPDATE user SET name = '" + user.getName() + "', password = '" + user.getPassword + "', phone_number = '" + user.getPhoneNumber + "', "+
-					"mobile_number = '" + user.mobileNumber + "', email = '" + user.getEmail + "' WHERE id = " + userId);
+			s.executeUpdate("UPDATE user SET name = '" + user.getName() + "', password = '" + user.getPassword + "', phone_number = " + user.getPhoneNumber + ", "+
+					"mobile_number = " + user.mobileNumber + ", email = '" + user.getEmail + "' WHERE id = " + userId);
 		}
 		catch(Exception e){
 			return false;
@@ -97,7 +97,7 @@ public class DatabaseConnector {
 	
 	public ArrayList<SheepStatus> getSheepStatus(Farm farm) {
 		ArrayList<SheepStatus> list = new ArrayList<SheepStatus>();
-		String[][] r = processQuery("SELECT * FROM sheep_status WHERE farm_id = '" + farm.getFarmId + "'");
+		String[][] r = processQuery("SELECT * FROM sheep_status WHERE farm_id = " + farm.getFarmId + "");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new SheepStatus(r[i][0],r[i][1],r[i][2],r[i][3],r[i][4],r[i][5],r[i][6]));
 		}
@@ -106,7 +106,7 @@ public class DatabaseConnector {
 	
 	public ArrayList<SheepAlarm> getSheepAlarm(Farm farm) {
 		ArrayList<SheepAlarm> list = new ArrayList<SheepAlarm>();
-		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE farm_id = '" + farm.getFarmId + "'");
+		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE farm_id = " + farm.getFarmId + "");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new SheepAlert(r[i][0],r[i][1],r[i][2],r[i][3],r[i][4],r[i][5],r[i][6]));
 		}
