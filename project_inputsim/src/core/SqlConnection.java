@@ -81,10 +81,6 @@ public class SqlConnection {
 		}	
 	}
 
-	public int getNumberOfSheep() {
-		String[][] results = processQuery("SELECT * FROM sheep");
-		return results.length;
-	}
 
 	public void insertSheep(String[][] sheep) {
 		try {
@@ -98,6 +94,11 @@ public class SqlConnection {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
+	}
+	
+	public int getNumberOfSheep() {
+		String[][] results = processQuery("SELECT * FROM sheep");
+		return results.length;
 	}
 
 	public void deleteSheep() {
