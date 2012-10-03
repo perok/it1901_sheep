@@ -34,7 +34,8 @@ public class AwtInQt extends QWidget {
 		layout.addWidget(new QLineEdit(), 0, 1);
 		layout.addWidget(new QLabel("Last name:"), 1, 0);
 		layout.addWidget(new QLineEdit(), 1, 1);
-
+		
+		/*
 		// The AWT part of the GUI
 		{
 			JPanel panel = new JPanel();
@@ -49,7 +50,7 @@ public class AwtInQt extends QWidget {
 
 			panel1 = panel;
 		}
-
+		
 		{
 			JPanel panel = new JPanel();
 
@@ -71,7 +72,11 @@ public class AwtInQt extends QWidget {
 			layout.addWidget(new QComponentHost(panel), 4, 0, 1, 2);
 
 			panel2 = panel;
-		}
+		}*/
+		
+		JPanel panel = new AwtMap();
+		panel1 = panel;
+		layout.addWidget(new QComponentHost(panel), 2, 0, 1, 2);
 
 	}
 
