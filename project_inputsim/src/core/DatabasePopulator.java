@@ -2,6 +2,11 @@ package core;
 
 import java.util.Random; 
 
+/**
+ * @version 0.2
+ * @author Lars Erik
+ *
+ */
 public class DatabasePopulator {
 	private SqlConnection sc;
 	private Random rand;
@@ -14,12 +19,31 @@ public class DatabasePopulator {
 		rand = new Random();
 	}
 
+	/**
+	 * @deprecated
+	 * @param numberOfUsers
+	 */
 	public void addUsers(int numberOfUsers) {
 
 	}
 
-	public void adduser() {
-
+	/**Sends the parameter to database via SqlConnection
+	 * 
+	 * @param username
+	 * @param password
+	 * @param phone
+	 * @param cellphone
+	 * @param email
+	 */
+	public void adduser(String [][] user) {
+		sc.insertUser(user);
+	}
+	
+	/**Deletes all users from the database via SqlConnection
+	 * 
+	 */
+	public void deleteUser() {
+		sc.deleteUser();
 	}
 
 	/**Generates random farms based on given parameter.
@@ -29,17 +53,24 @@ public class DatabasePopulator {
 	public void addFarms(int numberOfFarms) {
 		int latestFarm = sc.getLatestFarm();
 		if(latestFarm >= 0) {
-		String[][] farms = new String[numberOfFarms][2];
+		String[] farms = new String[numberOfFarms];
 		for (int i = 0; i < numberOfFarms; i++) {
-			farms[i][0] = Integer.toString(rand.nextInt(latestFarm));
-			farms[i][1] = "Bondebakken " + Integer.toString(i);
+			farms[i] = "Bondebakken " + Integer.toString(latestFarm++);
 		}
 		sc.insertFarms(farms);
 		}
 	}
-
-	/** Takes in the number of sheep to be generated together with farmID.
-	 * Generates a String[][] with number of sheep and calls SqlConnection
+	
+	/**Sends a message to SqlConnection to wipe farm database
+	 * 
+	 */
+	public void deleteFarm() {
+		sc.deleteFarm();
+	}
+	
+	/** Takes in the number of sheep to be generated.
+	 * Generates a String[][] with number of sheep and calls SqlConnection.
+	 * Farms is specified in parameter
 	 * 
 	 * @return void
 	 * @param numberOfSheep
@@ -64,7 +95,6 @@ public class DatabasePopulator {
 	 * 
 	 * @return void
 	 * @param numberOfSheep
-	 * @param farmId
 	 */
 	public void addSheep(int numberOfSheep) {
 		int numberOfFarms = sc.getNumberOfFarms() - 1;
@@ -90,7 +120,7 @@ public class DatabasePopulator {
 		sc.insertSheep(sheep);
 	}
 
-	/**Sends a message to SqlConnection that wipes all entires in sheep table
+	/**Sends a message to SqlConnection that wipes everything in sheep table
 	 * @return void
 	 */
 	public void deleteSheep() {

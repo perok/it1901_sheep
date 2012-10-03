@@ -15,6 +15,7 @@ public class SqlConnection {
 
 	/**
 	 * Constructor
+	 * @return SqlConnection
 	 */
 	public SqlConnection() {
 		try
@@ -109,12 +110,12 @@ public class SqlConnection {
 		}	
 	}
 
-	public void insertFarms(String[][] farms) {
+	public void insertFarms(String[] farms) {
 		try {
 			Statement s = conn.createStatement();
 			for (int i = 0; i < farms.length; i++) {
-				s.executeUpdate("INSERT INTO farm (id,name" +
-						") VALUES (" + ""+farms[i][0]+"," + "'"+farms[i][1]+");");
+				s.executeUpdate("INSERT INTO farm (name" +
+						") VALUES (" + "'"+farms[i] + "');");
 
 			}
 		} catch (SQLException e) {
@@ -128,6 +129,7 @@ public class SqlConnection {
 	}
 	
 	public int getLatestFarm() {
+
 		int latest = -1;
 		String[][] results = processQuery("SELECT * FROM farm");
 		for (int i = 0; i < results.length; i++) {
@@ -137,13 +139,23 @@ public class SqlConnection {
 		return latest;
 	}
 
-	public void insertUsers(String[][] users) {
+	public void deleteFarm() {
+		try {
+			Statement s = conn.createStatement();
+			s.executeUpdate("DELETE FROM farm WHERE 1=1;");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	public void insertUser(String[][] users) {
 		try {
 			Statement s = conn.createStatement();
 			for (int i = 0; i < users.length; i++) {
-				s.executeUpdate("INSERT INTO sheep (id,name,username,password,phone_number,mobile_number,email" +
-						") VALUES (" + ""+users[i][0]+"," + "'"+users[i][1]+"'," + ""+users[i][2]+"," +
-						""+users[i][3]+"," + ""+users[i][4]+"," + ""+users[i][5]+");");
+				s.executeUpdate("INSERT INTO user (username,password,name,phone_number,mobile_number,email" +
+						") VALUES (" + "'"+users[i][0]+"'," + "'"+users[i][1]+"'," + "'"+users[i][2]+"'," +
+						""+users[i][3]+"," + ""+users[i][4]+"," + "'"+users[i][5]+"');");
 
 			}
 		} catch (SQLException e) {
@@ -152,7 +164,22 @@ public class SqlConnection {
 
 	}
 
+	public void deleteUser() {
+		try {
+			Statement s = conn.createStatement();
+			s.executeUpdate("DELETE FROM user WHERE 1=1;");
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+	}
+
+	/**Takes in an select sql query and returns the results as a String[][]
+	 * with rows and colums respectively.
+	 * 
+	 * @param str - SqlQuery
+	 * @return String[][]
+	 */
 	private String[][] processQuery(String str) {
 		try {
 			Statement s = conn.createStatement();
