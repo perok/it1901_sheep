@@ -46,6 +46,7 @@ public class LayerList extends JPanel
      * Implementiert für LayerSelectionListener
      */
     public void layerSelected( LayerInformation layerInfo ) {
+    	System.out.println("Layerlist --> LayerSelected");
         if ( ! listModel.contains( layerInfo ) ) 
             listModel.add( 0, layerInfo );
         
