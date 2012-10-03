@@ -54,7 +54,6 @@ public class LayerPanel extends JPanel
 	    
         Vector constructedDataTree =  parser.constructDataTree();
         if ( constructedDataTree == null ) {
-        	System.out.println("In LayerPanel");
             JOptionPane.showMessageDialog( this, "Error on parsing the server description." );        
             return;
         }
