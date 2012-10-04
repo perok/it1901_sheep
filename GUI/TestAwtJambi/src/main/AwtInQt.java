@@ -31,8 +31,8 @@ public class AwtInQt extends QWidget {
 	private QGridLayout layout;
 
 	public AwtInQt() {
-		super.setMinimumWidth(300);
-		super.setMinimumHeight(150);
+		super.setMinimumWidth(900);
+		super.setMinimumHeight(700);
 		layout = new QGridLayout(this);
 
 		// A few Qt widgets
@@ -81,9 +81,9 @@ public class AwtInQt extends QWidget {
 		}*/
 		
 		//JPanel panel = new AwtMap();
-		JPanel panel = new WmsClientPanel();
-		panelWMs = panel;
-		layout.addWidget(new QComponentHost(panel), 2, 0, 10, 20);
+		JPanel panelWMs = new WmsClientPanel();
+
+		layout.addWidget(new QComponentHost(panelWMs), 2, 0, this.width(), this.height());
 		
 
 	}
@@ -107,7 +107,6 @@ public class AwtInQt extends QWidget {
 
 		if(awtInQt.panelWMs != null) {
 			awtInQt.panelWMs.setVisible(false);
-			awtInQt.panelWMs.setSize(400, 500);
 			//awtInQt.panel1.set
 			awtInQt.panelWMs = null;
 		}
@@ -136,30 +135,25 @@ public class AwtInQt extends QWidget {
         //File
         currentMenu = menuBar.add( new JMenu("File") );
         currentMenu.setMnemonic('f');
-        
+        /*
         currentMenuItem = currentMenu.add( new JMenuItem("Open Server", 'o') );
         currentMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_MASK));
-        currentMenuItem.addActionListener( 
-                                          new ActionListener() {
-                                              public void actionPerformed(ActionEvent e)
-                                              {  ((WmsClientPanel) panelWMs).openServer();  }
-                                          } );
         
         currentMenuItem = currentMenu.add( new JMenuItem("Load Server", 'l') );
         currentMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_MASK));
-        currentMenuItem.addActionListener( 
+        /*currentMenuItem.addActionListener( 
                                           new ActionListener() {
                                               public void actionPerformed(ActionEvent e)
                                               {  ((WmsClientPanel) panelWMs).loadServer();  }
-                                          } );
-                
+                                          } );*/
+        /*        
         currentMenuItem = currentMenu.add( new JMenuItem("Exit", 'x') );
         currentMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_MASK));
         currentMenuItem.addActionListener( 
                                           new ActionListener() {
                                               public void actionPerformed(ActionEvent e)
                                               {  System.exit(0); }
-                                          } );       
+                                          } );   */    
 
         
 
