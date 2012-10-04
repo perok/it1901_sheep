@@ -27,6 +27,7 @@ public class GetCapabilitiesWorker extends Thread
 	
     public GetCapabilitiesWorker( String url, LayerPanel list, StatusBar statusBar )
     {
+    	System.out.println("GetCapabilitiesWorker: " + url);
         _statusBar = statusBar;
     	_url  = url;
     	_list = list;
@@ -34,6 +35,7 @@ public class GetCapabilitiesWorker extends Thread
 
     public void run()
     {
+    	System.out.println("GetCapabilitiesWorker starting");
     	try
             {
                 _statusBar.clear();

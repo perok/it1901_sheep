@@ -18,10 +18,11 @@ public class LayerList extends JPanel
     protected LayerListModel listModel;
     protected JList theList;    
 
+    /*
     protected JButton upButton = new JButton("Up");
     protected JButton downButton = new JButton("Down");
     protected JButton removeButton = new JButton("Delete");
-    protected JButton clearButton = new JButton("Clear");
+    protected JButton clearButton = new JButton("Clear");*/
 
     public LayerList( ) {
         super();
@@ -29,10 +30,11 @@ public class LayerList extends JPanel
         listModel = new LayerListModel();
         theList = new JList( (ListModel)listModel );
         
+        /*
         upButton.addActionListener( this );
         downButton.addActionListener( this );
         removeButton.addActionListener( this );
-        clearButton.addActionListener( this );
+        clearButton.addActionListener( this );*/
         
         makeLayout();
     }
@@ -100,10 +102,11 @@ public class LayerList extends JPanel
         
         //JPanel buttons = new JPanel( new GridLayout(1,3) ) ;
         Box buttons = Box.createHorizontalBox();
+        /*
         buttons.add( upButton );
         buttons.add( downButton );
         buttons.add( removeButton );
-        buttons.add( clearButton );
+        buttons.add( clearButton );*/
         
         //add( new Label("Layer Auswahl"), BorderLayout.NORTH );
         add( new JScrollPane( theList ), BorderLayout.CENTER );
@@ -113,8 +116,14 @@ public class LayerList extends JPanel
         add( buttonFrame, BorderLayout.SOUTH );
         
     }
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
     
-    
+    /*
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
         
@@ -154,6 +163,6 @@ public class LayerList extends JPanel
         } 
         
         listModel.fireListDataListenerContentsChanged();
-    }   
+    }   */
 
 }

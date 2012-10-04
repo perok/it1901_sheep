@@ -16,7 +16,7 @@ import wmsClient.mapCanvas.*;
 public class WmsClientPanel extends JPanel
 {	
        
-    SmartListBox slb = new SmartListBox();
+    //SmartListBox slb = new SmartListBox();
 
 
     /**
@@ -82,27 +82,19 @@ public class WmsClientPanel extends JPanel
         JToolBar jToolBar = new JToolBar();
 
 
-        JButton jOpenButton = new JButton(new ImageIcon("/build/wmsClient/gui/openFile.gif)")); //this.getClass().getResource("openFile.gif") ));
-        jOpenButton.setToolTipText("Open server");
-        jOpenButton.addActionListener( new ActionListener() {
+        //JButton jLoadButton = new JButton("RHELLA"); //new ImageIcon( this.getClass().getResource("loadFile.gif") ));
+        //jLoadButton.setToolTipText("Load server");
+       /* jLoadButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e)
-                {  openServer();  }
-            } );
-
-        JButton jLoadButton = new JButton("/build/wmsClient/gui/loadFile.gif)"); //new ImageIcon( this.getClass().getResource("loadFile.gif") ));
-        jLoadButton.setToolTipText("Load server");
-        jLoadButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent e)
-                {  loadServer();  }
-            } );        
+                {  loadServer();}
+            } );    */    
         
         
-        jToolBar.add(jOpenButton);
-        jToolBar.add(jLoadButton);
-        jToolBar.add( slb );
+        //jToolBar.add(jLoadButton);
+        //jToolBar.add( slb );
         jToolBar.add( Box.createHorizontalGlue() );
 
-        contentPane.add( jToolBar, BorderLayout.NORTH );        
+        //contentPane.add( jToolBar, BorderLayout.NORTH );        
         
         // Status Bar
         contentPane.add( statusBar, BorderLayout.SOUTH );                
@@ -117,6 +109,7 @@ public class WmsClientPanel extends JPanel
         // rechter Panel mit requestControl und imgCanvas
         JPanel rightPanel = new JPanel( new BorderLayout() );
         rightPanel.add( requestControl, BorderLayout.NORTH );
+        
         JPanel mapPanel = new JPanel( new BorderLayout() );
         mapPanel.setBorder(new BevelBorder( BevelBorder.LOWERED));
         mapPanel.add(imgCanvas, BorderLayout.CENTER );
@@ -134,35 +127,20 @@ public class WmsClientPanel extends JPanel
         
         contentPane.add( mainPanel, BorderLayout.CENTER  );
 
-        setStatusMessage ( "Ready" );               
+        setStatusMessage ( "Ready" );  
+        
+        //Starter lasting av kartet
+        GetCapabilitiesWorker worker = new GetCapabilitiesWorker("http://openwms.statkart.no/skwms1/wms.kartdata2?request=GetCapabilities&service=wms&version=1.1.1", layerTree, statusBar );
+        worker.start();  
     }
-
-
-    //FOR FILEÅPNING
-    public void openServer()
-    {       
-        //  	ExampleFileFilter filter = new ExampleFileFilter();
-        //  	filter.addExtension("xml");
-        //  	filter.setDescription("GetCapability xml");
-        //  	chooser.setFileFilter(filter);
-        int returnVal = chooser.showOpenDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            try {
-                layerTree.displayCaps( new FileInputStream( chooser.getSelectedFile() ) );
-                
-            } catch ( Exception ex ) {
-                JOptionPane.showMessageDialog( this, "Es ist ein Fehler auf getreten. Die Datei konnte nicht geöffnet werden." );
-            }
-            
-        }        
-    }
-
+    /*
     public void loadServer() {
     	System.out.println("WmsClientPanel: loadServer");
         String url = (String)slb.getSelectedUrl();
+        System.out.println("trololo" + url);
         GetCapabilitiesWorker worker = new GetCapabilitiesWorker( url, layerTree, statusBar );
         worker.start();        
-    }       
+    }   */    
 
     public void setStatusMessage ( String message ) {
     	System.out.println(message);

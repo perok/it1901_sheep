@@ -20,13 +20,13 @@ public class SmartListBox extends JPanel implements ActionListener {
         super( new FlowLayout( FlowLayout.LEFT, 10, 0 ) );
         
         // Die box erlaubt immer die direkte Eingabe von Text.
-        this.addServer( null, (String)"http://ogc.intergraph.com/ows_wms/request.asp?request=GetCapabilities&version=1.1.12&%20service=WMS" );
+        //this.addServer( null, (String)"http://ogc.intergraph.com/ows_wms/request.asp?request=GetCapabilities&version=1.1.12&%20service=WMS" );
         //      this.addServer( null, (String)"http://www.cubewerx.com/wmt/cubeserv/cubeserv.cgi?VERSION=1.1.0&REQUEST=GetCapabilities" );
-        this.addServer( null, (String)"http://gisdata.usgs.net/servlet/com.esri.wms.Esrimap?servicename=USGS_WMS_REF&request=capabilities" );
-        this.addServer( null, (String)"http://wms.i3.com/wms/wms8bitdemo?VERSION=1.1.0&REQUEST=GetCapabilities" );
-        this.addServer( null, (String)"http://www.asemantics.com/mapserv/mapserv.cgi?VERSION=1.1.0&REQUEST=GetCapabilities&map=/usr/local/www/data/asemantics/mapserv/itasca/demo.map" );
-        this.addServer( null, (String)"http://globe.digitalearth.gov/cgi-bin/wmt.cgi?request=capabilities" );
-        this.addServer( null, (String)"http://www.cubewerx.com/demo/cubeserv/cubeserv.cgi?VERSION=1.1.2&REQUEST=GetCapabilities" );
+        //this.addServer( null, (String)"http://gisdata.usgs.net/servlet/com.esri.wms.Esrimap?servicename=USGS_WMS_REF&request=capabilities" );
+        //this.addServer( null, (String)"http://wms.i3.com/wms/wms8bitdemo?VERSION=1.1.0&REQUEST=GetCapabilities" );
+        //this.addServer( null, (String)"http://www.asemantics.com/mapserv/mapserv.cgi?VERSION=1.1.0&REQUEST=GetCapabilities&map=/usr/local/www/data/asemantics/mapserv/itasca/demo.map" );
+        //this.addServer( null, (String)"http://globe.digitalearth.gov/cgi-bin/wmt.cgi?request=capabilities" );
+        //this.addServer( null, (String)"http://www.cubewerx.com/demo/cubeserv/cubeserv.cgi?VERSION=1.1.2&REQUEST=GetCapabilities" );
         // Versteht nur 'map' als Type anstatt getMap
         //this.addServer( (String)"http://maps.intergraph.com/wms/london/Request.asp?request=capabilities" );
         
@@ -64,6 +64,7 @@ public class SmartListBox extends JPanel implements ActionListener {
     }
     
     public void addItemToServerList( String name ) {
+    	System.out.println(name);
         selecter.insertItemAt( 	"  "+name, 0 );
         selecter.setSelectedIndex( 0 );
         if ( selecter.getItemCount() > maxServers ) {
