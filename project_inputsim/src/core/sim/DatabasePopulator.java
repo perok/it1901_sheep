@@ -1,6 +1,9 @@
-package core;
+package core.sim;
 
 import java.util.Random; 
+
+import com.db.SqlConnection;
+
 
 /**
  * @version 0.2

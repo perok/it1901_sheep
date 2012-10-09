@@ -1,5 +1,7 @@
 package core;
 
+import core.sim.SheepStatusSim;
+
 public class Main {
 
 	public static void main(String[] args) {
