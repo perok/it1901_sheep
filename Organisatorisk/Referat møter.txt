@@ -293,7 +293,27 @@ Har fått tak i en WMS-klient skrevet i Java vi kan se på og finne ut hvordan kar
 
 Møteslutt 14.30
 
-03.10.12
-Møte 11
-Møtestart xx.xx
 
+03.10.12
+Møte 10
+Møtestart 12.15
+Jørgen, Per Øyvind, Tor, Lars Erik, Anders
+
+Svenn er syk. 
+
+Sprint 1 er nå ferdig.
+
+Vi planlegger sprint 2 som skal være ferdig til midtveispresentasjonen. 
+Forrige sprint var preget av undervurdering av arbeidsmengde, og hadde derfor mange endringer i tidsbruk underveis.
+Vi bestemte oss for å heller beregne for mye tid på hver pakke i sprint 2. Arbeidsmengden er derfor nesten dobbelt så stor,
+og vi venter at faktisk arbeidsmengde vil være en plass i mellom estimatene i sprint 1 og sprint 2.
+
+Vi har også bestemt oss for å prøve en server-klient arkitektur for å gi brukeren en mer stabil opplevelse. Research på dette
+er en stor del av sprint 2.
+
+Noen av arbeidspakkene fra sprint 1 ble flyttet til sprint 2 fordi de ikke ble gjennomført. Dette gjelder Skype runtime(6t),
+Dokumentasjon(6t) og Diagrammer(4t).
+
+Resten av møtet ble brukt til å jobbe med oppgavene vi har tildelt hverandre.
+
+Møteslutt 14.00
