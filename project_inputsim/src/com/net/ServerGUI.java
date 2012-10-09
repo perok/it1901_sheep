@@ -129,8 +129,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 	 */
 	class ServerRunning extends Thread {
 		public void run() {
-			server.start();         // should execute until if fails
-			// the server failed
+			server.start();
 			stopStart.setText("Start");
 			tPortNumber.setEditable(true);
 			appendEvent("Server crashed\n");

@@ -293,19 +293,7 @@ Har fått tak i en WMS-klient skrevet i Java vi kan se på og finne ut hvordan kar
 
 Møteslutt 14.30
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+03.10.12
+Møte 11
+Møtestart xx.xx
 

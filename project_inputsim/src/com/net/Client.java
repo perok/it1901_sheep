@@ -226,14 +226,14 @@ public class Client  {
 		public void run() {
 			while(true) {
 				try {
-					String msg = (String) sInput.readObject();
+					Response msg = (Response) sInput.readObject();
 					// if console mode print the message and add back the prompt
 					if(cg == null) {
 						System.out.println(msg);
 						System.out.print("> ");
 					}
 					else {
-						cg.append(msg);
+						cg.append(msg.toString());
 					}
 				}
 				catch(IOException e) {

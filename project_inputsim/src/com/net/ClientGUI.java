@@ -11,21 +11,13 @@ import java.awt.event.*;
 public class ClientGUI extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	// will first hold "Username:", later on "Enter message"
 	private JLabel label;
-	// to hold the Username and later on the messages
 	private JTextField tf;
-	// to hold the server address an the port number
 	private JTextField tfServer, tfPort;
-	// to Logout and get the list of the users
 	private JButton login, logout, whoIsIn;
-	// for the chat room
 	private JTextArea ta;
-	// if it is for connection
 	private boolean connected;
-	// the Client object
 	private Client client;
-	// the default port number
 	private int defaultPort;
 	private String defaultHost;
 
@@ -123,11 +115,6 @@ public class ClientGUI extends JFrame implements ActionListener {
 		// if it is the Logout button
 		if(o == logout) {
 			client.sendMessage(new Request(Request.LOGOUT, ""));
-			return;
-		}
-		// if it the who is in button
-		if(o == whoIsIn) {
-			client.sendMessage(new Request(Request.WHOISIN, ""));				
 			return;
 		}
 

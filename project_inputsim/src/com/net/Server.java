@@ -1,3 +1,5 @@
+package com.net;
+
 import java.io.*;
 import java.net.*;
 import java.text.SimpleDateFormat;
@@ -12,7 +14,7 @@ public class Server {
     // an ArrayList to keep the list of the Client
     private ArrayList<ClientHandler> al;
     // if I am in a GUI
-    private ServerGUI sg;
+    public ServerGUI sg;
     // to display time
     private SimpleDateFormat sdf;
     // the port number to listen for connection
@@ -20,19 +22,12 @@ public class Server {
     // the boolean that will be turned of to stop the server
     private boolean keepGoing;
 
-
-    /*
-     *  server constructor that receive the port to listen to for connection as parameter
-     *  in console
-     */
     public Server(int port) {
         this(port, null);
     }
 
     public Server(int port, ServerGUI sg) {
-        // GUI or not
         this.sg = sg;
-        // the port
         this.port = port;
         // to display hh:mm:ss
         sdf = new SimpleDateFormat("HH:mm:ss");
@@ -42,7 +37,6 @@ public class Server {
 
     public void start() {
         keepGoing = true;
-        /* create socket server and wait for connection requests */
         try 
         {
             // the socket used by the server
@@ -58,7 +52,7 @@ public class Server {
                 // if I was asked to stop
                 if(!keepGoing)
                     break;
-                ClientHandler t = new ClientHandler(socket);  // make a thread of it
+                ClientHandler t = new ClientHandler(socket,this);  // make a thread of it
                 al.add(t);                                  // save it in the ArrayList
                 new Thread(t).start();
             }
@@ -66,11 +60,9 @@ public class Server {
             try {
                 serverSocket.close();
                 for(int i = 0; i < al.size(); ++i) {
-                    ClientThread tc = al.get(i);
+                	ClientHandler tc = al.get(i);
                     try {
-                    tc.sInput.close();
-                    tc.sOutput.close();
-                    tc.socket.close();
+                    tc.kill();
                     }
                     catch(IOException ioE) {
                         // not much I can do
@@ -111,44 +103,7 @@ public class Server {
         else
             sg.appendEvent(time + "\n");
     }
-    /*
-     *  to broadcast a message to all Clients
-     */
-    private synchronized void broadcast(String message) {
-        // add HH:mm:ss and \n to the message
-        String time = sdf.format(new Date());
-        String messageLf = time + " " + message + "\n";
-        // display message on console or GUI
-        if(sg == null)
-            System.out.print(messageLf);
-        else
-            sg.appendRoom(messageLf);     // append in the room window
-
-        // we loop in reverse order in case we would have to remove a Client
-        // because it has disconnected
-        for(int i = al.size(); --i >= 0;) {
-            ClientThread ct = al.get(i);
-            // try to write to the Client if it fails remove it from the list
-            if(!ct.writeMsg(messageLf)) {
-                al.remove(i);
-                display("Disconnected Client " + ct.username + " removed from list.");
-            }
-        }
-    }
-
-    // for a client who logoff using the LOGOUT message
-    synchronized void remove(int id) {
-        // scan the array list until we found the Id
-        for(int i = 0; i < al.size(); ++i) {
-            ClientThread ct = al.get(i);
-            // found it
-            if(ct.id == id) {
-                al.remove(i);
-                return;
-            }
-        }
-    }
-
+    
     /*
      *  To run as a console application just open a console window and: 
      * > java Server
@@ -181,8 +136,7 @@ public class Server {
     }
 
 	public Response HandleRequest() {
-		
-		return null;
+		return new Response(1, "Svar");
 	}
 
   

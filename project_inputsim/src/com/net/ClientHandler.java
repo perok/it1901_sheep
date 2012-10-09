@@ -11,9 +11,12 @@ public class ClientHandler implements Runnable {
 	private ObjectInputStream sInput;
 	private Request req;
 	private Server server;
+	private String username;
+	private boolean keepGoing = true;
 
-	public ClientHandler(Socket socket) {
+	public ClientHandler(Socket socket,Server server) {
 		this.socket = socket;
+		this.server = server;
 	}
 
 
@@ -22,13 +25,26 @@ public class ClientHandler implements Runnable {
 		try{
 			sOutput = new ObjectOutputStream(socket.getOutputStream());
 			sInput  = new ObjectInputStream(socket.getInputStream());
+			username = (String) sInput.readObject();
 
-			while(true){
+			while(keepGoing){
 				req = (Request) sInput.readObject();
-				Response res = server.HandleRequest();
-				sOutput.writeObject(res);
-			}
+				
+				switch(req.getType()) {
 
+                case Request.MESSAGE:
+                	server.sg.appendRoom(username + ": " + req.getMessage() );
+                    Response res = server.HandleRequest();
+    				sOutput.writeObject(res);
+
+                    break;
+                case Request.LOGOUT:
+                    server.sg.appendRoom(username + " disconnected with a LOGOUT message.");
+                    keepGoing = false;
+    				kill();
+                    break;
+                }
+			}
 		}
 		catch(IOException e) {
 			System.err.println(e);
@@ -39,6 +55,8 @@ public class ClientHandler implements Runnable {
 	}
 	
 	public void kill() throws IOException {
+		sOutput.close();
+		sInput.close();
 		socket.close();
 	}
 
