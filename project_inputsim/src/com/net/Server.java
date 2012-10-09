@@ -9,18 +9,13 @@ import java.util.*;
  * The server that can be run both as a console application or a GUI
  */
 public class Server {
-    // a unique ID for each connection
     private static int uniqueId;
-    // an ArrayList to keep the list of the Client
     private ArrayList<ClientHandler> al;
-    // if I am in a GUI
     public ServerGUI sg;
-    // to display time
     private SimpleDateFormat sdf;
-    // the port number to listen for connection
     private int port;
-    // the boolean that will be turned of to stop the server
     private boolean keepGoing;
+    private DatabaseConnector db;
 
     public Server(int port) {
         this(port, null);

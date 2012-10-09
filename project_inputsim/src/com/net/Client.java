@@ -205,11 +205,7 @@ public class Client  {
 				// break to do the disconnect
 				break;
 			}
-			// message WhoIsIn
-			else if(msg.equalsIgnoreCase("WHOISIN")) {
-				client.sendMessage(new Request(Request.WHOISIN, ""));				
-			}
-			else {				// default to ordinary message
+			else {
 				client.sendMessage(new Request(Request.MESSAGE, msg));
 			}
 		}
