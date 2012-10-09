@@ -58,6 +58,10 @@ class CapabilitiesParser extends MinML {
     protected void eliminateInnerNodes(Vector node) {
         for ( int i=0; i< node.size(); i++ ) {
             InnerTreeNode currChild = (InnerTreeNode)node.elementAt( i );
+            
+            //ALLE LAYERS
+            System.out.println(currChild.toString());
+            
             if ( currChild.size() > 0 )
                 eliminateInnerNodes( currChild );
             else

@@ -294,6 +294,14 @@ Har fått tak i en WMS-klient skrevet i Java vi kan se på og finne ut hvordan kar
 Møteslutt 14.30
 
 
+Møte 10
+Møtestart 12.15
+Jørgen, Per Øyvind, Tor, Lars Erik, Anders
+
+Svenn er syk. 
+
+Sprint 1 er nå ferdig.
+
 
 
 
