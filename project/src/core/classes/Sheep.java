@@ -8,4 +8,8 @@ public class Sheep{
 	
 	int id;
 	
+	Farm farm;
+	
+	
+	
 }

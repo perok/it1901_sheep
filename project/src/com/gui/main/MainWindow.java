@@ -9,7 +9,7 @@
  */
 
 package com.gui.main;
-
+   
 import com.gui.mapWidget.MapWidget;
 import com.gui.sheepList.SheepListWidget;
 import com.gui.statisticsWidget.StatisticsWidget;
