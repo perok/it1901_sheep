@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/*Ser at ikke alt her er likt som i diagrammet.
+ * Er fult villig til å forandre på ting såklart, men vil gjerne snakke om det først.*/
+
 public class Farm implements Comparator<Sheep> {
 	
 	private int id;
