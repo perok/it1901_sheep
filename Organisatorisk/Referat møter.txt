@@ -198,7 +198,6 @@ Svenn ser på WMS-kart og hvordan hvis det i appen.
 Møteslutt: 17.00
 
 
-<<<<<<< HEAD
 =======
 19.09.12
 Møte 6
@@ -259,7 +258,7 @@ Svenn, Lars Erik, Tor, Jørgen, Per Øyvind, Anders
 Starter møtet med å finne ut at vi ikke får kontakt med koden i git-repoet.
 Prøvde flere rollbacks som ikke funket, men Ander hadde en lokal versjon som ble pushet opp og alt var på plass igjen.
 
-Per Øyvind sliter med et virus som har gjort pc-en hans til en mursein, men klarer å få liv i den igjen ilpet av møtet.
+Per Øyvind sliter med et virus som har gjort pc-en hans til en murstein, men klarer å få liv i den igjen iløpet av møtet.
 
 Diskuterer andre alternativ til Qt. Qt Jambi krever et binding layer mellom javakode og C++ kode. Potensielt mye jobb for å få det til å funke
 
@@ -317,3 +316,38 @@ Dokumentasjon(6t) og Diagrammer(4t).
 Resten av møtet ble brukt til å jobbe med oppgavene vi har tildelt hverandre.
 
 Møteslutt 14.00
+
+
+
+
+Møte 11
+Møtestart 12.15
+Jørgen, Per Øyvind, Tor, Anders, Svenn.
+Lars Erik har fysiotime. Kommer så fort han har mulighet.
+
+Per Øyvind oppdaterer Svenn på hvordan kartdelen av prosjektet har utviklet seg. Har funnet JXViewer som gjør det enklere å integrere WMS-tjenester i Java. Awesomeness!
+
+Rapport til studass sendt vedrørende sprint 1.
+
+Siden forige møte:
+Jørgen har jobbet med tilstandsdiagram og generell kode.
+Tor har jobbet med sekvensdiagram.
+Svenn har jobbet med å forstå hvordan wms-klienten som ble funnet på nett fungerer.
+Per Øyvind har funnet en alternativ, og bedre, måte å vise kart på.
+Anders har kodet om mye for å unngå hardkoding.
+
+
+Det registreres at Per Øyvind ikke har kontroll på kaffen. Skuffende, siden dette var et kriterie for at han ble valg til Scrum-master ;)
+
+Møteslutt: 14.15
+
+
+
+
+
+
+
+
+
+
+
