@@ -1,8 +1,7 @@
 package core.sim;
-
 import java.util.Random; 
-
-import com.db.SqlConnection;
+import com.db.*;
+import core.settings.*;
 
 
 /**
@@ -11,14 +10,14 @@ import com.db.SqlConnection;
  *
  */
 public class DatabasePopulator {
-	private SqlConnection sc;
+	private DatabaseConnector sc;
 	private Random rand;
 
 	/**Constructor
 	 * @return DatabasePopulator
 	 */
 	public DatabasePopulator() {
-		sc = new SqlConnection();
+		sc = new DatabaseConnector(new Settings());
 		rand = new Random();
 	}
 
@@ -30,7 +29,7 @@ public class DatabasePopulator {
 
 	}
 
-	/**Sends the parameter to database via SqlConnection
+	/**Sends the parameter to database via DatabaseConnector
 	 * 
 	 * @param username
 	 * @param password
@@ -42,7 +41,7 @@ public class DatabasePopulator {
 		sc.insertUser(user);
 	}
 	
-	/**Deletes all users from the database via SqlConnection
+	/**Deletes all users from the database via DatabaseConnector
 	 * 
 	 */
 	public void deleteUser() {
@@ -64,7 +63,7 @@ public class DatabasePopulator {
 		}
 	}
 	
-	/**Sends a message to SqlConnection to wipe farm database
+	/**Sends a message to DatabaseConnector to wipe farm database
 	 * 
 	 */
 	public void deleteFarm() {
@@ -72,7 +71,7 @@ public class DatabasePopulator {
 	}
 	
 	/** Takes in the number of sheep to be generated.
-	 * Generates a String[][] with number of sheep and calls SqlConnection.
+	 * Generates a String[][] with number of sheep and calls DatabaseConnector.
 	 * Farms is specified in parameter
 	 * 
 	 * @return void
@@ -93,7 +92,7 @@ public class DatabasePopulator {
 	}
 
 	/** Takes in the number of sheep to be generated.
-	 * Generates a String[][] with number of sheep and calls SqlConnection.
+	 * Generates a String[][] with number of sheep and calls DatabaseConnector.
 	 * Farms is randomly chosen from the farms in the database
 	 * 
 	 * @return void
@@ -115,7 +114,7 @@ public class DatabasePopulator {
 		}
 	}
 
-	/**Adds the parameter via det SqlConnection class
+	/**Adds the parameter via det DatabaseConnector class
 	 * 
 	 * @param sheep
 	 */
@@ -123,7 +122,7 @@ public class DatabasePopulator {
 		sc.insertSheep(sheep);
 	}
 
-	/**Sends a message to SqlConnection that wipes everything in sheep table
+	/**Sends a message to DatabaseConnector that wipes everything in sheep table
 	 * @return void
 	 */
 	public void deleteSheep() {
