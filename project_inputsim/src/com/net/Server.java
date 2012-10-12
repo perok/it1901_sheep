@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import com.db.*;
 
 /*
  * The server that can be run both as a console application or a GUI
@@ -15,7 +16,7 @@ public class Server {
     private SimpleDateFormat sdf;
     private int port;
     private boolean keepGoing;
-    private DatabaseConnector db;
+//    private DatabaseConnector db;
 
     public Server(int port) {
         this(port, null);
