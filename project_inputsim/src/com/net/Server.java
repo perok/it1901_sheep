@@ -4,11 +4,11 @@ import java.io.*;
 import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import com.db.*;
+import com.db.DatabaseConnector;
 
-/*
- * The server that can be run both as a console application or a GUI
- */
+import core.classes.Farm;
+import core.settings.Settings;
+
 public class Server {
     private static int uniqueId;
     private ArrayList<ClientHandler> al;
@@ -16,7 +16,7 @@ public class Server {
     private SimpleDateFormat sdf;
     private int port;
     private boolean keepGoing;
-//    private DatabaseConnector db;
+    private DatabaseConnector db;
 
     public Server(int port) {
         this(port, null);
@@ -29,6 +29,7 @@ public class Server {
         sdf = new SimpleDateFormat("HH:mm:ss");
         // ArrayList for the Client list
         al = new ArrayList<ClientHandler>();
+        db = new DatabaseConnector(new Settings());
     }
 
     public void start() {
@@ -131,8 +132,12 @@ public class Server {
         server.start();
     }
 
-	public Response HandleRequest() {
-		return new Response(1, "Svar");
+	public Response HandleRequest(String request) {
+		switch(request){
+		case("getSheep"):
+			return new Response(1,db.getSheep(new Farm(1,"LOl")));
+		}
+		return null;
 	}
 
   

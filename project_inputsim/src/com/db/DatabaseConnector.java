@@ -42,7 +42,7 @@ public class DatabaseConnector {
 		return null;
 	}
 	
-	public ArrayList<Sheep> getShepp(Farm farm) {
+	public ArrayList<Sheep> getSheep(Farm farm) {
 		ArrayList<Sheep> list = new ArrayList<Sheep>();
 		String[][] r = processQuery("SELECT * FROM sheep WHERE farm_id = " + farm.getId() + "");
 		for (int i = 0; i < r.length; i++) {

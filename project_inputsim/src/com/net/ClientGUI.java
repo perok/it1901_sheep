@@ -117,7 +117,7 @@ public class ClientGUI extends JFrame implements ActionListener {
 		// ok it is coming from the JTextField
 		if(connected) {
 			// just have to send the message
-			client.sendMessage(new Request(Request.MESSAGE, tf.getText()));				
+			client.sendMessage(new Request(Request.REQUEST, tf.getText()));				
 			tf.setText("");
 			return;
 		}

@@ -6,22 +6,23 @@ import java.util.ArrayList;
 
 public class Response implements Serializable { 
 	protected static final long serialVersionUID = 2;
-	// The different types of message sent by the Client
-	// WHOISIN to receive the list of the users connected
-	// MESSAGE an ordinary message
-	// LOGOUT to disconnect from the Server
-	static final int MESSAGE = 1, LOGOUT = 2;
+	static final int LIST = 1, BOOLEAN = 2;
 	private int type;
 	private String message;
-	private ArrayList<String> content;
+	private ArrayList content;
 	
 	// constructor
-	Response(int type, String message) {
+	public Response(int type, String message) {
 		this.type = type;
 		this.message = message;
 	}
 	
-	Response(int type, String message, ArrayList<String> content) {
+	public Response(int type, ArrayList content) {
+		this.type = type;
+		this.content = content;
+	}
+	
+	public Response(int type, String message, ArrayList<String> content) {
 		this.type = type;
 		this.message = message;
 		this.content = content;
@@ -48,7 +49,15 @@ public class Response implements Serializable {
 	}
 	
 	public String toString() {
-		return message;
+		if(this.type == Response.LIST) {
+			String out = new String();
+			for (int i = 0; i < content.size(); i++) {
+				out += content.get(i).toString();
+			}
+			return out;
+		}
+		else
+			return message;
 	}
 }
 

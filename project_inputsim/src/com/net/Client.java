@@ -206,7 +206,7 @@ public class Client  {
 				break;
 			}
 			else {
-				client.sendMessage(new Request(Request.MESSAGE, msg));
+				client.sendMessage(new Request(Request.REQUEST, msg));
 			}
 		}
 		// done disconnect
