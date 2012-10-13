@@ -11,18 +11,36 @@ import java.util.Comparator;
 public class Farm implements Comparator<Sheep> {
 	
 	private int id;
-	
 	private String name;
-	
 	private ArrayList<Sheep> sheepList;
-	
-	boolean sammeOmigjen;
-	
+	boolean sammeOmigjen;	
 	int sorterEtter = 1;
 	/*Variabelen sorterEtter bestemmer om vi skal sortere etter default settings(1),
 	 * navn(2), alder(3) eller id(4). Litt uproff måte å gjøre det på kanskje, men det er
 	 * ihvertfall mine foreløpige løsning. -Tor
 	 */
+
+	public Farm(int id, String name) {
+		this.setId(id);
+		this.setName(name);
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	
 	public boolean addSheep(Sheep sheep){
 		return false;
@@ -82,12 +100,16 @@ public class Farm implements Comparator<Sheep> {
 			return sheep1.name.compareTo(sheep2.name);
 		}
 		else if(sorterEtter == 3){
-			return sheep1.age - sheep2.age;
+			return sheep1.dateOfBirth - sheep2.dateOfBirth;
 		}
 		else if(sorterEtter == 4){
 			return sheep1.id - sheep2.id;
 		}
 		return 0;
 	}
+
+
+
+	
 	
 }

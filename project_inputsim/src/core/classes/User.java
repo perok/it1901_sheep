@@ -11,8 +11,17 @@ public class User {
 	private String username;
 	private ArrayList<Farm> farmlist;
 	
-	public User(int id, String name, int phoneNumber, int mobileNumber, String email, String username) {
-		
+	
+
+	public User(int id, String name, int phoneNumber, int mobileNumber, String email, String username, 
+			ArrayList<Farm> farmlist) {
+		this.id = id;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.mobileNumber = mobileNumber;
+		this.email = email;
+		this.username = username;
+		this.farmlist = farmlist;
 	}
 
 	public int getId() {

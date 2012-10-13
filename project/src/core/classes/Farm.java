@@ -100,7 +100,7 @@ public class Farm implements Comparator<Sheep> {
 			return sheep1.name.compareTo(sheep2.name);
 		}
 		else if(sorterEtter == 3){
-			return sheep1.age - sheep2.age;
+			return sheep1.dateOfBirth - sheep2.dateOfBirth;
 		}
 		else if(sorterEtter == 4){
 			return sheep1.id - sheep2.id;
