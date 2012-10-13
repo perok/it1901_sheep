@@ -2,15 +2,15 @@ package core.classes;
 
 public class Message {
 	private int id;
-	private Sheep sheep;
+	private int sheepId;
 	private int timestamp;
 	private float temperature;
 	private GpsPosition gpsPosition;
 	private int farmId;
 	
-	public Message(int id, Sheep sheep, int timestamp, float temperature, GpsPosition gpsPosition, int farmId) {
+	public Message(int id, int sheepId, int timestamp, float temperature, GpsPosition gpsPosition, int farmId) {
 		this.setId(id);
-		this.setSheep(sheep);
+		this.setSheep(sheepId);
 		this.setTimestamp(timestamp);
 		this.setTemperature(temperature);
 		this.setGpsPosition(gpsPosition);
@@ -25,12 +25,12 @@ public class Message {
 		this.id = id;
 	}
 
-	public Sheep getSheep() {
-		return sheep;
+	public int getSheep() {
+		return sheepId;
 	}
 
-	public void setSheep(Sheep sheep) {
-		this.sheep = sheep;
+	public void setSheep(int sheepId) {
+		this.sheepId = sheepId;
 	}
 
 	public int getTimestamp() {

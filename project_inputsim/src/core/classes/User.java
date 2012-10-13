@@ -10,6 +10,7 @@ public class User {
 	private String email;
 	private String username;
 	private ArrayList<Farm> farmlist;
+	private String password;
 	
 	
 
@@ -78,6 +79,14 @@ public class User {
 
 	public void setFarmlist(ArrayList<Farm> farmlist) {
 		this.farmlist = farmlist;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }
