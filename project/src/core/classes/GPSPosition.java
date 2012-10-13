@@ -1,12 +1,12 @@
 package core.classes;
 
-public class GPSPosition {
+public class GpsPosition {
 	
-	double lattitute;
+	double latitute;
 	double longditude;
 	
-	public GPSPosition(double lattitute, double longditude){
-		this.lattitute = lattitute;
+	public GpsPosition(double latitute, double longditude){
+		this.latitute = latitute;
 		this.longditude = longditude;
 	}
 
