@@ -49,7 +49,7 @@ public class LayerPanel extends JPanel
 
     public void displayCaps( java.io.InputStream capabilities ) {
 	
-
+    	//HER BLIR LAYERENE HENTA UT
         CapabilitiesParser parser = new CapabilitiesParser( capabilities );
 	    
         Vector constructedDataTree =  parser.constructDataTree();
@@ -57,9 +57,10 @@ public class LayerPanel extends JPanel
             JOptionPane.showMessageDialog( this, "Error on parsing the server description." );        
             return;
         }
-
+        
+        
         treeData.add( constructedDataTree.elementAt(0) );
-
+        
         
         // Sicher nicht so schön, immern einen neuen Tree zu bauen,
         // der dann gar nicht benutzt wird, funzt aber!
@@ -114,6 +115,7 @@ public class LayerPanel extends JPanel
                 if ( info.getLatLonBoundingBox() == null  || info.getField("name") == null ) 
                     infoArea.setText("Can´t add Layer.\nThe Layer is only for formatimg.\n\nOr there ist an \nserver side error.");
                 else {
+                	System.out.println("LayerPanel Selected Layer::"+info.getField("name"));
                     selectionListener.layerSelected( info );
                     infoArea.setText("Layer added!");
                 }

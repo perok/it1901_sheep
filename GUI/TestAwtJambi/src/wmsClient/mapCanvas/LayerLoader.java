@@ -34,6 +34,7 @@ public class LayerLoader extends Thread
 	
     public LayerLoader( LayerInformation info, WmsImageCanvas canvas, RequestParameter reqParam, int index, StatusBar statusBar )
     {
+    	System.out.println("LayerLoader " + info);
         _statusBar = statusBar;
     	_canvas   = canvas;
     	_info     = info;
