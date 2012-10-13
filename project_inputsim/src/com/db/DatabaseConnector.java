@@ -45,7 +45,7 @@ public class DatabaseConnector {
 	
 	public ArrayList<Sheep> getShepp(Farm farm) {
 		ArrayList<Sheep> list = new ArrayList<Sheep>();
-		String[][] r = processQuery("SELECT * FROM sheep WHERE farm_id = " + farm.getFarmId() + "");
+		String[][] r = processQuery("SELECT * FROM sheep WHERE farm_id = " + farm.getId() + "");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new Sheep(r[i][0],r[i][1],r[i][2],r[i][3],r[i][4],r[i][5]));
 		}
@@ -59,7 +59,7 @@ public class DatabaseConnector {
 	
 	public ArrayList<Farm> getFarms(User user) {
 		ArrayList<Farm> list = new ArrayList<Farm>();
-		String[][] r = processQuery("SELECT * FROM access_rights WHERE user_id = " + user.getUserId + "");
+		String[][] r = processQuery("SELECT * FROM access_rights WHERE user_id = " + user.getId() + "");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new Farm(r[i][0],r[i][1]));
 		}
@@ -69,7 +69,7 @@ public class DatabaseConnector {
 	public boolean addAccessRights(User user, Farm farm) {
 		Statement s = conn.createStatement();
 		try{
-			s.executeUpdate("INSERT INTO access_rights (user_id,farm_id) VALUES(" + user.getUserId + "," + farm.getFarmId + ")");
+			s.executeUpdate("INSERT INTO access_rights (user_id,farm_id) VALUES(" + user.getId() + "," + farm.getId() + ")");
 		}
 		catch(Exception e){
 			return false;
@@ -80,7 +80,7 @@ public class DatabaseConnector {
 	public boolean removeAccessRights(User user, Farm farm) {
 		Statement s = conn.createStatement();
 		try{
-			s.executeUpdate("DELETE FROM access_rights WHERE " + user.getUserId + " = user_id AND " + farm.getFarmId + " = farm_id");
+			s.executeUpdate("DELETE FROM access_rights WHERE " + user.getId() + " = user_id AND " + farm.getId() + " = farm_id");
 		}
 		catch(Exception e){
 			return false;
