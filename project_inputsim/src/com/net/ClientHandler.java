@@ -34,7 +34,7 @@ public class ClientHandler implements Runnable {
 
                 case Request.REQUEST:
                 	server.sg.appendRoom(username + ": " + req.getMessage() );
-                    Response res = server.HandleRequest(req.getMessage());
+                    Response res = server.HandleRequest(req);
     				sOutput.writeObject(res);
 
                     break;

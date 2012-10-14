@@ -132,10 +132,10 @@ public class Server {
         server.start();
     }
 
-	public Response HandleRequest(String request) {
-		switch(request){
+	public Response HandleRequest(Request request) {
+		switch(request.getMessage()){
 		case("getSheep"):
-			return new Response(1,db.getSheep(new Farm(1,"LOl")));
+			return new Response(1,db.getSheep(new Farm(Integer.parseInt(request.getParamter("farmId")),request.getParamter("farmName"))));
 		}
 		return null;
 	}
