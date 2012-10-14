@@ -1,6 +1,6 @@
 package GuiDesign;
 
-import com.db.DatabaseConnector;
+import com.net.DatabaseConnector;
 
 public class LoginWindow {
 

@@ -33,7 +33,7 @@
 <attribute is_hidden="false" is_key="true" name="farm_id" type="Integer"/>
 </attributes>
 </entity>
-<entity id="13" is_weak="false" name="sheep_alert" x="16" y="228">
+<entity id="13" is_weak="false" name="sheep_status" x="16" y="228">
 <attributes>
 <attribute is_hidden="false" is_key="true" name="id" type="Integer"/>
 <attribute is_hidden="false" is_key="true" name="sheep_id" type="Integer"/>
@@ -103,7 +103,7 @@
 <connection connection_side="2" direction="0" object_id="15" relation_point_x="114" relation_point_y="167"/>
 </line>
 <line cardinality_string="" has_u="false" id="19" is_weak="false" role="" style="1" turned="false">
-<connection connection_side="1" direction="1" object_id="13" relation_point_x="63" relation_point_y="228"/>
+<connection connection_side="1" direction="1" object_id="13" relation_point_x="68" relation_point_y="228"/>
 <connection connection_side="3" direction="1" object_id="15" relation_point_x="99" relation_point_y="182"/>
 </line>
 <line cardinality_string="" has_u="false" id="21" is_weak="false" role="" style="0" turned="false">
@@ -111,7 +111,7 @@
 <connection connection_side="1" direction="1" object_id="20" relation_point_x="294" relation_point_y="413"/>
 </line>
 <line cardinality_string="" has_u="false" id="22" is_weak="false" role="" style="0" turned="false">
-<connection connection_side="3" direction="1" object_id="13" relation_point_x="63" relation_point_y="378"/>
+<connection connection_side="3" direction="1" object_id="13" relation_point_x="68" relation_point_y="378"/>
 <connection connection_side="0" direction="0" object_id="20" relation_point_x="278" relation_point_y="429"/>
 </line>
 <line cardinality_string="" has_u="false" id="23" is_weak="false" role="" style="0" turned="false">

@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 import javax.swing.Timer;
-
-import com.db.SqlConnection;
+import com.db.*;
+import core.settings.*;
 
 
 /**
@@ -17,7 +17,7 @@ public class SheepStatusSim {
 	private final int DEFAULT_INTERVAL = 60;
 	private int timerInterval;
 	private final int numberOfSheep;
-	private SqlConnection sq;
+	private DatabaseConnector sq;
 	private Random rand;
 	private int numberOfFarms;
 
@@ -26,7 +26,7 @@ public class SheepStatusSim {
 	 */
 	public SheepStatusSim() {
 		timerInterval = DEFAULT_INTERVAL*1000;
-		sq = new SqlConnection();
+		sq = new DatabaseConnector(new Settings());
 		numberOfSheep = sq.getNumberOfSheep();
 		rand = new Random();
 		numberOfFarms = sq.getNumberOfFarms()	;
@@ -39,7 +39,7 @@ public class SheepStatusSim {
 	 */
 	public SheepStatusSim(int interval) {
 		timerInterval = interval*1000;
-		sq = new SqlConnection();
+		sq = new DatabaseConnector(new Settings());
 		numberOfSheep = sq.getNumberOfSheep();
 		rand = new Random();
 		numberOfFarms = sq.getNumberOfFarms();
@@ -55,7 +55,7 @@ public class SheepStatusSim {
 		}
 	}
 
-	/**Adds alert via SqlConnection to the database. Randomly generates alerts for
+	/**Adds alert via DatabaseConnector to the database. Randomly generates alerts for
 	 * all the sheep in the database. 
 	 */
 	private void addAlert() {

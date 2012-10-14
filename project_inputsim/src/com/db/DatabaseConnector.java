@@ -1,30 +1,29 @@
 package com.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import core.settings.*;
+import core.classes.*;
+import java.io.File;
+import java.sql.*;
+import java.util.ArrayList;
 
-import core.settings.Settings;
-
-public class SqlConnection {
+public class DatabaseConnector {
+	private String sqlUrl;
+	private String username;
+	private String database;
+	private String password;
 	private Connection conn;
-	private Settings settings;
 
-	/**
-	 * Constructor
-	 * @return SqlConnection
-	 */
-	public SqlConnection() {
+	public DatabaseConnector(Settings settings) {
+		sqlUrl = settings.getDbUrl();
+		database = settings.getDbDatabase();
+		username = settings.getDbUser();
+		password = settings.getDbPassword();
+		
 		try
 		{
-			settings = new Settings();
 			Class.forName ("com.mysql.jdbc.Driver").newInstance ();
-			String url = "jdbc:mysql://" + settings.getDbUrl() +"/" + settings.getDbDatabase();
-			System.out.println(settings.toString());
-			conn = DriverManager.getConnection (url, settings.getDbUser(), settings.getDbPassword());
+			String url = "jdbc:mysql://" + sqlUrl + "/" + database;
+			conn = DriverManager.getConnection (url, username, password);
 			System.out.println ("Database connection established");
 		}
 		catch (Exception e)
@@ -32,6 +31,109 @@ public class SqlConnection {
 			System.err.println ("Cannot connect to database server"+e.toString());
 		}
 	}
+	
+	/*
+	 * CLIENT SECTION
+	 */
+	
+	public User loginQuery(String username, String password) {
+		String[][] r = processQuery("SELECT * FROM user WHERE username = '" + username + "'" + " AND password = '" + password + "';");
+		
+		return null;
+	}
+	
+	public ArrayList<Sheep> getSheep(Farm farm) {
+		ArrayList<Sheep> list = new ArrayList<Sheep>();
+		String[][] r = processQuery("SELECT * FROM sheep WHERE farm_id = " + farm.getId() + "");
+		for (int i = 0; i < r.length; i++) {
+			list.add(new Sheep(Integer.parseInt(r[i][0]),r[i][1],Integer.parseInt(r[i][2]),Integer.parseInt(r[i][3]),
+					Boolean.parseBoolean(r[i][4]),Integer.parseInt(r[i][5])));
+		}
+		return list;
+	}
+	
+	public boolean removeSheep(Sheep sheep) {
+		try {
+			Statement s = conn.createStatement();
+			s.executeUpdate("DELETE FROM sheep WHERE id = " + sheep.getId() + "");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public ArrayList<Farm> getFarms(User user) {
+		ArrayList<Farm> list = new ArrayList<Farm>();
+		String[][] r = processQuery("SELECT * FROM access_rights WHERE user_id = " + user.getId() + "");
+		for (int i = 0; i < r.length; i++) {
+			list.add(new Farm(Integer.parseInt(r[i][0]),r[i][1]));
+		}
+		return list;
+	}
+	
+	public boolean addAccessRights(User user, Farm farm) {
+		try{
+			Statement s = conn.createStatement();
+			s.executeUpdate("INSERT INTO access_rights (user_id,farm_id) VALUES(" + user.getId() + "," + farm.getId() + ");");
+		}
+		catch(Exception e){
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean removeAccessRights(User user, Farm farm) {
+		
+		try{
+			Statement s = conn.createStatement();
+			s.executeUpdate("DELETE FROM access_rights WHERE " + user.getId() + " = user_id AND " + farm.getId() + " = farm_id;");
+		}
+		catch(Exception e){
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean editUser(int userId, User user) {
+		
+		try{
+			Statement s = conn.createStatement();
+			s.executeUpdate("UPDATE user SET name = '" + user.getName() + "', password = '" + user.getPassword() + "', phone_number = " + user.getPhoneNumber() + ", "+
+					"mobile_number = " + user.getMobileNumber() + ", email = '" + user.getEmail() + "' WHERE id = " + userId + ";");
+		}
+		catch(Exception e){
+			return false;
+		}
+		return true;
+	}
+	
+	public ArrayList<SheepStatus> getSheepStatus(Farm farm) {
+		ArrayList<SheepStatus> list = new ArrayList<SheepStatus>();
+		String[][] r = processQuery("SELECT * FROM sheep_status WHERE farm_id = " + farm.getId() + ";");
+		for (int i = 0; i < r.length; i++) {
+			list.add(new SheepStatus(Integer.parseInt(r[i][0]),Integer.parseInt(r[i][1]),Integer.parseInt(r[i][2])
+					,Float.parseFloat(r[i][3]), new GpsPosition(Double.parseDouble(r[i][4]), Double.parseDouble(r[i][5])),
+					Integer.parseInt(r[i][6])));
+		}
+		return list;
+	}
+	
+	public ArrayList<SheepAlert> getSheepAlarm(Farm farm) {
+		ArrayList<SheepAlert> list = new ArrayList<SheepAlert>();
+		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE farm_id = " + farm.getId() + ";");
+		for (int i = 0; i < r.length; i++) {
+			list.add(new SheepAlert(Integer.parseInt(r[i][0]),Integer.parseInt(r[i][1]),Integer.parseInt(r[i][2])
+					,Float.parseFloat(r[i][3]), new GpsPosition(Double.parseDouble(r[i][4]), Double.parseDouble(r[i][5])),
+					Integer.parseInt(r[i][6])));
+		}
+		return list;
+	}
+	
+	
+	/*
+	 * SERVER SECTION
+	 */
 
 	public void insertSheepStatus(String[][] sheepstats) {
 		try {
@@ -174,13 +276,7 @@ public class SqlConnection {
 			e.printStackTrace();
 		}	
 	}
-
-	/**Takes in an select sql query and returns the results as a String[][]
-	 * with rows and colums respectively.
-	 * 
-	 * @param str - SqlQuery
-	 * @return String[][]
-	 */
+	
 	private String[][] processQuery(String str) {
 		try {
 			Statement s = conn.createStatement();
@@ -210,4 +306,5 @@ public class SqlConnection {
 		}
 		return null;
 	}
+
 }

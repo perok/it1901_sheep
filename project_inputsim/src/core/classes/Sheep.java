@@ -1,6 +1,8 @@
 package core.classes;
 
-public class Sheep{
+import java.io.Serializable;
+
+public class Sheep implements Serializable{
 	
 	int id;
 	String name;
@@ -9,7 +11,7 @@ public class Sheep{
 	boolean alive;
 	int weight;
 	
-	public Sheep(int id, String name, int farmId, int dateOfBirth, boolean alive, int weight) {
+	public Sheep (int id, String name, int farmId, int dateOfBirth, boolean alive, int weight) {
 		this.id = id;
 		this.name = name;
 		this.farmId = farmId;
@@ -66,5 +68,7 @@ public class Sheep{
 		this.weight = weight;
 	}
 	
-	
+	public String toString() {
+		return name;
+	}
 }

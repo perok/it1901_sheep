@@ -32,9 +32,9 @@ public class ClientHandler implements Runnable {
 				
 				switch(req.getType()) {
 
-                case Request.MESSAGE:
+                case Request.REQUEST:
                 	server.sg.appendRoom(username + ": " + req.getMessage() );
-                    Response res = server.HandleRequest();
+                    Response res = server.HandleRequest(req.getMessage());
     				sOutput.writeObject(res);
 
                     break;
