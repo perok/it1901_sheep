@@ -1,15 +1,17 @@
-package com.gui.sheepList;
+package gui;
 
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
 
 /** List some sheep in a widget
  * 
- * @author andesil
+ * @author Gruppe 10 <3
  */
 public class SheepListWidget extends QDockWidget
 //public class SheepListWidget extends QWidget
-{
+{ 
+	// super.setWindowFlags(Qt::Widget);
+	
 	/** A class that acts a way to filter and sort data passed between a model and a view
 	 */
 	private class SortSheep extends QSortFilterProxyModel
@@ -24,7 +26,7 @@ public class SheepListWidget extends QDockWidget
 		@Override
 		protected boolean lessThan(QModelIndex qmiLeft, QModelIndex qmiRight)
 		{
-		   Object leftData = sourceModel().data(qmiLeft);
+		   Object leftData  = sourceModel().data(qmiLeft);
 	       Object rightData = sourceModel().data(qmiRight);
            String sLeftString = leftData.toString();
            String sRightString = rightData.toString();
@@ -36,11 +38,13 @@ public class SheepListWidget extends QDockWidget
 	/* End class SortSheep */
 	/* Begin class SheepListWidget */
 	
-	
+
+	/** Constructor. Initialize..
+	 */
 	public SheepListWidget()
 	{
 		this.ssProxyModel = new SortSheep();
-		this.qsimModel = createMailModel(this);
+		this.qsimModel = createSheepModel(this);
 		this.qtvModelView = new QTreeView();
 		this.mainLayout = new QHBoxLayout();
 		
@@ -52,29 +56,13 @@ public class SheepListWidget extends QDockWidget
 		this.qtvModelView.setSortingEnabled(true);
 		this.mainLayout.addWidget(qtvModelView);
 		
+		super.setAllowedAreas(Qt.DockWidgetArea.LeftDockWidgetArea, Qt.DockWidgetArea.RightDockWidgetArea);
+		
 		//super.setLayout(this.mainLayout);
 		super.setWidget(qtvModelView);
 	}
 	
-	// For test and debugging purposes
-	public static void main(String[] args)
-	{
-		QApplication.initialize(args);
-		SheepListWidget listWidget = new SheepListWidget();
-		listWidget.show();
-		
-		QApplication.exec();
-	}
-	
-	private QStandardItemModel createMailModel(QObject parent)
-	{
-		/* Rows, columns, parent */
-		QStandardItemModel qsimModel = new QStandardItemModel(0, 1, parent);
-		
-		qsimModel.setHeaderData(0, Qt.Orientation.Horizontal, tr("Sheep ID"));
-		return qsimModel;
-	}
-	
+	/** debug and test purposes - add sheep */
 	private void addSheep()
 	{
 		for(int iPos = 0; iPos < 10; iPos++)
@@ -84,10 +72,23 @@ public class SheepListWidget extends QDockWidget
 			this.qsimModel.setData(this.qsimModel.index(0,  0), sSheepName);
 		}
 	}
-	
-	private SortSheep ssProxyModel;
+
+	/** Initialize how sheeps should be listed
+	 * 
+	 * @param parent the graphical "host" of this widget 
+	 * @return a modeled layout of our list of sheep
+	 */
+	private QStandardItemModel createSheepModel(QObject parent)
+	{
+														/* Rows, columns, parent */
+		QStandardItemModel qsimModel = new QStandardItemModel(0, 1, parent);
+		
+		qsimModel.setHeaderData(0, Qt.Orientation.Horizontal, tr("Sheep ID"));
+		return qsimModel;
+	}
 	
 	private QHBoxLayout mainLayout;
+	private SortSheep ssProxyModel;
 	private QStandardItemModel qsimModel;
 	private QTreeView qtvModelView;
 }
