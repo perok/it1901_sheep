@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
+import org.jdesktop.swingx.JXMapKit;
 import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.OSMTileFactoryInfo;
 import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
@@ -32,11 +33,11 @@ public class testCanvas extends QWidget{
 
 	// You must retain a hard-reference to your AWT object graph
 	//  that has been offered up to Qt.
-	private static JXMapViewer mapViewer;
+	private JXMapKit mapKit;
 	
 	// You must retain a hard-reference to the Qt object graph
 	//  as well while you expect to be available via the Qt EventLoop.
-	private static QGridLayout layout;
+	private QGridLayout layout;
 
 	public testCanvas() {
 		super.setMinimumWidth(900);
@@ -52,17 +53,18 @@ public class testCanvas extends QWidget{
 
 		
 		//JPanel panel = new AwtMap();
-		mapViewer = new JXMapViewer();
+		mapKit = new JXMapKit();
 
-		layout.addWidget(new QComponentHost(mapViewer));
+		layout.addWidget(new QComponentHost(mapKit));
 		
-		mapViewer.setSize(800, 600);
-		mapViewer.setVisible(true);
+		
+		mapKit.setSize(800, 600);
+		mapKit.setVisible(true); 	
 		
 		// Create a TileFactoryInfo for OpenStreetMap
 		TileFactoryInfo info = new OSMTileFactoryInfo();
 		DefaultTileFactory tileFactory = new DefaultTileFactory(info);
-		mapViewer.setTileFactory(tileFactory);
+		mapKit.setTileFactory(tileFactory);
 		
 		
 		// Use 8 threads in parallel to load the tiles
@@ -71,8 +73,8 @@ public class testCanvas extends QWidget{
 		// Set the focus
 		GeoPosition frankfurt = new GeoPosition(50.11, 8.68);
 
-		mapViewer.setZoom(7);
-		mapViewer.setAddressLocation(frankfurt);
+		mapKit.setZoom(7);
+		mapKit.setAddressLocation(frankfurt);
 		
 
 	}
@@ -104,13 +106,13 @@ public class testCanvas extends QWidget{
 
 		// We destroy the hard-references to the objects we no longer need
 		//  (before shutting down main QApplication)
-		testCanvas.layout = null;
+/*		testCanvas.layout = null;
 
 		if(testCanvas.mapViewer != null) {
 			testCanvas.mapViewer.setVisible(false);
 			//awtInQt.panel1.set
 			testCanvas.mapViewer = null;
-		}
+		}*/
 	}
 
 	public static void main(String[] args) {
