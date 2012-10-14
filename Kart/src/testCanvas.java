@@ -43,22 +43,12 @@ public class testCanvas extends QWidget{
 		super.setMinimumWidth(900);
 		super.setMinimumHeight(700);
 		layout = new QGridLayout(this);
-
-		// A few Qt widgets
-		//layout.addWidget(new QLabel("First name:"), 0, 0);
-		//layout.addWidget(new QLineEdit(), 0, 1);
-		//layout.addWidget(new QLabel("Last name:"), 1, 0);
-		//layout.addWidget(new QLineEdit(), 1, 1);
 		
-
-		
-		//JPanel panel = new AwtMap();
 		mapKit = new JXMapKit();
 
 		layout.addWidget(new QComponentHost(mapKit));
 		
-		
-		mapKit.setSize(800, 600);
+		//mapKit.setSize(800, 600);
 		mapKit.setVisible(true); 	
 		
 		// Create a TileFactoryInfo for OpenStreetMap
@@ -75,15 +65,6 @@ public class testCanvas extends QWidget{
 
 		mapKit.setZoom(7);
 		mapKit.setAddressLocation(frankfurt);
-		
-
-	}
-
-	private JTextField jTextFieldFactory() {
-		JTextField j = new JTextField();
-		// Exception on Toolkit thread: sun.awt.X11.XException: Cannot write XdndAware property
-		j.setDropTarget(null);  // Sun BUG-ID 7027598
-		return j;
 	}
 
 	public static void doWork() {
@@ -92,15 +73,6 @@ public class testCanvas extends QWidget{
 		
 		
 		map.show();
-		
-		
-
-		
-		
-		
-		
-		
-		
 		
 		QApplication.exec();
 
