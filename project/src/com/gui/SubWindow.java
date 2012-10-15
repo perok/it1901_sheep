@@ -1,4 +1,4 @@
-package gui;
+package com.gui;
 
 import com.trolltech.qt.gui.QMdiSubWindow;
 import com.trolltech.qt.gui.QSizePolicy;

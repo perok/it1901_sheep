@@ -37,41 +37,38 @@ import org.jdesktop.swingx.painter.AbstractPainter;
 import org.jdesktop.swingx.painter.CompoundPainter;
 import org.jdesktop.swingx.painter.Painter;
 
-import com.trolltech.qt.gui.QWidget;
-
 /**
- * <p>The JXMapKit is a pair of JXMapViewers preconfigured to be easy to use
- * with common features built in.  This includes zoom buttons, a zoom slider,
- * and a mini-map in the lower right corner showing an overview of the map.
- * Each feature can be turned off using an appropriate
- * <CODE>is<I>X</I>visible</CODE> property. For example, to turn
- * off the minimap call
- *
- * <PRE><CODE>jxMapKit.setMiniMapVisible(false);</CODE></PRE>
+ * <p>
+ * The JXMapKit is a pair of JXMapViewers preconfigured to be easy to use with
+ * common features built in. This includes zoom buttons, a zoom slider, and a
+ * mini-map in the lower right corner showing an overview of the map. Each
+ * feature can be turned off using an appropriate <CODE>is<I>X</I>visible</CODE>
+ * property. For example, to turn off the minimap call
+ * 
+ * <PRE>
+ * <CODE>jxMapKit.setMiniMapVisible(false);</CODE>
+ * </PRE>
+ * 
  * </p>
- *
+ * 
  * <p>
  * The JXMapViewer is preconfigured to connect to maps.swinglabs.org which
- * serves up global satellite imagery from NASA's
- * <a href="http://earthobservatory.nasa.gov/Newsroom/BlueMarble/">Blue
- * Marble NG</a> image collection.
+ * serves up global satellite imagery from NASA's <a
+ * href="http://earthobservatory.nasa.gov/Newsroom/BlueMarble/">Blue Marble
+ * NG</a> image collection.
  * </p>
+ * 
  * @author joshy
  */
-public class JXMapKit extends JPanel
-{
+public class JXMapKit extends JPanel {
 	private static final long serialVersionUID = -8366577998349912380L;
 	private boolean miniMapVisible = true;
 	private boolean zoomSliderVisible = true;
 	private boolean zoomButtonsVisible = true;
 	private final boolean sliderReversed = false;
-	
-	
-	private static QWidget qWidgetRef;
 
 	@SuppressWarnings("javadoc")
-	public enum DefaultProviders
-	{
+	public enum DefaultProviders {
 		SwingLabsBlueMarble, OpenStreetMaps, Custom
 	}
 
@@ -84,26 +81,21 @@ public class JXMapKit extends JPanel
 	/**
 	 * Creates a new JXMapKit
 	 */
-	public JXMapKit()//QWidget cake)
-	{
-		
-		//qWidgetRef = cake;
-		
+	public JXMapKit() {
 		initComponents();
 		setDataProviderCreditShown(false);
 
 		zoomSlider.setOpaque(false);
-		try
-		{
-			Icon minusIcon = new ImageIcon(getClass().getResource("/org/jdesktop/swingx/mapviewer/resources/minus.png"));
+		try {
+			Icon minusIcon = new ImageIcon(getClass().getResource(
+					"/org/jdesktop/swingx/mapviewer/resources/minus.png"));
 			this.zoomOutButton.setIcon(minusIcon);
 			this.zoomOutButton.setText("");
-			Icon plusIcon = new ImageIcon(getClass().getResource("/org/jdesktop/swingx/mapviewer/resources/plus.png"));
+			Icon plusIcon = new ImageIcon(getClass().getResource(
+					"/org/jdesktop/swingx/mapviewer/resources/plus.png"));
 			this.zoomInButton.setIcon(plusIcon);
 			this.zoomInButton.setText("");
-		}
-		catch (Throwable thr)
-		{
+		} catch (Throwable thr) {
 			System.out.println("error: " + thr.getMessage());
 			thr.printStackTrace();
 		}
@@ -118,80 +110,80 @@ public class JXMapKit extends JPanel
 		rebuildMainMapOverlay();
 
 		/*
-		 * // adapter to move the minimap after the main map has moved MouseInputAdapter ma = new MouseInputAdapter() {
-		 * public void mouseReleased(MouseEvent e) { miniMap.setCenterPosition(mapCenterPosition); } };
+		 * // adapter to move the minimap after the main map has moved
+		 * MouseInputAdapter ma = new MouseInputAdapter() { public void
+		 * mouseReleased(MouseEvent e) {
+		 * miniMap.setCenterPosition(mapCenterPosition); } };
 		 * mainMap.addMouseMotionListener(ma); mainMap.addMouseListener(ma);
 		 */
 
-		mainMap.addPropertyChangeListener("center", new PropertyChangeListener()
-		{
-			@Override
-			public void propertyChange(PropertyChangeEvent evt)
-			{
-				Point2D mapCenter = (Point2D) evt.getNewValue();
-				TileFactory tf = mainMap.getTileFactory();
-				GeoPosition mapPos = tf.pixelToGeo(mapCenter, mainMap.getZoom());
-				miniMap.setCenterPosition(mapPos);
-			}
-		});
+		mainMap.addPropertyChangeListener("center",
+				new PropertyChangeListener() {
+					@Override
+					public void propertyChange(PropertyChangeEvent evt) {
+						Point2D mapCenter = (Point2D) evt.getNewValue();
+						TileFactory tf = mainMap.getTileFactory();
+						GeoPosition mapPos = tf.pixelToGeo(mapCenter,
+								mainMap.getZoom());
+						miniMap.setCenterPosition(mapPos);
+					}
+				});
 
-		mainMap.addPropertyChangeListener("centerPosition", new PropertyChangeListener()
-		{
-			@Override
-			public void propertyChange(PropertyChangeEvent evt)
-			{
-				mapCenterPosition = (GeoPosition) evt.getNewValue();
-				miniMap.setCenterPosition(mapCenterPosition);
-				Point2D pt = miniMap.getTileFactory().geoToPixel(mapCenterPosition, miniMap.getZoom());
-				miniMap.setCenter(pt);
-				miniMap.repaint();
-			}
-		});
+		mainMap.addPropertyChangeListener("centerPosition",
+				new PropertyChangeListener() {
+					@Override
+					public void propertyChange(PropertyChangeEvent evt) {
+						mapCenterPosition = (GeoPosition) evt.getNewValue();
+						miniMap.setCenterPosition(mapCenterPosition);
+						Point2D pt = miniMap.getTileFactory().geoToPixel(
+								mapCenterPosition, miniMap.getZoom());
+						miniMap.setCenter(pt);
+						miniMap.repaint();
+					}
+				});
 
-		mainMap.addPropertyChangeListener("zoom", new PropertyChangeListener()
-		{
+		mainMap.addPropertyChangeListener("zoom", new PropertyChangeListener() {
 			@Override
-			public void propertyChange(PropertyChangeEvent evt)
-			{
+			public void propertyChange(PropertyChangeEvent evt) {
 				zoomSlider.setValue(mainMap.getZoom());
 				miniMap.setZoom(mainMap.getZoom() + 4);
 			}
 		});
 
-		// an overlay for the mini-map which shows a rectangle representing the main map
-		miniMap.setOverlayPainter(new Painter<JXMapViewer>()
-		{
+		// an overlay for the mini-map which shows a rectangle representing the
+		// main map
+		miniMap.setOverlayPainter(new Painter<JXMapViewer>() {
 			@Override
-			public void paint(Graphics2D g, JXMapViewer map, int width, int height)
-			{
-				
-				//width = qWidgetRef.width();
-				//height = qWidgetRef.height();
-				
-				System.out.println(width + "  " + height);
-				
+			public void paint(Graphics2D g, JXMapViewer map, int width,
+					int height) {
 				// get the viewport rect of the main map
 				Rectangle mainMapBounds = mainMap.getViewportBounds();
-				
 
 				// convert to Point2Ds
 				Point2D upperLeft2D = mainMapBounds.getLocation();
-				Point2D lowerRight2D = new Point2D.Double(upperLeft2D.getX() + mainMapBounds.getWidth(), upperLeft2D
-						.getY() + mainMapBounds.getHeight());
+				Point2D lowerRight2D = new Point2D.Double(upperLeft2D.getX()
+						+ mainMapBounds.getWidth(), upperLeft2D.getY()
+						+ mainMapBounds.getHeight());
 
 				// convert to GeoPostions
-				GeoPosition upperLeft = mainMap.getTileFactory().pixelToGeo(upperLeft2D, mainMap.getZoom());
-				GeoPosition lowerRight = mainMap.getTileFactory().pixelToGeo(lowerRight2D, mainMap.getZoom());
+				GeoPosition upperLeft = mainMap.getTileFactory().pixelToGeo(
+						upperLeft2D, mainMap.getZoom());
+				GeoPosition lowerRight = mainMap.getTileFactory().pixelToGeo(
+						lowerRight2D, mainMap.getZoom());
 
 				// convert to Point2Ds on the mini-map
-				upperLeft2D = map.getTileFactory().geoToPixel(upperLeft, map.getZoom());
-				lowerRight2D = map.getTileFactory().geoToPixel(lowerRight, map.getZoom());
+				upperLeft2D = map.getTileFactory().geoToPixel(upperLeft,
+						map.getZoom());
+				lowerRight2D = map.getTileFactory().geoToPixel(lowerRight,
+						map.getZoom());
 
 				g = (Graphics2D) g.create();
 				Rectangle rect = map.getViewportBounds();
 				// p("rect = " + rect);
 				g.translate(-rect.x, -rect.y);
-//				Point2D centerpos = map.getTileFactory().geoToPixel(mapCenterPosition, map.getZoom());
+				// Point2D centerpos =
+				// map.getTileFactory().geoToPixel(mapCenterPosition,
+				// map.getZoom());
 				// p("center pos = " + centerpos);
 				g.setPaint(Color.RED);
 				// g.drawRect((int)centerpos.getX()-30,(int)centerpos.getY()-30,60,60);
@@ -207,12 +199,9 @@ public class JXMapKit extends JPanel
 			}
 		});
 
-		if (getDefaultProvider() == DefaultProviders.OpenStreetMaps)
-		{
+		if (getDefaultProvider() == DefaultProviders.OpenStreetMaps) {
 			setZoom(10);
-		}
-		else
-		{
+		} else {
 			setZoom(3);// joshy: hack, i shouldn't need this here
 		}
 		this.setCenterPosition(new GeoPosition(0, 0));
@@ -223,41 +212,39 @@ public class JXMapKit extends JPanel
 	private boolean zoomChanging = false;
 
 	/**
-	 * Set the current zoomlevel for the main map. The minimap will be updated accordingly
-	 * @param zoom the new zoom level
+	 * Set the current zoomlevel for the main map. The minimap will be updated
+	 * accordingly
+	 * 
+	 * @param zoom
+	 *            the new zoom level
 	 */
-	public void setZoom(int zoom)
-	{
+	public void setZoom(int zoom) {
 		zoomChanging = true;
 		mainMap.setZoom(zoom);
 		miniMap.setZoom(mainMap.getZoom() + 4);
-		if (sliderReversed)
-		{
+		if (sliderReversed) {
 			zoomSlider.setValue(zoomSlider.getMaximum() - zoom);
-		}
-		else
-		{
+		} else {
 			zoomSlider.setValue(zoom);
 		}
 		zoomChanging = false;
 	}
 
 	/**
-	 * Returns an action which can be attached to buttons or menu items to make the map zoom out
+	 * Returns an action which can be attached to buttons or menu items to make
+	 * the map zoom out
+	 * 
 	 * @return a preconfigured Zoom Out action
 	 */
-	public Action getZoomOutAction()
-	{
-		Action act = new AbstractAction()
-		{
+	public Action getZoomOutAction() {
+		Action act = new AbstractAction() {
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 5525706163434375107L;
 
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				setZoom(mainMap.getZoom() - 1);
 			}
 		};
@@ -266,21 +253,20 @@ public class JXMapKit extends JPanel
 	}
 
 	/**
-	 * Returns an action which can be attached to buttons or menu items to make the map zoom in
+	 * Returns an action which can be attached to buttons or menu items to make
+	 * the map zoom in
+	 * 
 	 * @return a preconfigured Zoom In action
 	 */
-	public Action getZoomInAction()
-	{
-		Action act = new AbstractAction()
-		{
+	public Action getZoomInAction() {
+		Action act = new AbstractAction() {
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 5779971489365451352L;
 
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				setZoom(mainMap.getZoom() + 1);
 			}
 		};
@@ -289,12 +275,13 @@ public class JXMapKit extends JPanel
 	}
 
 	/**
-	 * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
-	 * content of this method is always regenerated by the Form Editor.
+	 * This method is called from within the constructor to initialize the form.
+	 * WARNING: Do NOT modify this code. The content of this method is always
+	 * regenerated by the Form Editor.
 	 */
-	// <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
-	private void initComponents()
-	{
+	// <editor-fold defaultstate="collapsed"
+	// desc=" Generated Code ">//GEN-BEGIN:initComponents
+	private void initComponents() {
 		java.awt.GridBagConstraints gridBagConstraints;
 
 		mainMap = new org.jdesktop.swingx.JXMapViewer();
@@ -308,7 +295,8 @@ public class JXMapKit extends JPanel
 
 		mainMap.setLayout(new java.awt.GridBagLayout());
 
-		miniMap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+		miniMap.setBorder(javax.swing.BorderFactory
+				.createLineBorder(new java.awt.Color(0, 0, 0)));
 		miniMap.setMinimumSize(new java.awt.Dimension(100, 100));
 		miniMap.setPreferredSize(new java.awt.Dimension(100, 100));
 		miniMap.setLayout(new java.awt.GridBagLayout());
@@ -331,11 +319,9 @@ public class JXMapKit extends JPanel
 		zoomInButton.setMinimumSize(new java.awt.Dimension(20, 20));
 		zoomInButton.setOpaque(false);
 		zoomInButton.setPreferredSize(new java.awt.Dimension(20, 20));
-		zoomInButton.addActionListener(new java.awt.event.ActionListener()
-		{
+		zoomInButton.addActionListener(new java.awt.event.ActionListener() {
 			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt)
-			{
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				zoomInButtonActionPerformed(evt);
 			}
 		});
@@ -371,11 +357,9 @@ public class JXMapKit extends JPanel
 		zoomSlider.setSnapToTicks(true);
 		zoomSlider.setMinimumSize(new java.awt.Dimension(35, 100));
 		zoomSlider.setPreferredSize(new java.awt.Dimension(35, 190));
-		zoomSlider.addChangeListener(new javax.swing.event.ChangeListener()
-		{
+		zoomSlider.addChangeListener(new javax.swing.event.ChangeListener() {
 			@Override
-			public void stateChanged(javax.swing.event.ChangeEvent evt)
-			{
+			public void stateChanged(javax.swing.event.ChangeEvent evt) {
 				zoomSliderStateChanged(evt);
 			}
 		});
@@ -404,16 +388,18 @@ public class JXMapKit extends JPanel
 	}// </editor-fold>//GEN-END:initComponents
 
 	@SuppressWarnings("unused")
-	private void zoomInButtonActionPerformed(java.awt.event.ActionEvent evt)
-	{// GEN-FIRST:event_zoomInButtonActionPerformed
-		// TODO add your handling code here:
+	private void zoomInButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_zoomInButtonActionPerformed
+																				// TODO
+																				// add
+																				// your
+																				// handling
+																				// code
+																				// here:
 	}// GEN-LAST:event_zoomInButtonActionPerformed
 
 	@SuppressWarnings("unused")
-	private void zoomSliderStateChanged(javax.swing.event.ChangeEvent evt)
-	{// GEN-FIRST:event_zoomSliderStateChanged
-		if (!zoomChanging)
-		{
+	private void zoomSliderStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_zoomSliderStateChanged
+		if (!zoomChanging) {
 			setZoom(zoomSlider.getValue());
 		}
 		// TODO add your handling code here:
@@ -431,19 +417,20 @@ public class JXMapKit extends JPanel
 
 	/**
 	 * Indicates if the mini-map is currently visible
+	 * 
 	 * @return the current value of the mini-map property
 	 */
-	public boolean isMiniMapVisible()
-	{
+	public boolean isMiniMapVisible() {
 		return miniMapVisible;
 	}
 
 	/**
 	 * Sets if the mini-map should be visible
-	 * @param miniMapVisible a new value for the miniMap property
+	 * 
+	 * @param miniMapVisible
+	 *            a new value for the miniMap property
 	 */
-	public void setMiniMapVisible(boolean miniMapVisible)
-	{
+	public void setMiniMapVisible(boolean miniMapVisible) {
 		boolean old = this.isMiniMapVisible();
 		this.miniMapVisible = miniMapVisible;
 		miniMap.setVisible(miniMapVisible);
@@ -452,19 +439,20 @@ public class JXMapKit extends JPanel
 
 	/**
 	 * Indicates if the zoom slider is currently visible
+	 * 
 	 * @return the current value of the zoomSliderVisible property
 	 */
-	public boolean isZoomSliderVisible()
-	{
+	public boolean isZoomSliderVisible() {
 		return zoomSliderVisible;
 	}
 
 	/**
 	 * Sets if the zoom slider should be visible
-	 * @param zoomSliderVisible the new value of the zoomSliderVisible property
+	 * 
+	 * @param zoomSliderVisible
+	 *            the new value of the zoomSliderVisible property
 	 */
-	public void setZoomSliderVisible(boolean zoomSliderVisible)
-	{
+	public void setZoomSliderVisible(boolean zoomSliderVisible) {
 		boolean old = this.isZoomSliderVisible();
 		this.zoomSliderVisible = zoomSliderVisible;
 		zoomSlider.setVisible(zoomSliderVisible);
@@ -472,36 +460,40 @@ public class JXMapKit extends JPanel
 	}
 
 	/**
-	 * Indicates if the zoom buttons are visible. This is a bound property and can be listed for using a
-	 * PropertyChangeListener
+	 * Indicates if the zoom buttons are visible. This is a bound property and
+	 * can be listed for using a PropertyChangeListener
+	 * 
 	 * @return current value of the zoomButtonsVisible property
 	 */
-	public boolean isZoomButtonsVisible()
-	{
+	public boolean isZoomButtonsVisible() {
 		return zoomButtonsVisible;
 	}
 
 	/**
-	 * Sets if the zoom buttons should be visible. This ia bound property. Changes can be listened for using a
-	 * PropertyChaneListener
-	 * @param zoomButtonsVisible new value of the zoomButtonsVisible property
+	 * Sets if the zoom buttons should be visible. This ia bound property.
+	 * Changes can be listened for using a PropertyChaneListener
+	 * 
+	 * @param zoomButtonsVisible
+	 *            new value of the zoomButtonsVisible property
 	 */
-	public void setZoomButtonsVisible(boolean zoomButtonsVisible)
-	{
+	public void setZoomButtonsVisible(boolean zoomButtonsVisible) {
 		boolean old = this.isZoomButtonsVisible();
 		this.zoomButtonsVisible = zoomButtonsVisible;
 		zoomInButton.setVisible(zoomButtonsVisible);
 		zoomOutButton.setVisible(zoomButtonsVisible);
-		firePropertyChange("zoomButtonsVisible", old, this.isZoomButtonsVisible());
+		firePropertyChange("zoomButtonsVisible", old,
+				this.isZoomButtonsVisible());
 	}
 
 	/**
-	 * Sets the tile factory for both embedded JXMapViewer components. Calling this method will also reset the center
-	 * and zoom levels of both maps, as well as the bounds of the zoom slider.
-	 * @param fact the new TileFactory
+	 * Sets the tile factory for both embedded JXMapViewer components. Calling
+	 * this method will also reset the center and zoom levels of both maps, as
+	 * well as the bounds of the zoom slider.
+	 * 
+	 * @param fact
+	 *            the new TileFactory
 	 */
-	public void setTileFactory(TileFactory fact)
-	{
+	public void setTileFactory(TileFactory fact) {
 		mainMap.setTileFactory(fact);
 		mainMap.setZoom(fact.getInfo().getDefaultZoomLevel());
 		mainMap.setCenterPosition(new GeoPosition(0, 0));
@@ -513,10 +505,10 @@ public class JXMapKit extends JPanel
 	}
 
 	/**
-	 * @param pos the new center position
+	 * @param pos
+	 *            the new center position
 	 */
-	public void setCenterPosition(GeoPosition pos)
-	{
+	public void setCenterPosition(GeoPosition pos) {
 		mainMap.setCenterPosition(pos);
 		miniMap.setCenterPosition(pos);
 	}
@@ -524,77 +516,75 @@ public class JXMapKit extends JPanel
 	/**
 	 * @return the center geo position
 	 */
-	public GeoPosition getCenterPosition()
-	{
+	public GeoPosition getCenterPosition() {
 		return mainMap.getCenterPosition();
 	}
 
 	/**
 	 * @return the adress location
 	 */
-	public GeoPosition getAddressLocation()
-	{
+	public GeoPosition getAddressLocation() {
 		return mainMap.getAddressLocation();
 	}
 
 	/**
-	 * @param pos the address location
+	 * @param pos
+	 *            the address location
 	 */
-	public void setAddressLocation(GeoPosition pos)
-	{
+	public void setAddressLocation(GeoPosition pos) {
 		mainMap.setAddressLocation(pos);
 	}
 
 	/**
 	 * Returns a reference to the main embedded JXMapViewer component
+	 * 
 	 * @return the main map
 	 */
-	public JXMapViewer getMainMap()
-	{
+	public JXMapViewer getMainMap() {
 		return this.mainMap;
 	}
 
 	/**
 	 * Returns a reference to the mini embedded JXMapViewer component
+	 * 
 	 * @return the minimap JXMapViewer component
 	 */
-	public JXMapViewer getMiniMap()
-	{
+	public JXMapViewer getMiniMap() {
 		return this.miniMap;
 	}
 
 	/**
 	 * returns a reference to the zoom in button
+	 * 
 	 * @return a jbutton
 	 */
-	public JButton getZoomInButton()
-	{
+	public JButton getZoomInButton() {
 		return this.zoomInButton;
 	}
 
 	/**
 	 * returns a reference to the zoom out button
+	 * 
 	 * @return a jbutton
 	 */
-	public JButton getZoomOutButton()
-	{
+	public JButton getZoomOutButton() {
 		return this.zoomOutButton;
 	}
 
 	/**
 	 * returns a reference to the zoom slider
+	 * 
 	 * @return a jslider
 	 */
-	public JSlider getZoomSlider()
-	{
+	public JSlider getZoomSlider() {
 		return this.zoomSlider;
 	}
 
 	/**
-	 * @param b the visibility flag
+	 * @param b
+	 *            the visibility flag
 	 */
-	public void setAddressLocationShown(boolean b)
-	{
+	public void setAddressLocationShown(boolean b) {
 		boolean old = isAddressLocationShown();
 		this.addressLocationShown = b;
 		addressLocationPainter.setVisible(b);
@@ -605,16 +595,15 @@ public class JXMapKit extends JPanel
 	/**
 	 * @return true if the address location is shown
 	 */
-	public boolean isAddressLocationShown()
-	{
+	public boolean isAddressLocationShown() {
 		return addressLocationShown;
 	}
 
 	/**
-	 * @param b the visibility flag
+	 * @param b
+	 *            the visibility flag
 	 */
-	public void setDataProviderCreditShown(boolean b)
-	{
+	public void setDataProviderCreditShown(boolean b) {
 		boolean old = isDataProviderCreditShown();
 		this.dataProviderCreditShown = b;
 		dataProviderCreditPainter.setVisible(b);
@@ -625,38 +614,36 @@ public class JXMapKit extends JPanel
 	/**
 	 * @return true if the data provider credit is shown
 	 */
-	public boolean isDataProviderCreditShown()
-	{
+	public boolean isDataProviderCreditShown() {
 		return dataProviderCreditShown;
 	}
 
 	@SuppressWarnings("unchecked")
-	private void rebuildMainMapOverlay()
-	{
+	private void rebuildMainMapOverlay() {
 		CompoundPainter<JXMapViewer> cp = new CompoundPainter<JXMapViewer>();
 		cp.setCacheable(false);
 		/*
-		 * List<Painter> ptrs = new ArrayList<Painter>(); if(isDataProviderCreditShown()) {
-		 * ptrs.add(dataProviderCreditPainter); } if(isAddressLocationShown()) { ptrs.add(addressLocationPainter); }
+		 * List<Painter> ptrs = new ArrayList<Painter>();
+		 * if(isDataProviderCreditShown()) {
+		 * ptrs.add(dataProviderCreditPainter); } if(isAddressLocationShown()) {
+		 * ptrs.add(addressLocationPainter); }
 		 */
 		cp.setPainters(dataProviderCreditPainter, addressLocationPainter);
 		mainMap.setOverlayPainter(cp);
 	}
 
 	/**
-	 * @param prov the default provider
+	 * @param prov
+	 *            the default provider
 	 */
-	public void setDefaultProvider(DefaultProviders prov)
-	{
+	public void setDefaultProvider(DefaultProviders prov) {
 		DefaultProviders old = this.defaultProvider;
 		this.defaultProvider = prov;
-		if (prov == DefaultProviders.SwingLabsBlueMarble)
-		{
+		if (prov == DefaultProviders.SwingLabsBlueMarble) {
 			setTileFactory(new CylindricalProjectionTileFactory());
 			setZoom(3);
 		}
-		if (prov == DefaultProviders.OpenStreetMaps)
-		{
+		if (prov == DefaultProviders.OpenStreetMaps) {
 			TileFactoryInfo info = new OSMTileFactoryInfo();
 			TileFactory tf = new DefaultTileFactory(info);
 			setTileFactory(tf);
@@ -670,33 +657,27 @@ public class JXMapKit extends JPanel
 	/**
 	 * @return the default provider
 	 */
-	public DefaultProviders getDefaultProvider()
-	{
+	public DefaultProviders getDefaultProvider() {
 		return this.defaultProvider;
 	}
 
-	private AbstractPainter<JXMapViewer> dataProviderCreditPainter = new AbstractPainter<JXMapViewer>(false)
-	{
+	private AbstractPainter<JXMapViewer> dataProviderCreditPainter = new AbstractPainter<JXMapViewer>(
+			false) {
 		@Override
-		protected void doPaint(Graphics2D g, JXMapViewer map, int width, int height)
-		{
+		protected void doPaint(Graphics2D g, JXMapViewer map, int width,
+				int height) {
 			g.setPaint(Color.WHITE);
 			g.drawString("data ", 50, map.getHeight() - 10);
 		}
 	};
 
-	private WaypointPainter<Waypoint> addressLocationPainter = new WaypointPainter<Waypoint>()
-	{
+	private WaypointPainter<Waypoint> addressLocationPainter = new WaypointPainter<Waypoint>() {
 		@Override
-		public Set<Waypoint> getWaypoints()
-		{
+		public Set<Waypoint> getWaypoints() {
 			Set<Waypoint> set = new HashSet<Waypoint>();
-			if (getAddressLocation() != null)
-			{
+			if (getAddressLocation() != null) {
 				set.add(new DefaultWaypoint(getAddressLocation()));
-			}
-			else
-			{
+			} else {
 				set.add(new DefaultWaypoint(0, 0));
 			}
 			return set;
@@ -704,16 +685,13 @@ public class JXMapKit extends JPanel
 	};
 
 	/**
-	 * @param args the program args
+	 * @param args
+	 *            the program args
 	 */
-	public static void main(String... args)
-	{
-		SwingUtilities.invokeLater(new Runnable()
-		{
+	public static void main(String... args) {
+		SwingUtilities.invokeLater(new Runnable() {
 			@Override
-			public void run()
-			{
-				System.out.println("Well hello there");
+			public void run() {
 				JXMapKit kit = new JXMapKit();
 				kit.setDefaultProvider(DefaultProviders.OpenStreetMaps);
 
@@ -726,7 +704,8 @@ public class JXMapKit extends JPanel
 				kit.getMainMap().setRestrictOutsidePanning(true);
 				kit.getMainMap().setHorizontalWrapped(false);
 
-				((DefaultTileFactory) kit.getMainMap().getTileFactory()).setThreadPoolSize(8);
+				((DefaultTileFactory) kit.getMainMap().getTileFactory())
+						.setThreadPoolSize(8);
 				JFrame frame = new JFrame("JXMapKit test");
 				frame.add(kit);
 				frame.pack();
