@@ -36,7 +36,6 @@ public class ClientHandler implements Runnable {
                 	server.sg.appendRoom(username + ": " + req.getMessage() );
                     Response res = server.HandleRequest(req);
     				sOutput.writeObject(res);
-
                     break;
                 case Request.LOGOUT:
                     server.sg.appendRoom(username + " disconnected with a LOGOUT message.");
@@ -57,7 +56,7 @@ public class ClientHandler implements Runnable {
 	public void kill() throws IOException {
 		sOutput.close();
 		sInput.close();
-		socket.close();
+		socket.close(); 
 	}
 
 }

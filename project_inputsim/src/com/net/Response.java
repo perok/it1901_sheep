@@ -11,7 +11,7 @@ public class Response implements Serializable {
 	private String message;
 	private ArrayList content;
 	
-	// constructor
+	
 	public Response(int type, String message) {
 		this.type = type;
 		this.message = message;
@@ -22,13 +22,12 @@ public class Response implements Serializable {
 		this.content = content;
 	}
 	
-	public Response(int type, String message, ArrayList<String> content) {
+	public Response(int type, String message, ArrayList content) {
 		this.type = type;
 		this.message = message;
 		this.content = content;
 	}
 	
-	// getters
 	public int getType() {
 		return type;
 	}
@@ -40,11 +39,11 @@ public class Response implements Serializable {
 		this.message = message;
 	}
 
-	public ArrayList<String> getContent() {
+	public ArrayList getContent() {
 		return content;
 	}
 
-	public void setContent(ArrayList<String> content) {
+	public void setContent(ArrayList content) {
 		this.content = content;
 	}
 	
