@@ -2,8 +2,7 @@ package com.net;
 
 import java.io.*;
 import java.util.ArrayList;
-
-
+	
 public class Response implements Serializable { 
 	protected static final long serialVersionUID = 2;
 	static final int LIST = 1, BOOLEAN = 2;
