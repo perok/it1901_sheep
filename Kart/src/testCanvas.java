@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -18,6 +19,7 @@ import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.mapviewer.TileFactoryInfo;
 
+import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QGridLayout;
@@ -40,16 +42,22 @@ public class testCanvas extends QWidget{
 	private QGridLayout layout;
 
 	public testCanvas() {
-		super.setMinimumWidth(900);
-		super.setMinimumHeight(700);
+		super.setMinimumWidth(200);
+		super.setMinimumHeight(300);
 		layout = new QGridLayout(this);
-		
-		mapKit = new JXMapKit();
+		layout.setGeometry(new QRect(0, 0, 1000, 1000));
+		mapKit = new JXMapKit();//this);
 
-		layout.addWidget(new QComponentHost(mapKit));
+		//JFrame frame = new JFrame();
+		
+		
 		
 		//mapKit.setSize(800, 600);
+		//mapKit.setBounds(0, 0, 200, 300);
 		mapKit.setVisible(true); 	
+		
+		
+		System.out.println("CAKE "+this.width() + "  " +this.height());
 		
 		// Create a TileFactoryInfo for OpenStreetMap
 		TileFactoryInfo info = new OSMTileFactoryInfo();
@@ -65,12 +73,19 @@ public class testCanvas extends QWidget{
 
 		mapKit.setZoom(7);
 		mapKit.setAddressLocation(frankfurt);
+		
+//		frame.add(mapKit);
+//		frame.pack();
+//		frame.setSize(400, 600);
+//		frame.setVisible(true);
+		
+		
+		layout.addWidget(new QComponentHost(mapKit));
 	}
 
 	public static void doWork() {
 		System.out.println("Initializing GUI");
 		testCanvas map = new testCanvas();
-		
 		
 		map.show();
 		

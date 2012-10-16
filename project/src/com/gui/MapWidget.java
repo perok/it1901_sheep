@@ -1,7 +1,4 @@
-package gui;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+package com.gui;
 
 import org.jdesktop.swingx.JXMapKit;
 import org.jdesktop.swingx.OSMTileFactoryInfo;

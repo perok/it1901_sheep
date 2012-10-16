@@ -1,4 +1,10 @@
-package gui;
+package com.gui;
+
+import org.jdesktop.swingx.JXMapKit;
+import org.jdesktop.swingx.OSMTileFactoryInfo;
+import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
+import org.jdesktop.swingx.mapviewer.GeoPosition;
+import org.jdesktop.swingx.mapviewer.TileFactoryInfo;
 
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
@@ -11,6 +17,7 @@ import com.trolltech.qt.core.QTimer;
 import com.trolltech.qt.core.Qt;
 
 import com.trolltech.qt.gui.QWidget;
+import com.trolltech.research.qtjambiawtbridge.QComponentHost;
 
 /** Class to hold all graphical components (and itself).
  * 
@@ -43,6 +50,8 @@ public class MainWindow extends QMainWindow
     private MapWidget mwWidget;
     private SheepListWidget slwSheepList;
     private StatisticsWidget swStatistics;
+    
+    private JXMapKit SwingJXMapKit;
     
     /** Main.
      * 
@@ -221,7 +230,8 @@ public class MainWindow extends QMainWindow
 	 */
 	private void initSubWindows()
 	{
-		this.qmswMapWindow  = new SubWindow(this.mwWidget);
+		//this.qmswMapWindow  = new SubWindow(this.mwWidget);
+		this.qmswMapWindow  = new SubWindow(new QComponentHost(this.SwingJXMapKit));
 		this.swStatWindow   = new SubWindow(this.swStatistics);
 	}
 
@@ -238,7 +248,26 @@ public class MainWindow extends QMainWindow
 	 */
 	private void initWidgets()
 	{
-		this.mwWidget     = new MapWidget();
+		//this.mwWidget     = new MapWidget();
+		this.SwingJXMapKit = new JXMapKit();
+		
+		SwingJXMapKit.setVisible(true);
+		
+		TileFactoryInfo info = new OSMTileFactoryInfo();
+		DefaultTileFactory tileFactory = new DefaultTileFactory(info);
+		SwingJXMapKit.setTileFactory(tileFactory);
+		
+		
+		// Use 8 threads in parallel to load the tiles
+		tileFactory.setThreadPoolSize(8);
+
+		// Set the focus
+		GeoPosition frankfurt = new GeoPosition(50.11, 8.68);
+
+		SwingJXMapKit.setZoom(7);
+		SwingJXMapKit.setAddressLocation(frankfurt);
+		
+		
 		this.slwSheepList = new SheepListWidget();
 		this.swStatistics = new StatisticsWidget();
 		
