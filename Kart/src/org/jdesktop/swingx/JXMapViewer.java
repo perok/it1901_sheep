@@ -196,12 +196,17 @@ public class JXMapViewer extends JPanel implements DesignMode
 	 */
 	protected void drawMapTiles(final Graphics g, final int zoom, Rectangle viewportBounds)
 	{
+		
+		
+
 		int size = getTileFactory().getTileSize(zoom);
 		Dimension mapSize = getTileFactory().getMapSize(zoom);
 
 		// calculate the "visible" viewport area in tiles
 		int numWide = viewportBounds.width / size + 2;
 		int numHigh = viewportBounds.height / size + 2;
+		
+		
 
 		// TilePoint topLeftTile = getTileFactory().getTileCoordinate(
 		// new Point2D.Double(viewportBounds.x, viewportBounds.y));
@@ -213,6 +218,9 @@ public class JXMapViewer extends JPanel implements DesignMode
 		// p("top tile = " + topLeftTile);
 		// fetch the tiles from the factory and store them in the tiles cache
 		// attach the tileLoadListener
+		
+		
+		
 		for (int x = 0; x <= numWide; x++)
 		{
 			for (int y = 0; y <= numHigh; y++)
@@ -228,6 +236,8 @@ public class JXMapViewer extends JPanel implements DesignMode
 					int ox = ((itpx * getTileFactory().getTileSize(zoom)) - viewportBounds.x);
 					int oy = ((itpy * getTileFactory().getTileSize(zoom)) - viewportBounds.y);
 
+					System.out.println("JXMapViewver drawMapTiles   " + ox + "   " + oy);
+					
 					// if the tile is off the map to the north/south, then just don't paint anything
 					if (isTileOnMap(itpx, itpy, mapSize))
 					{
@@ -552,10 +562,12 @@ public class JXMapViewer extends JPanel implements DesignMode
 
 		if (isRestrictOutsidePanning())
 		{
+			
 			Insets insets = getInsets();
 			int viewportHeight = getHeight() - insets.top - insets.bottom;
 			int viewportWidth = getWidth() - insets.left - insets.right;
-
+			
+			
 			// don't let the user pan over the top edge
 			Rectangle newVP = calculateViewportBounds(center);
 			if (newVP.getY() < 0)

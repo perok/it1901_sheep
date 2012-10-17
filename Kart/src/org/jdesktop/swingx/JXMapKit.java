@@ -37,6 +37,8 @@ import org.jdesktop.swingx.painter.AbstractPainter;
 import org.jdesktop.swingx.painter.CompoundPainter;
 import org.jdesktop.swingx.painter.Painter;
 
+import com.trolltech.qt.gui.QWidget;
+
 /**
  * <p>The JXMapKit is a pair of JXMapViewers preconfigured to be easy to use
  * with common features built in.  This includes zoom buttons, a zoom slider,
@@ -63,6 +65,9 @@ public class JXMapKit extends JPanel
 	private boolean zoomSliderVisible = true;
 	private boolean zoomButtonsVisible = true;
 	private final boolean sliderReversed = false;
+	
+	
+	private static QWidget qWidgetRef;
 
 	@SuppressWarnings("javadoc")
 	public enum DefaultProviders
@@ -79,8 +84,11 @@ public class JXMapKit extends JPanel
 	/**
 	 * Creates a new JXMapKit
 	 */
-	public JXMapKit()
+	public JXMapKit()//QWidget cake)
 	{
+		
+		//qWidgetRef = cake;
+		
 		initComponents();
 		setDataProviderCreditShown(false);
 
@@ -156,8 +164,15 @@ public class JXMapKit extends JPanel
 			@Override
 			public void paint(Graphics2D g, JXMapViewer map, int width, int height)
 			{
+				
+				//width = qWidgetRef.width();
+				//height = qWidgetRef.height();
+				
+				System.out.println(width + "  " + height);
+				
 				// get the viewport rect of the main map
 				Rectangle mainMapBounds = mainMap.getViewportBounds();
+				
 
 				// convert to Point2Ds
 				Point2D upperLeft2D = mainMapBounds.getLocation();

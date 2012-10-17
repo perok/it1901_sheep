@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class Request implements Serializable {
-
 	protected static final long serialVersionUID = 1;
-	
 	static final int REQUEST = 1, LOGOUT = 2;
 	private int type;
 	private String message;
