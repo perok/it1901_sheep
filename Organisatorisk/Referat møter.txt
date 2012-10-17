@@ -342,6 +342,38 @@ Det registreres at Per Øyvind ikke har kontroll på kaffen. Skuffende, siden dett
 Møteslutt: 14.15
 
 
+Møte 12
+Møtestart 14.15
+Per Øyvind, Jørgen, Svenn
+
+
+Laget midtveispresentasjonen.
+Møteslutt 16.00
+
+
+
+Møte 13
+Møtestart 10.15
+Svenn, Jørgen, Anders, Lars Erik, Tor, Per Øyvind
+
+Finpusset midtveispresentasjon. Fordelte og kjørte gjennom presentasjonen.
+
+
+Møteslutt 12.00
+
+
+
+Møte 14
+
+
+Sette opp Sprint 3.
+Starter med å estimere hva som er mulig arbeidsmengde per pers per uke. Kom frem til at 8 timer per uke per person er realistisk.
+Skal sette opp sprinten slike at den totalt er på 96 timer.
+
+Dele opp sprint-oppgavene i mindre oppgaver og plassere dem under kategorier. Vi har hatt for generelle sprint-oppgaver frem til nå og må spesifisere mer hva hver oppgaver går ut på.
+
+Vi ønsker tilbakemelding på Sprint 2 og vil ha med stud.ass på neste møte. Perry er bortreis, men vi hører med Lise om hun kan se på ting for oss.
+
 
 
 

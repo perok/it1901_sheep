@@ -72,9 +72,10 @@ public class testCanvas extends QWidget{
 
 		// Set the focus
 		GeoPosition frankfurt = new GeoPosition(50.11, 8.68);
+		GeoPosition oppdal = new GeoPosition(62.60, 9.64);
 
 		mapKit.setZoom(7);
-		mapKit.setAddressLocation(frankfurt);
+		mapKit.setAddressLocation(oppdal);
 		
 
 	}

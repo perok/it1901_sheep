@@ -70,7 +70,7 @@ public class JXMapKit extends JPanel
 		SwingLabsBlueMarble, OpenStreetMaps, Custom
 	}
 
-	private DefaultProviders defaultProvider = DefaultProviders.SwingLabsBlueMarble;
+	private DefaultProviders defaultProvider = DefaultProviders.Custom;
 
 	private boolean addressLocationShown = true;
 
@@ -698,6 +698,7 @@ public class JXMapKit extends JPanel
 			@Override
 			public void run()
 			{
+				System.out.println("Well hello there");
 				JXMapKit kit = new JXMapKit();
 				kit.setDefaultProvider(DefaultProviders.OpenStreetMaps);
 
