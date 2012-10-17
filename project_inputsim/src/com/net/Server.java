@@ -10,7 +10,6 @@ import core.classes.Farm;
 import core.settings.Settings;
 
 public class Server {
-    private static int uniqueId;
     private ArrayList<ClientHandler> al;
     public ServerGUI sg;
     private SimpleDateFormat sdf;
@@ -45,12 +44,12 @@ public class Server {
                 // format message saying we are waiting
                 display("Server waiting for Clients on port " + port + ".");
 
-                Socket socket = serverSocket.accept();      // accept connection
-                // if I was asked to stop
+                Socket socket = serverSocket.accept();
+                
                 if(!keepGoing)
                     break;
-                ClientHandler t = new ClientHandler(socket,this);  // make a thread of it
-                al.add(t);                                  // save it in the ArrayList
+                ClientHandler t = new ClientHandler(socket,this);
+                al.add(t); 
                 new Thread(t).start();
             }
             // I was asked to stop
@@ -62,7 +61,7 @@ public class Server {
                     tc.kill();
                     }
                     catch(IOException ioE) {
-                        // not much I can do
+                    	ioE.printStackTrace();
                     }
                 }
             }
@@ -135,7 +134,7 @@ public class Server {
 	public Response HandleRequest(Request request) {
 		switch(request.getMessage()){
 		case("getSheep"):
-			return new Response(1,db.getSheep(new Farm(Integer.parseInt(request.getParamter("farmId")),request.getParamter("farmName"))));
+			return new Response(Response.LIST,db.getSheep(new Farm(Integer.parseInt(request.getParamter("farmId")),request.getParamter("farmName"))));
 		}
 		return null;
 	}

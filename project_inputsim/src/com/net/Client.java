@@ -10,9 +10,8 @@ import java.util.*;
  */
 public class Client  {
 
-	// for I/O
-	private ObjectInputStream sInput;		// to read from the socket
-	private ObjectOutputStream sOutput;		// to write on the socket
+	private ObjectInputStream sInput;
+	private ObjectOutputStream sOutput;
 	private Socket socket;
 
 	// if I use a GUI or not
@@ -28,7 +27,7 @@ public class Client  {
 	 *  port: the port number
 	 *  username: the username
 	 */
-	Client(String server, int port, String username) {
+	public Client(String server, int port, String username) {
 		// which calls the common constructor with the GUI set to null
 		this(server, port, username, null);
 	}
@@ -37,7 +36,7 @@ public class Client  {
 	 * Constructor call when used from a GUI
 	 * in console mode the ClienGUI parameter is null
 	 */
-	Client(String server, int port, String username, ClientGUI cg) {
+	public Client(String server, int port, String username, ClientGUI cg) {
 		this.server = server;
 		this.port = port;
 		this.username = username;
@@ -105,6 +104,8 @@ public class Client  {
 	 */
 	void sendMessage(Request msg) {
 		try {
+			msg.addParamter("farmId", "1");
+			msg.addParamter("farmName", "lols");
 			sOutput.writeObject(msg);
 		}
 		catch(IOException e) {
@@ -135,24 +136,8 @@ public class Client  {
 			cg.connectionFailed();
 			
 	}
-	/*
-	 * To start the Client in console mode use one of the following command
-	 * > java Client
-	 * > java Client username
-	 * > java Client username portNumber
-	 * > java Client username portNumber serverAddress
-	 * at the console prompt
-	 * If the portNumber is not specified 1500 is used
-	 * If the serverAddress is not specified "localHost" is used
-	 * If the username is not specified "Anonymous" is used
-	 * > java Client 
-	 * is equivalent to
-	 * > java Client Anonymous 1500 localhost 
-	 * are eqquivalent
-	 * 
-	 * In console mode, if an error occurs the program simply stops
-	 * when a GUI id used, the GUI is informed of the disconnection
-	 */
+	
+	
 	public static void main(String[] args) {
 		// default values
 		int portNumber = 1500;
@@ -206,19 +191,16 @@ public class Client  {
 				break;
 			}
 			else {
-				client.sendMessage(new Request(Request.REQUEST, msg));
+				Request req = new Request(Request.REQUEST, msg);
+				client.sendMessage(req);
 			}
 		}
 		// done disconnect
 		client.disconnect();	
 	}
 
-	/*
-	 * a class that waits for the message from the server and append them to the JTextArea
-	 * if we have a GUI or simply System.out.println() it in console mode
-	 */
+	
 	class ListenFromServer extends Thread {
-
 		public void run() {
 			while(true) {
 				try {
@@ -238,7 +220,6 @@ public class Client  {
 						cg.connectionFailed();
 					break;
 				}
-				// can't happen with a String object but need the catch anyhow
 				catch(ClassNotFoundException e2) {
 				}
 			}
