@@ -1,6 +1,9 @@
-package com.gui;
+package gui;
+
+import java.awt.Dimension;
 
 import org.jdesktop.swingx.JXMapKit;
+import org.jdesktop.swingx.JXMapViewer;
 import org.jdesktop.swingx.OSMTileFactoryInfo;
 import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
@@ -16,9 +19,10 @@ import com.trolltech.research.qtjambiawtbridge.QComponentHost;
  */
 public class MapWidget extends QWidget
 {
-	QHBoxLayout qhblSwingLayout;
+	private QHBoxLayout qhblSwingLayout;
+	private QComponentHost qchHost;
 	
-	JXMapKit mapKit;
+	private JXMapKit mapKit;
 	
 	/** Constructor. Initialize..
 	 */
@@ -27,62 +31,39 @@ public class MapWidget extends QWidget
 		/* Initialize graphic components */
 		initWidget();
 		initLayout();
-		
-		/*DAWdwaijdpawdwaodjwaødwadaw**/poop();/*dawdadawdad*kosfsef*/
 	}
 	
 	private void initWidget()
 	{
-		// TODO: Initialize your awt-component here
-		//		 and make sure it's declared as a class field.
+		TileFactoryInfo info = new OSMTileFactoryInfo();
+		DefaultTileFactory tileFactory = new DefaultTileFactory(info);
+		JXMapViewer mapKitChild;		
+			
+		this.mapKit  = new JXMapKit();
+		this.qchHost = new QComponentHost(mapKit);
 		
+		 mapKitChild = (JXMapViewer) this.mapKit.getComponent(0);
+		
+		this.mapKit.setTileFactory(tileFactory);		
+		this.mapKit.setVisible(true);
+		this.mapKit.setZoom(1);
+		this.mapKit.setAddressLocation(new GeoPosition(50.11, 8.68));
+		
+		mapKitChild.setMinimumSize(new Dimension(800, 800));
+		mapKitChild.setPreferredSize(new Dimension(800, 800));
+		
+		// This line is order specific - adding it at the top of this function causes an error
+		// why?
+		tileFactory.setThreadPoolSize(8);
 	}
 	
 	private void initLayout()
 	{
 		this.qhblSwingLayout = new QHBoxLayout();
 		
-		// TODO: Add your awt-component here, e.g.
-		
-		/* *****																****
-		 * **** qhblSwingLayout.addWidget(new QComponentHost(MyAwtComponent));   ***
-		 * *****																****
-		 */
+		this.qhblSwingLayout.addWidget(this.qchHost);
+		super.setLayout(this.qhblSwingLayout);
 	}
-	
-	private void poop()
-	{
-		
-		mapKit = new JXMapKit();
-		
-		mapKit.setVisible(true);
-		
-		TileFactoryInfo info = new OSMTileFactoryInfo();
-		DefaultTileFactory tileFactory = new DefaultTileFactory(info);
-		mapKit.setTileFactory(tileFactory);
-		
-		
-		// Use 8 threads in parallel to load the tiles
-		tileFactory.setThreadPoolSize(8);
-
-		// Set the focus
-		GeoPosition frankfurt = new GeoPosition(50.11, 8.68);
-
-		mapKit.setZoom(7);
-		mapKit.setAddressLocation(frankfurt);
-		
-		
-		
-		QHBoxLayout lay = new QHBoxLayout();
-//		JPanel jPanel = new JPanel();
-//		jPanel.add(new JLabel("Hello"));
-		lay.addWidget(new QComponentHost(mapKit));
-		
-		super.setLayout(lay);			
-	}
-	
-	
-
 }
 
 /* EOF */
