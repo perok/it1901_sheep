@@ -214,6 +214,7 @@ public class JXMapViewer extends JPanel implements DesignMode {
 	 */
 	protected void drawMapTiles(final Graphics g, final int zoom,
 			Rectangle viewportBounds) {
+		//System.out.println("x: " + viewportBounds.x + " y: " + viewportBounds.y);
 		int size = getTileFactory().getTileSize(zoom);
 		Dimension mapSize = getTileFactory().getMapSize(zoom);
 
@@ -227,7 +228,7 @@ public class JXMapViewer extends JPanel implements DesignMode {
 		int tpx = (int) Math.floor(viewportBounds.getX() / info.getTileSize(0));
 		int tpy = (int) Math.floor(viewportBounds.getY() / info.getTileSize(0));
 		// TilePoint topLeftTile = new TilePoint(tpx, tpy);
-
+		
 		// p("top tile = " + topLeftTile);
 		// fetch the tiles from the factory and store them in the tiles cache
 		// attach the tileLoadListener

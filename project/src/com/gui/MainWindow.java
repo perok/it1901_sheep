@@ -1,5 +1,7 @@
 package com.gui;
 
+import javax.swing.GroupLayout.Alignment;
+
 import org.jdesktop.swingx.JXMapKit;
 import org.jdesktop.swingx.OSMTileFactoryInfo;
 import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
@@ -8,16 +10,22 @@ import org.jdesktop.swingx.mapviewer.TileFactoryInfo;
 
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
+import com.trolltech.qt.gui.QFormLayout;
+import com.trolltech.qt.gui.QLayout;
+import com.trolltech.qt.gui.QLayout.SizeConstraint;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMenu;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QResizeEvent;
+import com.trolltech.qt.gui.QSizePolicy;
+import com.trolltech.qt.gui.QSizePolicy.Policy;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.QTimer;
 import com.trolltech.qt.core.Qt;
 
 import com.trolltech.qt.gui.QWidget;
 import com.trolltech.research.qtjambiawtbridge.QComponentHost;
+import com.trolltech.research.qtjambiawtbridge.QWidgetHost;
 
 /** Class to hold all graphical components (and itself).
  * 
@@ -47,7 +55,7 @@ public class MainWindow extends QMainWindow
     
     private QTimer qtWindowTimer;
         
-    private MapWidget mwWidget;
+    //private MapWidget mwWidget;
     private SheepListWidget slwSheepList;
     private StatisticsWidget swStatistics;
     
@@ -231,8 +239,44 @@ public class MainWindow extends QMainWindow
 	private void initSubWindows()
 	{
 		//this.qmswMapWindow  = new SubWindow(this.mwWidget);
-		this.qmswMapWindow  = new SubWindow(new QComponentHost(this.SwingJXMapKit));
+		QComponentHost Q = new QComponentHost(SwingJXMapKit);
+		this.qmswMapWindow  = new SubWindow(Q);
+		
+		qmswMapWindow.updateGeometry();
+		
+		
+		Q.adjustSize();
+		
+		//qmswMapWindow.layout().setSizeConstraint(SizeConstraint.SetMaximumSize);
+		qmswMapWindow.adjustSize();
+		
+		SwingJXMapKit.setAlignmentX(0);
+		SwingJXMapKit.setAlignmentY(0);
+		
+		Q.setSizeIncrement(500, 600);
+		//Q.setSizeIncrement(100, 100);
+		Q.setSizePolicy(Policy.Expanding, Policy.Expanding);
+		qmswMapWindow.setSizePolicy(Policy.Expanding, Policy.Expanding);
+		//QSizePolicy qSizePolicy = new QSizePolicy();
+		//qSizePolicy.transpose();
+		
+		//Q.setSizePolicy(qSizePolicy);
+		
+		qmswMapWindow.setWindowTitle("WMS Map");
+		SwingJXMapKit.setToolTipText("WELL HELLO THERE");
+		
+		//qmswMapWindow.children().get(0).
+		
+		System.out.println(SwingJXMapKit.getAlignmentX() + "  " + SwingJXMapKit.getAlignmentY());
+		
+		
+		
+		System.out.println("Frame Size " + qmswMapWindow.frameSize());
+		
 		this.swStatWindow   = new SubWindow(this.swStatistics);
+		
+		//SwingJXMapKit.update
+		Q.updateGeometry();
 	}
 
 	/** Initialize the first timed resize
