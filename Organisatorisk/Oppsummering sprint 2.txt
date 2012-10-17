@@ -1,0 +1,7 @@
+Oppsummering av sprint 2
+
+
+Mye arbeid har blitt gjort. Spesielt på server-/databasedelen og GUI. Kartet har også blitt implementert inn i GUI men vi har fortsatt litt problemer med å skalere det riktig og å vise rett kartkilde. For tiden er det Open Street Map (OMS) som vises, og ikke Kartverkets tjeneste, som vi vil ha til slutt.
+Det viste seg at vi hadde lagt til for mye i sprint 2 til at vi kunne fullføre den. Arbeidsoppgavene var dessuten for generelle og gjenspeilte ikke hva de faktisk inneholdt. Til neste sprint har vi delt inn mer detaljerte oppgaver som gjør alt mye klarere. Vi har også prøvd å sette oppe en mer realistisk mengde med arbeidsoppgaver.
+
+Alle på gruppa bidrar på sine felt/arbeidsområder, og det virker som at alle er gira på å klare å levere et bra produkt innen fristen for prosjektet.
