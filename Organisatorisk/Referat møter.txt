@@ -346,8 +346,10 @@ Møte 12
 Møtestart 14.15
 Per Øyvind, Jørgen, Svenn
 
-
 Laget midtveispresentasjonen.
+Skrev tekst om hva som måtte snakkes om på presentasjonen.
+
+
 Møteslutt 16.00
 
 
@@ -364,6 +366,8 @@ Møteslutt 12.00
 
 
 Møte 14
+Møtestart 12.15
+Jørgen, Per Øyvind, Tor, Anders, Svenn, Lars Erik.
 
 
 Sette opp Sprint 3.
@@ -372,9 +376,15 @@ Skal sette opp sprinten slike at den totalt er på 96 timer.
 
 Dele opp sprint-oppgavene i mindre oppgaver og plassere dem under kategorier. Vi har hatt for generelle sprint-oppgaver frem til nå og må spesifisere mer hva hver oppgaver går ut på.
 
+
+De resterende timene og oppgaver fra Sprint 2 blir overført til Sprint 3. Oppgavene blir også oppdelt i mindre underoppgaver i Sprint 3 så de vises ikke like tydelig, men de er fortsatt der.
+
 Vi ønsker tilbakemelding på Sprint 2 og vil ha med stud.ass på neste møte. Perry er bortreis, men vi hører med Lise om hun kan se på ting for oss.
 
+Oppgavene er lagt ut på IceScrum, og folk må ta kontroll over de de vil ha. Endte opp med totalt 96 timer.
 
+
+Møteslutt 14.00
 
 
 
