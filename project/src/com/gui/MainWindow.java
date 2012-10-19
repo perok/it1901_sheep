@@ -1,31 +1,16 @@
 package com.gui;
 
-import javax.swing.GroupLayout.Alignment;
-
-import org.jdesktop.swingx.JXMapKit;
-import org.jdesktop.swingx.OSMTileFactoryInfo;
-import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
-import org.jdesktop.swingx.mapviewer.GeoPosition;
-import org.jdesktop.swingx.mapviewer.TileFactoryInfo;
-
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
-import com.trolltech.qt.gui.QFormLayout;
-import com.trolltech.qt.gui.QLayout;
-import com.trolltech.qt.gui.QLayout.SizeConstraint;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMenu;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QResizeEvent;
-import com.trolltech.qt.gui.QSizePolicy;
-import com.trolltech.qt.gui.QSizePolicy.Policy;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.QTimer;
 import com.trolltech.qt.core.Qt;
 
 import com.trolltech.qt.gui.QWidget;
-import com.trolltech.research.qtjambiawtbridge.QComponentHost;
-import com.trolltech.research.qtjambiawtbridge.QWidgetHost;
 
 /** Class to hold all graphical components (and itself).
  * 
@@ -40,14 +25,16 @@ public class MainWindow extends QMainWindow
 							 INIT_SCREEN_HEIGHT 	= 600;
 	public  static final int INIT_SHEEP_WIDGET_SIZE = (int) (INIT_SCREEN_WIDTH * SHEEP_WINDOW_COVERAGE);
     
-    private QAction undoAct;
-    private QAction exitAct;
+   
     private QAction aboutAct;
     private QAction aboutQtJambiAct;
+    private QAction exitAct;
+    private QAction undoAct;
         
 	private QMenu editMenu;
     private QMenu fileMenu;
     private QMenu helpMenu;
+    private QMenu viewMenu;
     
     private MDIArea maSheep;
     private SubWindow qmswMapWindow;
@@ -55,11 +42,9 @@ public class MainWindow extends QMainWindow
     
     private QTimer qtWindowTimer;
         
-    //private MapWidget mwWidget;
+    private MapWidget mwWidget;
     private SheepListWidget slwSheepList;
     private StatisticsWidget swStatistics;
-    
-    private JXMapKit SwingJXMapKit;
     
     /** Main.
      * 
@@ -131,7 +116,7 @@ public class MainWindow extends QMainWindow
      *  @return the desired width for the central widget of THIS.
      */
     //TODO: is this function necessary?
-    public int getMdiWidth() { return super.width() - INIT_SHEEP_WIDGET_SIZE; }
+    public int getMdiWidth() { return (super.width() - INIT_SHEEP_WIDGET_SIZE); }
     
     @Override
     /** Handle resize-event of this
@@ -210,6 +195,9 @@ public class MainWindow extends QMainWindow
 		this.helpMenu = menuBar().addMenu(tr("&Help"));
 	    this.helpMenu.addAction(aboutAct);
 	    this.helpMenu.addAction(aboutQtJambiAct);
+	    
+	    this.viewMenu = menuBar().addMenu(tr("&View"));
+	    this.viewMenu.addAction("hey");
 	}
 
 	/** Set the initial MDIArea (centralwidget)
@@ -238,45 +226,8 @@ public class MainWindow extends QMainWindow
 	 */
 	private void initSubWindows()
 	{
-		//this.qmswMapWindow  = new SubWindow(this.mwWidget);
-		QComponentHost Q = new QComponentHost(SwingJXMapKit);
-		this.qmswMapWindow  = new SubWindow(Q);
-		
-		qmswMapWindow.updateGeometry();
-		
-		
-		Q.adjustSize();
-		
-		//qmswMapWindow.layout().setSizeConstraint(SizeConstraint.SetMaximumSize);
-		qmswMapWindow.adjustSize();
-		
-		SwingJXMapKit.setAlignmentX(0);
-		SwingJXMapKit.setAlignmentY(0);
-		
-		Q.setSizeIncrement(500, 600);
-		//Q.setSizeIncrement(100, 100);
-		Q.setSizePolicy(Policy.Expanding, Policy.Expanding);
-		qmswMapWindow.setSizePolicy(Policy.Expanding, Policy.Expanding);
-		//QSizePolicy qSizePolicy = new QSizePolicy();
-		//qSizePolicy.transpose();
-		
-		//Q.setSizePolicy(qSizePolicy);
-		
-		qmswMapWindow.setWindowTitle("WMS Map");
-		SwingJXMapKit.setToolTipText("WELL HELLO THERE");
-		
-		//qmswMapWindow.children().get(0).
-		
-		System.out.println(SwingJXMapKit.getAlignmentX() + "  " + SwingJXMapKit.getAlignmentY());
-		
-		
-		
-		System.out.println("Frame Size " + qmswMapWindow.frameSize());
-		
+		this.qmswMapWindow  = new SubWindow(this.mwWidget);
 		this.swStatWindow   = new SubWindow(this.swStatistics);
-		
-		//SwingJXMapKit.update
-		Q.updateGeometry();
 	}
 
 	/** Initialize the first timed resize
@@ -292,28 +243,11 @@ public class MainWindow extends QMainWindow
 	 */
 	private void initWidgets()
 	{
-		//this.mwWidget     = new MapWidget();
-		this.SwingJXMapKit = new JXMapKit();
-		
-		SwingJXMapKit.setVisible(true);
-		
-		TileFactoryInfo info = new OSMTileFactoryInfo();
-		DefaultTileFactory tileFactory = new DefaultTileFactory(info);
-		SwingJXMapKit.setTileFactory(tileFactory);
-		
-		
-		// Use 8 threads in parallel to load the tiles
-		tileFactory.setThreadPoolSize(8);
-
-		// Set the focus
-		GeoPosition frankfurt = new GeoPosition(50.11, 8.68);
-
-		SwingJXMapKit.setZoom(7);
-		SwingJXMapKit.setAddressLocation(frankfurt);
-		
-		
+		this.mwWidget     = new MapWidget();
 		this.slwSheepList = new SheepListWidget();
 		this.swStatistics = new StatisticsWidget();
+		
+		
 		
 		this.slwSheepList.setFixedWidth(INIT_SHEEP_WIDGET_SIZE);
 		super.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, this.slwSheepList);
