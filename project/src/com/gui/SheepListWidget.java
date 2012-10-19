@@ -99,28 +99,30 @@ public class SheepListWidget extends QDockWidget
 		ArrayList<Sheep> sheeps = Sheeps.getSHeeps();
 		//Sheep sau = new Sheep(25, "Olga", 0, 250291, true, 70);
 		
-		
-		/* Takes out the previous column and all the sheep referances*/
-		List<QStandardItem> preCol = qsimModel.takeColumn(0);
-		List<Sheep> data = new ArrayList<Sheep>();
-		
-		for (QStandardItem item : preCol){
-			data.add((Sheep)item.data());
-		}
-		
-		for(Sheep sheep : sheeps){
-			/*Add only new sheep*/
-			if(!data.contains(sheep)){
-				QStandardItem item = new QStandardItem();
-				item.setText(sheep.getId() + " " +sheep.getName());
-				item.setData(sheep);
-				
-				qsimModel.appendRow(item);
+		if(sheeps != null){
+			/* Takes out the previous column and all the sheep referances*/
+			List<QStandardItem> preCol = qsimModel.takeColumn(0);
+			List<Sheep> data = new ArrayList<Sheep>();
+			
+			for (QStandardItem item : preCol){
+				if(item.data() instanceof Sheep)
+					data.add((Sheep)item.data());
 			}
+			
+			for(Sheep sheep : sheeps){
+				/*Add only new sheep*/
+				if(!data.contains(sheep)){
+					QStandardItem item = new QStandardItem();
+					item.setText(sheep.getId() + " " +sheep.getName());
+					item.setData(sheep);
+					
+					qsimModel.appendRow(item);
+				}
+			}
+			
+			/*Insert back the previous column*/
+			qsimModel.insertColumn(0, preCol);
 		}
-		
-		/*Insert back the previous column*/
-		qsimModel.insertColumn(0, preCol);
 		
 		/* Experimental
 		//for(Sheep sheep : sheeps){
