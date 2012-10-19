@@ -72,6 +72,19 @@ public class SheepListWidget extends QDockWidget
 		
 		//super.setLayout(this.mainLayout);
 		super.setWidget(qtvModelView);
+		
+		/*Click event*/
+		qtvModelView.clicked.connect(this, "onSheepClicked()");
+	}
+	
+	/*
+	 * Recieves click events
+	 * 
+	 * TODO: How fuck to know which sheep is being poked?
+	 */
+	public void onSheepClicked(){
+		//qtvModelView.
+		System.out.println("WATFUCK");
 	}
 	
 	/** debug and test purposes - add sheep */
