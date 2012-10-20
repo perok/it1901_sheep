@@ -104,8 +104,8 @@ public class Client  {
 	 */
 	void sendMessage(Request msg) {
 		try {
-			msg.addParamter("farmId", "1");
-			msg.addParamter("farmName", "lols");
+			msg.addparameter("farmId", "1");
+			msg.addparameter("farmName", "lols");
 			sOutput.writeObject(msg);
 		}
 		catch(IOException e) {

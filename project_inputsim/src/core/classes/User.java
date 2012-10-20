@@ -14,7 +14,7 @@ public class User {
 	
 	
 
-	public User(int id, String name, int phoneNumber, int mobileNumber, String email, String username, 
+	public User(int id, String username, String name, String password, int mobileNumber, String email,  
 			ArrayList<Farm> farmlist) {
 		this.id = id;
 		this.name = name;

@@ -2,18 +2,19 @@ package com.net;
 
 import java.io.*;
 import java.util.ArrayList;
+
+import core.classes.User;
 	
 public class Response implements Serializable { 
-	protected static final long serialVersionUID = 2;
-	static final int LIST = 1, BOOLEAN = 2;
+	static final int LIST = 1, BOOLEAN = 2, USER = 3;
 	private int type;
-	private String message;
+	private boolean success;
+	private User user;
 	private ArrayList content;
 	
-	
-	public Response(int type, String message) {
+	public Response(int type, boolean success) {
 		this.type = type;
-		this.message = message;
+		this.success = success;
 	}
 	
 	public Response(int type, ArrayList content) {
@@ -21,21 +22,26 @@ public class Response implements Serializable {
 		this.content = content;
 	}
 	
-	public Response(int type, String message, ArrayList content) {
+	public Response(int type, boolean success, ArrayList content) {
 		this.type = type;
-		this.message = message;
+		this.success = success;
 		this.content = content;
+	}
+	
+	public Response(int type, User user) {
+		this.type = type;
+		this.user = user;
 	}
 	
 	public int getType() {
 		return type;
 	}
-	public String getMessage() {
-		return message;
+	public boolean getSuccess() {
+		return success;
 	}
 	
-	public void setMessage(String message) {
-		this.message = message;
+	public void setMessage(boolean success) {
+		this.success = success;
 	}
 
 	public ArrayList getContent() {
@@ -55,7 +61,10 @@ public class Response implements Serializable {
 			return out;
 		}
 		else
-			return message;
+			if(success)
+				return "Success";
+			else
+				return "Fail";
 	}
 }
 

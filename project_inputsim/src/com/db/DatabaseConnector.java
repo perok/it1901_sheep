@@ -2,7 +2,6 @@ package com.db;
 
 import core.settings.*;
 import core.classes.*;
-import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -32,19 +31,51 @@ public class DatabaseConnector {
 		}
 	}
 	
+	/**Helper method to get boolean value of a db-entry
+	 * 
+	 * @param string
+	 * @return
+	 */
+	private boolean getBoolean(String input) {
+		try {
+			if(Integer.parseInt(input) == 1)
+				return true;
+			else
+				return false;
+		} catch (Exception e) {
+			if(input.equals("true"))
+				return true;
+			else return false;
+		}
+	}
+	
 	/*
 	 * CLIENT SECTION
 	 */
 	
 	public User loginQuery(String username, String password) {
-		String[][] r = processQuery("SELECT * FROM user WHERE username = '" + username + "'" + " AND password = '" + password + "';");
-		
-		return null;
+		String[][] r = processQuery("SELECT id,username,password,name,mobile_number,email FROM user WHERE username = '" + username + "'" + " AND password = '" + password + "';");
+		User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5], null);
+		String[][] r2 = processQuery("SELECT farm_id FROM access_rights WHERE user_id = " + user.getId() + ";");
+		ArrayList<Farm> farms = new ArrayList<Farm>();
+		for (int i = 0; i < r2.length; i++) {
+			String[][] r3 = processQuery("SELECT name FROM farm WHERE farm_id = " + r2[i][0] + ";");
+			Farm farm = new Farm(Integer.parseInt(r[i][0]),r3[0][0]);
+			String [][] r4 = processQuery("SELECT * from sheep WHERE farm_id = " + farm.getId() + ";");
+			for (int j = 0; j < r4.length; j++) {
+				farm.addSheep(new Sheep(Integer.parseInt(r4[j][0]), r4[j][1], Integer.parseInt(r4[j][2]), Integer.parseInt(r4[j][3]), getBoolean(r[j][4]), Integer.parseInt(r4[i][5])));
+			}
+			farms.add(farm);
+		}
+//		user.addFarms(farms);
+		return user;
 	}
 	
-	public ArrayList<Sheep> getSheep(Farm farm) {
+	
+
+	public ArrayList<Sheep> getSheep(int farmId) {
 		ArrayList<Sheep> list = new ArrayList<Sheep>();
-		String[][] r = processQuery("SELECT * FROM sheep WHERE farm_id = " + farm.getId() + "");
+		String[][] r = processQuery("SELECT * FROM sheep WHERE farm_id = " + farmId + "");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new Sheep(Integer.parseInt(r[i][0]),r[i][1],Integer.parseInt(r[i][2]),Integer.parseInt(r[i][3]),
 					Boolean.parseBoolean(r[i][4]),Integer.parseInt(r[i][5])));
@@ -63,6 +94,17 @@ public class DatabaseConnector {
 		}
 	}
 	
+	public boolean removeSheep(int sheepId) {
+		try {
+			Statement s = conn.createStatement();
+			s.executeUpdate("DELETE FROM sheep WHERE id = " + sheepId + "");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public ArrayList<Farm> getFarms(User user) {
 		ArrayList<Farm> list = new ArrayList<Farm>();
 		String[][] r = processQuery("SELECT * FROM access_rights WHERE user_id = " + user.getId() + "");
@@ -72,10 +114,10 @@ public class DatabaseConnector {
 		return list;
 	}
 	
-	public boolean addAccessRights(User user, Farm farm) {
+	public boolean addAccessRights(int userId, int farmId) {
 		try{
 			Statement s = conn.createStatement();
-			s.executeUpdate("INSERT INTO access_rights (user_id,farm_id) VALUES(" + user.getId() + "," + farm.getId() + ");");
+			s.executeUpdate("INSERT INTO access_rights (user_id,farm_id) VALUES(" + userId + "," + farmId + ");");
 		}
 		catch(Exception e){
 			return false;
@@ -83,11 +125,11 @@ public class DatabaseConnector {
 		return true;
 	}
 	
-	public boolean removeAccessRights(User user, Farm farm) {
+	public boolean removeAccessRights(int userId, int farmId) {
 		
 		try{
 			Statement s = conn.createStatement();
-			s.executeUpdate("DELETE FROM access_rights WHERE " + user.getId() + " = user_id AND " + farm.getId() + " = farm_id;");
+			s.executeUpdate("DELETE FROM access_rights WHERE " + userId + " = user_id AND " + farmId + " = farm_id;");
 		}
 		catch(Exception e){
 			return false;
@@ -108,9 +150,9 @@ public class DatabaseConnector {
 		return true;
 	}
 	
-	public ArrayList<SheepStatus> getSheepStatus(Farm farm) {
+	public ArrayList<SheepStatus> getSheepStatus(int farmId) {
 		ArrayList<SheepStatus> list = new ArrayList<SheepStatus>();
-		String[][] r = processQuery("SELECT * FROM sheep_status WHERE farm_id = " + farm.getId() + ";");
+		String[][] r = processQuery("SELECT * FROM sheep_status WHERE farm_id = " + farmId + ";");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new SheepStatus(Integer.parseInt(r[i][0]),Integer.parseInt(r[i][1]),Integer.parseInt(r[i][2])
 					,Float.parseFloat(r[i][3]), new GpsPosition(Double.parseDouble(r[i][4]), Double.parseDouble(r[i][5])),
@@ -119,9 +161,9 @@ public class DatabaseConnector {
 		return list;
 	}
 	
-	public ArrayList<SheepAlert> getSheepAlarm(Farm farm) {
+	public ArrayList<SheepAlert> getSheepAlert(int farmId) {
 		ArrayList<SheepAlert> list = new ArrayList<SheepAlert>();
-		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE farm_id = " + farm.getId() + ";");
+		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE farm_id = " + farmId + ";");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new SheepAlert(Integer.parseInt(r[i][0]),Integer.parseInt(r[i][1]),Integer.parseInt(r[i][2])
 					,Float.parseFloat(r[i][3]), new GpsPosition(Double.parseDouble(r[i][4]), Double.parseDouble(r[i][5])),

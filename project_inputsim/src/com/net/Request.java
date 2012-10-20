@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class Request implements Serializable {
-	protected static final long serialVersionUID = 1;
 	static final int REQUEST = 1, LOGOUT = 2;
 	private int type;
 	private String message;
@@ -16,11 +15,11 @@ public class Request implements Serializable {
 		parameters = new HashMap();
 	}
 	
-	public Request(int type, String message, HashMap paramters) {
+	public Request(int type, String message, HashMap parameters) {
 		this.type = type;
 		this.message = message;
 		parameters = new HashMap();
-		this.parameters = paramters;
+		this.parameters = parameters;
 	}
 	
 	public Request(int type) {
@@ -43,11 +42,11 @@ public class Request implements Serializable {
 		this.parameters = parameters;
 	}
 	
-	public void addParamter(String name, String value) {
+	public void addparameter(String name, String value) {
 		parameters.put(name, value);
 	}
 	
-	public String getParamter(String name) {
+	public String getparameter(String name) {
 		return (String) parameters.get(name);
 	}
 

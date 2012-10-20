@@ -5,3 +5,6 @@
 11/10 - 2 research
 12/10 - 2 design 1 koding baseklasser
 13/10 - 1 prog baseklasser 1 research 1 design 1 kode <-.netpakken 
+19/10
+	19.50-20.50 - Server prog
+	21.40-22.40 - Server prog
