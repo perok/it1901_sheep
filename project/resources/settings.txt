@@ -1,0 +1,4 @@
+//SheepShield server path
+http://kord.dyndns.org
+//SheepShield port
+1500

@@ -5,6 +5,9 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
+import core.classes.Farm;
+import core.classes.User;
+
 /*
  * The Client that can be run both as a console or a GUI
  */
@@ -104,8 +107,6 @@ public class Client  {
 	 */
 	void sendMessage(Request msg) {
 		try {
-			msg.addparameter("farmId", "1");
-			msg.addparameter("farmName", "lols");
 			sOutput.writeObject(msg);
 		}
 		catch(IOException e) {
@@ -198,7 +199,17 @@ public class Client  {
 		// done disconnect
 		client.disconnect();	
 	}
+	
+	public void login(String username, String password) {
+		HashMap params = new HashMap();
+		params.put("username", username);
+		params.put("password", password);
+		sendMessage((new Request(Request.REQUEST, "login" ,params)));
+	}
 
+	public void getSheep(Farm farm) {
+		
+	}
 	
 	class ListenFromServer extends Thread {
 		public void run() {
