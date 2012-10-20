@@ -8,19 +8,13 @@ import java.util.*;
 import core.classes.Farm;
 import core.classes.User;
 
-/*
- * The Client that can be run both as a console or a GUI
- */
+
 public class Client  {
 
 	private ObjectInputStream sInput;
 	private ObjectOutputStream sOutput;
 	private Socket socket;
-
-	// if I use a GUI or not
 	private ClientGUI cg;
-	
-	// the server, the port and the username
 	private String server, username;
 	private int port;
 
@@ -46,25 +40,23 @@ public class Client  {
 		// save if we are in GUI mode or not
 		this.cg = cg;
 	}
-	
-	/*
-	 * To start the dialog
+
+	/**
+	 * 
+	 * @return
 	 */
 	public boolean start() {
-		// try to connect to the server
 		try {
 			socket = new Socket(server, port);
 		} 
-		// if it failed not much I can so
 		catch(Exception ec) {
 			display("Error connectiong to server:" + ec);
 			return false;
 		}
-		
+
 		String msg = "Connection accepted " + socket.getInetAddress() + ":" + socket.getPort();
 		display(msg);
-	
-		/* Creating both Data Stream */
+
 		try
 		{
 			sInput  = new ObjectInputStream(socket.getInputStream());
@@ -75,10 +67,7 @@ public class Client  {
 			return false;
 		}
 
-		// creates the Thread to listen from the server 
 		new ListenFromServer().start();
-		// Send our username to the server this is the only message that we
-		// will send as a String. All other messages will be Message objects
 		try
 		{
 			sOutput.writeObject(username);
@@ -88,23 +77,18 @@ public class Client  {
 			disconnect();
 			return false;
 		}
-		// success we inform the caller that it worked
 		return true;
 	}
 
-	/*
-	 * To send a message to the console or the GUI
-	 */
+
 	private void display(String msg) {
 		if(cg == null)
-			System.out.println(msg);      // println in console mode
+			System.out.println(msg);
 		else
-			cg.append(msg + "\n");		// append to the ClientGUI JTextArea (or whatever)
+			cg.append(msg + "\n");
 	}
-	
-	/*
-	 * To send a message to the server
-	 */
+
+
 	void sendMessage(Request msg) {
 		try {
 			sOutput.writeObject(msg);
@@ -114,31 +98,27 @@ public class Client  {
 		}
 	}
 
-	/*
-	 * When something goes wrong
-	 * Close the Input/Output streams and disconnect not much to do in the catch clause
-	 */
+
 	private void disconnect() {
 		try { 
 			if(sInput != null) sInput.close();
 		}
-		catch(Exception e) {} // not much else I can do
+		catch(Exception e) {}
 		try {
 			if(sOutput != null) sOutput.close();
 		}
-		catch(Exception e) {} // not much else I can do
-        try{
+		catch(Exception e) {} 
+		try{
 			if(socket != null) socket.close();
 		}
-		catch(Exception e) {} // not much else I can do
-		
-		// inform the GUI
+		catch(Exception e) {} 
+
 		if(cg != null)
 			cg.connectionFailed();
-			
+
 	}
-	
-	
+
+
 	public static void main(String[] args) {
 		// default values
 		int portNumber = 1500;
@@ -147,48 +127,43 @@ public class Client  {
 
 		// depending of the number of arguments provided we fall through
 		switch(args.length) {
-			// > javac Client username portNumber serverAddr
-			case 3:
-				serverAddress = args[2];
+		// > javac Client username portNumber serverAddr
+		case 3:
+			serverAddress = args[2];
 			// > javac Client username portNumber
-			case 2:
-				try {
-					portNumber = Integer.parseInt(args[1]);
-				}
-				catch(Exception e) {
-					System.out.println("Invalid port number.");
-					System.out.println("Usage is: > java Client [username] [portNumber] [serverAddress]");
-					return;
-				}
+		case 2:
+			try {
+				portNumber = Integer.parseInt(args[1]);
+			}
+			catch(Exception e) {
+				System.out.println("Invalid port number.");
+				System.out.println("Usage is: > java Client [username] [portNumber] [serverAddress]");
+				return;
+			}
 			// > javac Client username
-			case 1: 
-				userName = args[0];
+		case 1: 
+			userName = args[0];
 			// > java Client
-			case 0:
-				break;
+		case 0:
+			break;
 			// invalid number of arguments
-			default:
-				System.out.println("Usage is: > java Client [username] [portNumber] {serverAddress]");
+		default:
+			System.out.println("Usage is: > java Client [username] [portNumber] {serverAddress]");
 			return;
 		}
 		// create the Client object
 		Client client = new Client(serverAddress, portNumber, userName);
-		// test if we can start the connection to the Server
-		// if it failed nothing we can do
 		if(!client.start())
 			return;
-		
+
 		// wait for messages from user
 		Scanner scan = new Scanner(System.in);
 		// loop forever for message from the user
 		while(true) {
 			System.out.print("> ");
-			// read message from user
 			String msg = scan.nextLine();
-			// logout if message is LOGOUT
 			if(msg.equalsIgnoreCase("LOGOUT")) {
 				client.sendMessage(new Request(Request.LOGOUT, ""));
-				// break to do the disconnect
 				break;
 			}
 			else {
@@ -196,10 +171,9 @@ public class Client  {
 				client.sendMessage(req);
 			}
 		}
-		// done disconnect
 		client.disconnect();	
 	}
-	
+
 	public void login(String username, String password) {
 		HashMap params = new HashMap();
 		params.put("username", username);
@@ -208,15 +182,48 @@ public class Client  {
 	}
 
 	public void getSheep(Farm farm) {
-		
+		HashMap params = new HashMap();
+		params.put("farmId", farm.getId());
+		sendMessage(new Request(Request.REQUEST, "getSheep", params));
 	}
 	
+	public void removeSheep(int sheepId) {
+		HashMap params = new HashMap();
+		params.put("sheepId", sheepId);
+		sendMessage(new Request(Request.REQUEST, "removeSheep", params));
+	}
+	
+	public void addAccessRights(User user, Farm farm) {
+		HashMap params = new HashMap();
+		params.put("userId", user.getId());
+		params.put("farmId", farm.getId());
+		sendMessage(new Request(Request.REQUEST, "removeSheep", params));
+	}
+	
+	public void removeAccessRights(User user, Farm farm) {
+		HashMap params = new HashMap();
+		params.put("userId", user.getId());
+		params.put("farmId", farm.getId());
+		sendMessage(new Request(Request.REQUEST, "removeSheep", params));
+	}
+	
+	public void getSheepStatus(Farm farm) {
+		HashMap params = new HashMap();
+		params.put("farmId", farm.getId());
+		sendMessage(new Request(Request.REQUEST, "getSheepStatus", params));
+	}
+	
+	public void getSheepAlert(Farm farm) {
+		HashMap params = new HashMap();
+		params.put("farmId", farm.getId());
+		sendMessage(new Request(Request.REQUEST, "getSheepAlert", params));
+	}
+
 	class ListenFromServer extends Thread {
 		public void run() {
 			while(true) {
 				try {
 					Response msg = (Response) sInput.readObject();
-					// if console mode print the message and add back the prompt
 					if(cg == null) {
 						System.out.println(msg);
 						System.out.print("> ");
