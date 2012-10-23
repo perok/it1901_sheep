@@ -12,6 +12,7 @@ import com.trolltech.qt.core.Qt;
 
 import com.trolltech.qt.gui.QWidget;
 
+
 /** Class to hold all graphical components (and itself).
  * 
  * @author Gruppe 10 <3
@@ -57,6 +58,15 @@ public class MainWindow extends QMainWindow
         MainWindow testMainWindow = new MainWindow(null);
         testMainWindow.show();
         QApplication.exec();
+        
+
+        
+        /*
+         * http://doc.qt.digia.com/qt/gallery.html
+         * http://www.slideshare.net/qtbynokia/how-to-make-your-qt-app-look-native
+         */
+        
+        //testMainWindow.setStyleSheet(styleSheet)
     }
 
     /** Constructor. Initialize..
@@ -66,7 +76,7 @@ public class MainWindow extends QMainWindow
     public MainWindow(QWidget parent)
     {
         super(parent);
-        
+
         /* Main window properties - */
         initActions();
         initMenus();
