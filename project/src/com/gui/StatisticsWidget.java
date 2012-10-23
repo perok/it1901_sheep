@@ -46,39 +46,36 @@ public class StatisticsWidget extends QWidget
 	 */
 	private void initWidgets()
 	{
-		//this.qwStatWidget = new QWidget();
+		table = new QTableWidget(this);
+		
+		/* Horizontal headers */
 		String[] list = {"Message #","Message Date", "Sheep #", "Farm #", "Name", "Birthdate","Alive", "Weight", "Location"};
-		
-		
-		table = new QTableWidget(0, list.length, this);
-
-		table.setMinimumHeight(20);
-		
+		table.setColumnCount(list.length);
 		table.setHorizontalHeaderLabels(Arrays.asList(list));
 		
+		/* We don't need the vertical header */
 		table.verticalHeader().setVisible(false);
-		//table.
 		
-		
-		//table.
-		
-		//table.
-		
-		
+		/* Rezise rows and columns to needed size */
 		table.resizeRowsToContents();
 		table.resizeColumnsToContents();
 		
+		/* Stretch the vertical headers last element */
 		//table.verticalHeader().setStretchLastSection(true);
 		table.horizontalHeader().setStretchLastSection(true);
 		
+		/* Define the size */
+		table.setMinimumHeight(20);
 		
-		
-		
+		/* Add it*/
 		qhbMainLayout.addWidget(table);
 	}
 	
 	/**
 	 * Adds sheep information to the current window
+	 * 
+	 * TODO: Hook up to SHeeListWidget
+	 * TODO: How should this look?
 	 * 
 	 * @param ArrayList<Sheep> sheep
 	 */
