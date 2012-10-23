@@ -6,6 +6,8 @@ public class Settings {
 	private String dbDatabase;
 	private String dbUser;
 	private String dbPassword;
+	private String skypeUser;
+	private String skypePassword;
 	 
 	public Settings() {
 		init();
@@ -19,6 +21,8 @@ public class Settings {
 		dbDatabase = settings[1];
 		dbUser = settings[2];
 		dbPassword = settings[3];
+		skypeUser = settings[4];
+		skypePassword = settings[5];
 	}
 	
 	
@@ -57,6 +61,22 @@ public class Settings {
 		this.dbUser = dbUser;
 	}
 	
+	public String getSkypeUser() {
+		return skypeUser;
+	}
+
+	public void setSkypeUser(String skypeUser) {
+		this.skypeUser = skypeUser;
+	}
+
+	public String getSkypePassword() {
+		return skypePassword;
+	}
+
+	public void setSkypePassword(String skypePassword) {
+		this.skypePassword = skypePassword;
+	}
+
 	public String toString() {
 		return dbUrl + "  " + dbDatabase + "  " + dbUser + "  " + dbPassword;
 	}

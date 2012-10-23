@@ -6,3 +6,7 @@ grasdalk_it1901
 grasdalk_it1901
 //DB password
 lillelam1337
+//Skype user
+sheepshield
+//Skyper password
+lillelam1337

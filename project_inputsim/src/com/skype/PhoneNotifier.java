@@ -17,7 +17,7 @@ public class PhoneNotifier {
 	private String username;
 	private String password;
 	private String message = "Sau under angrep! Dette er en test";
-	private String[] numbers = new String[1];
+	private String[] numbers = {"+4791802057"};
 	
 	private AppKeyPairMgr appKey = new AppKeyPairMgr();
 	MySession mySession = new MySession();
@@ -29,7 +29,8 @@ public class PhoneNotifier {
 	 * @return PhoneNotifier
 	 */
 	public PhoneNotifier(Settings settings) {
-		
+		username = settings.getSkypeUser();
+		password = settings.getSkypePassword();
 	}
 
 	/**Starts the skype runtime in order to use the sdk. Requiered to use PhoneNotifier
@@ -186,13 +187,13 @@ public class PhoneNotifier {
 	 * 
 	 * @param args
 	 */
-//	public static void main(String[] args) {
-//		PhoneNotifier a = new PhoneNotifier();
-//		if(a.runSkypekit()){
-//			if(a.connect()){
-//				a.sendSMS();
-//			}
-//		}
-//	}
+	public static void main(String[] args) {
+		PhoneNotifier a = new PhoneNotifier(new Settings());
+		if(a.runSkypekit()){
+			if(a.connect()){
+				a.sendSMS();
+			}
+		}
+	}
 }
 

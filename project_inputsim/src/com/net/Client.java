@@ -18,26 +18,27 @@ public class Client  {
 	private String server, username;
 	private int port;
 
-	/*
-	 *  Constructor called by console mode
-	 *  server: the server address
-	 *  port: the port number
-	 *  username: the username
+	/**Console constructor
+	 * 
+	 * @param server
+	 * @param port
+	 * @param username
 	 */
 	public Client(String server, int port, String username) {
-		// which calls the common constructor with the GUI set to null
 		this(server, port, username, null);
 	}
 
-	/*
-	 * Constructor call when used from a GUI
-	 * in console mode the ClienGUI parameter is null
+	/**Gui constructor
+	 * 
+	 * @param server
+	 * @param port
+	 * @param username
+	 * @param cg
 	 */
 	public Client(String server, int port, String username, ClientGUI cg) {
 		this.server = server;
 		this.port = port;
 		this.username = username;
-		// save if we are in GUI mode or not
 		this.cg = cg;
 	}
 
@@ -120,17 +121,13 @@ public class Client  {
 
 
 	public static void main(String[] args) {
-		// default values
 		int portNumber = 1500;
 		String serverAddress = "localhost";
 		String userName = "Anonymous";
 
-		// depending of the number of arguments provided we fall through
 		switch(args.length) {
-		// > javac Client username portNumber serverAddr
 		case 3:
 			serverAddress = args[2];
-			// > javac Client username portNumber
 		case 2:
 			try {
 				portNumber = Integer.parseInt(args[1]);
@@ -140,25 +137,19 @@ public class Client  {
 				System.out.println("Usage is: > java Client [username] [portNumber] [serverAddress]");
 				return;
 			}
-			// > javac Client username
 		case 1: 
 			userName = args[0];
-			// > java Client
 		case 0:
 			break;
-			// invalid number of arguments
 		default:
 			System.out.println("Usage is: > java Client [username] [portNumber] {serverAddress]");
 			return;
 		}
-		// create the Client object
 		Client client = new Client(serverAddress, portNumber, userName);
 		if(!client.start())
 			return;
 
-		// wait for messages from user
 		Scanner scan = new Scanner(System.in);
-		// loop forever for message from the user
 		while(true) {
 			System.out.print("> ");
 			String msg = scan.nextLine();

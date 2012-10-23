@@ -5,7 +5,6 @@ import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import com.db.DatabaseConnector;
-
 import core.classes.Farm;
 import core.settings.Settings;
 
@@ -24,9 +23,7 @@ public class Server {
 	public Server(int port, ServerGUI sg) {
 		this.sg = sg;
 		this.port = port;
-		// to display hh:mm:ss
 		sdf = new SimpleDateFormat("HH:mm:ss");
-		// ArrayList for the Client list
 		al = new ArrayList<ClientHandler>();
 		db = new DatabaseConnector(new Settings());
 	}
@@ -35,13 +32,10 @@ public class Server {
 		keepGoing = true;
 		try 
 		{
-			// the socket used by the server
 			ServerSocket serverSocket = new ServerSocket(port);
 
-			// infinite loop to wait for connections
 			while(keepGoing) 
 			{
-				// format message saying we are waiting
 				display("Server waiting for Clients on port " + port + ".");
 
 				Socket socket = serverSocket.accept();
@@ -52,7 +46,6 @@ public class Server {
 				al.add(t); 
 				new Thread(t).start();
 			}
-			// I was asked to stop
 			try {
 				serverSocket.close();
 				for(int i = 0; i < al.size(); ++i) {
@@ -75,8 +68,8 @@ public class Server {
 			display(msg);
 		}
 	}       
-	/*
-	 * For the GUI to stop the server
+	/**Gui-method to stop the server
+	 * 
 	 */
 	protected void stop() {
 		keepGoing = false;
@@ -107,7 +100,6 @@ public class Server {
 	 * If the port number is not specified 1500 is used
 	 */ 
 	public static void main(String[] args) {
-		// start server on port 1500 unless a PortNumber is specified 
 		int portNumber = 1500;
 		switch(args.length) {
 		case 1:
@@ -126,7 +118,6 @@ public class Server {
 			return;
 
 		}
-		// create a server object and start it
 		Server server = new Server(portNumber);
 		server.start();
 	}
