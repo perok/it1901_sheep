@@ -41,10 +41,6 @@ public class SheepListWidget extends QDockWidget
 
            return sLeftString.compareTo(sRightString) < 0;
 		}
-		
-		public void FUCKTARS(){
-			
-		}
 	}
 
 	/* End class SortSheep */
@@ -74,34 +70,29 @@ public class SheepListWidget extends QDockWidget
 		super.setWidget(qtvModelView);
 		
 		/*Click event*/
-		//qtvModelView.clicked.connect(this, "onSheepClicked()");
 		qtvModelView.selectionModel().selectionChanged.connect(this, "onSheepClicked(QItemSelection, QItemSelection)");
-		
-		//QObject.connect(this, SIGNAL("selectionChanged(QItemSelection, QItemSelection)"), self.slot)
-		//qtvModelView.
-		//qtvModelView.
 	}
 	
-	/*
-	 * Recieves click events
+	/**
+	 * Receives the qsimModels click events
 	 * 
-	 * TODO: How fuck to know which sheep is being poked?
+	 * @param selected QItemSelection
+	 * @param deselected QItemSelection
 	 */
-	public void onSheepClicked(QItemSelection selected, QItemSelection deselected){//QObject){
-		//sender.objectName();
-		//qtvModelView.
+	public void onSheepClicked(QItemSelection selected, QItemSelection deselected){
 		
 		for(QModelIndex selID: selected.indexes()){
 			int rowSel = selID.row();
+			/*
+			 * TODO: Bug: selects row from original row implementation
+			 */
 			System.out.println(qsimModel.item(rowSel).text() + "  RowSelected: " + rowSel);
-			//System.out.println(((Sheep)selID.data()).getName());
 		}
 	}
 	
 	/** debug and test purposes - add sheep */
 	private void addSheep()
 	{
-
 		for(int iPos = 0; iPos < 10; iPos++)
 		{
 			String sSheepName = "sheep <" + Integer.toString((int)(Math.random() * 9)) + ">";
@@ -115,9 +106,8 @@ public class SheepListWidget extends QDockWidget
 	 * Updates the sheep list
 	 *
 	 * Adds only new sheep to the tree
-	 *
-	 * @param  None
-	 * @return None
+	 * 
+	 * @Param sheeps the sheeps being added
 	 */
 	public void updateSheepList(){
 		ArrayList<Sheep> sheeps = Sheeps.getSHeeps();
@@ -140,68 +130,13 @@ public class SheepListWidget extends QDockWidget
 					item.setText(sheep.getId() + " " +sheep.getName());
 					item.setData(sheep);
 					
-					
 					qsimModel.appendRow(item);
 				}
 			}
 			
 			/*Insert back the previous column*/
 			qsimModel.insertColumn(0, preCol);
-		}
-		
-		/* Experimental
-		//for(Sheep sheep : sheeps){
-			//this.qsimModel.insertRow(0);
-			
-			QStandardItem item = new QStandardItem();
-			item.setText(sau.getId() + " " +sau.getName());
-			item.setData(sau);
-			
-			qsimModel.appendRow(item);
-			//System.out.println(qsimModel.takeColumn(0).size());
-			
-			//qsimModel.
-			List<QStandardItem> lul = qsimModel.takeColumn(0);
-			
-			for(QStandardItem hj : lul){
-				System.out.println("w");
-				if(hj.data() != null)
-					System.out.println(((Sheep)hj.data()).getName());
-			}
-			
-			qsimModel.insertColumn(0, lul);
-			
-			//System.out.println(qsimModel.children().size());
-			
-			QObject st = qsimModel.findChild(QStandardItem.class, sau.getId() + " " + sau.getName());
-			
-			
-			
-			if(qsimModel.findChildren().contains(sau)){System.out.println("FANT DEG");}
-			//int index = this.qsimModel.indexFromItem(item).row();
-			
-			//System.out.println(qsimModel.takeItem(index).text());
-			
-			
-			//qsimModel.setD
-			QVariant qv = new QVariant();
-			
-			
-			//System.out.println("TROL" + u.size());
-			//QModelIndex index = 
-			
-			//this.qsimModel.setData(this.qsimModel.index(0, 0), sau.getId());
-			
-			/*
-			if (this.qsimModel.findItems("26") != null){
-				List l = this.qsimModel.findItems("25");
-				
-				//qsimModel.
-				
-				System.out.println("Æ FANT!" + l.size());
-				}*/
-		//}
-		
+		}		
 	}
 	
 
