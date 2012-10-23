@@ -74,7 +74,12 @@ public class SheepListWidget extends QDockWidget
 		super.setWidget(qtvModelView);
 		
 		/*Click event*/
-		qtvModelView.clicked.connect(this, "onSheepClicked()");
+		//qtvModelView.clicked.connect(this, "onSheepClicked()");
+		qtvModelView.selectionModel().selectionChanged.connect(this, "onSheepClicked(QItemSelection, QItemSelection)");
+		
+		//QObject.connect(this, SIGNAL("selectionChanged(QItemSelection, QItemSelection)"), self.slot)
+		//qtvModelView.
+		//qtvModelView.
 	}
 	
 	/*
@@ -82,9 +87,15 @@ public class SheepListWidget extends QDockWidget
 	 * 
 	 * TODO: How fuck to know which sheep is being poked?
 	 */
-	public void onSheepClicked(){
+	public void onSheepClicked(QItemSelection selected, QItemSelection deselected){//QObject){
+		//sender.objectName();
 		//qtvModelView.
-		System.out.println("WATFUCK");
+		
+		for(QModelIndex selID: selected.indexes()){
+			int rowSel = selID.row();
+			System.out.println(qsimModel.item(rowSel).text() + "  RowSelected: " + rowSel);
+			//System.out.println(((Sheep)selID.data()).getName());
+		}
 	}
 	
 	/** debug and test purposes - add sheep */
@@ -128,6 +139,7 @@ public class SheepListWidget extends QDockWidget
 					QStandardItem item = new QStandardItem();
 					item.setText(sheep.getId() + " " +sheep.getName());
 					item.setData(sheep);
+					
 					
 					qsimModel.appendRow(item);
 				}
