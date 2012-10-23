@@ -38,6 +38,8 @@ public class StatisticsWidget extends QWidget
 	private void initLayout()
 	{
 		this.qhbMainLayout = new QHBoxLayout();
+		
+		super.setLayout(qhbMainLayout);
 	}
 	
 	/** Initialize widgets in the current object context
@@ -45,7 +47,7 @@ public class StatisticsWidget extends QWidget
 	private void initWidgets()
 	{
 		//this.qwStatWidget = new QWidget();
-		String[] list = {"#", "Name", "Farm #", "Birthdate","Alive", "Weight", "Location"};
+		String[] list = {"Message #","Message Date", "Sheep #", "Farm #", "Name", "Birthdate","Alive", "Weight", "Location"};
 		
 		
 		table = new QTableWidget(0, list.length, this);
@@ -59,7 +61,7 @@ public class StatisticsWidget extends QWidget
 		
 		
 		//table.
-		qhbMainLayout.addWidget(table);
+		
 		//table.
 		
 		
@@ -70,10 +72,19 @@ public class StatisticsWidget extends QWidget
 		table.horizontalHeader().setStretchLastSection(true);
 		
 		
-		super.setLayout(qhbMainLayout);
+		
+		
+		qhbMainLayout.addWidget(table);
 	}
 	
+	/**
+	 * Adds sheep information to the current window
+	 * 
+	 * @param ArrayList<Sheep> sheep
+	 */
 	public void addSheeps(){
+		
+		//this.setWindowTitle("Statistics: " + name);
 		
 		table.setRowCount(6);
 		
