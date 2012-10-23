@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-
 import com.db.DatabaseConnector;
 import com.skype.PhoneNotifier;
+
 
 public class ClientHandler implements Runnable {
 	private Socket socket;
@@ -64,6 +64,14 @@ public class ClientHandler implements Runnable {
 	
 	private void notifyEmail() {
 		
+	}
+	
+	private void findPhoneNumer() {
+		db.getPhoneNumber(username);
+	}
+	
+	private void findEmailAddress() {
+		db.getEmailAddress(username);
 	}
 	
 	public void kill() throws IOException {

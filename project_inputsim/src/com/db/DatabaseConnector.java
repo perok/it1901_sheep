@@ -176,6 +176,16 @@ public class DatabaseConnector {
 	/*
 	 * SERVER SECTION
 	 */
+	
+	public String getPhoneNumber(String username) {
+		String[][] results = processQuery("SELECT phone_number FROM user WHERE username = '" + username + "';");
+		return results[0][0];
+	}
+	
+public String getEmailAddress(String username) {
+	String[][] results = processQuery("SELECT e-mail FROM user WHERE username = '" + username + "';");
+	return results[0][0];
+	}
 
 	public void insertSheepStatus(String[][] sheepstats) {
 		try {

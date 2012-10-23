@@ -16,9 +16,8 @@ public class PhoneNotifier {
 	
 	private String username;
 	private String password;
-	private String message = "Sau under angrep! Dette er en test";
-	private String[] numbers = {"+4791802057"};
-	
+	private String message = "Sau under angrep! Dette ikke er en test";
+	private String[] numbers = {"+47"};
 	private AppKeyPairMgr appKey = new AppKeyPairMgr();
 	MySession mySession = new MySession();
 	
@@ -33,7 +32,7 @@ public class PhoneNotifier {
 		password = settings.getSkypePassword();
 	}
 
-	/**Starts the skype runtime in order to use the sdk. Requiered to use PhoneNotifier
+	/**Starts the skype runtime in order to use the sdk. Requiered to use PhoneNotifier.
 	 * 
 	 * @return void
 	 */
@@ -52,12 +51,19 @@ public class PhoneNotifier {
 		return true;
 	}
 	
+	/**The public method available to send an Sms with a pre initialized PhoneNotifier.
+	 * 
+	 */
 	public void notifyPhone() {
 		this.runSkypekit();
-		this.connect();
-		this.sendSMS();
+		if(this.connect())
+			this.sendSMS();
 	}
 	
+	/**Connects to skype using username and password set in constructor.
+	 * 
+	 * @return booelean
+	 */
 	private boolean connect()
 	{
 		if(!(appKey.resolveAppKeyPairPath(APPKEYPATH)) || !(appKey.isValidCertificate()))
@@ -77,6 +83,9 @@ public class PhoneNotifier {
 		return false;		
 	}
 
+	/**Disconnects from session
+	 * 
+	 */
 	private void disconnect()
 	{
 		mySession.mySignInMgr.Logout(TAG, mySession);
@@ -88,7 +97,11 @@ public class PhoneNotifier {
 		
 	}
 
-	
+
+	/**Handles presets for the sendSmsMessage method
+	 * 
+	 * @return boolean
+	 */
 	private boolean sendSMS()
 	{
 		if(!mySession.isLoggedIn())
@@ -118,6 +131,13 @@ public class PhoneNotifier {
 		return true;
 	}
 	
+	/**Handles the actual sending of the sms. Takes and Sms from sendSms() and a String[]
+	 * of numbers to send the Sms to.
+	 * 
+	 * @param mySms
+	 * @param smsTargets
+	 * @return
+	 */
 	private boolean sendSmsMessage(Sms mySms, String[] smsTargets) 
 	{
 		int i = 0;
