@@ -23,7 +23,7 @@ public class PhoneNotifier {
 	MySession mySession = new MySession();
 	
 	
-	/**
+	/**Constructor. Sets username and password given in settings file.
 	 * 
 	 * @param Settings settings
 	 * @return PhoneNotifier
@@ -37,7 +37,7 @@ public class PhoneNotifier {
 	 * 
 	 * @return void
 	 */
-	public boolean runSkypekit()
+	private boolean runSkypekit()
 	{
 		try
 		{
@@ -52,7 +52,13 @@ public class PhoneNotifier {
 		return true;
 	}
 	
-	public boolean connect()
+	public void notifyPhone() {
+		this.runSkypekit();
+		this.connect();
+		this.sendSMS();
+	}
+	
+	private boolean connect()
 	{
 		if(!(appKey.resolveAppKeyPairPath(APPKEYPATH)) || !(appKey.isValidCertificate()))
 		{
@@ -71,7 +77,7 @@ public class PhoneNotifier {
 		return false;		
 	}
 
-	public void disconnect()
+	private void disconnect()
 	{
 		mySession.mySignInMgr.Logout(TAG, mySession);
 		
@@ -83,7 +89,7 @@ public class PhoneNotifier {
 	}
 
 	
-	public boolean sendSMS()
+	private boolean sendSMS()
 	{
 		if(!mySession.isLoggedIn())
 		{
@@ -112,7 +118,7 @@ public class PhoneNotifier {
 		return true;
 	}
 	
-	public boolean sendSmsMessage(Sms mySms, String[] smsTargets) 
+	private boolean sendSmsMessage(Sms mySms, String[] smsTargets) 
 	{
 		int i = 0;
         Sms.Status smsStatus = null;
@@ -138,6 +144,7 @@ public class PhoneNotifier {
 		if (mySession.smsWasSent) 
 		{
 			MySession.myConsole.println("SMS sent!");
+			disconnect();
 		}
 		else if (i == SMS_SEND_TIMEOUT_LIMIT) 
 		{
@@ -167,7 +174,10 @@ public class PhoneNotifier {
         return(true);
 	}
 	
-	public void callPhone() {
+	/**Not in use
+	 * @deprecated
+	 */
+	private void callPhone() {
 		Conversation myConversation = (Conversation)mySession.mySkype.getConversationByParticipants(numbers, true, true);
 		
 		myConversation.ringOthers(numbers, false, "LOLOLOL");
@@ -189,11 +199,7 @@ public class PhoneNotifier {
 	 */
 	public static void main(String[] args) {
 		PhoneNotifier a = new PhoneNotifier(new Settings());
-		if(a.runSkypekit()){
-			if(a.connect()){
-				a.sendSMS();
-			}
-		}
+		a.notifyPhone();
 	}
 }
 
