@@ -3,7 +3,6 @@ package com.gui;
 import java.util.Arrays;
 
 import com.trolltech.qt.gui.QHBoxLayout;
-import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QTableWidget;
 import com.trolltech.qt.gui.QTableWidgetItem;
 import com.trolltech.qt.gui.QWidget;
