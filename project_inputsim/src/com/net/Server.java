@@ -5,7 +5,11 @@ import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import com.db.DatabaseConnector;
+import com.skype.PhoneNotifier;
+
+import core.AlertNotifier;
 import core.classes.Farm;
+import core.classes.SheepAlert;
 import core.settings.Settings;
 
 public class Server {
@@ -15,17 +19,22 @@ public class Server {
 	private int port;
 	private boolean keepGoing;
 	private DatabaseConnector db;
+	private AlertNotifier notifier;
+	private Settings settings;
+
 
 	public Server(int port) {
 		this(port, null);
 	}
 
 	public Server(int port, ServerGUI sg) {
+		settings = new Settings();
 		this.sg = sg;
 		this.port = port;
 		sdf = new SimpleDateFormat("HH:mm:ss");
 		al = new ArrayList<ClientHandler>();
-		db = new DatabaseConnector(new Settings());
+		db = new DatabaseConnector(settings);
+		notifier = new AlertNotifier(settings);
 	}
 
 	public void start() {
@@ -36,10 +45,11 @@ public class Server {
 
 			while(keepGoing) 
 			{
+				notifier = new AlertNotifier(settings);
+				new Thread(notifier).start();
 				display("Server waiting for Clients on port " + port + ".");
 
-				Socket socket = serverSocket.accept();
-
+				Socket socket = serverSocket.accept();				
 				if(!keepGoing)
 					break;
 				ClientHandler t = new ClientHandler(socket,this);
@@ -149,6 +159,5 @@ public class Server {
 
 		return null;
 	}
-
-
+	
 }

@@ -31,6 +31,34 @@ public class PhoneNotifier {
 		username = settings.getSkypeUser();
 		password = settings.getSkypePassword();
 	}
+	
+	public PhoneNotifier() {
+		
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String[] getNumbers() {
+		return numbers;
+	}
+
+	public void setNumbers(String[] numbers) {
+		this.numbers = numbers;
+	}
 
 	/**Starts the skype runtime in order to use the sdk. Requiered to use PhoneNotifier.
 	 * 

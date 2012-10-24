@@ -7,6 +7,8 @@ import java.net.Socket;
 import com.db.DatabaseConnector;
 import com.skype.PhoneNotifier;
 
+import core.AlertNotifier;
+
 
 public class ClientHandler implements Runnable {
 	private Socket socket;
@@ -16,7 +18,6 @@ public class ClientHandler implements Runnable {
 	private Server server;
 	private String username;
 	private boolean keepGoing = true;
-	private PhoneNotifier phoneNotifier;
 	private DatabaseConnector db;
 
 	public ClientHandler(Socket socket,Server server) {
