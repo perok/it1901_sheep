@@ -9,7 +9,7 @@ public class SettingsReader {
 	
 	public String[] readSettings() {
 
-		String[] input = new String[6];
+		String[] input = new String[8];
 		int i = 0;
 		try {
 			Scanner scanner = new Scanner(new FileInputStream(settingsFile));

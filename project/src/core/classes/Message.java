@@ -5,10 +5,10 @@ public class Message {
 	private Sheep sheep;
 	private int timestamp;
 	private float temperature;
-	private GPSPosition gpsPosition;
+	private GpsPosition gpsPosition;
 	private int farmId;
 	
-	public Message(int id, Sheep sheep, int timestamp, float temperature, GPSPosition gpsPosition, int farmId) {
+	public Message(int id, Sheep sheep, int timestamp, float temperature, GpsPosition gpsPosition, int farmId) {
 		this.setId(id);
 		this.setSheep(sheep);
 		this.setTimestamp(timestamp);
@@ -49,11 +49,11 @@ public class Message {
 		this.temperature = temperature;
 	}
 
-	public GPSPosition getGpsPosition() {
+	public GpsPosition getGpsPosition() {
 		return gpsPosition;
 	}
 
-	public void setGpsPosition(GPSPosition gpsPosition) {
+	public void setGpsPosition(GpsPosition gpsPosition) {
 		this.gpsPosition = gpsPosition;
 	}
 

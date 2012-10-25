@@ -2,6 +2,7 @@ package com.db;
 
 import core.settings.*;
 import core.classes.*;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -259,12 +260,30 @@ public String getEmailAddress(String username) {
 	public void alertNotified(int alertId) {
 		try {
 			Statement s = conn.createStatement();
-				s.executeUpdate("UPDATE sheep_alert SET notified = " + 1 + "WHERE id=" + alertId
+				s.executeUpdate("UPDATE sheep_alert SET notified = " + 1 + " WHERE id = " + alertId
 						+ ";");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
+	}
+	
+	public String getAlertResponderEmail(int farmId) {
+		System.out.println(farmId);
+		String[][] r = processQuery("SELECT user_id FROM access_rights WHERE farm_id = " + farmId + 
+				" AND admin=1;");
+		System.out.println(r[0][0]);
+		String[][] s = processQuery("SELECT email from user WHERE id = " + Integer.parseInt(r[0][0]));
+		return s[0][0];
+		
+	}
+	
+	public int getAlertResponderPhone(int farmId) {
+		String[][] r = processQuery("SELECT user_id FROM access_rights WHERE farm_id= " + farmId + 
+				"AND admin="+ 1 + ";");
+		String[][] s = processQuery("SELECT mobile_number from user WHERE id=" + Integer.parseInt(r[0][0]));
+		return Integer.parseInt(s[0][0]);
+		
 	}
 
 	public void insertSheep(String[][] sheep) {

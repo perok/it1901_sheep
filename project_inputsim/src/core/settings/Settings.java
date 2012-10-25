@@ -8,6 +8,8 @@ public class Settings {
 	private String dbPassword;
 	private String skypeUser;
 	private String skypePassword;
+	private String googleUser;
+	private String googlePassword;
 	 
 	public Settings() {
 		init();
@@ -23,6 +25,8 @@ public class Settings {
 		dbPassword = settings[3];
 		skypeUser = settings[4];
 		skypePassword = settings[5];
+		googleUser = settings[6];
+		googlePassword = settings[7];
 	}
 	
 	
@@ -75,6 +79,22 @@ public class Settings {
 
 	public void setSkypePassword(String skypePassword) {
 		this.skypePassword = skypePassword;
+	}
+
+	public String getGoogleUser() {
+		return googleUser;
+	}
+
+	public void setGoogleUser(String googleUser) {
+		this.googleUser = googleUser;
+	}
+
+	public String getGooglePassword() {
+		return googlePassword;
+	}
+
+	public void setGooglePassword(String googlePassword) {
+		this.googlePassword = googlePassword;
 	}
 
 	public String toString() {
