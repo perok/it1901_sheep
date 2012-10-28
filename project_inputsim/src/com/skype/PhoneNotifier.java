@@ -17,7 +17,7 @@ public class PhoneNotifier {
 	private String username;
 	private String password;
 	private String message = "Sau under angrep! Dette ikke er en test";
-	private String[] numbers = {"+47"};
+	private String[] numbers;
 	private AppKeyPairMgr appKey = new AppKeyPairMgr();
 	MySession mySession = new MySession();
 	
@@ -30,6 +30,7 @@ public class PhoneNotifier {
 	public PhoneNotifier(Settings settings) {
 		username = settings.getSkypeUser();
 		password = settings.getSkypePassword();
+		numbers = new String[1];
 	}
 	
 	public PhoneNotifier() {
@@ -58,7 +59,11 @@ public class PhoneNotifier {
 
 	public void setNumbers(String[] numbers) {
 		
-		this.numbers[0] = "+47" + numbers[0];
+		this.numbers = numbers;;
+	}
+	
+	public void setNumber(String number) {
+		this.numbers[0] = number;
 	}
 
 	/**Starts the skype runtime in order to use the sdk. Requiered to use PhoneNotifier.
