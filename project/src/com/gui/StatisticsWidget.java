@@ -2,10 +2,6 @@ package com.gui;
 
 import java.util.Arrays;
 
-import com.trolltech.qt.core.QObject;
-import com.trolltech.qt.core.QRect;
-import com.trolltech.qt.core.Qt.Alignment;
-import com.trolltech.qt.core.Qt.AlignmentFlag;
 import com.trolltech.qt.gui.QCheckBox;
 import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QDateEdit;
@@ -17,7 +13,6 @@ import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QSizePolicy;
-import com.trolltech.qt.gui.QTabBar;
 import com.trolltech.qt.gui.QTabWidget;
 import com.trolltech.qt.gui.QTableWidget;
 import com.trolltech.qt.gui.QTableWidgetItem;

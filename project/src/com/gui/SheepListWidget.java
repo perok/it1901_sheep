@@ -3,11 +3,17 @@ package com.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.trolltech.qt.QVariant;
-import com.trolltech.qt.core.*;
-import com.trolltech.qt.gui.*;
-
 import com.storage.Sheeps;
+import com.trolltech.qt.core.QModelIndex;
+import com.trolltech.qt.core.QObject;
+import com.trolltech.qt.core.Qt;
+import com.trolltech.qt.gui.QDockWidget;
+import com.trolltech.qt.gui.QHBoxLayout;
+import com.trolltech.qt.gui.QItemSelection;
+import com.trolltech.qt.gui.QSortFilterProxyModel;
+import com.trolltech.qt.gui.QStandardItem;
+import com.trolltech.qt.gui.QStandardItemModel;
+import com.trolltech.qt.gui.QTreeView;
 
 import core.classes.Sheep;
 

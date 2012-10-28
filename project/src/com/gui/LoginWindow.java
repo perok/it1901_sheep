@@ -1,6 +1,5 @@
 package com.gui;
 
-import com.net.DatabaseConnector;
 
 public class LoginWindow {
 	

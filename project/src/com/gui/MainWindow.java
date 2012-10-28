@@ -1,15 +1,14 @@
 package com.gui;
 
+import com.trolltech.qt.core.QSize;
+import com.trolltech.qt.core.QTimer;
+import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMenu;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QResizeEvent;
-import com.trolltech.qt.core.QSize;
-import com.trolltech.qt.core.QTimer;
-import com.trolltech.qt.core.Qt;
-
 import com.trolltech.qt.gui.QWidget;
 
 
