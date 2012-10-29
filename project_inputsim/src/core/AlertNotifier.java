@@ -42,8 +42,8 @@ public class AlertNotifier implements Runnable{
 				alerts = db.getNewSheepAlert();
 				if(!alerts.isEmpty()) {
 					System.out.println("Alert found");
-					notifyPhone(alerts.get(0));
-					notifyEmail(alerts.get(0));
+//					notifyPhone(alerts.get(0));
+//					notifyEmail(alerts.get(0));
 					db.alertNotified(alerts.get(0).getId());
 				}
 			}

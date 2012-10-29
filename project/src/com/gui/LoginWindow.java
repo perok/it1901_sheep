@@ -6,10 +6,10 @@ public class LoginWindow {
 	String username;
 	String password;
 	
-	DatabaseConnector connector = new DatabaseConnector();
+	ClientSocket connector = new ClientSocket();
 	
 	loginUser User (String username, String password){
-		return connector.loginQuery(username, password);
+		return ClientSocket.login(username, password);
 	}
 	
 }

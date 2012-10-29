@@ -5,8 +5,9 @@ import java.io.*;
 import java.util.*;
 import core.classes.Farm;
 import core.classes.User;
+import core.settings.Settings;
 
-public class Client  {
+public class ClientSocket  {
 
 	private ObjectInputStream sInput;
 	private ObjectOutputStream sOutput;
@@ -14,6 +15,7 @@ public class Client  {
 	private ClientGUI caller;
 	private String server, username;
 	private int port;
+	private Settings settings;
 
 	/**Console constructor
 	 * 
@@ -21,8 +23,13 @@ public class Client  {
 	 * @param port
 	 * @param username
 	 */
-	public Client(String server, int port, String username) {
+	public ClientSocket(String server, int port, String username) {
 		this(server, port, username, null);
+	}
+	
+	public ClientSocket(Settings settings, String username) {
+		this.settings = settings;
+		this.username = username;
 	}
 
 	/**Gui constructor
@@ -32,7 +39,7 @@ public class Client  {
 	 * @param username
 	 * @param caller
 	 */
-	public Client(String server, int port, String username, ClientGUI caller) {
+	public ClientSocket(String server, int port, String username, ClientGUI caller) {
 		this.server = server;
 		this.port = port;
 		this.username = username;
@@ -52,8 +59,8 @@ public class Client  {
 			return false;
 		}
 
-		String msg = "Connection accepted " + socket.getInetAddress() + ":" + socket.getPort();
-		display(msg);
+		String req = "Connection accepted " + socket.getInetAddress() + ":" + socket.getPort();
+		display(req);
 
 		try
 		{
@@ -82,26 +89,31 @@ public class Client  {
 	/** Writes parameter to command line or GUI, depending on mode. 
 	 * This method shows status and connections to the server
 	 * 
-	 * @param msg
+	 * @param req
 	 */
-	private void display(String msg) {
+	private void display(String req) {
 		if(caller == null)
-			System.out.println(msg);
+			System.out.println(req);
 		else
-			caller.append(msg + "\n");
+			caller.append(req + "\n");
 	}
 
-
-	void sendRequest(Request msg) {
+	/**Transmits the request via outputstream to the server.
+	 * 
+	 * @param req
+	 */
+	void sendRequest(Request req) {
 		try {
-			sOutput.writeObject(msg);
+			sOutput.writeObject(req);
 		}
 		catch(IOException e) {
 			display("Exception writing to server: " + e);
 		}
 	}
 
-
+	/**Closes all streams and shuts down the socket.
+	 * 
+	 */
 	private void disconnect() {
 		try { 
 			if(sInput != null) sInput.close();
@@ -127,24 +139,11 @@ public class Client  {
 		String serverAddress = "localhost";
 		String userName = "Anonymous";
 
-		Client client = new Client(serverAddress, portNumber, userName);
-		if(!client.start())
+		ClientSocket ClientSocket = new ClientSocket(serverAddress, portNumber, userName);
+		if(!ClientSocket.start())
 			return;
 
-		Scanner scan = new Scanner(System.in);
-		while(true) {
-			System.out.print("> ");
-			String msg = scan.nextLine();
-			if(msg.equalsIgnoreCase("LOGOUT")) {
-				client.sendRequest(new Request(Request.LOGOUT, ""));
-				break;
-			}
-			else {
-				Request req = new Request(Request.REQUEST, msg);
-				client.sendRequest(req);
-			}
-		}
-		client.disconnect();	
+		ClientSocket.disconnect();	
 	}
 
 	/**Makes a request with the given paramters and sends it to the server.
@@ -232,13 +231,13 @@ public class Client  {
 		public void run() {
 			while(true) {
 				try {
-					Response msg = (Response) sInput.readObject();
+					Response req = (Response) sInput.readObject();
 					if(caller == null) {
-						System.out.println(msg);
+						System.out.println(req);
 						System.out.print("> ");
 					}
 					else {
-						caller.append(msg.toString());
+						caller.append(req.toString());
 					}
 				}
 				catch(IOException e) {
