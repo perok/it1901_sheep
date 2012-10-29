@@ -44,7 +44,7 @@ public class MailNotifier {
 					InternetAddress.parse(recipient));
 			message.setSubject("SheepShield alert. Urgent!");
 			message.setText("Dear SheepShield user,"
-					+ "\n\n We have registered a possible attack on your herd. Please respond, this is urgent" +
+					+ "\n\n We have registered a possible attack on your herd. Please respond, this is urgent." +
 					"\n The sheep in question was last registered at coordinates " + gps.getLatitute()
 					+ " Latitude and " + gps.getLongditude() + " Longditude. ");
 

@@ -110,14 +110,14 @@ public class ClientGUI extends JFrame implements ActionListener {
 		Object o = e.getSource();
 		// if it is the Logout button
 		if(o == logout) {
-			client.sendMessage(new Request(Request.LOGOUT, ""));
+			client.sendRequest(new Request(Request.LOGOUT, ""));
 			return;
 		}
 
 		// ok it is coming from the JTextField
 		if(connected) {
 			// just have to send the message
-			client.sendMessage(new Request(Request.REQUEST, tf.getText()));				
+			client.sendRequest(new Request(Request.REQUEST, tf.getText()));				
 			tf.setText("");
 			return;
 		}

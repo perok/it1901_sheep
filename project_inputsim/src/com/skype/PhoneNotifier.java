@@ -63,7 +63,8 @@ public class PhoneNotifier {
 	}
 	
 	public void setNumber(String number) {
-		this.numbers[0] = number;
+		this.numbers[0] = "+47" + number;
+		System.out.println(this.numbers[0]);
 	}
 
 	/**Starts the skype runtime in order to use the sdk. Requiered to use PhoneNotifier.

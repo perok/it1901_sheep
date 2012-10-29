@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class SettingsReader {
-	private String settingsFile = "resources/setting.txt";
+	private String settingsFile = "resources/settings.txt";
 	
 	public String[] readSettings() {
 

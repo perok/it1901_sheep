@@ -92,7 +92,7 @@ public class Client  {
 	}
 
 
-	void sendMessage(Request msg) {
+	void sendRequest(Request msg) {
 		try {
 			sOutput.writeObject(msg);
 		}
@@ -136,63 +136,90 @@ public class Client  {
 			System.out.print("> ");
 			String msg = scan.nextLine();
 			if(msg.equalsIgnoreCase("LOGOUT")) {
-				client.sendMessage(new Request(Request.LOGOUT, ""));
+				client.sendRequest(new Request(Request.LOGOUT, ""));
 				break;
 			}
 			else {
 				Request req = new Request(Request.REQUEST, msg);
-				client.sendMessage(req);
+				client.sendRequest(req);
 			}
 		}
 		client.disconnect();	
 	}
 
+	/**Makes a request with the given paramters and sends it to the server.
+	 * 
+	 * @param username
+	 * @param password
+	 */
 	public void login(String username, String password) {
 		HashMap params = new HashMap();
 		params.put("username", username);
 		params.put("password", password);
-		sendMessage((new Request(Request.REQUEST, "login" ,params)));
+		sendRequest((new Request(Request.REQUEST, "login" ,params)));
 	}
 
+	/**Makes a request with the given paramters and sends it to the server.
+	 * 
+	 * @param farm
+	 */
 	public void getSheep(Farm farm) {
 		HashMap params = new HashMap();
 		params.put("farmId", farm.getId());
-		sendMessage(new Request(Request.REQUEST, "getSheep", params));
+		sendRequest(new Request(Request.REQUEST, "getSheep", params));
 	}
 	
+	/**Makes a request with the given paramters and sends it to the server.
+	 * 
+	 * @param sheepId
+	 */
 	public void removeSheep(int sheepId) {
 		HashMap params = new HashMap();
 		params.put("sheepId", sheepId);
-		sendMessage(new Request(Request.REQUEST, "removeSheep", params));
+		sendRequest(new Request(Request.REQUEST, "removeSheep", params));
 	}
 	
+	/**Makes a request with the given paramters and sends it to the server.
+	 * 
+	 * @param user
+	 * @param farm
+	 */
 	public void addAccessRights(User user, Farm farm) {
 		HashMap params = new HashMap();
 		params.put("userId", user.getId());
 		params.put("farmId", farm.getId());
-		sendMessage(new Request(Request.REQUEST, "removeSheep", params));
+		sendRequest(new Request(Request.REQUEST, "removeSheep", params));
 	}
-	
+	/**Makes a request with the given paramters and sends it to the server.
+	 * 
+	 * @param user
+	 * @param farm
+	 */
 	public void removeAccessRights(User user, Farm farm) {
 		HashMap params = new HashMap();
 		params.put("userId", user.getId());
 		params.put("farmId", farm.getId());
-		sendMessage(new Request(Request.REQUEST, "removeSheep", params));
+		sendRequest(new Request(Request.REQUEST, "removeSheep", params));
 	}
 	
+	/**Makes a request with the given paramters and sends it to the server.
+	 * 
+	 * @param farm
+	 */
 	public void getSheepStatus(Farm farm) {
 		HashMap params = new HashMap();
 		params.put("farmId", farm.getId());
-		sendMessage(new Request(Request.REQUEST, "getSheepStatus", params));
+		sendRequest(new Request(Request.REQUEST, "getSheepStatus", params));
 	}
 	
-	/** Asks server for sheepAlerts for a given farm
-	 * @param farm 
+	/**Makes a request with the given paramters and sends it to the server.
+	 * 
+	 * @param farm
 	 */
 	public void getSheepAlert(Farm farm) {
 		HashMap params = new HashMap();
 		params.put("farmId", farm.getId());
-		sendMessage(new Request(Request.REQUEST, "getSheepAlert", params));
+		sendRequest(new Request(Request.REQUEST, "getSheepAlert", params));
 	}
 
 	/**Internal class(thread) that listens for input from the server. The object "caller"

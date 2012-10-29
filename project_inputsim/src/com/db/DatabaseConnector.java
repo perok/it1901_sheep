@@ -279,8 +279,8 @@ public String getEmailAddress(String username) {
 	}
 	
 	public int getAlertResponderPhone(int farmId) {
-		String[][] r = processQuery("SELECT user_id FROM access_rights WHERE farm_id= " + farmId + 
-				"AND admin="+ 1 + ";");
+		String[][] r = processQuery("SELECT user_id FROM access_rights WHERE farm_id = " + farmId + 
+				" AND admin=1;");
 		String[][] s = processQuery("SELECT mobile_number from user WHERE id=" + Integer.parseInt(r[0][0]));
 		return Integer.parseInt(s[0][0]);
 		
@@ -379,6 +379,12 @@ public String getEmailAddress(String username) {
 		}	
 	}
 	
+	/** A method for processing SELECT queries easier. Returns a String[][] instead of using result sets given 
+	 * from the sql query. 
+	 * 
+	 * @param str
+	 * @return
+	 */
 	private String[][] processQuery(String str) {
 		try {
 			Statement s = conn.createStatement();
