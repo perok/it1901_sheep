@@ -5,9 +5,15 @@ import com.skype.api.Sms;
 import com.skype.tutorial.appkeypair.AppKeyPairMgr;
 import com.skype.tutorial.util.MySession;
 import com.skype.tutorial.util.SignInMgr;
+
+import core.classes.GpsPosition;
 import core.settings.Settings;
 
-
+/**Supports sending of sms to given phonenumber with coordinates of attack.
+ * 
+ * @author Lars Erik
+ *
+ */
 public class PhoneNotifier {
 	private static final String TAG = "SMS_TAG";
 	private static final int SMS_SEND_TIMEOUT_LIMIT = 30;
@@ -16,11 +22,11 @@ public class PhoneNotifier {
 	
 	private String username;
 	private String password;
-	private String message = "Sau under angrep! Dette ikke er en test";
+	private String message = "Sau under angrep! Sist registrert på ";
 	private String[] numbers;
 	private AppKeyPairMgr appKey = new AppKeyPairMgr();
-	MySession mySession = new MySession();
-	
+	private MySession mySession = new MySession();
+	private GpsPosition gps;
 	
 	/**Constructor. Sets username and password given in settings file.
 	 * 
@@ -59,7 +65,7 @@ public class PhoneNotifier {
 
 	public void setNumbers(String[] numbers) {
 		
-		this.numbers = numbers;;
+		this.numbers = numbers;
 	}
 	
 	public void setNumber(String number) {
@@ -89,7 +95,8 @@ public class PhoneNotifier {
 	/**The public method available to send an Sms with a pre initialized PhoneNotifier.
 	 * 
 	 */
-	public void notifyPhone() {
+	public void notifyPhone(GpsPosition gps) {
+		this.gps = gps;
 		this.runSkypekit();
 		if(this.connect())
 			this.sendSMS();
@@ -147,7 +154,7 @@ public class PhoneNotifier {
 		
 		Sms sms = mySession.mySkype.createOutgoingSms();
 		
-		Sms.SetBodyResponse smsBodyResponse = sms.setBody(message);
+		Sms.SetBodyResponse smsBodyResponse = sms.setBody(message + gps.getLatitute() + " lat and " + gps.getLongditude() + " long");
 		
 		if (smsBodyResponse.result != Sms.SetBodyResult.BODY_OK) 
 		{
@@ -248,13 +255,6 @@ public class PhoneNotifier {
 			}
 		}
 	}
-	/**Used to test module
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		PhoneNotifier a = new PhoneNotifier(new Settings());
-		a.notifyPhone();
-	}
+
 }
 

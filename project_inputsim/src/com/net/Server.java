@@ -12,6 +12,11 @@ import core.classes.Farm;
 import core.classes.SheepAlert;
 import core.settings.Settings;
 
+/**Server that accpects sockets and creates ClientHandlers for connecting clients.
+ * 
+ * @author Lars Erik
+ *
+ */
 public class Server {
 	private ArrayList<ClientHandler> al;
 	public ServerGUI sg;
@@ -22,11 +27,19 @@ public class Server {
 	private AlertNotifier notifier;
 	private Settings settings;
 
-
+	/**Constructor without GUI.
+	 * 
+	 * @param port
+	 */
 	public Server(int port) {
 		this(port, null);
 	}
 
+	/**Constructor with GUI.
+	 * 
+	 * @param port
+	 * @param sg
+	 */
 	public Server(int port, ServerGUI sg) {
 		settings = new Settings();
 		this.sg = sg;
@@ -72,7 +85,6 @@ public class Server {
 				display("Exception closing the server and clients: " + e);
 			}
 		}
-		// something went bad
 		catch (IOException e) {
 			String msg = sdf.format(new Date()) + " Exception on new ServerSocket: " + e + "\n";
 			display(msg);
@@ -84,7 +96,7 @@ public class Server {
 	protected void stop() {
 		keepGoing = false;
 		// connect to myself as Client to exit statement 
-		// Socket socket = serverSocket.accept();
+//		 Socket socket = serverSocket.accept();
 		try {
 			new Socket("localhost", port);
 		}
@@ -92,8 +104,8 @@ public class Server {
 			// nothing I can really do
 		}
 	}
-	/*
-	 * Display an event (not a message) to the console or the GUI
+	/**
+	 * Display an event to the console or the GUI
 	 */
 	private void display(String msg) {
 		String time = sdf.format(new Date()) + " " + msg;
@@ -103,61 +115,16 @@ public class Server {
 			sg.appendEvent(time + "\n");
 	}
 
-	/*
-	 *  To run as a console application just open a console window and: 
-	 * > java Server
-	 * > java Server portNumber
-	 * If the port number is not specified 1500 is used
+	/**Starts the server at port 1500
+	 * 
 	 */ 
 	public static void main(String[] args) {
 		int portNumber = 1500;
-		switch(args.length) {
-		case 1:
-			try {
-				portNumber = Integer.parseInt(args[0]);
-			}
-			catch(Exception e) {
-				System.out.println("Invalid port number.");
-				System.out.println("Usage is: > java Server [portNumber]");
-				return;
-			}
-		case 0:
-			break;
-		default:
-			System.out.println("Usage is: > java Server [portNumber]");
-			return;
-
-		}
 		Server server = new Server(portNumber);
 		server.start();
 	}
 
-	public Response HandleRequest(Request request) {
-		switch(request.getMessage()){
-		case("getSheep"):
-			return new Response(Response.LIST,db.getSheep(Integer.parseInt(request.getparameter("farmId"))));
-		
-		case("getSheepStatus"):
-			return new Response(Response.LIST,db.getSheepStatus(Integer.parseInt(request.getparameter("farmId"))));
-			
-		case("getSheepAlert"):
-			return new Response(Response.LIST,db.getSheepAlert(Integer.parseInt(request.getparameter("farmId"))));
-			
-		case("deleteAccessRights"):
-			return new Response(Response.BOOLEAN,db.removeAccessRights(Integer.parseInt(request.getparameter("userId")), Integer.parseInt(request.getparameter("farmId"))));
-			
-		case("addAccessRights"):
-			return new Response(Response.BOOLEAN,db.addAccessRights(Integer.parseInt(request.getparameter("userId")), Integer.parseInt(request.getparameter("farmId"))));
-			
-		case("removeSheep"):
-			return new Response(Response.BOOLEAN,db.removeSheep(Integer.parseInt(request.getparameter("sheepId"))));
-
-		case("login"):
-			return new Response(Response.USER,db.loginQuery(request.getparameter("username"), request.getparameter("password")));
-		
-		}
-
-		return null;
-	}
+	
+	
 	
 }

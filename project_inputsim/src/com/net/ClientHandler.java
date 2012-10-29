@@ -40,7 +40,7 @@ public class ClientHandler implements Runnable {
 
                 case Request.REQUEST:
                 	server.sg.appendRoom(username + ": " + req.getMessage() );
-                    Response res = server.HandleRequest(req);
+                    Response res = HandleRequest(req);
     				sOutput.writeObject(res);
                     break;
                 case Request.LOGOUT:
@@ -59,26 +59,43 @@ public class ClientHandler implements Runnable {
 
 	}
 	
-	private void notifyPhone() {
-		
-	}
-	
-	private void notifyEmail() {
-		
-	}
-	
-	private void findPhoneNumer() {
-		db.getPhoneNumber(username);
-	}
-	
-	private void findEmailAddress() {
-		db.getEmailAddress(username);
-	}
-	
 	public void kill() throws IOException {
 		sOutput.close();
 		sInput.close();
 		socket.close(); 
+	}
+	
+	/**Processes requests from clients. Calls the appropriate db method based on the input given.
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public Response HandleRequest(Request request) {
+		switch(request.getMessage()){
+		case("getSheep"):
+			return new Response(Response.LIST,db.getSheep(Integer.parseInt(request.getparameter("farmId"))));
+		
+		case("getSheepStatus"):
+			return new Response(Response.LIST,db.getSheepStatus(Integer.parseInt(request.getparameter("farmId"))));
+			
+		case("getSheepAlert"):
+			return new Response(Response.LIST,db.getSheepAlert(Integer.parseInt(request.getparameter("farmId"))));
+			
+		case("deleteAccessRights"):
+			return new Response(Response.BOOLEAN,db.removeAccessRights(Integer.parseInt(request.getparameter("userId")), Integer.parseInt(request.getparameter("farmId"))));
+			
+		case("addAccessRights"):
+			return new Response(Response.BOOLEAN,db.addAccessRights(Integer.parseInt(request.getparameter("userId")), Integer.parseInt(request.getparameter("farmId"))));
+			
+		case("removeSheep"):
+			return new Response(Response.BOOLEAN,db.removeSheep(Integer.parseInt(request.getparameter("sheepId"))));
+
+		case("login"):
+			return new Response(Response.USER,db.loginQuery(request.getparameter("username"), request.getparameter("password")));
+		
+		}
+
+		return null;
 	}
 
 }

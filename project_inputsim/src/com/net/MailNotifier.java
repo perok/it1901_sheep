@@ -1,15 +1,15 @@
 package com.net;
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.Properties;
-
 import javax.mail.*;
 import javax.mail.internet.*;
-
-import com.sun.mail.smtp.*;
-
 import core.classes.GpsPosition;
 import core.settings.Settings;
+
+/**Notifies users by mail.
+ * 
+ * @author Lars Erik
+ *
+ */
 public class MailNotifier {
 
 	private String username;
@@ -17,6 +17,11 @@ public class MailNotifier {
 	private Settings settings;
 	private Session session;
 
+	/**Constructor that creates session with google smtp with username and password
+	 * given in the settings file.
+	 * 
+	 * @param settings
+	 */
 	public MailNotifier(Settings settings) {
 		this.settings = settings;
 		username = settings.getGoogleUser();
@@ -35,6 +40,11 @@ public class MailNotifier {
 		});
 	}
 
+	/**Sends an email to recipient with a warning containing the gps position.
+	 * 
+	 * @param recipient
+	 * @param gps
+	 */
 	public void notifyUser(String recipient, GpsPosition gps) {
 		try {
 
