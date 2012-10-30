@@ -8,6 +8,8 @@ import org.jdesktop.swingx.OSMTileFactoryInfo;
 import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.mapviewer.TileFactoryInfo;
+import org.jdesktop.swingx.mapviewer.wms.WMSService;
+import org.jdesktop.swingx.mapviewer.wms.WMSTileFactory;
 
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QWidget;
@@ -35,8 +37,15 @@ public class MapWidget extends QWidget
 	
 	private void initWidget()
 	{
+		String wmsStatensKartVerk = "http://openwms.statkart.no/skwms1/wms.kartdata2?";
+		String layer = "Kartdata2_WMS";
+		GeoPosition trondheimLocation = new GeoPosition( 63.430515, 10.395053);
+		WMSService wmsService = new WMSService(wmsStatensKartVerk, layer);
+		WMSTileFactory wmsTileFactory = new WMSTileFactory(wmsService);
+		
 		TileFactoryInfo info = new OSMTileFactoryInfo();
 		DefaultTileFactory tileFactory = new DefaultTileFactory(info);
+		
 		JXMapViewer mapKitChild;		
 			
 		this.mapKit  = new JXMapKit();
@@ -44,10 +53,10 @@ public class MapWidget extends QWidget
 		
 		 mapKitChild = (JXMapViewer) this.mapKit.getComponent(0);
 		
-		this.mapKit.setTileFactory(tileFactory);		
+		this.mapKit.setTileFactory(wmsTileFactory); //tileFactory);		
 		this.mapKit.setVisible(true);
 		this.mapKit.setZoom(1);
-		this.mapKit.setAddressLocation(new GeoPosition(50.11, 8.68));
+		this.mapKit.setAddressLocation(trondheimLocation);//new GeoPosition(50.11, 8.68));
 		
 		mapKitChild.setMinimumSize(new Dimension(800, 800));
 		mapKitChild.setPreferredSize(new Dimension(800, 800));
