@@ -3,6 +3,9 @@ package com.net;
 import java.net.*;
 import java.io.*;
 import java.util.*;
+
+import com.gui.MainWindow;
+
 import core.classes.Farm;
 import core.classes.User;
 import core.settings.Settings;
@@ -12,7 +15,7 @@ public class ClientSocket  {
 	private ObjectInputStream sInput;
 	private ObjectOutputStream sOutput;
 	private Socket socket;
-	private Object caller;
+	private MainWindow caller;
 	private String server, username;
 	private int port;
 	private Settings settings;
@@ -39,7 +42,7 @@ public class ClientSocket  {
 	 * @param username
 	 * @param caller
 	 */
-	public ClientSocket(String server, int port, String username, Object caller) {
+	public ClientSocket(String server, int port, String username, MainWindow caller) {
 		this.server = server;
 		this.port = port;
 		this.username = username;
