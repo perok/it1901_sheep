@@ -1,6 +1,8 @@
 package core.classes;
 
-public class SheepStatus extends Message {
+import java.io.Serializable;
+
+public class SheepStatus extends Message  implements Serializable {
 
 //	public SheepStatus(int id, int sheepId, int timestamp, float temperature, GpsPosition gpsPosition, int farmId) {
 //		super(farmId, sheepId, farmId, temperature, gpsPosition, farmId);

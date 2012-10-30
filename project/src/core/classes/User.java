@@ -1,8 +1,9 @@
 package core.classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class User {
+public class User  implements Serializable{
 	private int id;
 	private String name;
 	private int phoneNumber;
@@ -10,10 +11,11 @@ public class User {
 	private String email;
 	private String username;
 	private ArrayList<Farm> farmlist;
+	private String password;
 	
 	
 
-	public User(int id, String name, int phoneNumber, int mobileNumber, String email, String username, 
+	public User(int id, String username, String name, String password, int mobileNumber, String email,  
 			ArrayList<Farm> farmlist) {
 		this.id = id;
 		this.name = name;
@@ -78,6 +80,14 @@ public class User {
 
 	public void setFarmlist(ArrayList<Farm> farmlist) {
 		this.farmlist = farmlist;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

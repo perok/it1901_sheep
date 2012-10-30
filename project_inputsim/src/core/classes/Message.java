@@ -1,6 +1,8 @@
 package core.classes;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable{
 	private int id;
 	private int sheepId;
 	private int timestamp;

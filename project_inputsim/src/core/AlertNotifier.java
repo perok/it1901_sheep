@@ -58,7 +58,7 @@ public class AlertNotifier implements Runnable{
 		GpsPosition gps = sheepAlert.getGpsPosition();
 		int recipient = db.getAlertResponderPhone(sheepAlert.getFarmId());
 		skype.setNumber(Integer.toString(recipient));
-		skype.notifyPhone();
+		skype.notifyPhone(gps);
 	}
 
 	/** Find the email of the admin of the farm and send him an email with the mail object.

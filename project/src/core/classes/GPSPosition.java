@@ -10,4 +10,20 @@ public class GpsPosition {
 		this.longditude = longditude;
 	}
 
+	public double getLatitute() {
+		return latitute;
+	}
+
+	public void setLatitute(double latitute) {
+		this.latitute = latitute;
+	}
+
+	public double getLongditude() {
+		return longditude;
+	}
+
+	public void setLongditude(double longditude) {
+		this.longditude = longditude;
+	}
+
 }

@@ -5,8 +5,6 @@ import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import com.db.DatabaseConnector;
-import com.skype.PhoneNotifier;
-
 import core.AlertNotifier;
 import core.classes.Farm;
 import core.classes.SheepAlert;

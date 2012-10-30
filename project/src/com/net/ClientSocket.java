@@ -12,7 +12,7 @@ public class ClientSocket  {
 	private ObjectInputStream sInput;
 	private ObjectOutputStream sOutput;
 	private Socket socket;
-	private ClientGUI caller;
+	private Object caller;
 	private String server, username;
 	private int port;
 	private Settings settings;
@@ -39,14 +39,14 @@ public class ClientSocket  {
 	 * @param username
 	 * @param caller
 	 */
-	public ClientSocket(String server, int port, String username, ClientGUI caller) {
+	public ClientSocket(String server, int port, String username, Object caller) {
 		this.server = server;
 		this.port = port;
 		this.username = username;
 		this.caller = caller;
 	}
 
-	/**
+	/**Connects to the server and opens streams for objects to be sent.
 	 * 
 	 * @return
 	 */
@@ -95,7 +95,7 @@ public class ClientSocket  {
 		if(caller == null)
 			System.out.println(req);
 		else
-			caller.append(req + "\n");
+			caller.handleResponse(req + "\n");
 	}
 
 	/**Transmits the request via outputstream to the server.
@@ -223,7 +223,7 @@ public class ClientSocket  {
 
 	/**Internal class(thread) that listens for input from the server. The object "caller"
 	 * must have a method to handle the response it is given. When started the thread constantly
-	 * listens for input and calls the "append" method in the "caller" object.
+	 * listens for input and calls the "handleResponse" method in the "caller" object.
 	 * 
 	 * @author Lars Erik
 	 */
@@ -237,7 +237,7 @@ public class ClientSocket  {
 						System.out.print("> ");
 					}
 					else {
-						caller.append(req.toString());
+						caller.handleResponse(req.toString());
 					}
 				}
 				catch(IOException e) {
