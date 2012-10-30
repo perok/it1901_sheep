@@ -1,5 +1,7 @@
 package com.gui;
 
+import com.net.ClientSocket;
+
 
 public class LoginWindow {
 	

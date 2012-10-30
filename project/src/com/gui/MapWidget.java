@@ -2,8 +2,16 @@ package com.gui;
 
 import java.awt.Dimension;
 
+import org.jdesktop.swingx.JXMapKit;
+import org.jdesktop.swingx.JXMapViewer;
+import org.jdesktop.swingx.OSMTileFactoryInfo;
+import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
+import org.jdesktop.swingx.mapviewer.GeoPosition;
+import org.jdesktop.swingx.mapviewer.TileFactoryInfo;
+
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QWidget;
+import com.trolltech.research.qtjambiawtbridge.QComponentHost;
 
 /** Stream an external source of media
  * 
