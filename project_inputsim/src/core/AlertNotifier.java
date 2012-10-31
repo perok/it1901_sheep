@@ -38,15 +38,8 @@ public class AlertNotifier implements Runnable{
 	@Override
 	public void run() {
 		while (true) {
-			if(db.newAlertExists()) {
-				alerts = db.getNewSheepAlert();
-				if(!alerts.isEmpty()) {
-					System.out.println("Alert found");
-//					notifyPhone(alerts.get(0));
-//					notifyEmail(alerts.get(0));
-					db.alertNotified(alerts.get(0).getId());
-				}
-			}
+			
+			
 		}
 	}
 
@@ -69,6 +62,17 @@ public class AlertNotifier implements Runnable{
 		GpsPosition gps = sheepAlert.getGpsPosition();
 		String recipient = db.getAlertResponderEmail(sheepAlert.getFarmId());
 		mail.notifyUser(recipient, gps);
+	}
+	
+	public void recieveAlert(SheepAlert sheepAlert) {
+		notifyPhone(sheepAlert);
+		notifyEmail(sheepAlert);
+		db.insertSheepAlert(sheepAlert);
+		db.alertNotified(sheepAlert.getId());
+	}
+	
+	public void recieveStatus(String[][] status) {
+		
 	}
 
 }

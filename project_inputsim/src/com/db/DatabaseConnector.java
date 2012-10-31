@@ -18,7 +18,7 @@ public class DatabaseConnector {
 		database = settings.getDbDatabase();
 		username = settings.getDbUser();
 		password = settings.getDbPassword();
-		
+
 		try
 		{
 			Class.forName ("com.mysql.jdbc.Driver").newInstance ();
@@ -31,7 +31,7 @@ public class DatabaseConnector {
 			System.err.println ("Cannot connect to database server"+e.toString());
 		}
 	}
-	
+
 	/**Helper method to get boolean value of a db-entry
 	 * 
 	 * @param string
@@ -49,11 +49,11 @@ public class DatabaseConnector {
 			else return false;
 		}
 	}
-	
+
 	/*
 	 * CLIENT SECTION
 	 */
-	
+
 	public User loginQuery(String username, String password) {
 		String[][] r = processQuery("SELECT id,username,password,name,mobile_number,email FROM user WHERE username = '" + username + "'" + " AND password = '" + password + "';");
 		User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5], null);
@@ -68,11 +68,11 @@ public class DatabaseConnector {
 			}
 			farms.add(farm);
 		}
-//		user.addFarms(farms);
+		//		user.addFarms(farms);
 		return user;
 	}
-	
-	
+
+
 
 	public ArrayList<Sheep> getSheep(int farmId) {
 		ArrayList<Sheep> list = new ArrayList<Sheep>();
@@ -83,7 +83,7 @@ public class DatabaseConnector {
 		}
 		return list;
 	}
-	
+
 	public boolean removeSheep(Sheep sheep) {
 		try {
 			Statement s = conn.createStatement();
@@ -94,7 +94,7 @@ public class DatabaseConnector {
 			return false;
 		}
 	}
-	
+
 	public boolean removeSheep(int sheepId) {
 		try {
 			Statement s = conn.createStatement();
@@ -105,7 +105,7 @@ public class DatabaseConnector {
 			return false;
 		}
 	}
-	
+
 	public ArrayList<Farm> getFarms(User user) {
 		ArrayList<Farm> list = new ArrayList<Farm>();
 		String[][] r = processQuery("SELECT * FROM access_rights WHERE user_id = " + user.getId() + "");
@@ -114,7 +114,7 @@ public class DatabaseConnector {
 		}
 		return list;
 	}
-	
+
 	public boolean addAccessRights(int userId, int farmId) {
 		try{
 			Statement s = conn.createStatement();
@@ -125,9 +125,9 @@ public class DatabaseConnector {
 		}
 		return true;
 	}
-	
+
 	public boolean removeAccessRights(int userId, int farmId) {
-		
+
 		try{
 			Statement s = conn.createStatement();
 			s.executeUpdate("DELETE FROM access_rights WHERE " + userId + " = user_id AND " + farmId + " = farm_id;");
@@ -137,9 +137,9 @@ public class DatabaseConnector {
 		}
 		return true;
 	}
-	
+
 	public boolean editUser(int userId, User user) {
-		
+
 		try{
 			Statement s = conn.createStatement();
 			s.executeUpdate("UPDATE user SET name = '" + user.getName() + "', password = '" + user.getPassword() + "', phone_number = " + user.getPhoneNumber() + ", "+
@@ -150,7 +150,7 @@ public class DatabaseConnector {
 		}
 		return true;
 	}
-	
+
 	public ArrayList<SheepStatus> getSheepStatus(int farmId) {
 		ArrayList<SheepStatus> list = new ArrayList<SheepStatus>();
 		String[][] r = processQuery("SELECT * FROM sheep_status WHERE farm_id = " + farmId + ";");
@@ -161,7 +161,7 @@ public class DatabaseConnector {
 		}
 		return list;
 	}
-	
+
 	public ArrayList<SheepAlert> getSheepAlert(int farmId) {
 		ArrayList<SheepAlert> list = new ArrayList<SheepAlert>();
 		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE farm_id = " + farmId + ";");
@@ -172,20 +172,20 @@ public class DatabaseConnector {
 		}
 		return list;
 	}
-	
-	
+
+
 	/*
 	 * SERVER SECTION
 	 */
-	
+
 	public String getPhoneNumber(String username) {
 		String[][] results = processQuery("SELECT phone_number FROM user WHERE username = '" + username + "';");
 		return results[0][0];
 	}
-	
-public String getEmailAddress(String username) {
-	String[][] results = processQuery("SELECT e-mail FROM user WHERE username = '" + username + "';");
-	return results[0][0];
+
+	public String getEmailAddress(String username) {
+		String[][] results = processQuery("SELECT e-mail FROM user WHERE username = '" + username + "';");
+		return results[0][0];
 	}
 
 	public void insertSheepStatus(String[][] sheepstats) {
@@ -201,7 +201,7 @@ public String getEmailAddress(String username) {
 			e.printStackTrace();
 		}	
 	}
-	
+
 	public void deleteSheepStatus() {
 		try {
 			Statement s = conn.createStatement();
@@ -226,6 +226,20 @@ public String getEmailAddress(String username) {
 		}	
 	}
 	
+	public void insertSheepAlert(SheepAlert alert) {
+		try {
+			Statement s = conn.createStatement();
+			
+				s.executeUpdate("INSERT INTO sheep_alert (id,sheep_id,timestamp,temperature,heart_rate,latitude,longditude,farm_id" +
+						") VALUES (" + ""+alert.getId()+"," + ""+alert.getSheep()+"," + ""+alert.getTimestamp()+"," +
+						""+alert.getTemperature()+"," + ""+alert.getTemperature()+"," + ""+alert.getGpsPosition().getLatitute()+ "," +alert.getGpsPosition().getLongditude()+ "," +alert.getFarmId()+");");
+
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+	}
+
 	public void deleteSheepAlert() {
 		try {
 			Statement s = conn.createStatement();
@@ -246,28 +260,28 @@ public String getEmailAddress(String username) {
 		}
 		return list;
 	}
-	
+
 	public boolean newAlertExists() {
 		ArrayList<SheepAlert> list = new ArrayList<SheepAlert>();
 		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE notified = " + 0 + ";");
-		
-		if(r == null)
+
+		if(r[0][0] == null)
 			return false;
 		else
 			return true;
 	}
-	
+
 	public void alertNotified(int alertId) {
 		try {
 			Statement s = conn.createStatement();
-				s.executeUpdate("UPDATE sheep_alert SET notified = " + 1 + " WHERE id = " + alertId
-						+ ";");
+			s.executeUpdate("UPDATE sheep_alert SET notified = " + 1 + " WHERE id = " + alertId
+					+ ";");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
 	}
-	
+
 	public String getAlertResponderEmail(int farmId) {
 		System.out.println(farmId);
 		String[][] r = processQuery("SELECT user_id FROM access_rights WHERE farm_id = " + farmId + 
@@ -275,15 +289,15 @@ public String getEmailAddress(String username) {
 		System.out.println(r[0][0]);
 		String[][] s = processQuery("SELECT email from user WHERE id = " + Integer.parseInt(r[0][0]));
 		return s[0][0];
-		
+
 	}
-	
+
 	public int getAlertResponderPhone(int farmId) {
 		String[][] r = processQuery("SELECT user_id FROM access_rights WHERE farm_id = " + farmId + 
 				" AND admin=1;");
 		String[][] s = processQuery("SELECT mobile_number from user WHERE id=" + Integer.parseInt(r[0][0]));
 		return Integer.parseInt(s[0][0]);
-		
+
 	}
 
 	public void insertSheep(String[][] sheep) {
@@ -299,7 +313,7 @@ public String getEmailAddress(String username) {
 			e.printStackTrace();
 		}	
 	}
-	
+
 	public int getNumberOfSheep() {
 		String[][] results = processQuery("SELECT * FROM sheep");
 		return results.length;
@@ -327,12 +341,12 @@ public String getEmailAddress(String username) {
 			e.printStackTrace();
 		}	
 	}
-	
+
 	public int getNumberOfFarms() {
 		String[][] results = processQuery("SELECT * FROM farm");
 		return results.length;
 	}
-	
+
 	public int getLatestFarm() {
 
 		int latest = -1;
@@ -353,7 +367,7 @@ public String getEmailAddress(String username) {
 			e.printStackTrace();
 		}	
 	}
-	
+
 	public void insertUser(String[][] users) {
 		try {
 			Statement s = conn.createStatement();
@@ -378,7 +392,7 @@ public String getEmailAddress(String username) {
 			e.printStackTrace();
 		}	
 	}
-	
+
 	/** A method for processing SELECT queries easier. Returns a String[][] instead of using result sets given 
 	 * from the sql query. 
 	 * 

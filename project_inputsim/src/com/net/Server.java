@@ -8,7 +8,9 @@ import com.db.DatabaseConnector;
 import core.AlertNotifier;
 import core.classes.Farm;
 import core.classes.SheepAlert;
+import core.classes.SheepStatus;
 import core.settings.Settings;
+import core.sim.SheepStatusSim;
 
 /**Server that accpects sockets and creates ClientHandlers for connecting clients.
  * 
@@ -17,13 +19,13 @@ import core.settings.Settings;
  */
 public class Server {
 	private ArrayList<ClientHandler> al;
-	public ServerGUI sg;
 	private SimpleDateFormat sdf;
 	private int port;
 	private boolean keepGoing;
-	private DatabaseConnector db;
-	private AlertNotifier notifier;
 	private Settings settings;
+	public ServerGUI sg;
+	public AlertNotifier notifier;
+	private SheepStatusSim simulator;
 
 	/**Constructor without GUI.
 	 * 
@@ -44,12 +46,13 @@ public class Server {
 		this.port = port;
 		sdf = new SimpleDateFormat("HH:mm:ss");
 		al = new ArrayList<ClientHandler>();
-		db = new DatabaseConnector(settings);
 		notifier = new AlertNotifier(settings);
+		simulator = new SheepStatusSim(10, this);
 	}
 
 	public void start() {
 		keepGoing = true;
+		simulator.addAlert(1);
 		try 
 		{
 			ServerSocket serverSocket = new ServerSocket(port);
