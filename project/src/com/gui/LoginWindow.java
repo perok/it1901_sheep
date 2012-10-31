@@ -154,7 +154,8 @@ public class LoginWindow extends QWidget{
 
         txtEditPassword = new QLineEdit(Form);
         txtEditPassword.setObjectName("txtEditPassword");
-
+        txtEditPassword.setEchoMode(EchoMode.Password);
+        
         formLayout.addWidget(txtEditPassword);
 
 
