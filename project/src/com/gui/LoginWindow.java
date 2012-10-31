@@ -1,7 +1,10 @@
 package com.gui;
 
 import com.net.ClientSocket;
+<<<<<<< HEAD
 import core.settings.Settings;
+=======
+>>>>>>> f7d89ae8aa6017bcef50d4f3058a88b36577b9ca
 
 
 public class LoginWindow {

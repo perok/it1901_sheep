@@ -1,5 +1,6 @@
 package com.gui;
 
+import com.net.ClientSocket;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.QTimer;
 import com.trolltech.qt.core.Qt;
@@ -45,6 +46,9 @@ public class MainWindow extends QMainWindow
     private MapWidget mwWidget;
     private SheepListWidget slwSheepList;
     private StatisticsWidget swStatistics;
+    
+    
+    private ClientSocket clientSocket;
     
     /** Main.
      * 
@@ -189,6 +193,8 @@ public class MainWindow extends QMainWindow
 		this.qtWindowTimer		.timeout		 	.connect(this, "timedResize()");
 		this.slwSheepList		.topLevelChanged	.connect(this, "dockEvent()");
 		this.undoAct			.triggered			.connect(this, "undo()");
+		
+		
 	}
 
 	/** Set the initial menu
@@ -260,6 +266,16 @@ public class MainWindow extends QMainWindow
 		
 		this.slwSheepList.setFixedWidth(INIT_SHEEP_WIDGET_SIZE);
 		super.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, this.slwSheepList);
+	}
+	
+	/**
+	 * Internal method for setting up network connection after the user has logged in.
+	 * 
+	 * @param usrName
+	 * @param usrPW
+	 */
+	private void setupNetworkConnection(String usrName, String usrPW){
+		clientSocket = new ClientSocket(server, port, username, this);
 	}
 }
 
