@@ -17,13 +17,12 @@ import core.settings.Settings;
  */
 public class Server {
 	private ArrayList<ClientHandler> al;
-	public ServerGUI sg;
 	private SimpleDateFormat sdf;
 	private int port;
 	private boolean keepGoing;
-	private DatabaseConnector db;
-	private AlertNotifier notifier;
 	private Settings settings;
+	public ServerGUI sg;
+	public AlertNotifier notifier;
 
 	/**Constructor without GUI.
 	 * 
@@ -44,7 +43,6 @@ public class Server {
 		this.port = port;
 		sdf = new SimpleDateFormat("HH:mm:ss");
 		al = new ArrayList<ClientHandler>();
-		db = new DatabaseConnector(settings);
 		notifier = new AlertNotifier(settings);
 	}
 

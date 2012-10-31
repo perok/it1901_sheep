@@ -20,7 +20,7 @@ public class ClientGUI extends JFrame implements ActionListener {
 	// Constructor connection receiving a socket number
 	ClientGUI(String host, int port) {
 
-		super("Chat Client");
+		super("SheepShield client");
 		defaultPort = port;
 		defaultHost = host;
 		

@@ -5,6 +5,10 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 import javax.swing.Timer;
 import com.db.*;
+import com.net.Server;
+
+import core.classes.GpsPosition;
+import core.classes.SheepAlert;
 import core.settings.*;
 
 
@@ -20,16 +24,18 @@ public class SheepStatusSim {
 	private DatabaseConnector sq;
 	private Random rand;
 	private int numberOfFarms;
+	private Server server;
 
 	/**Default constructor. Sets interval to one minute
 	 * 
 	 */
-	public SheepStatusSim() {
+	public SheepStatusSim(Server server) {
 		timerInterval = DEFAULT_INTERVAL*1000;
 		sq = new DatabaseConnector(new Settings());
 		numberOfSheep = sq.getNumberOfSheep();
 		rand = new Random();
-		numberOfFarms = sq.getNumberOfFarms()	;
+		numberOfFarms = sq.getNumberOfFarms();
+		this.server = server;
 	}
 
 	/**Constructor that sets the status intervals equal to the 
@@ -37,12 +43,13 @@ public class SheepStatusSim {
 	 * 
 	 * @param interval
 	 */
-	public SheepStatusSim(int interval) {
+	public SheepStatusSim(int interval,Server server) {
 		timerInterval = interval*1000;
 		sq = new DatabaseConnector(new Settings());
 		numberOfSheep = sq.getNumberOfSheep();
 		rand = new Random();
 		numberOfFarms = sq.getNumberOfFarms();
+		this.server = server;
 	}
 
 	/**Starts the timer and keeps it running until the program terminates.
@@ -69,8 +76,10 @@ public class SheepStatusSim {
 			alerts[i][4] = Integer.toString(rand.nextInt(400));
 			alerts[i][5] = Integer.toString(rand.nextInt(400));
 			alerts[i][6] = Integer.toString(rand.nextInt(numberOfFarms)+1);
+			server.notifier.recieveAlert(new SheepAlert(Integer.parseInt(alerts[i][0]), Integer.parseInt(alerts[i][1]), 
+					Integer.parseInt(alerts[i][2]), Integer.parseInt(alerts[i][3]), new GpsPosition(Integer.parseInt(alerts[i][4]), 
+							Integer.parseInt(alerts[i][5])), Integer.parseInt(alerts[i][6])));
 		}
-		sq.insertSheepAlert(alerts);
 	}
 
 	/**Adds status via SqlConection to the database. Randomly generates statuses
@@ -89,7 +98,7 @@ public class SheepStatusSim {
 			stats[i][5] = Integer.toString(rand.nextInt(400));
 			stats[i][6] = Integer.toString(rand.nextInt(numberOfFarms)+1);
 		}
-		sq.insertSheepStatus(stats);
+		server.notifier.recieveStatus(stats);
 	}
 
 	/**
@@ -106,7 +115,7 @@ public class SheepStatusSim {
 	ActionListener updateStatus = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {
 			System.out.println("Action registered");
-//			addStatus();
+			//			addStatus();
 		}
 	};
 

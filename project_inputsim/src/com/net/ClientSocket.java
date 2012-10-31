@@ -136,8 +136,8 @@ public class ClientSocket  {
 
 	public static void main(String[] args) {
 		int portNumber = 1500;
-		String serverAddress = "localhost";
-		String userName = "Anonymous";
+		String serverAddress = "kord.dyndns.org";
+		String userName = "Larsynoob";
 
 		ClientSocket ClientSocket = new ClientSocket(serverAddress, portNumber, userName);
 		if(!ClientSocket.start())
@@ -231,13 +231,13 @@ public class ClientSocket  {
 		public void run() {
 			while(true) {
 				try {
-					Response req = (Response) sInput.readObject();
+					Response res = (Response) sInput.readObject();
 					if(caller == null) {
-						System.out.println(req);
+						System.out.println(res);
 						System.out.print("> ");
 					}
 					else {
-						caller.append(req.toString());
+						caller.append(res.toString());
 					}
 				}
 				catch(IOException e) {
@@ -251,6 +251,7 @@ public class ClientSocket  {
 			}
 		}
 	}
+	
 }
 
 

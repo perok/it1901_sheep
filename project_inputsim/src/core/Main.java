@@ -23,8 +23,8 @@ public class Main {
 //		SheepStatusSim sim = new SheepStatusSim(6000);
 //		sim.init();
 
-		SheepStatusSim sim = new SheepStatusSim(6000);
-		sim.init();
+//		SheepStatusSim sim = new SheepStatusSim(6000);
+//		sim.init();
 		
 		
 //		DatabasePopulator pop = new DatabasePopulator();
