@@ -67,6 +67,7 @@ public class AlertNotifier implements Runnable{
 	public void recieveAlert(SheepAlert sheepAlert) {
 		notifyPhone(sheepAlert);
 		notifyEmail(sheepAlert);
+		db.insertSheepAlert(sheepAlert);
 		db.alertNotified(sheepAlert.getId());
 	}
 	

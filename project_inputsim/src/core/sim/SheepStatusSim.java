@@ -81,6 +81,24 @@ public class SheepStatusSim {
 							Integer.parseInt(alerts[i][5])), Integer.parseInt(alerts[i][6])));
 		}
 	}
+	
+	public void addAlert(int amount) {
+		String[][] alerts = new String[amount][7];
+
+		for (int i = 0; i < amount; i++) {
+			alerts[i][0] = Integer.toString(i+1);
+			alerts[i][1] = Integer.toString(rand.nextInt(3600)+ 1389080800);
+			alerts[i][2] = Integer.toString(rand.nextInt(4)+37);
+			alerts[i][3] = Integer.toString(rand.nextInt(40)+140);
+			alerts[i][4] = Integer.toString(rand.nextInt(400));
+			alerts[i][5] = Integer.toString(rand.nextInt(400));
+			alerts[i][6] = Integer.toString(rand.nextInt(numberOfFarms)+1);
+			server.notifier.recieveAlert(new SheepAlert(Integer.parseInt(alerts[i][0]), Integer.parseInt(alerts[i][1]), 
+					Integer.parseInt(alerts[i][2]), Integer.parseInt(alerts[i][3]), new GpsPosition(Integer.parseInt(alerts[i][4]), 
+							Integer.parseInt(alerts[i][5])), Integer.parseInt(alerts[i][6])));
+		}
+	}
+
 
 	/**Adds status via SqlConection to the database. Randomly generates statuses
 	 * for all the sheep in the database
