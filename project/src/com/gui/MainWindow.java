@@ -95,6 +95,8 @@ public class MainWindow extends QMainWindow
         
         /* Triggers and actions */
         init_connectEvents();
+        
+        setupNetworkConnection("kake", "er digg");
     }
     
     /** Handle "about" trigger
@@ -275,7 +277,20 @@ public class MainWindow extends QMainWindow
 	 * @param usrPW
 	 */
 	private void setupNetworkConnection(String usrName, String usrPW){
-		clientSocket = new ClientSocket(server, port, username, this);
+		this.
+		clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
+		if(!clientSocket.start())
+			System.out.println("Problem with connecting");
+		clientSocket.login(usrName, usrPW);
+		
+	}
+	
+	public void handleResponse(String response){
+		System.out.println("Response: "+ response);
+	}
+	
+	public void connectionFailed(){
+		System.out.println("Something got seriously fucked");
 	}
 }
 

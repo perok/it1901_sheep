@@ -1,6 +1,10 @@
 package com.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.event.MouseInputListener;
 
@@ -14,9 +18,12 @@ import org.jdesktop.swingx.input.ZoomMouseWheelListenerCenter;
 import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.mapviewer.TileFactoryInfo;
+import org.jdesktop.swingx.mapviewer.WaypointPainter;
 import org.jdesktop.swingx.mapviewer.wms.WMSService;
 import org.jdesktop.swingx.mapviewer.wms.WMSTileFactory;
 
+import com.mapWidgetExtras.FancyWaypointRenderer;
+import com.mapWidgetExtras.MyWaypoint;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 import com.trolltech.research.qtjambiawtbridge.QComponentHost;
@@ -83,6 +90,23 @@ public class MapWidget extends QWidget
 		
 		this.qhblSwingLayout.addWidget(this.qchHost);
 		super.setLayout(this.qhblSwingLayout);
+	}
+	
+	public void setSheepGeoPositionsOnMap(){
+		// Create waypoints from the geo-positions
+		//Set<MyWaypoint> waypoints = new HashSet<MyWaypoint>(Arrays.asList(
+				/*new MyWaypoint("F", Color.ORANGE, frankfurt),
+				new MyWaypoint("W", Color.CYAN, wiesbaden),
+				new MyWaypoint("M", Color.GRAY, mainz),
+				new MyWaypoint("D", Color.MAGENTA, darmstadt),
+				new MyWaypoint("O", Color.GREEN, offenbach)));
+
+		// Create a waypoint painter that takes all the waypoints
+		WaypointPainter<MyWaypoint> waypointPainter = new WaypointPainter<MyWaypoint>();
+		waypointPainter.setWaypoints(waypoints);
+		waypointPainter.setRenderer(new FancyWaypointRenderer());
+
+		mapKit.setOverlayPainter(waypointPainter);*/
 	}
 }
 
