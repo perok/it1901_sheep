@@ -241,7 +241,7 @@ public class ClientSocket  {
 						System.out.print("> ");
 					}
 					else {
-						caller.handleResponse(req.toString());
+						caller.handleResponse(req);
 					}
 				}
 				catch(IOException e) {
