@@ -236,13 +236,13 @@ public class ClientSocket  {
 		public void run() {
 			while(true) {
 				try {
-					Response req = (Response) sInput.readObject();
+					Response res = (Response) sInput.readObject();
 					if(caller == null) {
-						System.out.println(req);
+						System.out.println(res.toString());
 						System.out.print("> ");
 					}
 					else {
-						caller.handleResponse(req);
+						caller.handleResponse(res);
 					}
 				}
 				catch(IOException e) {
