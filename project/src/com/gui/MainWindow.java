@@ -24,7 +24,7 @@ import core.classes.Sheep;
  * @author Gruppe 10 <3
  *
  */
-public class MainWindow extends QMainWindow
+public class MainWindow extends QMainWindow 
 {
 	private static final double SHEEP_WINDOW_COVERAGE = 0.2;
 	
@@ -90,7 +90,10 @@ public class MainWindow extends QMainWindow
     {
         super(parent);
         
-        setupLoginWindow();
+        Ui_MainWindow vindu = new Ui_MainWindow();
+        vindu.setupUi(this);
+        
+        //setupLoginWindow();
     }
     
     /*
@@ -170,17 +173,21 @@ public class MainWindow extends QMainWindow
     //		where else? Is there another way to handle user re-sizing?
 	protected void resizeEvent(QResizeEvent qreSize)
     {
-		this.maSheep.resizeWidget(qreSize, getMdiWidth());
+    	super.resizeEvent(qreSize);
+    	if(maSheep != null)
+    		this.maSheep.resizeWidget(qreSize, getMdiWidth());
 	}
     
     
-    @SuppressWarnings("unused")
+    //@SuppressWarnings("unused")
     /** Resize the window appropriately after the window is initialized.
      */
     //FIXME: This function is not desired, it would be better if resizeEvent
     //		 wasn't called until this had initialized itself
     private void timedResize()
     {
+   
+    	
     	this.qtWindowTimer.stop();
     	this.qtWindowTimer.disconnect();
     	this.maSheep.cascadeWindows();
