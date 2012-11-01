@@ -1,0 +1,52 @@
+31102012 12:30
+
+ALF: (hehehehehe)
+	Har gjort sånn at ting kjører
+	Migrert database sånn at den er på server
+		Noen problemer med minne o.l.
+	Har fått epost og mail til å kjøre
+
+	
+Anders:
+	GUI og dokumentasjon
+
+Jørgen:
+	Finpusset på dokumentasjon
+	Lært litt QtJambi
+
+Tor:
+	Skrevet dokumentasjon
+
+Per:
+	Har skrevet dokumentasjon
+	Har fikset litt på statistikkvindu
+	Sett på WMS, fått det til å virke
+	Få sauer inn i databasen
+
+FIXME: 
+	Vi burde få mere konkrete krav til dokumentasjon;
+		noen avsnitt er redundante o:
+	Sprint er ikke heeeelt ferdig akkurat
+		Kan det ha noe å gjøre med at vi kombinerte dok og kode?
+
+	
+TODO: 
+	Skrive mer dokumentasjon
+		Må skrive mer om arkitektur til systemet vårt, valg av API osv
+		Produktbeskrivelse..
+		Systemdesign
+		Systemfunksjoner	
+
+WORKFLOW:
+	Møtet går ellers til at vi diskuterer litt deadlines
+	ALF forklarer systemdesign
+
+	
+	
+
+
+
+
+
+
+
