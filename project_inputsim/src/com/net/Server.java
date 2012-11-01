@@ -52,7 +52,6 @@ public class Server {
 
 	public void start() {
 		keepGoing = true;
-		simulator.addAlert(1);
 		try 
 		{
 			ServerSocket serverSocket = new ServerSocket(port);
