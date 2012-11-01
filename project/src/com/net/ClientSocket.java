@@ -117,7 +117,7 @@ public class ClientSocket  {
 	/**Closes all streams and shuts down the socket.
 	 * 
 	 */
-	private void disconnect() {
+	public void disconnect() {
 		try { 
 			if(sInput != null) sInput.close();
 		}
@@ -155,6 +155,7 @@ public class ClientSocket  {
 	 * @param password
 	 */
 	public void login(String username, String password) {
+		System.out.println("Logging in");
 		HashMap params = new HashMap();
 		params.put("username", username);
 		params.put("password", password);
