@@ -7,6 +7,7 @@ import java.util.*;
 import com.gui.MainWindow;
 
 import core.classes.Farm;
+import core.classes.Sheep;
 import core.classes.User;
 import core.settings.Settings;
 
@@ -162,7 +163,26 @@ public class ClientSocket  {
 		params.put("password", password);
 		sendRequest((new Request(Request.REQUEST, "login" ,params)));
 	}
+	
+	/**Makes a request with the given paramter and sends it to the server.
+	 * 
+	 * @param user
+	 */
+	public void editUser(User user) {
+		HashMap params = new HashMap();
+		sendRequest((new Request(Request.EDITUSER, "edituser", user)));
 
+	}
+
+	/**Makes a request with the given paramter and sends it to the server.
+	 * 
+	 * @param user
+	 */
+	public void editSheep(Sheep sheep) {
+		HashMap params = new HashMap();
+		sendRequest((new Request(Request.EDITSHEEP, "editsheep", sheep)));
+
+	}
 	/**Makes a request with the given paramters and sends it to the server.
 	 * 
 	 * @param farm

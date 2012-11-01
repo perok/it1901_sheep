@@ -93,6 +93,11 @@ public class ClientHandler implements Runnable {
 		case("login"):
 			return new Response(Response.USER,db.loginQuery(request.getparameter("username"), request.getparameter("password")));
 		
+		case("editSheep"):
+			return new Response(Response.BOOLEAN,db.editUser(request.getUser().getId(), request.getUser()));
+
+		case("editUser"):
+			return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()));
 		}
 
 		return null;

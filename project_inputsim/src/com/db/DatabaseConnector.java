@@ -150,6 +150,20 @@ public class DatabaseConnector {
 		}
 		return true;
 	}
+	
+	public boolean editSheep(int sheepId, Sheep sheep) {
+
+		try{
+			Statement s = conn.createStatement();
+			s.executeUpdate("UPDATE user SET name = '" + sheep.getName() + "', weigt = '" + sheep.getWeight() + "', alive = " + sheep.isAlive() + ", "+
+					"date_of_birth = " + sheep.getDateOfBirth() + ", farm_id = '" + sheep.getFarmId() + "' WHERE id = " + sheepId + ";");
+		}
+		catch(Exception e){
+			return false;
+		}
+		return true;
+	}
+
 
 	public ArrayList<SheepStatus> getSheepStatus(int farmId) {
 		ArrayList<SheepStatus> list = new ArrayList<SheepStatus>();
