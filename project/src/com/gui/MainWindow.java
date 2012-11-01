@@ -3,6 +3,7 @@ package com.gui;
 import java.util.ArrayList;
 
 import com.net.ClientSocket;
+import com.net.Response;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.QTimer;
 import com.trolltech.qt.core.Qt;
@@ -90,10 +91,10 @@ public class MainWindow extends QMainWindow
     {
         super(parent);
         
-        Ui_MainWindow vindu = new Ui_MainWindow();
-        vindu.setupUi(this);
+        //Ui_MainWindow vindu = new Ui_MainWindow();
+        //vindu.setupUi(this);
         
-        //setupLoginWindow();
+        setupLoginWindow();
     }
     
     /*
@@ -365,6 +366,7 @@ public class MainWindow extends QMainWindow
 	 * Changes the view to application mode
 	 */
 	public void loggedIn(){
+		System.out.println("hello");
 		/* Widgets - */
         initWidgets();
         initSubWindows();
@@ -386,9 +388,9 @@ public class MainWindow extends QMainWindow
 	 */
 	private void tryLogIn(String usrName, String usrPW){
 		loggedIn();
-		/*
+		
 		this.clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
-
+		System.out.println(usrName);
 		try{
 			if(!clientSocket.start())
 				System.out.println("Problem with connecting");
@@ -398,7 +400,7 @@ public class MainWindow extends QMainWindow
 		}
 		catch (Exception e){
 			System.out.println(e);
-		}*/
+		}
 
 	}
 	
@@ -415,7 +417,14 @@ public class MainWindow extends QMainWindow
 	 * DATABSE CONNECTION
 	 */
 	
-	public void handleResponse(String response){
+	public void handleResponse(Response response){
+		System.out.println("handling response");
+		if(response.getType() == 3)
+			if(response.getUser() == null)
+				System.out.println("FAIL");
+			else
+				System.out.println("The success is great");
+		
 		System.out.println("Response: "+ response);
 		
 		//Run loggIn() here
@@ -424,6 +433,11 @@ public class MainWindow extends QMainWindow
 	
 	public void connectionFailed(){
 		System.out.println("Something got seriously fucked");
+	}
+	
+	public void handleMessage(String cake){
+		System.out.println("Handling message");
+		System.out.println(cake);
 	}
 }
 

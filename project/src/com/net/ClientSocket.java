@@ -94,11 +94,12 @@ public class ClientSocket  {
 	 * 
 	 * @param req
 	 */
+	
 	private void display(String req) {
 		if(caller == null)
 			System.out.println(req);
 		else
-			caller.handleResponse(req + "\n");
+			caller.handleMessage(req + "\n");
 	}
 
 	/**Transmits the request via outputstream to the server.

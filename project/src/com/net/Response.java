@@ -36,6 +36,11 @@ public class Response implements Serializable {
 	public int getType() {
 		return type;
 	}
+	
+	public User getUser() {
+		return user;
+	}
+	
 	public boolean getSuccess() {
 		return success;
 	}
