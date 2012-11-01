@@ -117,7 +117,7 @@ public class ClientSocket  {
 	/**Closes all streams and shuts down the socket.
 	 * 
 	 */
-	private void disconnect() {
+	public void disconnect() {
 		try { 
 			if(sInput != null) sInput.close();
 		}

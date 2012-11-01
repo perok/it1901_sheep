@@ -1,16 +1,22 @@
 package com.gui;
 
+import java.util.ArrayList;
+
 import com.net.ClientSocket;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.QTimer;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
+import com.trolltech.qt.gui.QCloseEvent;
+import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMenu;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QResizeEvent;
 import com.trolltech.qt.gui.QWidget;
+
+import core.classes.Sheep;
 
 
 /** Class to hold all graphical components (and itself).
@@ -47,8 +53,11 @@ public class MainWindow extends QMainWindow
     private SheepListWidget slwSheepList;
     private StatisticsWidget swStatistics;
     
+    private SubWindow qmsLoginWindow;
+    private LoginWindowWidget lWindowWidget;
     
-    private ClientSocket clientSocket;
+    
+    private static ClientSocket clientSocket;
     
     /** Main.
      * 
@@ -57,12 +66,12 @@ public class MainWindow extends QMainWindow
     public static void main(String[] args) 
     {
         QApplication.initialize(args);
-
+        
         MainWindow testMainWindow = new MainWindow(null);
         testMainWindow.show();
-        QApplication.exec();
+    	
         
-
+        QApplication.exec();
         
         /*
          * http://doc.qt.digia.com/qt/gallery.html
@@ -71,6 +80,7 @@ public class MainWindow extends QMainWindow
         
         //testMainWindow.setStyleSheet(styleSheet)
     }
+    
 
     /** Constructor. Initialize..
      * 
@@ -79,25 +89,43 @@ public class MainWindow extends QMainWindow
     public MainWindow(QWidget parent)
     {
         super(parent);
-
-        /* Main window properties - */
+        
+        setupLoginWindow();
+    }
+    
+    /*
+     *LOGINWINDOW 
+     */
+    
+    /**
+     * 
+     */
+    public void setupLoginWindow(){
+		/* Main window properties - */
         initActions();
         initMenus();
         initScreenSettings();
         initTimerResize();
         
         /* Widgets - */
-        initWidgets();
-        initSubWindows();
+        initLoginWindowWidget();
+        initLoginWindowSubWindows();
         
         /* Mdi-areas - */
-        initMdi();
+        initMdiLoginWindow();
         
         /* Triggers and actions */
         init_connectEvents();
         
-        setupNetworkConnection("kake", "er digg");
+        if (lWindowWidget == null)
+        	System.out.println("wtf");
+        		
+    	lWindowWidget.tryLogin.connect(this, "tryLogIn(String, String)");
     }
+    
+    /*
+     * APPLICATION 
+     */
     
     /** Handle "about" trigger
 	*/
@@ -183,6 +211,7 @@ public class MainWindow extends QMainWindow
 		this.undoAct = new QAction(tr("&Undo"), this);
 		this.undoAct.setShortcut(tr("Ctrl+Z"));
 		this.undoAct.setStatusTip(tr("Undo your last action"));
+		
 	}
 
 	/** Set the initial event-handlers
@@ -193,11 +222,20 @@ public class MainWindow extends QMainWindow
 		this.aboutQtJambiAct	.triggered			.connect(QApplication.instance(), "aboutQtJambi()");
 		this.exitAct			.triggered			.connect(this, "close()");
 		this.qtWindowTimer		.timeout		 	.connect(this, "timedResize()");
-		this.slwSheepList		.topLevelChanged	.connect(this, "dockEvent()");
 		this.undoAct			.triggered			.connect(this, "undo()");
 		
 		
 	}
+	
+	/** Set the initial event-handlers
+	 */
+	private void init_connectEventsForWidgets()
+	{
+		
+		this.slwSheepList		.topLevelChanged	.connect(this, "dockEvent()");	
+		
+	}
+	
 
 	/** Set the initial menu
 	 */
@@ -231,6 +269,21 @@ public class MainWindow extends QMainWindow
 		
 		super.setCentralWidget(this.maSheep);
 	}
+	
+	/**
+	 * Set the initial MDIArea (centralwidget) for LoginWindow
+	 */
+	private void initMdiLoginWindow(){
+		this.maSheep = new MDIArea();
+		
+		this.maSheep.addSubWindow(this.qmsLoginWindow);
+		
+		/* Make sure it looks OK to begin with */
+		this.maSheep.cascadeWindows();
+		
+		super.setCentralWidget(this.maSheep);
+	}
+	
 
 	/** Set the initial screen settings.
 	 */
@@ -239,6 +292,14 @@ public class MainWindow extends QMainWindow
 		super.setGeometry(10, 10,  INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
 	}
 
+	
+	/** Initialize the LoginWindow subwindow to be placed in the central MDIArea
+	 */
+	private void initLoginWindowSubWindows()
+	{
+		this.qmsLoginWindow = new SubWindow(this.lWindowWidget);
+	}
+	
 	/** Initialize the initial subwindows to be placed in the central MDIArea
 	 */
 	private void initSubWindows()
@@ -255,7 +316,14 @@ public class MainWindow extends QMainWindow
 	    this.qtWindowTimer.setInterval(400);
 	    this.qtWindowTimer.start();
 	}
-
+	
+	/**
+	 * Initializes the login window widget
+	 */
+	private void initLoginWindowWidget(){
+		this.lWindowWidget	= new LoginWindowWidget();
+	}
+	
 	/** Initialize the first widgets
 	 */
 	private void initWidgets()
@@ -264,29 +332,87 @@ public class MainWindow extends QMainWindow
 		this.slwSheepList = new SheepListWidget();
 		this.swStatistics = new StatisticsWidget();
 		
-		
-		
 		this.slwSheepList.setFixedWidth(INIT_SHEEP_WIDGET_SIZE);
 		super.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, this.slwSheepList);
 	}
 	
+	/*
+	 * EVENTS
+	 */
 	/**
-	 * Internal method for setting up network connection after the user has logged in.
+	 * Close event
+	 * 
+	 * @param event the close event
+	 */
+	@Override
+	protected void closeEvent(QCloseEvent event) {
+		
+		if(clientSocket != null)
+			clientSocket.disconnect();
+		
+		super.closeEvent(event);
+	}
+	
+	/**
+	 * Event fired when user has made a succesfull loggin.
+	 * Changes the view to application mode
+	 */
+	public void loggedIn(){
+		/* Widgets - */
+        initWidgets();
+        initSubWindows();
+        
+        qmsLoginWindow = null;
+        lWindowWidget = null;
+        
+        /* Mdi-areas - */
+        initMdi();
+        
+        init_connectEventsForWidgets();
+	}
+	
+	/**
+	 * Signaled method for setting up network connection and log in
 	 * 
 	 * @param usrName
 	 * @param usrPW
 	 */
-	private void setupNetworkConnection(String usrName, String usrPW){
-		this.
-		clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
-		if(!clientSocket.start())
-			System.out.println("Problem with connecting");
-		clientSocket.login(usrName, usrPW);
-		
+	private void tryLogIn(String usrName, String usrPW){
+		loggedIn();
+		/*
+		this.clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
+
+		try{
+			if(!clientSocket.start())
+				System.out.println("Problem with connecting");
+			else
+				clientSocket.login(usrName, usrPW);
+				
+		}
+		catch (Exception e){
+			System.out.println(e);
+		}*/
+
 	}
+	
+	/*
+	 * SIGNALS
+	 * 
+	 */
+	public Signal0 loggedIn;
+	public Signal1<ArrayList<Sheep>> sheepsRecieved;
+	public Signal1<Sheep> showSheepInformation;
+	
+	
+	/*
+	 * DATABSE CONNECTION
+	 */
 	
 	public void handleResponse(String response){
 		System.out.println("Response: "+ response);
+		
+		//Run loggIn() here
+		
 	}
 	
 	public void connectionFailed(){
