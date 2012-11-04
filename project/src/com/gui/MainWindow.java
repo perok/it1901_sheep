@@ -2,20 +2,13 @@ package com.gui;
 
 import java.util.ArrayList;
 
-import javax.swing.UIManager;
-
 import com.net.ClientSocket;
 import com.net.Response;
-import com.trolltech.qt.core.QSize;
-import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
-import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QMainWindow;
-import com.trolltech.qt.gui.QMenu;
 import com.trolltech.qt.gui.QMessageBox;
-import com.trolltech.qt.gui.QResizeEvent;
 import com.trolltech.qt.gui.QWidget;
 
 import core.classes.Sheep;
@@ -40,8 +33,10 @@ public class MainWindow extends QMainWindow
     private QAction exitAct;
     private QAction undoAct;
         
-    private Ui_MainWindow Ui_MainWindow;
+    private UiMainWindow uiMainWindow;
     private UiLoginWindow Ui_LoginWindow;
+    
+    private Object objectAskingForResponse = null;
     
     private static ClientSocket clientSocket;
     
@@ -204,8 +199,9 @@ public class MainWindow extends QMainWindow
 	 * Changes the view to application mode
 	 */
 	public void setupUi_MainWindow(){		
-		Ui_MainWindow = new Ui_MainWindow();
-		Ui_MainWindow.setupUi(this);
+		uiMainWindow = new UiMainWindow();
+		
+		uiMainWindow.setupUi(this);
         
         
         //init_connectEventsForWidgets();
@@ -218,10 +214,10 @@ public class MainWindow extends QMainWindow
 	 * @param usrPW
 	 */
 	private void tryLogIn(String usrName, String usrPW){
-		setupUi_MainWindow();
-		/*
-		this.clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
-		System.out.println(usrName);
+		
+		if(this.clientSocket == null )
+			this.clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
+		
 		try{
 			if(!clientSocket.start())
 				System.out.println("Problem with connecting");
@@ -231,7 +227,7 @@ public class MainWindow extends QMainWindow
 		}
 		catch (Exception e){
 			System.out.println(e);
-		}*/
+		}
 
 	}
 	
@@ -249,26 +245,55 @@ public class MainWindow extends QMainWindow
 	 */
 	
 	public void handleResponse(Response response){
-		System.out.println("handling response");
-		if(response.getType() == 3)
+		System.out.println("Response: "+ response.getType());
+		
+		/*
+		 * Må ha ett system der de ulike viewsa som kaller etter informasjon
+		 * fra serveren blir registrert slikt at de kan sendes dit
+		 */
+		
+		int responseType = response.getType();
+		
+		/* List */
+		if(responseType == 1) {
+			//A object has called for a list
+			if (objectAskingForResponse != null){
+				//Sheeplist asking for information
+				if( objectAskingForResponse instanceof SheepListWidget){
+					//objectAskingForResponse.giveResponse(response);
+					
+					objectAskingForResponse = null;
+				}
+			}
+			System.out.println("respinse 1");
+		}
+		/* Boolean */
+		else if(responseType == 2)
+			System.out.println("response 2");
+		/* User */
+		else if(response.getType() == 3)
 			if(response.getUser() == null)
-				System.out.println("FAIL");
-			else
-				System.out.println("The success is great");
-		
-		System.out.println("Response: "+ response);
-		
-		//Run loggIn() here
-		
+				/*Koble seg til loggininterface og gi beskjed der */
+				System.out.println("Loggin failed, try again");
+			else{
+				System.out.println("Logged in with user: " + response.getUser().getName());
+				setupUi_MainWindow();
+			}
+				
 	}
 	
 	public void connectionFailed(){
-		System.out.println("Something got seriously fucked");
+		System.out.println("Connection error");
 	}
 	
-	public void handleMessage(String cake){
-		System.out.println("Handling message");
-		System.out.println(cake);
+	public void handleMessage(String message){
+		System.out.println("Message from server: " + message);
+	}
+	
+	protected void requestSheeps(Object o){
+		if(objectAskingForResponse == null)
+			objectAskingForResponse = o;
+		//SendRequest
 	}
 }
 
