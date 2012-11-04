@@ -8,6 +8,7 @@ import com.db.DatabaseConnector;
 import com.skype.PhoneNotifier;
 
 import core.AlertNotifier;
+import core.settings.Settings;
 
 
 public class ClientHandler implements Runnable {
@@ -19,10 +20,13 @@ public class ClientHandler implements Runnable {
 	private String username;
 	private boolean keepGoing = true;
 	private DatabaseConnector db;
+	private Settings settings;
 
-	public ClientHandler(Socket socket,Server server) {
+	public ClientHandler(Socket socket,Server server, Settings settings) {
+		this.settings = settings;
 		this.socket = socket;
 		this.server = server;
+		db = new DatabaseConnector(this.settings);
 	}
 
 
