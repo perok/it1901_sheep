@@ -138,7 +138,20 @@ public class MainWindow extends QMainWindow
         
         
         init_connectEventsForWidgets();
+        
+  	}
+	
+	/** Set the initial event-handlers
+	 */
+	private void init_connectEventsForWidgets()
+	{
+		twhandler = new tableWidgetHandler(uiMainWindow.tableWidget);
+		slwHandler = new sheepListWidgetHandler(uiMainWindow.listWidget);
+		//this.slwSheepList		.topLevelChanged	.connect(this, "dockEvent()");
+		
         mwLogic = new MainWindowLogic(uiMainWindow, slwHandler);
+
+		
 	}
     
     /*
@@ -192,15 +205,6 @@ public class MainWindow extends QMainWindow
 		
 	}
 	
-	/** Set the initial event-handlers
-	 */
-	private void init_connectEventsForWidgets()
-	{
-		twhandler = new tableWidgetHandler(uiMainWindow.tableWidget);
-		slwHandler = new sheepListWidgetHandler(uiMainWindow.listWidget);
-		//this.slwSheepList		.topLevelChanged	.connect(this, "dockEvent()");	
-		
-	}
 	
 
 	/** Set the initial menu

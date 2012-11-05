@@ -91,7 +91,6 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 		
 		//doubleclick event
 		this.qlWidget.itemDoubleClicked.connect(this, "onSheepDoubleClicked(QListWidgetItem)");
-		addSheep();
 		
 		//this.qlWidget.itemSelectionChanged.connect(this, "multipleSheepsSelected(QItemSelection, QItemSelection)");
 		
@@ -148,7 +147,7 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	
 	
 	/** debug and test purposes - add sheep */
-	private void addSheep()
+	public void addSheep()
 	{
 		statusBarMessage.emit("Populating Sheeps");
 		

@@ -7,16 +7,22 @@ import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QWidget;
 
+import core.classes.Sheep;
+
 public class MainWindowLogic extends QSignalEmitter{
 	
 	UiMainWindow mw;
 	sheepListWidgetHandler slwHandler;
+	tableWidgetHandler twHandler;
+	
 	
 	QLabel statusbarMessage;
 	
-	public MainWindowLogic(UiMainWindow mw, sheepListWidgetHandler slwHandler){
+	public MainWindowLogic(UiMainWindow mw, sheepListWidgetHandler slwHandler, tableWidgetHandler twHandler){
 		this.mw = mw;
 		this.slwHandler = slwHandler;
+		this.twHandler = twHandler;
+		
 		statusbarMessage = new QLabel("Ready");
 		mw.statusbar.addWidget(statusbarMessage);
 		
@@ -31,14 +37,26 @@ public class MainWindowLogic extends QSignalEmitter{
 		
 		mw.dockWidget.*/
 		
-		this.slwHandler.statusBarMessage.connect(this, "statusBarMessage(String)");
+		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
+		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");
+		System.out.println("Logic applied");
 		
+		
+		//Debug
+		slwHandler.addSheep();
 		
 	}
 	
-	public void statusBarMessage(String text){
-		System.out.println("hello there");
+	private void newStatusBarMessage(String text){
 		statusbarMessage.setText(text);
+	}
+	
+	private void populateTableWidget(Sheep sheep){
+		System.out.println("Sheep selected: " + sheep.getName());
+		//Get messages for sheep
+		//Send them to twHandler
+		
+		//this.twHandler.addSheep(Message)
 	}
 	
 
