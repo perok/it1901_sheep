@@ -82,6 +82,8 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
     public QWidget dockWidgetContents;
     public QGridLayout gridLayout_2;
     public QListWidget listWidget;
+    
+    public QWidget placeholder;
 
     public UiMainWindow() { super(); }
 
@@ -118,9 +120,10 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         //MAPWIDGET = new QWidget(splitter);
         //MAPWIDGET.setObjectName("MAPWIDGET");
         
-        mapWidget = new MapWidget();//splitter);
-        //JXMapKit kit = new JXMapKit();
-        splitter.addWidget(mapWidget);
+        placeholder = new QWidget();
+        splitter.addWidget(placeholder);
+        //mapWidget = new MapWidget();//splitter);
+        //splitter.addWidget(mapWidget);
  
         //splitter.addWidget(MAPWIDGET);
         tabWidget = new QTabWidget(splitter);

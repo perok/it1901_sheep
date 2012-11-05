@@ -2,15 +2,36 @@ package com.gui;
 
 import java.util.ArrayList;
 
+import com.gui.logic.MainWindowLogic;
+import com.gui.logic.sheepListWidgetHandler;
 import com.gui.logic.tableWidgetHandler;
 import com.net.ClientSocket;
 import com.net.Response;
+import com.trolltech.qt.QtBlockedSlot;
+import com.trolltech.qt.core.QPoint;
+import com.trolltech.qt.core.QRect;
+import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.gui.QPainter;
+import com.trolltech.qt.gui.QPixmap;
+import com.trolltech.qt.gui.QStyle;
+import com.trolltech.qt.gui.QStyleFactory;
+import com.trolltech.qt.gui.QStyleHintReturn;
+import com.trolltech.qt.gui.QStyleOption;
+import com.trolltech.qt.gui.QStyleOptionComplex;
 import com.trolltech.qt.gui.QWidget;
+import com.trolltech.qt.gui.QIcon.Mode;
+import com.trolltech.qt.gui.QStyle.ComplexControl;
+import com.trolltech.qt.gui.QStyle.ContentsType;
+import com.trolltech.qt.gui.QStyle.ControlElement;
+import com.trolltech.qt.gui.QStyle.PixelMetric;
+import com.trolltech.qt.gui.QStyle.PrimitiveElement;
+import com.trolltech.qt.gui.QStyle.StyleHint;
+import com.trolltech.qt.gui.QStyle.SubElement;
 
 import core.classes.Sheep;
 
@@ -44,6 +65,8 @@ public class MainWindow extends QMainWindow
     
     /* Handlers */
     private tableWidgetHandler twhandler;
+    private sheepListWidgetHandler slwHandler;
+    private MainWindowLogic mwLogic;
     
     /** Main.
      * 
@@ -53,7 +76,9 @@ public class MainWindow extends QMainWindow
     {
         QApplication.initialize(args);
         
+        QApplication.setStyle("Plastique");//QStyleFactory.keys().get(0));
         MainWindow testMainWindow = new MainWindow(null);
+        //testMainWindow.setStyle(new QStyle().)
         testMainWindow.show();
     	
         
@@ -76,7 +101,15 @@ public class MainWindow extends QMainWindow
     {
         super(parent);
         
+        //QStyleFactory qsf = new QStyleFactory();
+        //QStyle styl = qsf.create(qsf.keys().get(0));
+        //System.out.println(qsf.keys());
+        //this.setStyle(styl);
+        //this.setStyleSheet(qsf.keys().get(0));
+     
+        
         Ui_LoginWindow = new UiLoginWindow();
+        
         Ui_LoginWindow.setupUi(this, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
         setupLoginWindow();
     }
@@ -105,6 +138,7 @@ public class MainWindow extends QMainWindow
         
         
         init_connectEventsForWidgets();
+        mwLogic = new MainWindowLogic(uiMainWindow, slwHandler);
 	}
     
     /*
@@ -163,6 +197,7 @@ public class MainWindow extends QMainWindow
 	private void init_connectEventsForWidgets()
 	{
 		twhandler = new tableWidgetHandler(uiMainWindow.tableWidget);
+		slwHandler = new sheepListWidgetHandler(uiMainWindow.listWidget);
 		//this.slwSheepList		.topLevelChanged	.connect(this, "dockEvent()");	
 		
 	}
