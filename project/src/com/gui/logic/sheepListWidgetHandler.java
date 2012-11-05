@@ -3,22 +3,13 @@ package com.gui.logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import sun.misc.Signal;
-
 import com.storage.Sheeps;
 import com.trolltech.qt.QSignalEmitter;
-import com.trolltech.qt.QSignalEmitter.Signal1;
 import com.trolltech.qt.core.QModelIndex;
-import com.trolltech.qt.core.QObject;
-import com.trolltech.qt.core.Qt;
-import com.trolltech.qt.core.Qt.MatchFlag;
 import com.trolltech.qt.core.Qt.MatchFlags;
 import com.trolltech.qt.core.Qt.SortOrder;
 import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
-import com.trolltech.qt.gui.QDirModel.Roles;
-import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QItemSelection;
-import com.trolltech.qt.gui.QListView;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QListWidgetItem;
 import com.trolltech.qt.gui.QSortFilterProxyModel;
@@ -53,10 +44,10 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 		}
 	}
 	
-	private SortSheep ssProxyModel;
-	private QStandardItemModel qsimModel;
+	//private SortSheep ssProxyModel;
+	//private QStandardItemModel qsimModel;
 	
-	private QTreeView qtvModelView;
+	//private QTreeView qtvModelView;
 	
 	private QListWidget qlWidget;
 	
@@ -68,9 +59,6 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	Signal1<ArrayList<Sheep>> multiSheepSelect;
 	protected Signal1<String> statusBarMessage;
 	
-	//0 == ascending
-	//1 == descending
-	private int sortingOrder = 0;
 	
 	/** Constructor. Initialize..
 	 */
@@ -190,9 +178,6 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	 * @Param sheeps the sheeps being added
 	 */
 	public void updateSheepList(){
-		
-		
-		
 		ArrayList<Sheep> sheeps = Sheeps.getSHeeps();
 		//Sheep sau = new Sheep(25, "Olga", 0, 250291, true, 70);
 		
@@ -221,5 +206,4 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 			qsimModel.insertColumn(0, preCol);
 		}		
 	}
-
 }

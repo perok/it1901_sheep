@@ -1,22 +1,17 @@
 package com.gui;
 
-import java.util.ArrayList;
-
 import com.gui.logic.UiLoginWindowLogic;
 import com.gui.logic.UiMainWindowLogic;
 import com.gui.logic.ServerLogic;
 import com.gui.logic.sheepListWidgetHandler;
 import com.gui.logic.tableWidgetHandler;
-import com.net.ClientSocket;
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.gui.QStyleFactory;
 import com.trolltech.qt.gui.QWidget;
-
-import core.classes.Sheep;
-
 
 /** Class to hold all graphical components (and itself).
  * 
@@ -58,9 +53,10 @@ public class MainWindow extends QMainWindow
     {
         QApplication.initialize(args);
         
-        QApplication.setStyle("Plastique");//QStyleFactory.keys().get(0));
+        System.out.println("Available themes: " + QStyleFactory.keys());
+        
+        QApplication.setStyle("Plastique");
         MainWindow testMainWindow = new MainWindow(null);
-        //testMainWindow.setStyle(new QStyle().)
         testMainWindow.show();
     	
         
@@ -70,8 +66,6 @@ public class MainWindow extends QMainWindow
          * http://doc.qt.digia.com/qt/gallery.html
          * http://www.slideshare.net/qtbynokia/how-to-make-your-qt-app-look-native
          */
-        
-        //testMainWindow.setStyleSheet(styleSheet)
     }
     
 
@@ -91,9 +85,7 @@ public class MainWindow extends QMainWindow
         lwLogic = new UiLoginWindowLogic(uiLoginWindow, serverLogic);
         
         serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");
-
     }
-    
     
 	/**
 	 * Event fired when user has made a succesfull loggin.
@@ -111,9 +103,7 @@ public class MainWindow extends QMainWindow
 	private void init_connectEventsForWidgets()
 	{
 		twhandler = new tableWidgetHandler(uiMainWindow.tableWidget);
-		slwHandler = new sheepListWidgetHandler(uiMainWindow.listWidget);
-		//this.slwSheepList		.topLevelChanged	.connect(this, "dockEvent()");
-		
+		slwHandler = new sheepListWidgetHandler(uiMainWindow.listWidget);		
         mwLogic = new UiMainWindowLogic(uiMainWindow, slwHandler, twhandler, serverLogic);
 	}
     
@@ -137,6 +127,7 @@ public class MainWindow extends QMainWindow
     {
     	System.out.println("What has been done cannot be undone :o");
     }
+    
     
     /** Set the initial actions
      */
@@ -169,9 +160,6 @@ public class MainWindow extends QMainWindow
 		
 		
 	}
-	
-	
-
 	/** Set the initial menu
 	 */
 	/*
@@ -190,14 +178,6 @@ public class MainWindow extends QMainWindow
 	    this.viewMenu = menuBar().addMenu(tr("&View"));
 	    this.viewMenu.addAction("hey");
 	}*/
-	
-
-	/** Set the initial screen settings.
-	 */
-	private void initScreenSettings()
-	{
-		super.setGeometry(10, 10,  INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
-	}
 
 	
 	/*
@@ -214,25 +194,7 @@ public class MainWindow extends QMainWindow
 		
 		super.closeEvent(event);
 	}
-
-	
-	
-	/*
-	 * SIGNALS
-	 * 
-	 */
-	public Signal0 loggedIn;
-	public Signal1<ArrayList<Sheep>> sheepsRecieved;
-	public Signal1<Sheep> showSheepInformation;
-	
-	
-	/*
-	 * DATABSE CONNECTION
-	 */
-	
 }
-
-
 /* 14.10.2012 - worked about 5 hours to fix everything */
 
 /* EOF */

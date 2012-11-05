@@ -3,7 +3,6 @@ package com.gui.logic;
 import com.net.Response;
 import com.net.ClientSocket;
 import com.trolltech.qt.QSignalEmitter;
-import com.trolltech.qt.QSignalEmitter.Signal0;
 
 
 public class ServerLogic extends QSignalEmitter{
@@ -28,8 +27,8 @@ public class ServerLogic extends QSignalEmitter{
 		loggedIn.emit();
 
 		
-		if(this.clientSocket == null )
-			this.clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
+		if(clientSocket == null )
+			clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
 		
 		try{
 			clientSocket.start();

@@ -4,7 +4,6 @@ package com.gui.logic;
 import com.gui.UiMainWindow;
 import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.gui.QLabel;
-import com.trolltech.qt.gui.QWidget;
 
 import core.classes.Sheep;
 
@@ -39,9 +38,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		mw.dockWidget.*/
 		
 		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
-		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");
-		System.out.println("Logic applied");
-		
+		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");		
 		
 		//Debug
 		slwHandler.addSheep();
