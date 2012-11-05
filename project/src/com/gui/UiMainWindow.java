@@ -10,7 +10,7 @@ package com.gui;
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
 
-public class Ui_MainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
+public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
 {
     public QAction actionExit;
     public QAction actionAbout;
@@ -78,7 +78,7 @@ public class Ui_MainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
     public QGridLayout gridLayout_2;
     public QListWidget listWidget;
 
-    public Ui_MainWindow() { super(); }
+    public UiMainWindow() { super(); }
 
     public void setupUi(QMainWindow MainWindow)
     {

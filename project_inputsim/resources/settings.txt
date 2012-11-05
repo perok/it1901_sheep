@@ -1,9 +1,9 @@
 //DB url
-mysql.stud.ntnu.no
+localhost
 //DB name
-grasdalk_it1901
+it1901
 //DB user
-grasdalk_it1901
+it1901
 //DB password
 lillelam1337
 //Skype user

@@ -4,17 +4,11 @@ import java.util.ArrayList;
 
 import com.net.ClientSocket;
 import com.net.Response;
-import com.trolltech.qt.core.QSize;
-import com.trolltech.qt.core.QTimer;
-import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
-import com.trolltech.qt.gui.QGridLayout;
 import com.trolltech.qt.gui.QMainWindow;
-import com.trolltech.qt.gui.QMenu;
 import com.trolltech.qt.gui.QMessageBox;
-import com.trolltech.qt.gui.QResizeEvent;
 import com.trolltech.qt.gui.QWidget;
 
 import core.classes.Sheep;
@@ -39,24 +33,10 @@ public class MainWindow extends QMainWindow
     private QAction exitAct;
     private QAction undoAct;
         
-	private QMenu editMenu;
-    private QMenu fileMenu;
-    private QMenu helpMenu;
-    private QMenu viewMenu;
+    private UiMainWindow uiMainWindow;
+    private UiLoginWindow Ui_LoginWindow;
     
-    private MDIArea maSheep;
-    private SubWindow qmswMapWindow;
-    private SubWindow swStatWindow;
-    
-    private QTimer qtWindowTimer;
-        
-    private MapWidget mwWidget;
-    private SheepListWidget slwSheepList;
-    private StatisticsWidget swStatistics;
-    
-    private SubWindow qmsLoginWindow;
-    private LoginWindowWidget lWindowWidget;
-    
+    private Object objectAskingForResponse = null;
     
     private static ClientSocket clientSocket;
     
@@ -91,9 +71,8 @@ public class MainWindow extends QMainWindow
     {
         super(parent);
         
-        //Ui_MainWindow vindu = new Ui_MainWindow();
-        //vindu.setupUi(this);
-        
+        Ui_LoginWindow = new UiLoginWindow();
+        Ui_LoginWindow.setupUi(this);
         setupLoginWindow();
     }
     
@@ -104,27 +83,9 @@ public class MainWindow extends QMainWindow
     /**
      * 
      */
-    public void setupLoginWindow(){
-		/* Main window properties - */
-        initActions();
-        initMenus();
-        initScreenSettings();
-        initTimerResize();
-        
-        /* Widgets - */
-        initLoginWindowWidget();
-        initLoginWindowSubWindows();
-        
-        /* Mdi-areas - */
-        initMdiLoginWindow();
-        
-        /* Triggers and actions */
-        init_connectEvents();
-        
-        if (lWindowWidget == null)
-        	System.out.println("wtf");
-        		
-    	lWindowWidget.tryLogin.connect(this, "tryLogIn(String, String)");
+    public void setupLoginWindow(){        
+    	Ui_LoginWindow.tryLogin.connect(this, "tryLogIn(String, String)");
+
     }
     
     /*
@@ -133,66 +94,10 @@ public class MainWindow extends QMainWindow
     
     /** Handle "about" trigger
 	*/
-	protected void about() 
-	{
+	protected void about() {
 	    QMessageBox.information(this, "Info", "baa! baa! baa! baa! baa! baa! baa! baa! baa! ");
 	}
 
-	@SuppressWarnings("unused")
-    /** Handle QDockwidget docking and un-docking.
-     */
-    private void dockEvent()
-    {
-    	/* If QDockwidget is un-docked */
-    	if(this.slwSheepList.isFloating() == true)
-    	{
-    		/* Set QMdiArea to full-screen */
-    		this.maSheep.resizeWidget(new QSize(super.width(), this.maSheep.height()));
-    	}
-    	else /* QDockwidget docked back into the main window. */
-    	{
-    		/* If a subwindow is maximized, we Qt does everything for us */
-    		if(this.maSheep.hasMaximized()) { return; }
-    		/* Decrement the MDIArea */
-    		this.maSheep.resizeWidget(new QSize(getMdiWidth(), this.maSheep.height()));
-    	}
-    }
-      
-    /** Return the desired width of the central widget of THIS
-     * 
-     *  @return the desired width for the central widget of THIS.
-     */
-    //TODO: is this function necessary?
-    public int getMdiWidth() { return (super.width() - INIT_SHEEP_WIDGET_SIZE); }
-    
-    @Override
-    /** Handle resize-event of this
-     * 
-     * @param qreSize the former size of this
-     */
-    //TODO: Qt-docs says that no repainting etc should or need to be done inside here -
-    //		where else? Is there another way to handle user re-sizing?
-	protected void resizeEvent(QResizeEvent qreSize)
-    {
-    	super.resizeEvent(qreSize);
-    	if(maSheep != null)
-    		this.maSheep.resizeWidget(qreSize, getMdiWidth());
-	}
-    
-    
-    //@SuppressWarnings("unused")
-    /** Resize the window appropriately after the window is initialized.
-     */
-    //FIXME: This function is not desired, it would be better if resizeEvent
-    //		 wasn't called until this had initialized itself
-    private void timedResize()
-    {
-   
-    	
-    	this.qtWindowTimer.stop();
-    	this.qtWindowTimer.disconnect();
-    	this.maSheep.cascadeWindows();
-    }
     
     @SuppressWarnings("unused")
     /** Handle undo-trigger 
@@ -229,7 +134,6 @@ public class MainWindow extends QMainWindow
 		this.aboutAct			.triggered			.connect(this, "about()");
 		this.aboutQtJambiAct	.triggered			.connect(QApplication.instance(), "aboutQtJambi()");
 		this.exitAct			.triggered			.connect(this, "close()");
-		this.qtWindowTimer		.timeout		 	.connect(this, "timedResize()");
 		this.undoAct			.triggered			.connect(this, "undo()");
 		
 		
@@ -240,13 +144,14 @@ public class MainWindow extends QMainWindow
 	private void init_connectEventsForWidgets()
 	{
 		
-		this.slwSheepList		.topLevelChanged	.connect(this, "dockEvent()");	
+		//this.slwSheepList		.topLevelChanged	.connect(this, "dockEvent()");	
 		
 	}
 	
 
 	/** Set the initial menu
 	 */
+	/*
 	private void initMenus()
 	{
 		this.fileMenu = menuBar().addMenu(tr("&File"));
@@ -261,36 +166,7 @@ public class MainWindow extends QMainWindow
 	    
 	    this.viewMenu = menuBar().addMenu(tr("&View"));
 	    this.viewMenu.addAction("hey");
-	}
-
-	/** Set the initial MDIArea (centralwidget)
-	 */
-	private void initMdi()
-	{
-		this.maSheep = new MDIArea();
-		
-		this.maSheep.addSubWindow(this.qmswMapWindow);
-		this.maSheep.addSubWindow(this.swStatWindow);
-		
-		/* Make sure it looks OK to begin with */
-		this.maSheep.cascadeWindows();
-		
-		super.setCentralWidget(this.maSheep);
-	}
-	
-	/**
-	 * Set the initial MDIArea (centralwidget) for LoginWindow
-	 */
-	private void initMdiLoginWindow(){
-		this.maSheep = new MDIArea();
-		
-		this.maSheep.addSubWindow(this.qmsLoginWindow);
-		
-		/* Make sure it looks OK to begin with */
-		this.maSheep.cascadeWindows();
-		
-		super.setCentralWidget(this.maSheep);
-	}
+	}*/
 	
 
 	/** Set the initial screen settings.
@@ -300,49 +176,6 @@ public class MainWindow extends QMainWindow
 		super.setGeometry(10, 10,  INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
 	}
 
-	
-	/** Initialize the LoginWindow subwindow to be placed in the central MDIArea
-	 */
-	private void initLoginWindowSubWindows()
-	{
-		this.qmsLoginWindow = new SubWindow(this.lWindowWidget);
-	}
-	
-	/** Initialize the initial subwindows to be placed in the central MDIArea
-	 */
-	private void initSubWindows()
-	{
-		this.qmswMapWindow  = new SubWindow(this.mwWidget);
-		this.swStatWindow   = new SubWindow(this.swStatistics);
-	}
-
-	/** Initialize the first timed resize
-	 */
-	private void initTimerResize()
-	{
-		this.qtWindowTimer = new QTimer();
-	    this.qtWindowTimer.setInterval(400);
-	    this.qtWindowTimer.start();
-	}
-	
-	/**
-	 * Initializes the login window widget
-	 */
-	private void initLoginWindowWidget(){
-		this.lWindowWidget	= new LoginWindowWidget();
-	}
-	
-	/** Initialize the first widgets
-	 */
-	private void initWidgets()
-	{
-		this.mwWidget     = new MapWidget();
-		this.slwSheepList = new SheepListWidget();
-		this.swStatistics = new StatisticsWidget();
-		
-		this.slwSheepList.setFixedWidth(INIT_SHEEP_WIDGET_SIZE);
-		super.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, this.slwSheepList);
-	}
 	
 	/*
 	 * EVENTS
@@ -365,19 +198,13 @@ public class MainWindow extends QMainWindow
 	 * Event fired when user has made a succesfull loggin.
 	 * Changes the view to application mode
 	 */
-	public void loggedIn(){
-		System.out.println("hello");
-		/* Widgets - */
-        initWidgets();
-        initSubWindows();
+	public void setupUi_MainWindow(){		
+		uiMainWindow = new UiMainWindow();
+		
+		uiMainWindow.setupUi(this);
         
-        qmsLoginWindow = null;
-        lWindowWidget = null;
         
-        /* Mdi-areas - */
-        initMdi();
-        
-        init_connectEventsForWidgets();
+        //init_connectEventsForWidgets();
 	}
 	
 	/**
@@ -387,10 +214,10 @@ public class MainWindow extends QMainWindow
 	 * @param usrPW
 	 */
 	private void tryLogIn(String usrName, String usrPW){
-		loggedIn();
 		
-		this.clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
-		System.out.println(usrName);
+		if(this.clientSocket == null )
+			this.clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
+		
 		try{
 			if(!clientSocket.start())
 				System.out.println("Problem with connecting");
@@ -418,26 +245,55 @@ public class MainWindow extends QMainWindow
 	 */
 	
 	public void handleResponse(Response response){
-		System.out.println("handling response");
-		if(response.getType() == 3)
+		System.out.println("Response: "+ response.getType());
+		
+		/*
+		 * Må ha ett system der de ulike viewsa som kaller etter informasjon
+		 * fra serveren blir registrert slikt at de kan sendes dit
+		 */
+		
+		int responseType = response.getType();
+		
+		/* List */
+		if(responseType == 1) {
+			//A object has called for a list
+			if (objectAskingForResponse != null){
+				//Sheeplist asking for information
+				if( objectAskingForResponse instanceof SheepListWidget){
+					//objectAskingForResponse.giveResponse(response);
+					
+					objectAskingForResponse = null;
+				}
+			}
+			System.out.println("respinse 1");
+		}
+		/* Boolean */
+		else if(responseType == 2)
+			System.out.println("response 2");
+		/* User */
+		else if(response.getType() == 3)
 			if(response.getUser() == null)
-				System.out.println("FAIL");
-			else
-				System.out.println("The success is great");
-		
-		System.out.println("Response: "+ response);
-		
-		//Run loggIn() here
-		
+				/*Koble seg til loggininterface og gi beskjed der */
+				System.out.println("Loggin failed, try again");
+			else{
+				System.out.println("Logged in with user: " + response.getUser().getName());
+				setupUi_MainWindow();
+			}
+				
 	}
 	
 	public void connectionFailed(){
-		System.out.println("Something got seriously fucked");
+		System.out.println("Connection error");
 	}
 	
-	public void handleMessage(String cake){
-		System.out.println("Handling message");
-		System.out.println(cake);
+	public void handleMessage(String message){
+		System.out.println("Message from server: " + message);
+	}
+	
+	protected void requestSheeps(Object o){
+		if(objectAskingForResponse == null)
+			objectAskingForResponse = o;
+		//SendRequest
 	}
 }
 

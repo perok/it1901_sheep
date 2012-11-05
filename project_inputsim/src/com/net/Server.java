@@ -65,7 +65,7 @@ public class Server {
 				Socket socket = serverSocket.accept();				
 				if(!keepGoing)
 					break;
-				ClientHandler t = new ClientHandler(socket,this);
+				ClientHandler t = new ClientHandler(socket,this,settings);
 				al.add(t); 
 				new Thread(t).start();
 			}
