@@ -2,6 +2,7 @@ package com.gui;
 
 import java.util.ArrayList;
 
+import com.gui.logic.tableWidgetHandler;
 import com.net.ClientSocket;
 import com.net.Response;
 import com.trolltech.qt.gui.QAction;
@@ -38,7 +39,11 @@ public class MainWindow extends QMainWindow
     
     private Object objectAskingForResponse = null;
     
+    /* DB */
     private static ClientSocket clientSocket;
+    
+    /* Handlers */
+    private tableWidgetHandler twhandler;
     
     /** Main.
      * 
@@ -72,7 +77,7 @@ public class MainWindow extends QMainWindow
         super(parent);
         
         Ui_LoginWindow = new UiLoginWindow();
-        Ui_LoginWindow.setupUi(this);
+        Ui_LoginWindow.setupUi(this, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
         setupLoginWindow();
     }
     
@@ -87,6 +92,20 @@ public class MainWindow extends QMainWindow
     	Ui_LoginWindow.tryLogin.connect(this, "tryLogIn(String, String)");
 
     }
+    
+    
+	/**
+	 * Event fired when user has made a succesfull loggin.
+	 * Changes the view to application mode
+	 */
+	public void setupUi_MainWindow(){		
+		uiMainWindow = new UiMainWindow();
+		
+		uiMainWindow.setupUi(this, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
+        
+        
+        init_connectEventsForWidgets();
+	}
     
     /*
      * APPLICATION 
@@ -143,7 +162,7 @@ public class MainWindow extends QMainWindow
 	 */
 	private void init_connectEventsForWidgets()
 	{
-		
+		twhandler = new tableWidgetHandler(uiMainWindow.tableWidget);
 		//this.slwSheepList		.topLevelChanged	.connect(this, "dockEvent()");	
 		
 	}
@@ -193,19 +212,7 @@ public class MainWindow extends QMainWindow
 		
 		super.closeEvent(event);
 	}
-	
-	/**
-	 * Event fired when user has made a succesfull loggin.
-	 * Changes the view to application mode
-	 */
-	public void setupUi_MainWindow(){		
-		uiMainWindow = new UiMainWindow();
-		
-		uiMainWindow.setupUi(this);
-        
-        
-        //init_connectEventsForWidgets();
-	}
+
 	
 	/**
 	 * Signaled method for setting up network connection and log in
@@ -214,15 +221,19 @@ public class MainWindow extends QMainWindow
 	 * @param usrPW
 	 */
 	private void tryLogIn(String usrName, String usrPW){
+		setupUi_MainWindow();
+
 		
 		if(this.clientSocket == null )
 			this.clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
 		
 		try{
-			if(!clientSocket.start())
+			clientSocket.start();
+			clientSocket.login(usrName, usrPW);
+			/*if(!clientSocket.start())
 				System.out.println("Problem with connecting");
 			else
-				clientSocket.login(usrName, usrPW);
+				clientSocket.login(usrName, usrPW);*/
 				
 		}
 		catch (Exception e){

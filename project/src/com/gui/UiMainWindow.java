@@ -7,6 +7,9 @@
  ********************************************************************************/
 package com.gui;
 
+
+
+import com.sun.xml.internal.fastinfoset.algorithm.IEEE754FloatingPointEncodingAlgorithm;
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
 
@@ -21,6 +24,8 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
     public QGridLayout gridLayout;
     public QSplitter splitter;
     public QWidget MAPWIDGET;
+    public MapWidget mapWidget;
+    
     public QTabWidget tabWidget;
     public QWidget tabInformation;
     public QGridLayout gridLayout_3;
@@ -80,10 +85,10 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
 
     public UiMainWindow() { super(); }
 
-    public void setupUi(QMainWindow MainWindow)
+    public void setupUi(QMainWindow MainWindow, int width, int height)
     {
         MainWindow.setObjectName("MainWindow");
-        MainWindow.resize(new QSize(974, 756).expandedTo(MainWindow.minimumSizeHint()));
+        MainWindow.resize(new QSize(width, height).expandedTo(MainWindow.minimumSizeHint()));
         MainWindow.setTabShape(com.trolltech.qt.gui.QTabWidget.TabShape.Rounded);
         actionExit = new QAction(MainWindow);
         actionExit.setObjectName("actionExit");
@@ -108,9 +113,16 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         splitter.setObjectName("splitter");
         splitter.setOrientation(com.trolltech.qt.core.Qt.Orientation.Vertical);
         splitter.setHandleWidth(4);
-        MAPWIDGET = new QWidget(splitter);
-        MAPWIDGET.setObjectName("MAPWIDGET");
-        splitter.addWidget(MAPWIDGET);
+        
+        /* MAP */
+        //MAPWIDGET = new QWidget(splitter);
+        //MAPWIDGET.setObjectName("MAPWIDGET");
+        
+        mapWidget = new MapWidget();//splitter);
+        //JXMapKit kit = new JXMapKit();
+        splitter.addWidget(mapWidget);
+ 
+        //splitter.addWidget(MAPWIDGET);
         tabWidget = new QTabWidget(splitter);
         tabWidget.setObjectName("tabWidget");
         QSizePolicy sizePolicy = new QSizePolicy(com.trolltech.qt.gui.QSizePolicy.Policy.Minimum, com.trolltech.qt.gui.QSizePolicy.Policy.Minimum);
@@ -137,52 +149,66 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         label = new QLabel(tabInformation);
         label.setObjectName("label");
 
-        formLayout_2.addWidget(label);
+        //formLayout_2.addWidget(label);
 
         lEName = new QLineEdit(tabInformation);
         lEName.setObjectName("lEName");
 
-        formLayout_2.addWidget(lEName);
+        //formLayout_2.addWidget(lEName);
+        
 
+
+        
+        
         label_2 = new QLabel(tabInformation);
         label_2.setObjectName("label_2");
 
-        formLayout_2.addWidget(label_2);
+        //formLayout_2.addWidget(label_2);
 
         label_3 = new QLabel(tabInformation);
         label_3.setObjectName("label_3");
 
-        formLayout_2.addWidget(label_3);
+        //formLayout_2.addWidget(label_3);
 
         label_4 = new QLabel(tabInformation);
         label_4.setObjectName("label_4");
 
-        formLayout_2.addWidget(label_4);
+        //formLayout_2.addWidget(label_4);
 
         lEFarmId = new QLineEdit(tabInformation);
         lEFarmId.setObjectName("lEFarmId");
 
-        formLayout_2.addWidget(lEFarmId);
+        //formLayout_2.addWidget(lEFarmId);
 
         label_5 = new QLabel(tabInformation);
         label_5.setObjectName("label_5");
 
-        formLayout_2.addWidget(label_5);
+        //formLayout_2.addWidget(label_5);
 
         chbAlive = new QCheckBox(tabInformation);
         chbAlive.setObjectName("chbAlive");
 
-        formLayout_2.addWidget(chbAlive);
+        //formLayout_2.addWidget(chbAlive);
 
         dSBWeight = new QDoubleSpinBox(tabInformation);
         dSBWeight.setObjectName("dSBWeight");
 
-        formLayout_2.addWidget(dSBWeight);
+        //formLayout_2.addWidget(dSBWeight);
 
         dEBirthdaye = new QDateEdit(tabInformation);
         dEBirthdaye.setObjectName("dEBirthdaye");
 
-        formLayout_2.addWidget(dEBirthdaye);
+        //formLayout_2.addWidget(dEBirthdaye);
+        
+        formLayout_2.addRow(label, lEName);
+
+        formLayout_2.addRow(label_2, dEBirthdaye);
+        formLayout_2.addRow(label_3, dSBWeight);
+        formLayout_2.addRow(label_4, lEFarmId);
+        formLayout_2.addRow(label_5, chbAlive);
+
+        
+        
 
 
         gridLayout_4.addLayout(formLayout_2, 0, 0, 1, 1);
@@ -285,52 +311,60 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         label_11 = new QLabel(tabAddSheep);
         label_11.setObjectName("label_11");
 
-        formLayout_5.addWidget(label_11);
+        //formLayout_5.addWidget(label_11);
 
         lEName_Add_2 = new QLineEdit(tabAddSheep);
         lEName_Add_2.setObjectName("lEName_Add_2");
 
-        formLayout_5.addWidget(lEName_Add_2);
+        //formLayout_5.addWidget(lEName_Add_2);
 
         label_12 = new QLabel(tabAddSheep);
         label_12.setObjectName("label_12");
 
-        formLayout_5.addWidget(label_12);
+        //formLayout_5.addWidget(label_12);
 
         dEBirthdate_Add = new QDateEdit(tabAddSheep);
         dEBirthdate_Add.setObjectName("dEBirthdate_Add");
 
-        formLayout_5.addWidget(dEBirthdate_Add);
+        //formLayout_5.addWidget(dEBirthdate_Add);
 
         label_13 = new QLabel(tabAddSheep);
         label_13.setObjectName("label_13");
 
-        formLayout_5.addWidget(label_13);
+        //formLayout_5.addWidget(label_13);
 
         dSBWeight_Add_2 = new QDoubleSpinBox(tabAddSheep);
         dSBWeight_Add_2.setObjectName("dSBWeight_Add_2");
 
-        formLayout_5.addWidget(dSBWeight_Add_2);
+        //formLayout_5.addWidget(dSBWeight_Add_2);
 
         label_14 = new QLabel(tabAddSheep);
         label_14.setObjectName("label_14");
 
-        formLayout_5.addWidget(label_14);
+        //formLayout_5.addWidget(label_14);
 
         lEFar_Add = new QLineEdit(tabAddSheep);
         lEFar_Add.setObjectName("lEFar_Add");
 
-        formLayout_5.addWidget(lEFar_Add);
+        //formLayout_5.addWidget(lEFar_Add);
 
         label_15 = new QLabel(tabAddSheep);
         label_15.setObjectName("label_15");
 
-        formLayout_5.addWidget(label_15);
+        //formLayout_5.addWidget(label_15);
 
         cBAlive_Add = new QCheckBox(tabAddSheep);
         cBAlive_Add.setObjectName("cBAlive_Add");
 
-        formLayout_5.addWidget(cBAlive_Add);
+        //formLayout_5.addWidget(cBAlive_Add);
+        
+        
+        formLayout_5.addRow(label_11, lEName);
+
+        formLayout_5.addRow(label_12, dEBirthdate_Add);
+        formLayout_5.addRow(label_13, dSBWeight_Add_2);
+        formLayout_5.addRow(label_14, lEFar_Add);
+        formLayout_5.addRow(label_15, cBAlive_Add);
 
 
         gridLayout_11.addLayout(formLayout_5, 0, 0, 1, 1);
@@ -419,6 +453,8 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
 
 
         MainWindow.connectSlotsByName();
+        
+        
     } // setupUi
 
     void retranslateUi(QMainWindow MainWindow)
@@ -458,6 +494,12 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         dockWidget.setWindowTitle(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Sheeps", null));
         dockWidgetContents.setAccessibleName("");
     } // retranslateUi
+
+	@Override
+	public void setupUi(QMainWindow arg0) {
+		setupUi(arg0, 800, 800);
+		
+	}
 
 }
 

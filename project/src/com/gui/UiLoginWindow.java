@@ -34,12 +34,13 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
 
     public UiLoginWindow() { super(); }
 
-    public void setupUi(QMainWindow MainWindow)
+    public void setupUi(QMainWindow MainWindow, int width, int height)
     {
     	tryLogin = new Signal2<String, String>();
     	
         MainWindow.setObjectName("MainWindow");
-        MainWindow.resize(new QSize(800, 496).expandedTo(MainWindow.minimumSizeHint()));
+        
+        MainWindow.resize(new QSize(width, height).expandedTo(MainWindow.minimumSizeHint()));
         centralwidget = new QWidget(MainWindow);
         centralwidget.setObjectName("centralwidget");
         gridLayout = new QGridLayout(centralwidget);
@@ -54,24 +55,26 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
         label = new QLabel(centralwidget);
         label.setObjectName("label");
 
-        formLayout.addWidget(label);
+        //formLayout.addWidget(label);
 
         txtEditUsername = new QLineEdit(centralwidget);
         txtEditUsername.setObjectName("txtEditUsername");
 
-        formLayout.addWidget(txtEditUsername);
+        //formLayout.addWidget(txtEditUsername);
+        formLayout.addRow(label, txtEditUsername);
 
         label_2 = new QLabel(centralwidget);
         label_2.setObjectName("label_2");
 
-        formLayout.addWidget(label_2);
+        //formLayout.addWidget(label_2);
 
         txtEditPassword = new QLineEdit(centralwidget);
         txtEditPassword.setObjectName("txtEditPassword");
         txtEditPassword.setEchoMode(com.trolltech.qt.gui.QLineEdit.EchoMode.Password);
 
-        formLayout.addWidget(txtEditPassword);
+        //formLayout.addWidget(txtEditPassword);
 
+        formLayout.addRow(label_2, txtEditPassword);
 
         verticalLayout.addLayout(formLayout);
 
@@ -160,6 +163,12 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
     	return true;
     	
     }
+
+	@Override
+	public void setupUi(QMainWindow arg0) {
+		setupUi(arg0, 800, 800);
+		
+	}
 
 }
 

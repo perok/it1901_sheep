@@ -1,30 +1,29 @@
 package com.gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.swing.event.MouseInputListener;
 
 import org.jdesktop.swingx.JXMapKit;
 import org.jdesktop.swingx.JXMapViewer;
-import org.jdesktop.swingx.OSMTileFactoryInfo;
 import org.jdesktop.swingx.input.CenterMapListener;
 import org.jdesktop.swingx.input.PanKeyListener;
 import org.jdesktop.swingx.input.PanMouseInputListener;
 import org.jdesktop.swingx.input.ZoomMouseWheelListenerCenter;
-import org.jdesktop.swingx.mapviewer.DefaultTileFactory;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.mapviewer.TileFactoryInfo;
 import org.jdesktop.swingx.mapviewer.WaypointPainter;
 import org.jdesktop.swingx.mapviewer.wms.WMSService;
 import org.jdesktop.swingx.mapviewer.wms.WMSTileFactory;
 
+import sun.tools.jar.resources.jar;
+
 import com.mapWidgetExtras.FancyWaypointRenderer;
 import com.mapWidgetExtras.MyWaypoint;
+import com.trolltech.qt.gui.QFrame;
 import com.trolltech.qt.gui.QHBoxLayout;
+import com.trolltech.qt.gui.QResizeEvent;
+import com.trolltech.qt.gui.QSizePolicy.Policy;
 import com.trolltech.qt.gui.QWidget;
 import com.trolltech.research.qtjambiawtbridge.QComponentHost;
 
@@ -34,10 +33,12 @@ import com.trolltech.research.qtjambiawtbridge.QComponentHost;
  */
 public class MapWidget extends QWidget
 {
-	private QHBoxLayout qhblSwingLayout;
-	private QComponentHost qchHost;
+	private QHBoxLayout qhbLayout;
+	private QComponentHost qcHost;
 	
 	private JXMapKit mapKit;
+	
+	private JXMapViewer mapKitChild;
 	
 	/** Constructor. Initialize..
 	 */
@@ -56,12 +57,10 @@ public class MapWidget extends QWidget
 		WMSService wmsService = new WMSService(wmsStatensKartVerk, layer);
 		WMSTileFactory wmsTileFactory = new WMSTileFactory(wmsService);
 		
-		JXMapViewer mapKitChild;		
 			
-		this.mapKit  = new JXMapKit();
-		this.qchHost = new QComponentHost(mapKit);
 		
-		 mapKitChild = (JXMapViewer) this.mapKit.getComponent(0);
+		this.mapKit  = new JXMapKit();
+		mapKitChild = (JXMapViewer) this.mapKit.getComponent(0);
 		 
 		// Add interactions
 		MouseInputListener mia = new PanMouseInputListener(mapKitChild);
@@ -76,8 +75,13 @@ public class MapWidget extends QWidget
 		this.mapKit.setZoom(1);
 		this.mapKit.setAddressLocation(trondheimLocation);
 		
-		mapKitChild.setMinimumSize(new Dimension(800, 800));
-		mapKitChild.setPreferredSize(new Dimension(800, 800));
+		this.setSizePolicy(Policy.Maximum, Policy.Maximum);
+		
+		//mapKitChild.setMinimumSize(new Dimension(100, 100));
+		//mapKitChild.setPreferredSize(new Dimension(800, 800));
+		
+		//this.
+		//this.qcHost = new QComponentHost(mapKit, this);
 		
 		// This line is order specific - adding it at the top of this function causes an error
 		// why?
@@ -86,11 +90,25 @@ public class MapWidget extends QWidget
 	
 	private void initLayout()
 	{
-		this.qhblSwingLayout = new QHBoxLayout();
-		
-		this.qhblSwingLayout.addWidget(this.qchHost);
-		super.setLayout(this.qhblSwingLayout);
+		this.qhbLayout = new QHBoxLayout();
+		this.setLayout(qhbLayout);
+		this.qhbLayout.addWidget(new QComponentHost(mapKit, this));
+		super.setLayout(this.qhbLayout);
 	}
+	
+	@Override
+    protected void resizeEvent(QResizeEvent e) {
+       System.out.println("The new size: (" + e.size().width() + ", " + e.size().height() + ")");
+       
+       
+       mapKit.setBounds(0, 0, e.size().width(), e.size().height());
+      // mapKitChild.resize(new Dimension(e.size().width(), e.size().height()));
+       mapKitChild.setBounds(0, 0, e.size().width(), e.size().height());
+       //qhbLayout.update();
+       //mapKit.repaint();
+       
+       //mapKitChild.setMaximumSize(new Dimension(e.size().width(), e.size().height()));
+    }
 	
 	public void setSheepGeoPositionsOnMap(){
 		// Create waypoints from the geo-positions
