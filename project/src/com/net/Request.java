@@ -3,16 +3,31 @@ package com.net;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import core.classes.Sheep;
+import core.classes.User;
+
 public class Request implements Serializable {
-	static final int REQUEST = 1, LOGOUT = 2;
+	static final int REQUEST = 1, LOGOUT = 2, EDITUSER = 3, EDITSHEEP = 4;
 	private int type;
 	private String message;
+	private User user;
+	private Sheep sheep;
 	private HashMap parameters;
 	
 	public Request(int type, String message) {
 		this.type = type;
 		this.message = message;
 		parameters = new HashMap();
+	}
+	
+	public Request(int type, String message, User user) {
+		this.type = type;
+		this.user = user;
+	}
+	
+	public Request(int type, String message, Sheep sheep) {
+		this.type = type;
+		this.sheep = sheep;
 	}
 	
 	public Request(int type, String message, HashMap parameters) {
@@ -48,6 +63,22 @@ public class Request implements Serializable {
 	
 	public String getparameter(String name) {
 		return (String) parameters.get(name);
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Sheep getSheep() {
+		return sheep;
+	}
+
+	public void setSheep(Sheep sheep) {
+		this.sheep = sheep;
 	}
 
 }

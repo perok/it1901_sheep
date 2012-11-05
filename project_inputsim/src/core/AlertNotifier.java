@@ -26,9 +26,7 @@ public class AlertNotifier implements Runnable{
 	 */
 	public AlertNotifier(Settings settings) {
 		this.settings = settings;
-		db = new DatabaseConnector(settings);
-		skype = new PhoneNotifier(settings);
-		mail = new MailNotifier(settings);
+		
 	}
 
 	/** Polls database for unotified alerts.
@@ -37,10 +35,9 @@ public class AlertNotifier implements Runnable{
 	 */
 	@Override
 	public void run() {
-		while (true) {
-			
-			
-		}
+		db = new DatabaseConnector(settings);
+		skype = new PhoneNotifier(settings);
+		mail = new MailNotifier(settings);
 	}
 
 	/** Finds the phone number for the admin of farm and send him an sms with the skype object

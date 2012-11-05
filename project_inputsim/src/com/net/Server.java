@@ -55,11 +55,13 @@ public class Server {
 		try 
 		{
 			ServerSocket serverSocket = new ServerSocket(port);
+			notifier = new AlertNotifier(settings);
+			new Thread(notifier).start();
 
 			while(keepGoing) 
 			{
-				notifier = new AlertNotifier(settings);
-				new Thread(notifier).start();
+				
+				
 				display("Server waiting for Clients on port " + port + ".");
 
 				Socket socket = serverSocket.accept();				
