@@ -26,6 +26,7 @@ import com.trolltech.qt.gui.QResizeEvent;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
 import com.trolltech.qt.gui.QWidget;
 import com.trolltech.research.qtjambiawtbridge.QComponentHost;
+import com.trolltech.research.qtjambiawtbridge.generated.QComponentHostNative;
 
 /** Stream an external source of media
  * 
@@ -102,8 +103,17 @@ public class MapWidget extends QWidget
        
        
        mapKit.setBounds(0, 0, e.size().width(), e.size().height());
+       mapKit.setSize(e.size().width(), e.size().height());
+       mapKit.mainMap.setBounds(0, 0, e.size().width(), e.size().height());
+       mapKit.mainMap.setSize(e.size().width(), e.size().height());
+       mapKit.mainMap.updateUI();
+
+       //mapKit.miniMap.setBounds(0, 0, e.size().width(), e.size().height());
+       //mapKit.setSize(e.size().width(), e.size().height());
+
+       //mapKit.jPanel1.setBounds(0, 0, e.size().width(), e.size().height());
       // mapKitChild.resize(new Dimension(e.size().width(), e.size().height()));
-       mapKitChild.setBounds(0, 0, e.size().width(), e.size().height());
+       //mapKitChild.setBounds(0, 0, e.size().width(), e.size().height());
        //qhbLayout.update();
        //mapKit.repaint();
        
