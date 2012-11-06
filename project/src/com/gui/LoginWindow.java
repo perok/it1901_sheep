@@ -127,70 +127,66 @@ public class LoginWindow extends QWidget{
         sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth());
         Form.setSizePolicy(sizePolicy);
         Form.setLayoutDirection(com.trolltech.qt.core.Qt.LayoutDirection.LeftToRight);
+        
         gridLayout = new QGridLayout(Form);
         gridLayout.setObjectName("gridLayout");
         gridLayout.setSizeConstraint(com.trolltech.qt.gui.QLayout.SizeConstraint.SetDefaultConstraint);
+        
         verticalLayout = new QVBoxLayout();
         verticalLayout.setObjectName("verticalLayout");
         verticalLayout.setSizeConstraint(com.trolltech.qt.gui.QLayout.SizeConstraint.SetDefaultConstraint);
+        
         formLayout = new QFormLayout();
         formLayout.setObjectName("formLayout");
         formLayout.setFieldGrowthPolicy(com.trolltech.qt.gui.QFormLayout.FieldGrowthPolicy.FieldsStayAtSizeHint);
         formLayout.setFormAlignment(com.trolltech.qt.core.Qt.AlignmentFlag.createQFlags(com.trolltech.qt.core.Qt.AlignmentFlag.AlignHCenter,com.trolltech.qt.core.Qt.AlignmentFlag.AlignTop));
+        
         label = new QLabel(Form);
         label.setObjectName("label");
-
         formLayout.addWidget(label);
 
         txtEditUsername = new QLineEdit(Form);
         txtEditUsername.setObjectName("txtEditUsername");
-
         formLayout.addWidget(txtEditUsername);
 
         label_2 = new QLabel(Form);
         label_2.setObjectName("label_2");
-
         formLayout.addWidget(label_2);
 
         txtEditPassword = new QLineEdit(Form);
         txtEditPassword.setObjectName("txtEditPassword");
         txtEditPassword.setEchoMode(EchoMode.Password);
-        
         formLayout.addWidget(txtEditPassword);
 
 
         verticalLayout.addLayout(formLayout);
-
-
         gridLayout.addLayout(verticalLayout, 1, 0, 1, 1);
-
         verticalSpacer_2 = new QSpacerItem(20, 40, com.trolltech.qt.gui.QSizePolicy.Policy.Minimum, com.trolltech.qt.gui.QSizePolicy.Policy.Expanding);
-
         gridLayout.addItem(verticalSpacer_2, 0, 0, 1, 1);
 
         gridLayouButton = new QGridLayout();
         gridLayouButton.setSpacing(6);
         gridLayouButton.setObjectName("gridLayouButton");
         gridLayouButton.setSizeConstraint(com.trolltech.qt.gui.QLayout.SizeConstraint.SetDefaultConstraint);
+        
         btnLogin = new QPushButton(Form);
         btnLogin.setObjectName("btnLogin");
         btnLogin.setEnabled(true);
+        
         QSizePolicy sizePolicy1 = new QSizePolicy(com.trolltech.qt.gui.QSizePolicy.Policy.Minimum, com.trolltech.qt.gui.QSizePolicy.Policy.Fixed);
         sizePolicy1.setHorizontalStretch((byte)0);
         sizePolicy1.setVerticalStretch((byte)0);
         sizePolicy1.setHeightForWidth(btnLogin.sizePolicy().hasHeightForWidth());
+        
         btnLogin.setSizePolicy(sizePolicy1);
         btnLogin.setMinimumSize(new QSize(0, 0));
         btnLogin.setMaximumSize(new QSize(100, 16777215));
         btnLogin.setLayoutDirection(com.trolltech.qt.core.Qt.LayoutDirection.LeftToRight);
 
         gridLayouButton.addWidget(btnLogin, 0, 0, 1, 1);
-
-
         gridLayout.addLayout(gridLayouButton, 3, 0, 1, 1);
 
         verticalSpacer = new QSpacerItem(20, 40, com.trolltech.qt.gui.QSizePolicy.Policy.Minimum, com.trolltech.qt.gui.QSizePolicy.Policy.Expanding);
-
         gridLayout.addItem(verticalSpacer, 6, 0, 1, 1);
 
         retranslateUi(Form);
@@ -200,7 +196,7 @@ public class LoginWindow extends QWidget{
     
     void retranslateUi(QWidget Form)
     {
-        Form.setWindowTitle(com.trolltech.qt.core.QCoreApplication.translate("Form", "Form", null));
+        Form.setWindowTitle(com.trolltech.qt.core.QCoreApplication.translate("Form", "Login Window", null));
         label.setText(com.trolltech.qt.core.QCoreApplication.translate("Form", "Username", null));
         label_2.setText(com.trolltech.qt.core.QCoreApplication.translate("Form", "Password", null));
         btnLogin.setText(com.trolltech.qt.core.QCoreApplication.translate("Form", "Login", null));
@@ -229,7 +225,6 @@ public class LoginWindow extends QWidget{
     	}
     }
     public static void main(String[] args)  {
-    	System.out.println("GAAAY");
         QApplication.initialize(args);
         new LoginWindow();
         QApplication.exec();

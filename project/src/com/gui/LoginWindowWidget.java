@@ -131,7 +131,7 @@ public class LoginWindowWidget extends QWidget{
     
     void retranslateUi(QWidget Form)
     {
-        Form.setWindowTitle(com.trolltech.qt.core.QCoreApplication.translate("Form", "Form", null));
+        Form.setWindowTitle(com.trolltech.qt.core.QCoreApplication.translate("Form", "Login Window", null));
         label.setText(com.trolltech.qt.core.QCoreApplication.translate("Form", "Username", null));
         label_2.setText(com.trolltech.qt.core.QCoreApplication.translate("Form", "Password", null));
         btnLogin.setText(com.trolltech.qt.core.QCoreApplication.translate("Form", "Login", null));
