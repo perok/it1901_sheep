@@ -2,7 +2,8 @@ package com.net;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
-import core.classes.GpsPosition;
+
+import core.classes.GPSPosition;
 import core.settings.Settings;
 
 /**Notifies users by mail.
@@ -45,7 +46,7 @@ public class MailNotifier {
 	 * @param recipient
 	 * @param gps
 	 */
-	public void notifyUser(String recipient, GpsPosition gps) {
+	public void notifyUser(String recipient, GPSPosition gps) {
 		try {
 
 			Message message = new MimeMessage(session);
