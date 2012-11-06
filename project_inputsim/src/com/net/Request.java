@@ -7,6 +7,7 @@ import core.classes.Sheep;
 import core.classes.User;
 
 public class Request implements Serializable {
+	private static final long serialVersionUID = 2L;
 	static final int REQUEST = 1, LOGOUT = 2, EDITUSER = 3, EDITSHEEP = 4;
 	private int type;
 	private String message;
