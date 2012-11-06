@@ -5,12 +5,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import com.db.DatabaseConnector;
-import com.skype.PhoneNotifier;
-
-import core.AlertNotifier;
 import core.settings.Settings;
 
-
+/**Thread to handle connections from Client Socket,
+ * 
+ * @author Lars Erik
+ *
+ */
 public class ClientHandler implements Runnable {
 	private Socket socket;
 	private ObjectOutputStream sOutput;

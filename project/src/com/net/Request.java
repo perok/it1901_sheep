@@ -34,8 +34,12 @@ public class Request implements Serializable {
 	public Request(int type, String message, HashMap parameters) {
 		this.type = type;
 		this.message = message;
-		parameters = new HashMap();
-		this.parameters = parameters;
+//		parameters = new HashMap(parameters);
+		for (int i = 0; i < parameters.size(); i++) {
+			this.parameters.putAll(parameters);
+		}
+//		this.parameters = parameters;
+		
 	}
 	
 	public Request(int type) {
