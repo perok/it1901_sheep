@@ -5,8 +5,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-/*
- * The server as a GUI
+/**
+ * 
+ * @author Lars Erik
+ *
  */
 public class ServerGUI extends JFrame implements ActionListener, WindowListener {
 
@@ -73,7 +75,6 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == stopStart){
-
 			if(server != null) {
 				server.stop();
 				server = null;
@@ -96,6 +97,9 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 			new ServerRunning().start();
 			stopStart.setText("Stop");
 			tPortNumber.setEditable(false);
+		}
+		if(e.getSource() == cmdButton){
+			command.setText("");
 		}
 	}
 
