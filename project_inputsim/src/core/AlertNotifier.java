@@ -45,7 +45,7 @@ public class AlertNotifier implements Runnable{
 	 * @param sheepAlert
 	 */
 	private void notifyPhone(SheepAlert sheepAlert) {
-		GpsPosition gps = sheepAlert.getGpsPosition();
+		GPSPosition gps = sheepAlert.getGpsPosition();
 		int recipient = db.getAlertResponderPhone(sheepAlert.getFarmId());
 		skype.setNumber(Integer.toString(recipient));
 		skype.notifyPhone(gps);
@@ -56,7 +56,7 @@ public class AlertNotifier implements Runnable{
 	 * @param sheepAlert
 	 */
 	private void notifyEmail(SheepAlert sheepAlert) {
-		GpsPosition gps = sheepAlert.getGpsPosition();
+		GPSPosition gps = sheepAlert.getGpsPosition();
 		String recipient = db.getAlertResponderEmail(sheepAlert.getFarmId());
 		mail.notifyUser(recipient, gps);
 	}

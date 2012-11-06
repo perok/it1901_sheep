@@ -43,12 +43,12 @@ public class ClientHandler implements Runnable {
 				switch(req.getType()) {
 
                 case Request.REQUEST:
-                	server.sg.appendRoom(username + ": " + req.getMessage() );
+                	server.sg.appendEvent(username + ": " + req.getMessage() );
                     Response res = HandleRequest(req);
     				sOutput.writeObject(res);
                     break;
                 case Request.LOGOUT:
-                    server.sg.appendRoom(username + " disconnected with a LOGOUT message.");
+                    server.sg.appendEvent(username + " disconnected with a LOGOUT message.");
                     keepGoing = false;
     				kill();
                     break;

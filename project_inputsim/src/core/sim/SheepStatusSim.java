@@ -7,7 +7,7 @@ import javax.swing.Timer;
 import com.db.*;
 import com.net.Server;
 
-import core.classes.GpsPosition;
+import core.classes.GPSPosition;
 import core.classes.SheepAlert;
 import core.settings.*;
 
@@ -77,7 +77,7 @@ public class SheepStatusSim {
 			alerts[i][5] = Integer.toString(rand.nextInt(400));
 			alerts[i][6] = Integer.toString(rand.nextInt(numberOfFarms)+1);
 			server.notifier.recieveAlert(new SheepAlert(Integer.parseInt(alerts[i][0]), Integer.parseInt(alerts[i][1]), 
-					Integer.parseInt(alerts[i][2]), Integer.parseInt(alerts[i][3]), new GpsPosition(Integer.parseInt(alerts[i][4]), 
+					Integer.parseInt(alerts[i][2]), Integer.parseInt(alerts[i][3]), new GPSPosition(Integer.parseInt(alerts[i][4]), 
 							Integer.parseInt(alerts[i][5])), Integer.parseInt(alerts[i][6])));
 		}
 	}
@@ -94,7 +94,7 @@ public class SheepStatusSim {
 			alerts[i][5] = Integer.toString(rand.nextInt(400));
 			alerts[i][6] = Integer.toString(rand.nextInt(numberOfFarms)+1);
 			server.notifier.recieveAlert(new SheepAlert(Integer.parseInt(alerts[i][0]), Integer.parseInt(alerts[i][1]), 
-					Integer.parseInt(alerts[i][2]), Integer.parseInt(alerts[i][3]), new GpsPosition(Integer.parseInt(alerts[i][4]), 
+					Integer.parseInt(alerts[i][2]), Integer.parseInt(alerts[i][3]), new GPSPosition(Integer.parseInt(alerts[i][4]), 
 							Integer.parseInt(alerts[i][5])), Integer.parseInt(alerts[i][6])));
 		}
 	}

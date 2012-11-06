@@ -6,7 +6,7 @@ import com.skype.tutorial.appkeypair.AppKeyPairMgr;
 import com.skype.tutorial.util.MySession;
 import com.skype.tutorial.util.SignInMgr;
 
-import core.classes.GpsPosition;
+import core.classes.GPSPosition;
 import core.settings.Settings;
 
 /**Supports sending of sms to given phonenumber with coordinates of attack.
@@ -26,7 +26,7 @@ public class PhoneNotifier {
 	private String[] numbers;
 	private AppKeyPairMgr appKey = new AppKeyPairMgr();
 	private MySession mySession = new MySession();
-	private GpsPosition gps;
+	private GPSPosition gps;
 	
 	/**Constructor. Sets username and password given in settings file.
 	 * 
@@ -95,7 +95,7 @@ public class PhoneNotifier {
 	/**The public method available to send an Sms with a pre initialized PhoneNotifier.
 	 * 
 	 */
-	public void notifyPhone(GpsPosition gps) {
+	public void notifyPhone(GPSPosition gps) {
 		this.gps = gps;
 		this.runSkypekit();
 		if(this.connect())

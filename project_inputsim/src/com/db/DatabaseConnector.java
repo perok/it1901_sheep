@@ -181,7 +181,7 @@ public class DatabaseConnector {
 		String[][] r = processQuery("SELECT * FROM sheep_status WHERE farm_id = " + farmId + ";");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new SheepStatus(Integer.parseInt(r[i][0]),Integer.parseInt(r[i][1]),Integer.parseInt(r[i][2])
-					,Float.parseFloat(r[i][3]), new GpsPosition(Double.parseDouble(r[i][4]), Double.parseDouble(r[i][5])),
+					,Float.parseFloat(r[i][3]), new GPSPosition(Double.parseDouble(r[i][4]), Double.parseDouble(r[i][5])),
 					Integer.parseInt(r[i][6])));
 		}
 		return list;
@@ -192,7 +192,7 @@ public class DatabaseConnector {
 		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE farm_id = " + farmId + ";");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new SheepAlert(Integer.parseInt(r[i][0]),Integer.parseInt(r[i][1]),Integer.parseInt(r[i][2])
-					,Float.parseFloat(r[i][3]), new GpsPosition(Double.parseDouble(r[i][4]), Double.parseDouble(r[i][5])),
+					,Float.parseFloat(r[i][3]), new GPSPosition(Double.parseDouble(r[i][4]), Double.parseDouble(r[i][5])),
 					Integer.parseInt(r[i][6])));
 		}
 		return list;
@@ -280,7 +280,7 @@ public class DatabaseConnector {
 		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE notified = " + 0 + ";");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new SheepAlert(Integer.parseInt(r[i][0]),Integer.parseInt(r[i][1]),Integer.parseInt(r[i][2])
-					,Float.parseFloat(r[i][3]), new GpsPosition(Double.parseDouble(r[i][4]), Double.parseDouble(r[i][5])),
+					,Float.parseFloat(r[i][3]), new GPSPosition(Double.parseDouble(r[i][4]), Double.parseDouble(r[i][5])),
 					Integer.parseInt(r[i][6])));
 		}
 		return list;
