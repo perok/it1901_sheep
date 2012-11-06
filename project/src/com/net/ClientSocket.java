@@ -4,7 +4,7 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
-import com.gui.MainWindow;
+import com.gui.logic.ServerLogic;
 
 import core.classes.Farm;
 import core.classes.Sheep;
@@ -16,7 +16,7 @@ public class ClientSocket  {
 	private ObjectInputStream sInput;
 	private ObjectOutputStream sOutput;
 	private Socket socket;
-	private MainWindow caller;
+	private ServerLogic caller;
 	private String server, username;
 	private int port;
 	private Settings settings;
@@ -43,7 +43,7 @@ public class ClientSocket  {
 	 * @param username
 	 * @param caller
 	 */
-	public ClientSocket(String server, int port, String username, MainWindow caller) {
+	public ClientSocket(String server, int port, String username, ServerLogic caller) {
 		this.server = server;
 		this.port = port;
 		this.username = username;

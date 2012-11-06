@@ -1,27 +1,27 @@
 package com.gui.logic;
 
 
-import com.gui.SheepListWidget;
 import com.gui.UiMainWindow;
 import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.gui.QLabel;
-import com.trolltech.qt.gui.QWidget;
 
 import core.classes.Sheep;
 
-public class MainWindowLogic extends QSignalEmitter{
+public class UiMainWindowLogic extends QSignalEmitter{
 	
 	UiMainWindow mw;
 	sheepListWidgetHandler slwHandler;
 	tableWidgetHandler twHandler;
+	ServerLogic sLogic;
 	
 	
 	QLabel statusbarMessage;
 	
-	public MainWindowLogic(UiMainWindow mw, sheepListWidgetHandler slwHandler, tableWidgetHandler twHandler){
+	public UiMainWindowLogic(UiMainWindow mw, sheepListWidgetHandler slwHandler, tableWidgetHandler twHandler, ServerLogic sLogic){
 		this.mw = mw;
 		this.slwHandler = slwHandler;
 		this.twHandler = twHandler;
+		this.sLogic = sLogic;
 		
 		statusbarMessage = new QLabel("Ready");
 		mw.statusbar.addWidget(statusbarMessage);
@@ -38,9 +38,7 @@ public class MainWindowLogic extends QSignalEmitter{
 		mw.dockWidget.*/
 		
 		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
-		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");
-		System.out.println("Logic applied");
-		
+		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");		
 		
 		//Debug
 		slwHandler.addSheep();

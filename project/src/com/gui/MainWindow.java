@@ -1,19 +1,17 @@
 package com.gui;
 
-import java.util.ArrayList;
-
+import com.gui.logic.UiLoginWindowLogic;
+import com.gui.logic.UiMainWindowLogic;
+import com.gui.logic.ServerLogic;
+import com.gui.logic.sheepListWidgetHandler;
 import com.gui.logic.tableWidgetHandler;
-import com.net.ClientSocket;
-import com.net.Response;
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.gui.QStyleFactory;
 import com.trolltech.qt.gui.QWidget;
-
-import core.classes.Sheep;
-
 
 /** Class to hold all graphical components (and itself).
  * 
@@ -24,8 +22,8 @@ public class MainWindow extends QMainWindow
 {
 	private static final double SHEEP_WINDOW_COVERAGE = 0.2;
 	
-	public  static final int INIT_SCREEN_WIDTH      = 800, 
-							 INIT_SCREEN_HEIGHT 	= 600;
+	public  static final int INIT_SCREEN_WIDTH      = 900, 
+							 INIT_SCREEN_HEIGHT 	= 800;
 	public  static final int INIT_SHEEP_WIDGET_SIZE = (int) (INIT_SCREEN_WIDTH * SHEEP_WINDOW_COVERAGE);
     
    
@@ -35,15 +33,17 @@ public class MainWindow extends QMainWindow
     private QAction undoAct;
         
     private UiMainWindow uiMainWindow;
-    private UiLoginWindow Ui_LoginWindow;
+    private UiLoginWindow uiLoginWindow;
     
-    private Object objectAskingForResponse = null;
     
     /* DB */
-    private static ClientSocket clientSocket;
     
     /* Handlers */
     private tableWidgetHandler twhandler;
+    private sheepListWidgetHandler slwHandler;
+    private UiMainWindowLogic mwLogic;
+    private UiLoginWindowLogic lwLogic;
+    private ServerLogic serverLogic;
     
     /** Main.
      * 
@@ -53,6 +53,9 @@ public class MainWindow extends QMainWindow
     {
         QApplication.initialize(args);
         
+        System.out.println("Available themes: " + QStyleFactory.keys());
+        
+        QApplication.setStyle("Plastique");
         MainWindow testMainWindow = new MainWindow(null);
         testMainWindow.show();
     	
@@ -63,8 +66,6 @@ public class MainWindow extends QMainWindow
          * http://doc.qt.digia.com/qt/gallery.html
          * http://www.slideshare.net/qtbynokia/how-to-make-your-qt-app-look-native
          */
-        
-        //testMainWindow.setStyleSheet(styleSheet)
     }
     
 
@@ -76,23 +77,15 @@ public class MainWindow extends QMainWindow
     {
         super(parent);
         
-        Ui_LoginWindow = new UiLoginWindow();
-        Ui_LoginWindow.setupUi(this, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
-        setupLoginWindow();
+        serverLogic = new ServerLogic();
+        uiLoginWindow = new UiLoginWindow();
+        
+        uiLoginWindow.setupUi(this, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
+    	
+        lwLogic = new UiLoginWindowLogic(uiLoginWindow, serverLogic);
+        
+        serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");
     }
-    
-    /*
-     *LOGINWINDOW 
-     */
-    
-    /**
-     * 
-     */
-    public void setupLoginWindow(){        
-    	Ui_LoginWindow.tryLogin.connect(this, "tryLogIn(String, String)");
-
-    }
-    
     
 	/**
 	 * Event fired when user has made a succesfull loggin.
@@ -100,11 +93,18 @@ public class MainWindow extends QMainWindow
 	 */
 	public void setupUi_MainWindow(){		
 		uiMainWindow = new UiMainWindow();
-		
 		uiMainWindow.setupUi(this, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
         
-        
         init_connectEventsForWidgets();
+  	}
+	
+	/** Set the initial event-handlers
+	 */
+	private void init_connectEventsForWidgets()
+	{
+		twhandler = new tableWidgetHandler(uiMainWindow.tableWidget);
+		slwHandler = new sheepListWidgetHandler(uiMainWindow.listWidget);		
+        mwLogic = new UiMainWindowLogic(uiMainWindow, slwHandler, twhandler, serverLogic);
 	}
     
     /*
@@ -114,7 +114,9 @@ public class MainWindow extends QMainWindow
     /** Handle "about" trigger
 	*/
 	protected void about() {
-	    QMessageBox.information(this, "Info", "baa! baa! baa! baa! baa! baa! baa! baa! baa! ");
+	    QMessageBox.information(this, "About", "Sheep surveilance application." 
+	    		+ "Created by Anders Sildnes, Lars erik Grasdal, Tor Økland Barstad"
+	    		+ ", Svenn K and Per Øyvind Kanestrøm");
 	}
 
     
@@ -125,6 +127,7 @@ public class MainWindow extends QMainWindow
     {
     	System.out.println("What has been done cannot be undone :o");
     }
+    
     
     /** Set the initial actions
      */
@@ -157,17 +160,6 @@ public class MainWindow extends QMainWindow
 		
 		
 	}
-	
-	/** Set the initial event-handlers
-	 */
-	private void init_connectEventsForWidgets()
-	{
-		twhandler = new tableWidgetHandler(uiMainWindow.tableWidget);
-		//this.slwSheepList		.topLevelChanged	.connect(this, "dockEvent()");	
-		
-	}
-	
-
 	/** Set the initial menu
 	 */
 	/*
@@ -186,14 +178,6 @@ public class MainWindow extends QMainWindow
 	    this.viewMenu = menuBar().addMenu(tr("&View"));
 	    this.viewMenu.addAction("hey");
 	}*/
-	
-
-	/** Set the initial screen settings.
-	 */
-	private void initScreenSettings()
-	{
-		super.setGeometry(10, 10,  INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
-	}
 
 	
 	/*
@@ -206,110 +190,11 @@ public class MainWindow extends QMainWindow
 	 */
 	@Override
 	protected void closeEvent(QCloseEvent event) {
-		
-		if(clientSocket != null)
-			clientSocket.disconnect();
+		serverLogic.closeConnection();
 		
 		super.closeEvent(event);
 	}
-
-	
-	/**
-	 * Signaled method for setting up network connection and log in
-	 * 
-	 * @param usrName
-	 * @param usrPW
-	 */
-	private void tryLogIn(String usrName, String usrPW){
-		setupUi_MainWindow();
-
-		
-		if(this.clientSocket == null )
-			this.clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
-		
-		try{
-			clientSocket.start();
-			clientSocket.login(usrName, usrPW);
-			/*if(!clientSocket.start())
-				System.out.println("Problem with connecting");
-			else
-				clientSocket.login(usrName, usrPW);*/
-				
-		}
-		catch (Exception e){
-			System.out.println(e);
-		}
-
-	}
-	
-	/*
-	 * SIGNALS
-	 * 
-	 */
-	public Signal0 loggedIn;
-	public Signal1<ArrayList<Sheep>> sheepsRecieved;
-	public Signal1<Sheep> showSheepInformation;
-	
-	
-	/*
-	 * DATABSE CONNECTION
-	 */
-	
-	public void handleResponse(Response response){
-		System.out.println("Response: "+ response.getType());
-		
-		/*
-		 * Må ha ett system der de ulike viewsa som kaller etter informasjon
-		 * fra serveren blir registrert slikt at de kan sendes dit
-		 */
-		
-		int responseType = response.getType();
-		
-		/* List */
-		if(responseType == 1) {
-			//A object has called for a list
-			if (objectAskingForResponse != null){
-				//Sheeplist asking for information
-				if( objectAskingForResponse instanceof SheepListWidget){
-					//objectAskingForResponse.giveResponse(response);
-					
-					objectAskingForResponse = null;
-				}
-			}
-			System.out.println("respinse 1");
-		}
-		/* Boolean */
-		else if(responseType == 2)
-			System.out.println("response 2");
-		/* User */
-		else if(response.getType() == 3)
-			if(response.getUser() == null)
-				/*Koble seg til loggininterface og gi beskjed der */
-				System.out.println("Loggin failed, try again");
-			else{
-				System.out.println("Logged in with user: " + response.getUser().getName());
-				setupUi_MainWindow();
-			}
-				
-	}
-	
-	public void connectionFailed(){
-		System.out.println("Connection error");
-	}
-	
-	public void handleMessage(String message){
-		System.out.println("Message from server: " + message);
-	}
-	
-	protected void requestSheeps(Object o){
-		if(objectAskingForResponse == null)
-			objectAskingForResponse = o;
-		//SendRequest
-	}
 }
-
-//splitDockWidget
-
 /* 14.10.2012 - worked about 5 hours to fix everything */
 
 /* EOF */

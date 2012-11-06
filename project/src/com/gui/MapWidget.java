@@ -98,7 +98,7 @@ public class MapWidget extends QWidget
 	
 	@Override
     protected void resizeEvent(QResizeEvent e) {
-       System.out.println("The new size: (" + e.size().width() + ", " + e.size().height() + ")");
+       //System.out.println("The new size: (" + e.size().width() + ", " + e.size().height() + ")");
        
        
        mapKit.setBounds(0, 0, e.size().width(), e.size().height());
