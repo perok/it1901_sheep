@@ -81,6 +81,13 @@ public class User  implements Serializable{
 	public void setFarmlist(ArrayList<Farm> farmlist) {
 		this.farmlist = farmlist;
 	}
+	
+	public void addFarms(ArrayList<Farm> farms) {
+		for (int i = 0; i < farms.size(); i++) {
+			this.farmlist.add(farms.get(i));
+		}
+		
+	}
 
 	public String getPassword() {
 		return password;

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import core.classes.User;
 	
 public class Response implements Serializable { 
+	private static final long serialVersionUID = 1L;
 	static final int LIST = 1, BOOLEAN = 2, USER = 3;
 	private int type;
 	private boolean success;

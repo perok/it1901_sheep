@@ -69,6 +69,7 @@ public class DatabaseConnector {
 			}
 			farms.add(farm);
 		}
+		user.addFarms(farms);
 		return user;
 		}
 		catch(NullPointerException e){
@@ -78,7 +79,7 @@ public class DatabaseConnector {
 			return null;
 		}
 		
-		//		user.addFarms(farms);
+				
 		
 	}
 
