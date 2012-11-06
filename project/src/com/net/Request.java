@@ -31,11 +31,15 @@ public class Request implements Serializable {
 		this.sheep = sheep;
 	}
 	
-	public Request(int type, String message, HashMap parameters) {
+	public Request(int type, String message, HashMap _parameters) {
 		this.type = type;
 		this.message = message;
+		
 		parameters = new HashMap();
-		this.parameters = parameters;
+		
+		for( Object key : _parameters.keySet()){
+			parameters.put(key, _parameters.get(key));
+		}
 	}
 	
 	public Request(int type) {
@@ -54,8 +58,10 @@ public class Request implements Serializable {
 		return parameters;
 	}
 
-	public void setparameters(HashMap parameters) {
-		this.parameters = parameters;
+	public void setparameters(HashMap _parameters) {
+		for( Object key : _parameters.keySet()){
+			parameters.put(key, _parameters.get(key));
+		}
 	}
 	
 	public void addparameter(String name, String value) {
