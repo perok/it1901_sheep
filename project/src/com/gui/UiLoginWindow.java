@@ -115,7 +115,7 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
 
     void retranslateUi(QMainWindow MainWindow)
     {
-        MainWindow.setWindowTitle(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "MainWindow", null));
+        MainWindow.setWindowTitle(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Login Window", null));
         label.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Username", null));
         label_2.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Password", null));
         btnLogin.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Login", null));
