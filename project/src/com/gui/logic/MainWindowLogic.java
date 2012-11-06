@@ -1,7 +1,6 @@
 package com.gui.logic;
 
 
-import com.gui.SheepListWidget;
 import com.gui.UiMainWindow;
 import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.gui.QLabel;
