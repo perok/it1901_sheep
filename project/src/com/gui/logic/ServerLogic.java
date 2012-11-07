@@ -23,17 +23,17 @@ public class ServerLogic extends QSignalEmitter{
 	 * @param usrPW
 	 */
 	public void tryLogIn(String usrName, String usrPW){
-		loggedIn.emit();
+		//loggedIn.emit();
 		
 		System.out.println("Trying to log in with user: " + usrName);
 		//For testing only
 		//loggedIn.emit();
 		if(clientSocket == null )
-			//clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
+			clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
 		
 		try{
-			//clientSocket.start();
-			//clientSocket.login(usrName, usrPW);
+			clientSocket.start();
+			clientSocket.login(usrName, usrPW);
 			/*if(!clientSocket.start())
 				System.out.println("Problem with connecting");
 			else
