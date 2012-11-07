@@ -121,24 +121,10 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
         btnLogin.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Login", null));
     } // retranslateUi
     
-    
-    /**
-     * Key event(Enter) for loginCheck
-     */
-    /*
-    public void keyPressEvent(QKeyEvent event){
-    	if (event.key() == Qt.Key.Key_Return.value()){
-    		loginCheck();
-    	}
-    	else{
-    	super.keyPressEvent(event);
-    	}
-   	}*/
-    
     /**
      * A method for checking login autorization
      */
-    private void loginCheck(){
+    public void loginCheck(){
     	if(isPassWordAndUsernName(txtEditUsername.text(), txtEditPassword.text())){
     		tryLogin.emit(txtEditUsername.text(), txtEditPassword.text());
     	}

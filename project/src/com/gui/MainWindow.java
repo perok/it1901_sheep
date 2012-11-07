@@ -5,9 +5,11 @@ import com.gui.logic.UiMainWindowLogic;
 import com.gui.logic.ServerLogic;
 import com.gui.logic.sheepListWidgetHandler;
 import com.gui.logic.tableWidgetHandler;
+import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
+import com.trolltech.qt.gui.QKeyEvent;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QStyleFactory;
@@ -76,14 +78,13 @@ public class MainWindow extends QMainWindow
     public MainWindow(QWidget parent)
     {
         super(parent);
-        
+       
         serverLogic = new ServerLogic();
         uiLoginWindow = new UiLoginWindow();
         
         uiLoginWindow.setupUi(this, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
     	
         lwLogic = new UiLoginWindowLogic(uiLoginWindow, serverLogic);
-        
         serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");
     }
     
@@ -91,7 +92,10 @@ public class MainWindow extends QMainWindow
 	 * Event fired when user has made a succesfull loggin.
 	 * Changes the view to application mode
 	 */
-	public void setupUi_MainWindow(){		
+	public void setupUi_MainWindow(){
+		uiLoginWindow = null;
+		lwLogic = null;
+		
 		uiMainWindow = new UiMainWindow();
 		uiMainWindow.setupUi(this, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
         
@@ -194,6 +198,19 @@ public class MainWindow extends QMainWindow
 		
 		super.closeEvent(event);
 	}
+	
+	@Override
+	public void keyPressEvent(QKeyEvent event){
+		if(uiLoginWindow != null){
+			if (event.key() == Qt.Key.Key_Return.value()){
+				uiLoginWindow.loginCheck();
+	    	}
+			else
+				super.keyPressEvent(event);
+		}
+    	else
+    		super.keyPressEvent(event);
+   	}
 }
 /* 14.10.2012 - worked about 5 hours to fix everything */
 

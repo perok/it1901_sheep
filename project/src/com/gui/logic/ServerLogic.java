@@ -23,10 +23,11 @@ public class ServerLogic extends QSignalEmitter{
 	 * @param usrPW
 	 */
 	public void tryLogIn(String usrName, String usrPW){
-		//For testing only
-		loggedIn.emit();
-
+		//loggedIn.emit();
 		
+		System.out.println("Trying to log in with user: " + usrName);
+		//For testing only
+		//loggedIn.emit();
 		if(clientSocket == null )
 			clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
 		
@@ -46,7 +47,7 @@ public class ServerLogic extends QSignalEmitter{
 	}
 	
 	public void handleResponse(Response response){
-		System.out.println("Response: "+ response.getType());
+		System.out.println("Recieved response: "+ response.getType());
 		
 		/*
 		 * Må ha ett system der de ulike viewsa som kaller etter informasjon
