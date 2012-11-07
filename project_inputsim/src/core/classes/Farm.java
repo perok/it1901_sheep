@@ -21,6 +21,7 @@ public class Farm implements Serializable {
 	public Farm(int id, String name) {
 		this.setId(id);
 		this.setName(name);
+		sheepList = new ArrayList<Sheep>();
 	}
 	
 	public int getId() {
@@ -40,8 +41,8 @@ public class Farm implements Serializable {
 	}
 	
 	
-	public boolean addSheep(Sheep sheep){
-		return false;
+	public void addSheep(Sheep sheep){
+		sheepList.add(sheep);
 	}
 	
 	public ArrayList<Sheep> getSheepList(){

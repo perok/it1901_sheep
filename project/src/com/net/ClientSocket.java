@@ -256,7 +256,10 @@ public class ClientSocket  {
 		public void run() {
 			while(true) {
 				try {
-					Response res = (Response) sInput.readObject();
+					Response res = (Response) sInput.readObject();			
+					
+
+					
 					if(caller == null) {
 						System.out.println(res.toString());
 						System.out.print("> ");

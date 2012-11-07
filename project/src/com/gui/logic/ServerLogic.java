@@ -2,6 +2,7 @@ package com.gui.logic;
 
 import com.net.Response;
 import com.net.ClientSocket;
+import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
 
 
@@ -83,10 +84,24 @@ public class ServerLogic extends QSignalEmitter{
 				/*Koble seg til loggininterface og gi beskjed der */
 				System.out.println("Loggin failed, try again");
 			else{
-				System.out.println("Logged in with user: " + response.getUser().getName());
+				System.out.println("Logged in with user: " + response.getUser().getName()
+						+ "\nNumber of farms: " + response.getUser().getFarmlist().size());
+				
+					
+	
+				
+				for(int i = 0; i < response.getUser().getFarmlist().size(); i++){
+					System.out.println("=== Farm: " + response.getUser().getFarmlist().get(i).getId() + " ==");
+					System.out.println("\tNumber of sheep: " + response.getUser().getFarmlist().get(i).getSheepList().size());
+				}
+				
+				
+				new UserStorage(response.getUser());
+				
 				loggedIn.emit();
 			}
-				
+		
+		System.out.println("Response handled");				
 	}
 	
 	public void closeConnection(){

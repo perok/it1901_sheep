@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.storage.Sheeps;
+import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.core.Qt.MatchFlags;
@@ -138,7 +139,7 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	public void addSheep()
 	{
 		statusBarMessage.emit("Populating Sheeps");
-		
+		/*
 		for(int iPos = 0; iPos < 10; iPos++)
 		{
 			String sSheepName = "sheep <" + Integer.toString((int)(Math.random() * 9)) + ">";
@@ -150,9 +151,15 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 			
 			//this.qsimModel.insertRow(0);
 			//this.qsimModel.setData(this.qsimModel.index(0, 0), sSheepName);
-		}
+		}*/
 		//updateSheepList();
 		statusBarMessage.emit("done");
+		int currentFarm = 0;
+		for(Sheep sheep : UserStorage.getUser().getFarmlist().get(currentFarm).getSheepList()){
+			QListWidgetItem item = new QListWidgetItem();
+			item.setData(QtSheepDataRole, sheep);
+			item.setData(0, sheep.getName());
+		}
 	}
 	
 	//Qt MatchContains 1 == contained in the item
