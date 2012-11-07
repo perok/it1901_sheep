@@ -5,6 +5,8 @@ import com.net.ClientSocket;
 import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
 
+import core.classes.Sheep;
+
 
 public class ServerLogic extends QSignalEmitter{
 	
@@ -114,6 +116,10 @@ public class ServerLogic extends QSignalEmitter{
 	
 	public void handleMessage(String message){
 		System.out.println("Message from server: " + message);
+	}
+	
+	public void editSheep(Sheep sheep){
+		clientSocket.editSheep(sheep);
 	}
 	
 	protected void requestSheeps(Object o){

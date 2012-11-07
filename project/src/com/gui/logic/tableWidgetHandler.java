@@ -65,7 +65,7 @@ public class tableWidgetHandler {
 	protected void addSheep(Sheep sheep, ArrayList<Message> messages){ // Alerts
 		
 		//Hva med å ha ovenfor felt for; 
-		//Sheep id, Sheep name, farmId
+		
 		//Og fyllle inn
 		
 		widget.setRowCount(messages.size());

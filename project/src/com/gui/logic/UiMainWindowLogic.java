@@ -19,6 +19,9 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	QLabel statusbarMessage;
 	
 	public Signal0 signalShowAbout;
+	public Signal0 signalShowAboutQt;
+	
+	private Sheep currentSheep;
 	
 	public UiMainWindowLogic(UiMainWindow mw, sheepListWidgetHandler slwHandler, tableWidgetHandler twHandler, ServerLogic sLogic){
 		System.out.println("Applying logic");
@@ -26,6 +29,10 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		this.mw = mw;
 		this.slwHandler = slwHandler;
 		this.twHandler = twHandler;
+		
+		/* Setting up user information*/
+		for(int i = 0; i < UserStorage.getUser().getFarmlist().size(); i++)
+			mw.cmbDockFarmId.addItem(UserStorage.getUser().getFarmlist().get(i).getName());
 		
 		/* Setting up extra widgets*/
 		statusbarMessage = new QLabel("Ready");
@@ -37,6 +44,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		
 		/* Setting up signals */
 		signalShowAbout = new Signal0();
+		signalShowAboutQt = new Signal0();
 			//MainWinow
 				//MENU
 		mw.actionInformation_Window.toggled.connect(this, "actionInformation_Window_toggled(boolean)");
@@ -68,18 +76,14 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		slwHandler.addSheep();
 	}
 	
-	/**
-	 * 
-	 */
-	public void setupUserInformation(){
-		for(int i = 0; i < UserStorage.getUser().getFarmlist().size(); i++)
-			mw.cmbDockFarmId.addItem(UserStorage.getUser().getFarmlist().get(i).getName());
-	}
-	
 	/* ACTIONS */
 	
 	private void actionAbout_toggled(boolean trigg){
 		signalShowAbout.emit();
+	}
+	
+	private void actionAbout_Qt_Jambi_triggerd(boolean trigg){
+		signalShowAboutQt.emit();
 	}
 	
 	private void actionInformation_Window_toggled(boolean toggle){
@@ -101,21 +105,57 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	}
 	
 	private void cmbDockFarmId_currentIndexChanged(int index){
+		System.out.println("INDEX CHAGNED " + index);
+
 		UserStorage.setCurrentFarm(index);
 		slwHandler.addSheep();
 	}
 	
 	private void lineEdit_textChanged(String text){
-		
+		slwHandler.searchSheeps(text);
 	}
 	
 		//TABWIDGET	
+	/**
+	 * Update button for the informaton tab
+	 * 
+	 * Handles the call to DB and update of locale sheep
+	 * 
+	 * @param click
+	 */
 	private void pbTabInformationUpdate_clicked(boolean click){
-		System.out.println("CLICK");
+		Sheep sheepUpdate;
+		//Not empty
+		if(!mw.lEName.text().equals("") && !mw.lEFarmId.text().equals("") && Integer.parseInt(mw.lEFarmId.text()) != 0){
+			sheepUpdate = new Sheep(currentSheep.getId(), mw.lEName.text(), Integer.parseInt(mw.lEFarmId.text()), 
+					Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) + String.valueOf(mw.dEBirthdaye.date().month()) + String.valueOf(mw.dEBirthdaye.date().day())),
+					mw.chbAlive.isChecked(), (int)mw.dSBWeight.value()); //MÅ FIKSES, skal ikke være int
+			
+			sLogic.editSheep(sheepUpdate);
+		}
+		else
+			statusbarMessage.setText("Some fields are blank, or not valid input..");
 	}
 	
+	/**
+	 * Resets the sheep information tab
+	 * 
+	 * @param click
+	 */
 	private void pbTabInformationReset_clicked(boolean click){
-		System.out.println("CLICK");
+		if(currentSheep != null){			
+			mw.lEName.setText(currentSheep.getName());
+			mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//sheep.getDateOfBirth(), m, d))
+			mw.dSBWeight.setValue((double)currentSheep.getWeight());
+			mw.lEFarmId.setText(String.valueOf(currentSheep.getFarmId()));
+			if(currentSheep.isAlive())
+				mw.chbAlive.setChecked(true);
+			else
+				mw.chbAlive.setChecked(false);
+			
+			statusbarMessage.setText("Information reset done");
+		}
+			
 
 	}
 	
@@ -136,6 +176,11 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	//OTHER EVENTS
 	
 	private void populateTableWidget(Sheep sheep){
+		currentSheep = sheep;
+		
+		//Sheep id, Sheep name, farmId
+		mw.lblTabMessages.setText("Sheep#: " + sheep.getId() + "\tFarm#: " + sheep.getFarmId() + "\tName: " + sheep.getName());
+		
 		mw.lEName.setText(sheep.getName());
 		mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//sheep.getDateOfBirth(), m, d))
 		mw.dSBWeight.setValue((double)sheep.getWeight());

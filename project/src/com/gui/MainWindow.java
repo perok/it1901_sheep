@@ -103,10 +103,9 @@ public class MainWindow extends QMainWindow
 		twhandler = new tableWidgetHandler(uiMainWindow.tableWidget);
 		slwHandler = new sheepListWidgetHandler(uiMainWindow.listWidget);		
         mwLogic = new UiMainWindowLogic(uiMainWindow, slwHandler, twhandler, serverLogic);
-        
-        mwLogic.setupUserInformation();
-        
+                
         mwLogic.signalShowAbout.connect(this, "about()");
+        mwLogic.signalShowAboutQt.connect(this, "aboutQt()");
   	}
     
     /*
@@ -119,6 +118,10 @@ public class MainWindow extends QMainWindow
 	    QMessageBox.information(this, "About", "Sheep surveilance application." 
 	    		+ "Created by Anders Sildnes, Lars erik Grasdal, Tor Økland Barstad"
 	    		+ ", Svenn K and Per Øyvind Kanestrøm");
+	}
+	
+	protected void aboutQt() {
+	    QMessageBox.aboutQt(this);
 	}
 	
 	/*

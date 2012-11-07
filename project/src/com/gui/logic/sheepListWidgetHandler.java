@@ -148,11 +148,13 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	public void addSheep()
 	{
 		statusBarMessage.emit("Populating Sheeps");
+		System.out.println("Adding new sheeps to listView. Old amount of sheeps are: " + qlWidget.count());
+
 		//Empty list
 		for(int i = 0; i < qlWidget.count(); i++)
 			qlWidget.takeItem(i);
-		
 		for(Sheep sheep : UserStorage.getUser().getFarmlist().get(UserStorage.getCurrentFarm()).getSheepList()){
+			System.out.println(sheep.getName());
 			QListWidgetItem item = new QListWidgetItem();
 			item.setData(QtSheepDataRole, sheep);
 			item.setData(0, sheep.getName());
@@ -164,8 +166,8 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	}
 	
 	//Qt MatchContains 1 == contained in the item
-	private void searchSheeps(String searchString){
-		qlWidget.findItems(searchString, new MatchFlags(1));
+	public void searchSheeps(String searchString){
+		//qlWidget.findItems(searchString, new MatchFlags(1));
 	}
 	
 	public void changeSortOrder(){
