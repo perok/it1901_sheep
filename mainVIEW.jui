@@ -67,7 +67,7 @@
         <enum>com.trolltech.qt.gui.QTabWidget.TabShape.Triangular</enum>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <property name="documentMode">
         <bool>false</bool>
@@ -551,6 +551,7 @@
      <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="actionAbout_Qt_Jambi"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -726,6 +727,16 @@
   <action name="actionUndo">
    <property name="text">
     <string>Undo</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionAbout_Qt_Jambi">
+   <property name="text">
+    <string>About Qt Jambi</string>
    </property>
    <property name="font">
     <font>

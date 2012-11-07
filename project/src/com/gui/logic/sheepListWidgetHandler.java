@@ -77,14 +77,14 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 
 		//Select multiple items
 		this.qlWidget.setSelectionMode(SelectionMode.ExtendedSelection);
-		
+		/*
 		String s = "vertical {"
 			+ "border: 2px solid grey;"
 			+ "background: #32CC99;"
 			+ " width: 15px;"
 			+ "margin: 20px 0px 20px 0px ;}";
 		
-		this.qlWidget.setStyleSheet(s);
+		this.qlWidget.setStyleSheet(s);*/
 		
 		//this.qlWidget.contentsMargins().setLeft(200);
 		
@@ -133,7 +133,6 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	 * @param item Item doubleclicked
 	 */
 	public void onSheepDoubleClicked(QListWidgetItem item){//QItemSelection selected, QItemSelection deselected){
-		
 		if(item.data(QtSheepDataRole) != null){
 			Sheep dClicked = (Sheep)item.data(QtSheepDataRole);
 			sheepSelected.emit(dClicked);
@@ -149,10 +148,11 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	public void addSheep()
 	{
 		statusBarMessage.emit("Populating Sheeps");
+		//Empty list
+		for(int i = 0; i < qlWidget.count(); i++)
+			qlWidget.takeItem(i);
 		
-		int currentFarm = 0;
-		
-		for(Sheep sheep : UserStorage.getUser().getFarmlist().get(currentFarm).getSheepList()){
+		for(Sheep sheep : UserStorage.getUser().getFarmlist().get(UserStorage.getCurrentFarm()).getSheepList()){
 			QListWidgetItem item = new QListWidgetItem();
 			item.setData(QtSheepDataRole, sheep);
 			item.setData(0, sheep.getName());
@@ -168,7 +168,7 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 		qlWidget.findItems(searchString, new MatchFlags(1));
 	}
 	
-	private void changeSortOrder(){
+	public void changeSortOrder(){
 		if(sortOrder == SortOrder.AscendingOrder)
 			sortOrder = SortOrder.DescendingOrder;
 		else

@@ -1,8 +1,9 @@
 package com.gui.logic;
 
-
 import com.gui.UiMainWindow;
+import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
+import com.trolltech.qt.core.QDate;
 import com.trolltech.qt.gui.QLabel;
 
 import core.classes.Sheep;
@@ -16,6 +17,8 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	
 	
 	QLabel statusbarMessage;
+	
+	public Signal0 signalShowAbout;
 	
 	public UiMainWindowLogic(UiMainWindow mw, sheepListWidgetHandler slwHandler, tableWidgetHandler twHandler, ServerLogic sLogic){
 		System.out.println("Applying logic");
@@ -33,6 +36,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		
 		
 		/* Setting up signals */
+		signalShowAbout = new Signal0();
 			//MainWinow
 				//MENU
 		mw.actionInformation_Window.toggled.connect(this, "actionInformation_Window_toggled(boolean)");
@@ -40,8 +44,6 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		mw.actionAbout.triggered.connect(this, "actionAbout_toggled(boolean)");
 		mw.actionExit.triggered.connect(this, "actionExit_toggled(boolean)");
 		mw.actionUndo.triggered.connect(this, "actionUndo_toggled(boolean)");
-	
-		
 		
 				//DOCKWIDGET
 		mw.rbAscDesc.toggled.connect(this, "rbAscDesc_toggled(boolean)");
@@ -55,31 +57,29 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		mw.pBSubmit_Add.clicked.connect(this, "pBSubmit_Add_clicked(boolean)");
 		
 			//tableWidgetHandler
+		//mw.ta
+		
 			//SheepListWidget
 		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
-		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");
-		
-		
-		/*
-		mw.pbTabInformationUpdate.clicked.connect(signalOut)
-		mw.pbTabInformationReset.clicked
-		mw.pBSubmit_Add.clicked
-		
-		mw.tableWidget.cellClicked
-		
-		mw.listWidget.itemClicked.connect(receiver, method)
-		
-		mw.dockWidget.*/
-		
+		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");		
 		
 		System.out.println("Logic applied");
 		
+		slwHandler.addSheep();
+	}
+	
+	/**
+	 * 
+	 */
+	public void setupUserInformation(){
+		for(int i = 0; i < UserStorage.getUser().getFarmlist().size(); i++)
+			mw.cmbDockFarmId.addItem(UserStorage.getUser().getFarmlist().get(i).getName());
 	}
 	
 	/* ACTIONS */
 	
 	private void actionAbout_toggled(boolean trigg){
-		System.out.println("wtf");
+		signalShowAbout.emit();
 	}
 	
 	private void actionInformation_Window_toggled(boolean toggle){
@@ -97,11 +97,12 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	
 		//DockWidget
 	private void rbAscDesc_toggled(boolean toggled){
-		
+		slwHandler.changeSortOrder();
 	}
 	
 	private void cmbDockFarmId_currentIndexChanged(int index){
-		
+		UserStorage.setCurrentFarm(index);
+		slwHandler.addSheep();
 	}
 	
 	private void lineEdit_textChanged(String text){
@@ -127,12 +128,23 @@ public class UiMainWindowLogic extends QSignalEmitter{
 
 	}
 	
+	//STATUSBAR
 	private void newStatusBarMessage(String text){
 		statusbarMessage.setText(text);
 	}
 	
+	//OTHER EVENTS
+	
 	private void populateTableWidget(Sheep sheep){
-		System.out.println("Sheep selected: " + sheep.getName());
+		mw.lEName.setText(sheep.getName());
+		mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//sheep.getDateOfBirth(), m, d))
+		mw.dSBWeight.setValue((double)sheep.getWeight());
+		mw.lEFarmId.setText(String.valueOf(sheep.getFarmId()));
+		if(sheep.isAlive())
+			mw.chbAlive.setChecked(true);
+		else
+			mw.chbAlive.setChecked(false);
+		
 		//Get messages for sheep
 		//Send them to twHandler
 		

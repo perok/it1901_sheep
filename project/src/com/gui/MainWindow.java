@@ -103,6 +103,10 @@ public class MainWindow extends QMainWindow
 		twhandler = new tableWidgetHandler(uiMainWindow.tableWidget);
 		slwHandler = new sheepListWidgetHandler(uiMainWindow.listWidget);		
         mwLogic = new UiMainWindowLogic(uiMainWindow, slwHandler, twhandler, serverLogic);
+        
+        mwLogic.setupUserInformation();
+        
+        mwLogic.signalShowAbout.connect(this, "about()");
   	}
     
     /*
@@ -116,67 +120,6 @@ public class MainWindow extends QMainWindow
 	    		+ "Created by Anders Sildnes, Lars erik Grasdal, Tor Økland Barstad"
 	    		+ ", Svenn K and Per Øyvind Kanestrøm");
 	}
-
-    
-    @SuppressWarnings("unused")
-    /** Handle undo-trigger 
-     */
-	private void undo()
-    {
-    	System.out.println("What has been done cannot be undone :o");
-    }
-    
-    
-    /** Set the initial actions
-     */
-	private void initActions()
-	{
-		this.aboutAct = new QAction(tr("&About the Sheep Protoype"), this);
-		this.aboutAct.setStatusTip(tr("Show the application's About box"));
-	
-		this.aboutQtJambiAct = new QAction(tr("About &Qt Jambi"), this);
-		this.aboutQtJambiAct.setStatusTip(tr("Show the Qt Jambi's About box"));
-		
-		this.exitAct = new QAction(tr("E&xit"), this);
-		this.exitAct.setShortcut(tr("Ctrl+Q"));
-		this.exitAct.setStatusTip(tr("Exit the application"));
-	    
-		this.undoAct = new QAction(tr("&Undo"), this);
-		this.undoAct.setShortcut(tr("Ctrl+Z"));
-		this.undoAct.setStatusTip(tr("Undo your last action"));
-		
-	}
-
-	/** Set the initial event-handlers
-	 */
-	private void init_connectEvents()
-	{
-		this.aboutAct			.triggered			.connect(this, "about()");
-		this.aboutQtJambiAct	.triggered			.connect(QApplication.instance(), "aboutQtJambi()");
-		this.exitAct			.triggered			.connect(this, "close()");
-		this.undoAct			.triggered			.connect(this, "undo()");
-		
-		
-	}
-	/** Set the initial menu
-	 */
-	/*
-	private void initMenus()
-	{
-		this.fileMenu = menuBar().addMenu(tr("&File"));
-	    this.fileMenu.addAction(exitAct);
-	    
-	    this.editMenu = menuBar().addMenu(tr("&Edit"));
-		this.editMenu.addAction(this.undoAct);
-	
-		this.helpMenu = menuBar().addMenu(tr("&Help"));
-	    this.helpMenu.addAction(aboutAct);
-	    this.helpMenu.addAction(aboutQtJambiAct);
-	    
-	    this.viewMenu = menuBar().addMenu(tr("&View"));
-	    this.viewMenu.addAction("hey");
-	}*/
-
 	
 	/*
 	 * EVENTS

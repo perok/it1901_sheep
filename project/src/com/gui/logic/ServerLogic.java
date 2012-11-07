@@ -87,9 +87,6 @@ public class ServerLogic extends QSignalEmitter{
 				System.out.println("Logged in with user: " + response.getUser().getName()
 						+ "\nNumber of farms: " + response.getUser().getFarmlist().size());
 				
-					
-	
-				
 				for(int i = 0; i < response.getUser().getFarmlist().size(); i++){
 					System.out.println("=== Farm: " + response.getUser().getFarmlist().get(i).getId() + " ==");
 					System.out.println("\tNumber of sheep: " + response.getUser().getFarmlist().get(i).getSheepList().size());
@@ -97,6 +94,8 @@ public class ServerLogic extends QSignalEmitter{
 				
 				
 				new UserStorage(response.getUser());
+				UserStorage.setCurrentFarm(0);
+				UserStorage.setCurrentMessageType(0);
 				
 				loggedIn.emit();
 			}
