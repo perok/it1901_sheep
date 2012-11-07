@@ -120,10 +120,10 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         //MAPWIDGET = new QWidget(splitter);
         //MAPWIDGET.setObjectName("MAPWIDGET");
         
-        placeholder = new QWidget();
-        splitter.addWidget(placeholder);
-        //mapWidget = new MapWidget();//splitter);
-        //splitter.addWidget(mapWidget);
+        //placeholder = new QWidget();
+        //splitter.addWidget(placeholder);
+        mapWidget = new MapWidget();//splitter);
+        splitter.addWidget(mapWidget);
  
         //splitter.addWidget(MAPWIDGET);
         tabWidget = new QTabWidget(splitter);

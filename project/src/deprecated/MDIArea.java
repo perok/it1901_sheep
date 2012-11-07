@@ -9,6 +9,7 @@ import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.gui.QMdiArea;
 import com.trolltech.qt.gui.QMdiSubWindow;
 import com.trolltech.qt.gui.QResizeEvent;
+import com.gui.*;
 
 /** Class to hold Subwindows
  * 
