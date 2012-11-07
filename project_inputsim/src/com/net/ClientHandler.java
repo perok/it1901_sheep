@@ -5,12 +5,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import com.db.DatabaseConnector;
-import com.skype.PhoneNotifier;
-
-import core.AlertNotifier;
 import core.settings.Settings;
 
-
+/**Thread to handle connections from Client Socket,
+ * 
+ * @author Lars Erik
+ *
+ */
 public class ClientHandler implements Runnable {
 	private Socket socket;
 	private ObjectOutputStream sOutput;
@@ -46,6 +47,7 @@ public class ClientHandler implements Runnable {
                 	server.sg.appendEvent(username + ": " + req.getMessage() );
                     Response res = HandleRequest(req);
     				sOutput.writeObject(res);
+    				sOutput.flush();
                     break;
                 case Request.LOGOUT:
                     server.sg.appendEvent(username + " disconnected with a LOGOUT message.");
@@ -95,8 +97,9 @@ public class ClientHandler implements Runnable {
 			return new Response(Response.BOOLEAN,db.removeSheep(Integer.parseInt(request.getparameter("sheepId"))));
 
 		case("login"):
-			return new Response(Response.USER,db.loginQuery(request.getparameter("username"), request.getparameter("password")));
-		
+			Response lol = new Response(Response.USER,db.loginQuery(request.getparameter("username"), request.getparameter("password")));
+			System.out.println(lol.getUser().getName());
+			return lol;
 		case("editSheep"):
 			return new Response(Response.BOOLEAN,db.editUser(request.getUser().getId(), request.getUser()));
 

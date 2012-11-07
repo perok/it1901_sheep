@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class Sheep implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	int id;
 	String name;
 	int farmId;

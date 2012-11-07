@@ -31,9 +31,13 @@ public class ServerLogic extends QSignalEmitter{
 		if(clientSocket == null )
 			clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
 		
+		System.out.println("ClientSocket ready");
 		try{
+			System.out.println("ClientSocket starting");
 			clientSocket.start();
+			System.out.println("ClientSocket loggin message sending");
 			clientSocket.login(usrName, usrPW);
+			System.out.println("ClientSocket loggin message sent");
 			/*if(!clientSocket.start())
 				System.out.println("Problem with connecting");
 			else
@@ -41,12 +45,13 @@ public class ServerLogic extends QSignalEmitter{
 				
 		}
 		catch (Exception e){
-			System.out.println(e);
+			e.printStackTrace();
 		}
 
 	}
 	
 	public void handleResponse(Response response){
+		System.out.println("Response incoming");
 		System.out.println("Recieved response: "+ response.getType());
 		
 		/*

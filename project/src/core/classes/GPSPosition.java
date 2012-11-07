@@ -1,7 +1,13 @@
 package core.classes;
 
-public class GPSPosition {
+import java.io.Serializable;
+
+public class GPSPosition implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	double latitute;
 	double longditude;
 	

@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class User  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
-	private int phoneNumber;
 	private int mobileNumber;
 	private String email;
 	private String username;
@@ -19,11 +22,19 @@ public class User  implements Serializable{
 			ArrayList<Farm> farmlist) {
 		this.id = id;
 		this.name = name;
-		this.phoneNumber = phoneNumber;
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.username = username;
 		this.farmlist = farmlist;
+	}
+	
+	public User(int id, String username, String name, String password, int mobileNumber, String email) {
+		this.id = id;
+		this.name = name;
+		this.mobileNumber = mobileNumber;
+		this.email = email;
+		this.username = username;
+		this.farmlist = new ArrayList<Farm>();
 	}
 
 	public int getId() {
@@ -40,14 +51,6 @@ public class User  implements Serializable{
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public int getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(int phoneNumber) {
-		this.phoneNumber = phoneNumber;
 	}
 
 	public int getMobileNumber() {
@@ -83,7 +86,9 @@ public class User  implements Serializable{
 	}
 	
 	public void addFarms(ArrayList<Farm> farms) {
+		System.out.println(farms.size());
 		for (int i = 0; i < farms.size(); i++) {
+			System.out.println("forløkke" + i + farms.get(i));
 			this.farmlist.add(farms.get(i));
 		}
 		
