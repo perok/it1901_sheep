@@ -23,8 +23,8 @@ public class User  implements Serializable{
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.username = username;
-		this.farmlist = farmlist;
-	}
+		addFarms(farmlist);
+}
 
 	public int getId() {
 		return id;
