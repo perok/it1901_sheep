@@ -10,7 +10,6 @@ public class User  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
-	private int phoneNumber;
 	private int mobileNumber;
 	private String email;
 	private String username;
@@ -23,7 +22,6 @@ public class User  implements Serializable{
 			ArrayList<Farm> farmlist) {
 		this.id = id;
 		this.name = name;
-		this.phoneNumber = phoneNumber;
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.username = username;
@@ -44,14 +42,6 @@ public class User  implements Serializable{
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public int getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(int phoneNumber) {
-		this.phoneNumber = phoneNumber;
 	}
 
 	public int getMobileNumber() {
