@@ -57,25 +57,32 @@ public class DatabaseConnector {
 	public User loginQuery(String username, String password) {
 		try{
 		String[][] r = processQuery("SELECT id,username,password,name,mobile_number,email FROM user WHERE username = '" + username + "'" + " AND password = '" + password + "';");
+		
 		User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5], null);
 		String[][] r2 = processQuery("SELECT farm_id FROM access_rights WHERE user_id = " + user.getId() + ";");
 		ArrayList<Farm> farms = new ArrayList<Farm>();
+		
 		for (int i = 0; i < r2.length; i++) {
+			
 			String[][] r3 = processQuery("SELECT name FROM farm WHERE id = " + r2[i][0] + ";");
-			Farm farm = new Farm(Integer.parseInt(r[i][0]),r3[0][0]);
+			Farm farm = new Farm(Integer.parseInt(r2[i][0]),r3[0][0]);
 			String [][] r4 = processQuery("SELECT * from sheep WHERE farm_id = " + farm.getId() + ";");
 			for (int j = 0; j < r4.length; j++) {
-				farm.addSheep(new Sheep(Integer.parseInt(r4[j][0]), r4[j][1], Integer.parseInt(r4[j][2]), Integer.parseInt(r4[j][3]), getBoolean(r[j][4]), Integer.parseInt(r4[i][5])));
+				farm.addSheep(new Sheep(Integer.parseInt(r4[j][0]), r4[j][1], Integer.parseInt(r4[j][2]), Integer.parseInt(r4[j][3]), getBoolean(r4[j][4]), Integer.parseInt(r4[j][5])));
 			}
 			farms.add(farm);
 		}
 		user.addFarms(farms);
+		System.out.println("DBNAME:  " +user.getName());
 		return user;
 		}
 		catch(NullPointerException e){
+			System.out.println("NPE" + e.toString());
 			return null;
 		}
 		catch(ArrayIndexOutOfBoundsException e){
+			System.out.println("AIOOBE");
+			e.printStackTrace();
 			return null;
 		}
 		
@@ -446,6 +453,10 @@ public class DatabaseConnector {
 				}
 				i++;
 				if(!r.next()) break;
+			}
+			for (int y = 0; y < result.length; y++)
+			for (int j = 0; j < result[y].length; j++) {
+				System.out.println("processquery: " + y + "  " + j + " "+result[y][j]);
 			}
 			return result;
 		} catch (SQLException e) {

@@ -31,7 +31,11 @@ public class Response implements Serializable {
 	
 	public Response(int type, User user) {
 		this.type = type;
-		this.user = user;
+		System.out.println("RHELLA" + user.getName());
+		this.user = new User(user.getId(),user.getUsername(),user.getName(),user.getPassword(),
+				user.getMobileNumber(),user.getEmail(),user.getFarmlist());
+		
+		System.out.println(this.user.getName());
 	}
 	
 	public int getType() {
@@ -53,6 +57,14 @@ public class Response implements Serializable {
 		this.content = content;
 	}
 	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public String toString() {
 		if(this.type == Response.LIST) {
 			String out = new String();
