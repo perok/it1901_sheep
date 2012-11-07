@@ -3,6 +3,9 @@
  <author>Per Øyvind Kanestrøm</author>
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>com.trolltech.qt.core.Qt.WindowModality.NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,8 +20,14 @@
   <property name="styleSheet">
    <string notr="true">Windows</string>
   </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
   <property name="tabShape">
    <enum>com.trolltech.qt.gui.QTabWidget.TabShape.Rounded</enum>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -27,6 +36,9 @@
     </property>
     <item row="0" column="0">
      <widget class="QSplitter" name="splitter">
+      <property name="frameShape">
+       <enum>com.trolltech.qt.gui.QFrame.Shape.NoFrame</enum>
+      </property>
       <property name="orientation">
        <enum>com.trolltech.qt.core.Qt.Orientation.Vertical</enum>
       </property>
@@ -55,9 +67,12 @@
         <enum>com.trolltech.qt.gui.QTabWidget.TabShape.Triangular</enum>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <property name="documentMode">
+        <bool>false</bool>
+       </property>
+       <property name="tabsClosable">
         <bool>false</bool>
        </property>
        <property name="movable">
@@ -68,7 +83,7 @@
          <string>Information</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_3">
-         <item row="1" column="0">
+         <item row="0" column="0">
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
             <layout class="QGridLayout" name="gridLayout_4">
@@ -88,7 +103,11 @@
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QLineEdit" name="lEName"/>
+                <widget class="QLineEdit" name="lEName">
+                 <property name="alignment">
+                  <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+                 </property>
+                </widget>
                </item>
                <item row="2" column="0">
                 <widget class="QLabel" name="label_2">
@@ -112,7 +131,14 @@
                 </widget>
                </item>
                <item row="4" column="1">
-                <widget class="QLineEdit" name="lEFarmId"/>
+                <widget class="QLineEdit" name="lEFarmId">
+                 <property name="inputMethodHints">
+                  <set>com.trolltech.qt.core.Qt.InputMethodHint.ImhUppercaseOnly</set>
+                 </property>
+                 <property name="alignment">
+                  <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+                 </property>
+                </widget>
                </item>
                <item row="5" column="0">
                 <widget class="QLabel" name="label_5">
@@ -126,13 +152,39 @@
                  <property name="text">
                   <string/>
                  </property>
+                 <property name="tristate">
+                  <bool>false</bool>
+                 </property>
                 </widget>
                </item>
                <item row="3" column="1">
-                <widget class="QDoubleSpinBox" name="dSBWeight"/>
+                <widget class="QDoubleSpinBox" name="dSBWeight">
+                 <property name="minimumSize">
+                  <size>
+                   <width>178</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="alignment">
+                  <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+                 </property>
+                </widget>
                </item>
                <item row="2" column="1">
-                <widget class="QDateEdit" name="dEBirthdaye"/>
+                <widget class="QDateEdit" name="dEBirthdaye">
+                 <property name="minimumSize">
+                  <size>
+                   <width>178</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="alignment">
+                  <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+                 </property>
+                 <property name="calendarPopup">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
@@ -191,22 +243,39 @@
          <string>Messages</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_9">
+         <property name="margin">
+          <number>3</number>
+         </property>
          <item row="2" column="0">
           <widget class="QTableWidget" name="tableWidget"/>
          </item>
-         <item row="0" column="0">
-          <layout class="QFormLayout" name="formLayout">
-           <property name="fieldGrowthPolicy">
-            <enum>com.trolltech.qt.gui.QFormLayout.FieldGrowthPolicy.ExpandingFieldsGrow</enum>
-           </property>
-           <property name="labelAlignment">
-            <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignLeft|com.trolltech.qt.core.Qt.AlignmentFlag.AlignVCenter</set>
-           </property>
-           <property name="formAlignment">
-            <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignRight|com.trolltech.qt.core.Qt.AlignmentFlag.AlignTop</set>
-           </property>
-           <item row="0" column="1">
-            <widget class="QComboBox" name="comboBox">
+         <item row="1" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayoutTabMessages">
+           <item>
+            <widget class="QLabel" name="lblTabMessages">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>com.trolltech.qt.gui.QSizePolicy.Policy.MinimumExpanding</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QComboBox" name="cmbTabMessages">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -219,29 +288,17 @@
                <height>0</height>
               </size>
              </property>
-             <property name="maximumSize">
-              <size>
-               <width>200</width>
-               <height>16777215</height>
-              </size>
-             </property>
+             <item>
+              <property name="text">
+               <string>Messages</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Alarms</string>
+              </property>
+             </item>
             </widget>
-           </item>
-           <item row="0" column="0">
-            <spacer name="horizontalSpacer_3">
-             <property name="orientation">
-              <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
-             </property>
-             <property name="sizeType">
-              <enum>com.trolltech.qt.gui.QSizePolicy.Policy.Maximum</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </item>
@@ -257,12 +314,24 @@
          </property>
          <item row="0" column="0">
           <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="sizeConstraint">
+            <enum>com.trolltech.qt.gui.QLayout.SizeConstraint.SetNoConstraint</enum>
+           </property>
            <item>
             <layout class="QGridLayout" name="gridLayout_11">
              <item row="1" column="0">
               <layout class="QGridLayout" name="gridLayout_12">
+               <property name="sizeConstraint">
+                <enum>com.trolltech.qt.gui.QLayout.SizeConstraint.SetDefaultConstraint</enum>
+               </property>
                <item row="0" column="1">
                 <widget class="QPushButton" name="pBSubmit_Add">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="text">
                   <string>Submit</string>
                  </property>
@@ -298,6 +367,9 @@
              </item>
              <item row="0" column="0">
               <layout class="QFormLayout" name="formLayout_5">
+               <property name="sizeConstraint">
+                <enum>com.trolltech.qt.gui.QLayout.SizeConstraint.SetDefaultConstraint</enum>
+               </property>
                <property name="fieldGrowthPolicy">
                 <enum>com.trolltech.qt.gui.QFormLayout.FieldGrowthPolicy.FieldsStayAtSizeHint</enum>
                </property>
@@ -312,7 +384,11 @@
                 </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QLineEdit" name="lEName_Add_2"/>
+                <widget class="QLineEdit" name="lEName_Add_2">
+                 <property name="alignment">
+                  <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+                 </property>
+                </widget>
                </item>
                <item row="1" column="0">
                 <widget class="QLabel" name="label_12">
@@ -322,7 +398,27 @@
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QDateEdit" name="dEBirthdate_Add"/>
+                <widget class="QDateEdit" name="dEBirthdate_Add">
+                 <property name="minimumSize">
+                  <size>
+                   <width>178</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="alignment">
+                  <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+                 </property>
+                 <property name="minimumDate">
+                  <date>
+                   <year>1752</year>
+                   <month>9</month>
+                   <day>25</day>
+                  </date>
+                 </property>
+                 <property name="calendarPopup">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
                <item row="2" column="0">
                 <widget class="QLabel" name="label_13">
@@ -332,7 +428,17 @@
                 </widget>
                </item>
                <item row="2" column="1">
-                <widget class="QDoubleSpinBox" name="dSBWeight_Add_2"/>
+                <widget class="QDoubleSpinBox" name="dSBWeight_Add_2">
+                 <property name="minimumSize">
+                  <size>
+                   <width>178</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="alignment">
+                  <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+                 </property>
+                </widget>
                </item>
                <item row="3" column="0">
                 <widget class="QLabel" name="label_14">
@@ -342,7 +448,11 @@
                 </widget>
                </item>
                <item row="3" column="1">
-                <widget class="QLineEdit" name="lEFar_Add"/>
+                <widget class="QLineEdit" name="lEFar_Add">
+                 <property name="alignment">
+                  <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+                 </property>
+                </widget>
                </item>
                <item row="4" column="0">
                 <widget class="QLabel" name="label_15">
@@ -400,7 +510,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>7</pointsize>
+      <pointsize>8</pointsize>
      </font>
     </property>
     <property name="title">
@@ -411,7 +521,7 @@
    <widget class="QMenu" name="menuEdit">
     <property name="font">
      <font>
-      <pointsize>7</pointsize>
+      <pointsize>8</pointsize>
      </font>
     </property>
     <property name="title">
@@ -422,7 +532,7 @@
    <widget class="QMenu" name="menuView">
     <property name="font">
      <font>
-      <pointsize>7</pointsize>
+      <pointsize>8</pointsize>
      </font>
     </property>
     <property name="title">
@@ -434,7 +544,7 @@
    <widget class="QMenu" name="menuAbout">
     <property name="font">
      <font>
-      <pointsize>7</pointsize>
+      <pointsize>8</pointsize>
      </font>
     </property>
     <property name="title">
@@ -451,12 +561,12 @@
   <widget class="QDockWidget" name="dockWidget">
    <property name="minimumSize">
     <size>
-     <width>226</width>
-     <height>164</height>
+     <width>200</width>
+     <height>193</height>
     </size>
    </property>
    <property name="features">
-    <set>com.trolltech.qt.gui.QDockWidget.DockWidgetFeature.DockWidgetClosable|com.trolltech.qt.gui.QDockWidget.DockWidgetFeature.DockWidgetMovable</set>
+    <set>com.trolltech.qt.gui.QDockWidget.DockWidgetFeature.DockWidgetMovable</set>
    </property>
    <property name="allowedAreas">
     <set>com.trolltech.qt.core.Qt.DockWidgetArea.LeftDockWidgetArea|com.trolltech.qt.core.Qt.DockWidgetArea.RightDockWidgetArea</set>
@@ -478,46 +588,80 @@
      <property name="margin">
       <number>0</number>
      </property>
-     <item row="2" column="0">
+     <item row="1" column="0">
       <widget class="QListWidget" name="listWidget">
        <property name="font">
         <font>
-         <pointsize>6</pointsize>
+         <pointsize>9</pointsize>
         </font>
        </property>
        <property name="selectionMode">
-        <enum>com.trolltech.qt.gui.QAbstractItemView.SelectionMode.MultiSelection</enum>
+        <enum>com.trolltech.qt.gui.QAbstractItemView.SelectionMode.ExtendedSelection</enum>
+       </property>
+       <property name="textElideMode">
+        <enum>com.trolltech.qt.core.Qt.TextElideMode.ElideMiddle</enum>
        </property>
        <property name="layoutMode">
         <enum>com.trolltech.qt.gui.QListView.LayoutMode.SinglePass</enum>
        </property>
+       <property name="spacing">
+        <number>5</number>
+       </property>
+       <property name="sortingEnabled">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <layout class="QFormLayout" name="formLayout_3">
-       <property name="margin">
-        <number>7</number>
+     <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="spacing">
+        <number>3</number>
        </property>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="pbDockWidgetSortOrder">
-         <property name="maximumSize">
-          <size>
-           <width>119</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>7</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Descending</string>
+       <property name="leftMargin">
+        <number>3</number>
+       </property>
+       <property name="topMargin">
+        <number>3</number>
+       </property>
+       <property name="rightMargin">
+        <number>3</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QRadioButton" name="rbAscDesc">
+           <property name="text">
+            <string>Ascending</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>com.trolltech.qt.core.Qt.Orientation.Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmbDockFarmId"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit">
+         <property name="alignment">
+          <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
          </property>
         </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="lineEdit"/>
        </item>
       </layout>
      </item>
@@ -531,10 +675,20 @@
    <property name="toolTip">
     <string>Exit the program</string>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionInformation_Window">
@@ -547,6 +701,11 @@
    <property name="text">
     <string>Information</string>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionMap">
    <property name="checkable">
@@ -558,30 +717,23 @@
    <property name="text">
     <string>Map</string>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionUndo">
    <property name="text">
     <string>Undo</string>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
   </action>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>pbTabInformationUpdate</sender>
-   <signal>pressed</signal>
-   <receiver>chbAlive</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>514</x>
-     <y>677</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>533</x>
-     <y>517</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

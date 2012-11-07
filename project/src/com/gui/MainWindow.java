@@ -93,23 +93,17 @@ public class MainWindow extends QMainWindow
 	 * Changes the view to application mode
 	 */
 	public void setupUi_MainWindow(){
+		System.out.println("Setting up Main Window UI");
 		uiLoginWindow = null;
 		lwLogic = null;
 		
 		uiMainWindow = new UiMainWindow();
 		uiMainWindow.setupUi(this, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
-        
-        init_connectEventsForWidgets();
-  	}
-	
-	/** Set the initial event-handlers
-	 */
-	private void init_connectEventsForWidgets()
-	{
+		
 		twhandler = new tableWidgetHandler(uiMainWindow.tableWidget);
 		slwHandler = new sheepListWidgetHandler(uiMainWindow.listWidget);		
         mwLogic = new UiMainWindowLogic(uiMainWindow, slwHandler, twhandler, serverLogic);
-	}
+  	}
     
     /*
      * APPLICATION 

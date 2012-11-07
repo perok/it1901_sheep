@@ -18,13 +18,35 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	QLabel statusbarMessage;
 	
 	public UiMainWindowLogic(UiMainWindow mw, sheepListWidgetHandler slwHandler, tableWidgetHandler twHandler, ServerLogic sLogic){
+		System.out.println("Applying logic");
+		/* Storing referances */
 		this.mw = mw;
 		this.slwHandler = slwHandler;
 		this.twHandler = twHandler;
-		this.sLogic = sLogic;
 		
+		/* Setting up extra widgets*/
 		statusbarMessage = new QLabel("Ready");
 		mw.statusbar.addWidget(statusbarMessage);
+		//Fiks mapWidget her..
+		
+		/* Adding values to ui */
+		
+		/* Setting up signals */
+			//MainWinow
+		//MENU
+		//DOCKWIDGET
+		//TABWIDGET
+		mw.pbTabInformationUpdate.clicked.connect(this, "pbTabInformationUpdate_clicked(boolean)");
+		mw.pbTabInformationReset.clicked.connect(this, "pbTabInformationReset_clicked(boolean)");
+		
+		mw.cmbTabMessages.currentIndexChanged.connect(this, "cmbTabMessages_currentIndexChanged(int)");
+		mw.pBSubmit_Add.clicked.connect(this, "pBSubmit_Add_clicked(boolean)");
+		
+			//tableWidgetHandler
+			//SheepListWidget
+		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
+		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");
+		
 		
 		/*
 		mw.pbTabInformationUpdate.clicked.connect(signalOut)
@@ -37,12 +59,27 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		
 		mw.dockWidget.*/
 		
-		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
-		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");		
 		
-		//Debug
-		slwHandler.addSheep();
+		System.out.println("Logic applied");
 		
+	}
+	
+	private void pbTabInformationUpdate_clicked(boolean click){
+		System.out.println("CLICK");
+	}
+	
+	private void pbTabInformationReset_clicked(boolean click){
+		System.out.println("CLICK");
+
+	}
+	
+	private void cmbTabMessages_currentIndexChanged(int index){
+		System.out.println("INDEX CHAGNED " + index);
+	}
+	
+	private void pBSubmit_Add_clicked(boolean click){
+		System.out.println("CLICK");
+
 	}
 	
 	private void newStatusBarMessage(String text){

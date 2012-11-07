@@ -6,6 +6,7 @@ import java.util.Arrays;
 import com.trolltech.qt.gui.QTableWidget;
 import com.trolltech.qt.gui.QTableWidgetItem;
 
+import core.classes.GPSPosition;
 import core.classes.Message;
 import core.classes.Sheep;
 
@@ -13,11 +14,14 @@ public class tableWidgetHandler {
 	
 	private QTableWidget widget;
 	
+	private int QtSheepDataRole = 32;
+
+	
 	public tableWidgetHandler(QTableWidget widget){
 		this.widget = widget;
 		
         /* Horizontal headers */
-		String[] list = {"Message #","Message Date", "Sheep #", "Farm #", "Name", "Birthdate","Alive", "Weight", "Location"};
+		String[] list = {"Message #","Timestamp", "Temperature", "Weight", "Latitude - Longditude"};
 		widget.setColumnCount(list.length);
 		widget.setHorizontalHeaderLabels(Arrays.asList(list));
 		
@@ -30,10 +34,7 @@ public class tableWidgetHandler {
 		
 		/* Stretch the vertical headers last element */
 		//table.verticalHeader().setStretchLastSection(true);
-		widget.horizontalHeader().setStretchLastSection(true);
-        
-        addSheeps();
-	
+		widget.horizontalHeader().setStretchLastSection(true);        
 	}
 	
 	/**
@@ -61,7 +62,37 @@ public class tableWidgetHandler {
 	 * Adds the messages to the informationview
 	 * @param messages
 	 */
-	protected void addSheep(Sheep sheep, ArrayList<Message> messages){
-		//sheep.get
+	protected void addSheep(Sheep sheep, ArrayList<Message> messages){ // Alerts
+		
+		//Hva med å ha ovenfor felt for; 
+		//Sheep id, Sheep name, farmId
+		//Og fyllle inn
+		
+		widget.setRowCount(messages.size());
+		
+		if(messages != null)
+			for(Message message : messages){
+				QTableWidgetItem item = new QTableWidgetItem(message.getId());
+				item.disableGarbageCollection();
+				item.setData(QtSheepDataRole, sheep);
+				
+				
+				item = new QTableWidgetItem(message.getTimestamp());
+				item.disableGarbageCollection();
+				item.setData(QtSheepDataRole, sheep);
+				
+				item = new QTableWidgetItem(String.valueOf(message.getTemperature()));
+				item.disableGarbageCollection();
+				item.setData(QtSheepDataRole, sheep);
+				
+				item = new QTableWidgetItem(message.getWeight());
+				item.disableGarbageCollection();
+				item.setData(QtSheepDataRole, sheep);
+				
+				item = new QTableWidgetItem(message.getGpsPosition().getLatitute() + " - " + message.getGpsPosition().getLongditude());
+				item.disableGarbageCollection();
+				item.setData(QtSheepDataRole, sheep);
+			}
+		
 	}
 }

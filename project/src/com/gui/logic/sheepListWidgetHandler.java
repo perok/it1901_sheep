@@ -78,6 +78,16 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 		//Select multiple items
 		this.qlWidget.setSelectionMode(SelectionMode.ExtendedSelection);
 		
+		String s = "vertical {"
+			+ "border: 2px solid grey;"
+			+ "background: #32CC99;"
+			+ " width: 15px;"
+			+ "margin: 20px 0px 20px 0px ;}";
+		
+		this.qlWidget.setStyleSheet(s);
+		
+		//this.qlWidget.contentsMargins().setLeft(200);
+		
 		//doubleclick event
 		this.qlWidget.itemDoubleClicked.connect(this, "onSheepDoubleClicked(QListWidgetItem)");
 		
@@ -139,27 +149,18 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	public void addSheep()
 	{
 		statusBarMessage.emit("Populating Sheeps");
-		/*
-		for(int iPos = 0; iPos < 10; iPos++)
-		{
-			String sSheepName = "sheep <" + Integer.toString((int)(Math.random() * 9)) + ">";
-			
-			QListWidgetItem item = new QListWidgetItem();
-			item.setData(QtSheepDataRole, new Sheep(23, sSheepName, 23, 3432,true, 3432));
-			item.setData(0, sSheepName);
-			qlWidget.addItem(item);
-			
-			//this.qsimModel.insertRow(0);
-			//this.qsimModel.setData(this.qsimModel.index(0, 0), sSheepName);
-		}*/
-		//updateSheepList();
-		statusBarMessage.emit("done");
+		
 		int currentFarm = 0;
+		
 		for(Sheep sheep : UserStorage.getUser().getFarmlist().get(currentFarm).getSheepList()){
 			QListWidgetItem item = new QListWidgetItem();
 			item.setData(QtSheepDataRole, sheep);
 			item.setData(0, sheep.getName());
+			item.disableGarbageCollection();
+			qlWidget.addItem(item);
 		}
+		
+		statusBarMessage.emit("done");
 	}
 	
 	//Qt MatchContains 1 == contained in the item
