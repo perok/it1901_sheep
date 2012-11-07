@@ -75,6 +75,7 @@ public class DatabaseConnector {
 		user.addFarms(farms);
 		System.out.println("DBNAME:  " +user.getName());
 		return user;
+		
 		}
 		catch(NullPointerException e){
 			System.out.println("NPE" + e.toString());
