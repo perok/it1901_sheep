@@ -34,21 +34,18 @@ public class Request implements Serializable {
 	public Request(int type, String message, HashMap _parameters) {
 		this.type = type;
 		this.message = message;
-<<<<<<< HEAD
 //		parameters = new HashMap(parameters);
 		for (int i = 0; i < parameters.size(); i++) {
 			this.parameters.putAll(parameters);
 		}
 //		this.parameters = parameters;
 		
-=======
 		
 		parameters = new HashMap();
 		
 		for( Object key : _parameters.keySet()){
 			parameters.put(key, _parameters.get(key));
 		}
->>>>>>> 68393511a4067e4be9f40c2cbc93ac98e7babc74
 	}
 	
 	public Request(int type) {

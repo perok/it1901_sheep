@@ -110,6 +110,7 @@ public class ClientSocket  {
 	void sendRequest(Request req) {
 		try {
 			sOutput.writeObject(req);
+			sOutput.flush();
 		}
 		catch(IOException e) {
 			display("Exception writing to server: " + e);

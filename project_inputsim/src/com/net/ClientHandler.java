@@ -47,6 +47,7 @@ public class ClientHandler implements Runnable {
                 	server.sg.appendEvent(username + ": " + req.getMessage() );
                     Response res = HandleRequest(req);
     				sOutput.writeObject(res);
+    				sOutput.flush();
                     break;
                 case Request.LOGOUT:
                     server.sg.appendEvent(username + " disconnected with a LOGOUT message.");
