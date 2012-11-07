@@ -77,7 +77,7 @@ public class DatabaseConnector {
 		return user;
 		}
 		catch(NullPointerException e){
-			System.out.println("NPE" + e.toString());
+			e.printStackTrace();
 			return null;
 		}
 		catch(ArrayIndexOutOfBoundsException e){
