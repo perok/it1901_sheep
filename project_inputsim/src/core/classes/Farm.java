@@ -1,6 +1,5 @@
 package core.classes;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +10,10 @@ import java.util.Comparator;
 
 public class Farm implements Comparator<Sheep>, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
 	private ArrayList<Sheep> sheepList;

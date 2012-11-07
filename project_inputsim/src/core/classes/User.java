@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class User  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
 	private int phoneNumber;
@@ -23,8 +27,8 @@ public class User  implements Serializable{
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.username = username;
-		addFarms(farmlist);
-}
+		this.farmlist = farmlist;
+	}
 
 	public int getId() {
 		return id;
