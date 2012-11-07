@@ -31,11 +31,23 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		
 		/* Adding values to ui */
 		
+		
 		/* Setting up signals */
 			//MainWinow
-		//MENU
-		//DOCKWIDGET
-		//TABWIDGET
+				//MENU
+		mw.actionInformation_Window.toggled.connect(this, "actionInformation_Window_toggled(boolean)");
+		mw.actionMap.toggled.connect(this, "actionMap_toggled(boolean)");
+		mw.actionAbout.triggered.connect(this, "actionAbout_toggled(boolean)");
+		mw.actionExit.triggered.connect(this, "actionExit_toggled(boolean)");
+		mw.actionUndo.triggered.connect(this, "actionUndo_toggled(boolean)");
+	
+		
+		
+				//DOCKWIDGET
+		mw.rbAscDesc.toggled.connect(this, "rbAscDesc_toggled(boolean)");
+		mw.cmbDockFarmId.currentIndexChanged.connect(this, "cmbDockFarmId_currentIndexChanged(int)");
+		mw.lineEdit.textChanged.connect(this, "lineEdit_textChanged(String)");
+				//TABWIDGET
 		mw.pbTabInformationUpdate.clicked.connect(this, "pbTabInformationUpdate_clicked(boolean)");
 		mw.pbTabInformationReset.clicked.connect(this, "pbTabInformationReset_clicked(boolean)");
 		
@@ -64,6 +76,39 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		
 	}
 	
+	/* ACTIONS */
+	
+	private void actionAbout_toggled(boolean trigg){
+		System.out.println("wtf");
+	}
+	
+	private void actionInformation_Window_toggled(boolean toggle){
+		System.out.println(toggle);
+	}
+	private void actionMap_toggled(boolean trigg){
+		System.out.println(trigg);
+	}
+	private void actionExit_toggled(boolean trigg){
+		System.out.println(trigg);
+	}
+	private void actionUndo_toggled(boolean trigg){
+		System.out.println(trigg);
+	}
+	
+		//DockWidget
+	private void rbAscDesc_toggled(boolean toggled){
+		
+	}
+	
+	private void cmbDockFarmId_currentIndexChanged(int index){
+		
+	}
+	
+	private void lineEdit_textChanged(String text){
+		
+	}
+	
+		//TABWIDGET	
 	private void pbTabInformationUpdate_clicked(boolean click){
 		System.out.println("CLICK");
 	}
