@@ -180,6 +180,7 @@ public class ClientSocket  {
 	 */
 	public void editSheep(Sheep sheep) {
 		HashMap params = new HashMap();
+
 		sendRequest((new Request(Request.EDITSHEEP, "editsheep", sheep)));
 
 	}

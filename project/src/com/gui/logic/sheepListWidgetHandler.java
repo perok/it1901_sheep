@@ -153,8 +153,8 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 		//Empty list
 		for(int i = 0; i < qlWidget.count(); i++)
 			qlWidget.takeItem(i);
+		
 		for(Sheep sheep : UserStorage.getUser().getFarmlist().get(UserStorage.getCurrentFarm()).getSheepList()){
-			System.out.println(sheep.getName());
 			QListWidgetItem item = new QListWidgetItem();
 			item.setData(QtSheepDataRole, sheep);
 			item.setData(0, sheep.getName());

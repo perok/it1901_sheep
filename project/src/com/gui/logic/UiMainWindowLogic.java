@@ -29,6 +29,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		this.mw = mw;
 		this.slwHandler = slwHandler;
 		this.twHandler = twHandler;
+		this.sLogic = sLogic;
 		
 		/* Setting up user information*/
 		for(int i = 0; i < UserStorage.getUser().getFarmlist().size(); i++)
@@ -102,6 +103,11 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		//DockWidget
 	private void rbAscDesc_toggled(boolean toggled){
 		slwHandler.changeSortOrder();
+		if(toggled)
+			mw.rbAscDesc.setText("Ascending");
+		else
+			mw.rbAscDesc.setText("Descending");
+
 	}
 	
 	private void cmbDockFarmId_currentIndexChanged(int index){
@@ -131,7 +137,12 @@ public class UiMainWindowLogic extends QSignalEmitter{
 					Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) + String.valueOf(mw.dEBirthdaye.date().month()) + String.valueOf(mw.dEBirthdaye.date().day())),
 					mw.chbAlive.isChecked(), (int)mw.dSBWeight.value()); //MÅ FIKSES, skal ikke være int
 			
-			sLogic.editSheep(sheepUpdate);
+			try{
+				sLogic.editSheep(sheepUpdate);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 		else
 			statusbarMessage.setText("Some fields are blank, or not valid input..");

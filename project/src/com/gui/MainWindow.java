@@ -97,6 +97,7 @@ public class MainWindow extends QMainWindow
 		uiLoginWindow = null;
 		lwLogic = null;
 		
+		
 		uiMainWindow = new UiMainWindow();
 		uiMainWindow.setupUi(this, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
 		
