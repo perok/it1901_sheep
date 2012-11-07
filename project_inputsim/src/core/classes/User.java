@@ -27,6 +27,15 @@ public class User  implements Serializable{
 		this.username = username;
 		this.farmlist = farmlist;
 	}
+	
+	public User(int id, String username, String name, String password, int mobileNumber, String email) {
+		this.id = id;
+		this.name = name;
+		this.mobileNumber = mobileNumber;
+		this.email = email;
+		this.username = username;
+		this.farmlist = new ArrayList<Farm>();
+	}
 
 	public int getId() {
 		return id;
@@ -77,7 +86,9 @@ public class User  implements Serializable{
 	}
 	
 	public void addFarms(ArrayList<Farm> farms) {
+		System.out.println(farms.size());
 		for (int i = 0; i < farms.size(); i++) {
+			System.out.println("forløkke" + i + farms.get(i));
 			this.farmlist.add(farms.get(i));
 		}
 		
