@@ -15,7 +15,6 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	tableWidgetHandler twHandler;
 	ServerLogic sLogic;
 	
-	
 	QLabel statusbarMessage;
 	
 	public Signal0 signalShowAbout;
@@ -87,6 +86,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		signalShowAboutQt.emit();
 	}
 	
+	//NOT WORKING 
 	private void actionInformation_Window_toggled(boolean toggle){
 		mw.tableWidget.setVisible(toggle);
 		
@@ -98,7 +98,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 			//mw.splitter.c
 		}
 		else
-			Smw.tabWidget.close();
+			mw.tabWidget.close();
 		
 		System.out.println(toggle);
 	}
