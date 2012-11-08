@@ -88,6 +88,18 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	}
 	
 	private void actionInformation_Window_toggled(boolean toggle){
+		mw.tableWidget.setVisible(toggle);
+		
+		if(toggle){
+			mw.tableWidget.show();
+			//mw.tableWidget.update();
+			//mw.splitter.update();
+			//mw.splitter.updateGeometry();
+			//mw.splitter.c
+		}
+		else
+			Smw.tabWidget.close();
+		
 		System.out.println(toggle);
 	}
 	private void actionMap_toggled(boolean trigg){

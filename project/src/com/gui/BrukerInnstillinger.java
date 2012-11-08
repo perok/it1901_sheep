@@ -1,4 +1,4 @@
-package alt;
+package com.gui;
 
 import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QGroupBox;

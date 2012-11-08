@@ -6,7 +6,6 @@ import com.gui.logic.ServerLogic;
 import com.gui.logic.sheepListWidgetHandler;
 import com.gui.logic.tableWidgetHandler;
 import com.trolltech.qt.core.Qt;
-import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
 import com.trolltech.qt.gui.QKeyEvent;
@@ -27,12 +26,6 @@ public class MainWindow extends QMainWindow
 	public  static final int INIT_SCREEN_WIDTH      = 900, 
 							 INIT_SCREEN_HEIGHT 	= 800;
 	public  static final int INIT_SHEEP_WIDGET_SIZE = (int) (INIT_SCREEN_WIDTH * SHEEP_WINDOW_COVERAGE);
-    
-   
-    private QAction aboutAct;
-    private QAction aboutQtJambiAct;
-    private QAction exitAct;
-    private QAction undoAct;
         
     private UiMainWindow uiMainWindow;
     private UiLoginWindow uiLoginWindow;
@@ -58,8 +51,8 @@ public class MainWindow extends QMainWindow
         System.out.println("Available themes: " + QStyleFactory.keys());
         
         QApplication.setStyle("Plastique");
-        MainWindow testMainWindow = new MainWindow(null);
-        testMainWindow.show();
+        MainWindow mainWindow = new MainWindow(null);
+        mainWindow.show();
     	
         
         QApplication.exec();

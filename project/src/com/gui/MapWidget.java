@@ -1,7 +1,5 @@
 package com.gui;
 
-import java.awt.Dimension;
-
 import javax.swing.event.MouseInputListener;
 
 import org.jdesktop.swingx.JXMapKit;
@@ -11,22 +9,15 @@ import org.jdesktop.swingx.input.PanKeyListener;
 import org.jdesktop.swingx.input.PanMouseInputListener;
 import org.jdesktop.swingx.input.ZoomMouseWheelListenerCenter;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
-import org.jdesktop.swingx.mapviewer.TileFactoryInfo;
-import org.jdesktop.swingx.mapviewer.WaypointPainter;
 import org.jdesktop.swingx.mapviewer.wms.WMSService;
 import org.jdesktop.swingx.mapviewer.wms.WMSTileFactory;
-
-import sun.tools.jar.resources.jar;
-
 import com.mapWidgetExtras.FancyWaypointRenderer;
 import com.mapWidgetExtras.MyWaypoint;
-import com.trolltech.qt.gui.QFrame;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QResizeEvent;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
 import com.trolltech.qt.gui.QWidget;
 import com.trolltech.research.qtjambiawtbridge.QComponentHost;
-import com.trolltech.research.qtjambiawtbridge.generated.QComponentHostNative;
 
 /** Stream an external source of media
  * 
@@ -81,7 +72,6 @@ public class MapWidget extends QWidget
 		//mapKitChild.setMinimumSize(new Dimension(100, 100));
 		//mapKitChild.setPreferredSize(new Dimension(800, 800));
 		
-		//this.
 		//this.qcHost = new QComponentHost(mapKit, this);
 		
 		// This line is order specific - adding it at the top of this function causes an error

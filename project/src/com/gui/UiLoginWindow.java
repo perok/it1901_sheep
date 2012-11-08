@@ -9,7 +9,6 @@
 package com.gui;
 
 import com.trolltech.qt.QSignalEmitter;
-import com.trolltech.qt.QSignalEmitter.Signal2;
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
 
@@ -55,24 +54,17 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
         label = new QLabel(centralwidget);
         label.setObjectName("label");
 
-        //formLayout.addWidget(label);
-
         txtEditUsername = new QLineEdit(centralwidget);
         txtEditUsername.setObjectName("txtEditUsername");
 
-        //formLayout.addWidget(txtEditUsername);
         formLayout.addRow(label, txtEditUsername);
 
         label_2 = new QLabel(centralwidget);
         label_2.setObjectName("label_2");
 
-        //formLayout.addWidget(label_2);
-
         txtEditPassword = new QLineEdit(centralwidget);
         txtEditPassword.setObjectName("txtEditPassword");
         txtEditPassword.setEchoMode(com.trolltech.qt.gui.QLineEdit.EchoMode.Password);
-
-        //formLayout.addWidget(txtEditPassword);
 
         formLayout.addRow(label_2, txtEditPassword);
 
@@ -129,7 +121,6 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
     		tryLogin.emit(txtEditUsername.text(), txtEditPassword.text());
     	}
     	else{
-    		//QMessageBox.critical(this, "login", "Wrong username or password, please try again! " );
     		System.out.println("Input correct shiet mafacka");
     		txtEditPassword.setText(null);
     		txtEditPassword.setFocus();

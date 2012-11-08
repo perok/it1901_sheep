@@ -1,15 +1,11 @@
-package alt;
+package com.gui;
 
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt.AlignmentFlag;
 import com.trolltech.qt.core.Qt.ItemFlag;
 import com.trolltech.qt.gui.QApplication;
-import com.trolltech.qt.gui.QCheckBox;
-import com.trolltech.qt.gui.QComboBox;
-import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QIcon;
-import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QListView;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QListWidgetItem;
@@ -56,14 +52,12 @@ public class SettingsMeny extends QDialog
 	    qlwiBtnIconUser.setIcon(new QIcon(BrukerInnstillinger.CLASS_ICON));
 	    qlwiBtnIconUser.setText(tr("Bruker"));
 	    qlwiBtnIconUser.setTextAlignment(AlignmentFlag.AlignHCenter.value());
-	    qlwiBtnIconUser
-	            .setFlags(ItemFlag.ItemIsSelectable, ItemFlag.ItemIsEnabled);
+	    qlwiBtnIconUser.setFlags(ItemFlag.ItemIsSelectable, ItemFlag.ItemIsEnabled);
 	
 	    qlwiBtnIconApp.setIcon(new QIcon(SauInnstillinger.CLASS_ICON));
 	    qlwiBtnIconApp.setText(tr("Applikasjon"));
 	    qlwiBtnIconApp.setTextAlignment(AlignmentFlag.AlignHCenter.value());
-	    qlwiBtnIconApp
-	            .setFlags(ItemFlag.ItemIsSelectable, ItemFlag.ItemIsEnabled);
+	    qlwiBtnIconApp.setFlags(ItemFlag.ItemIsSelectable, ItemFlag.ItemIsEnabled);
 	
 	    this.qlwParentcontentsWidget.currentItemChanged.connect(this,
 	            "changePage(QListWidgetItem , QListWidgetItem)");
