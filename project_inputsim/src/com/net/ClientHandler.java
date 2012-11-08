@@ -101,7 +101,7 @@ public class ClientHandler implements Runnable {
 			System.out.println(lol.getUser().getName());
 			return lol;
 		case("editSheep"):
-			return new Response(Response.BOOLEAN,db.editUser(request.getUser().getId(), request.getUser()));
+			return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()));
 
 		case("editUser"):
 			return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()));
