@@ -2,10 +2,12 @@ package com.net;
 
 import javax.swing.*;
 
+import com.sun.org.apache.xml.internal.security.utils.HelperNodeList;
+import core.*;
 import java.awt.*;
 import java.awt.event.*;
 
-/**
+/**GUI for the Server. Also allows admin commands.
  * 
  * @author Lars Erik
  *
@@ -43,6 +45,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 		command = new JTextField("",20);
 		command.setEditable(true);
 		cmdButton = new JButton("Execute command");
+		cmdButton.addActionListener(this);
 		commandPanel.add(command);
 		commandPanel.add(cmdButton);
 		add(commandPanel, BorderLayout.SOUTH);
@@ -68,10 +71,11 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 		event.append(str);
 	}
 
-	/**Action listener for the buttons
+		/**Action listener for the buttons
 	 * 
 	 */
 	public void actionPerformed(ActionEvent e) {
+		System.out.println(e.getSource());
 		if(e.getSource() == stopStart){
 			if(server != null) {
 				server.stop();
@@ -96,11 +100,15 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 			}
 		}
 		if(e.getSource() == cmdButton){
+			performCommand(command.getText());
 			command.setText("");
 		}
 	}
 
-	// entry point to start the Server
+	/**Starts the GUI
+	 * 
+	 * @param arg
+	 */
 	public static void main(String[] arg) {
 		new ServerGUI(1500);
 	}
@@ -127,8 +135,20 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 	public void windowActivated(WindowEvent e) {}
 	public void windowDeactivated(WindowEvent e) {}
 
-	/**Internal class that runs server as a Thread.
+	/**Performs commands given by the Admin GUI.
 	 * 
+	 */
+	public void performCommand(String cmd) {
+		String[] decoded = cmd.split("\\s+");
+		int length = decoded.length;
+		switch(decoded[0]){
+		case("help"):
+			appendEvent(HelpPrinter.printHelp());
+		}
+
+	}
+
+	/**Internal class that runs server as a Thread.
 	 *
 	 */
 	class ServerRunning extends Thread {
