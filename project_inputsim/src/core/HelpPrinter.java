@@ -9,13 +9,16 @@ public final class HelpPrinter {
 		return help;
 	}
 	
-	public static String simHelp() {
-		String help = new String();
+	public static String printSimHelp() {
+		String help = new String("Following command are available for sim: \n");
+		help += "sim help - sim commands";
 		return help;
 	}
 	
-	public static String popHelp() {
-		String help = new String();
+	public static String printPopHelp() {
+		String help = new String("Following command are available for pop: \n");
+		help += "pop add x - adds x number of sheep to random farms";
+		help += "pop add x y - adds x number of sheep to farm with id y";
 		return help;
 	}
 	

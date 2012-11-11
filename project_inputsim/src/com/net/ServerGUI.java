@@ -44,8 +44,13 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 		JPanel commandPanel = new JPanel();
 		command = new JTextField("",20);
 		command.setEditable(true);
+		command.addActionListener(this);
 		cmdButton = new JButton("Execute command");
 		cmdButton.addActionListener(this);
+		cmdButton.registerKeyboardAction(cmdButton.getActionForKeyStroke(
+                KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false)),
+                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false),
+                JComponent.WHEN_FOCUSED);
 		commandPanel.add(command);
 		commandPanel.add(cmdButton);
 		add(commandPanel, BorderLayout.SOUTH);
@@ -76,6 +81,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 	 */
 	public void actionPerformed(ActionEvent e) {
 		System.out.println(e.getSource());
+		System.out.println(e.getActionCommand());
 		if(e.getSource() == stopStart){
 			if(server != null) {
 				server.stop();
@@ -99,7 +105,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 				tPortNumber.setEditable(false);
 			}
 		}
-		if(e.getSource() == cmdButton){
+		if(e.getSource() == cmdButton || e.getSource() == command){
 			performCommand(command.getText());
 			command.setText("");
 		}
@@ -144,6 +150,12 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 		switch(decoded[0]){
 		case("help"):
 			appendEvent(HelpPrinter.printHelp());
+		case("sim"):
+			appendEvent(HelpPrinter.printSimHelp());
+		case("pop"):
+			appendEvent(HelpPrinter.printPopHelp());
+		default:
+			appendEvent("Invalid command. Try 'help'");
 		}
 
 	}
