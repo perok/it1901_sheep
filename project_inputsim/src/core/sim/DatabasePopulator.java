@@ -29,6 +29,10 @@ public class DatabasePopulator {
 
 	}
 
+	public void addAccessRights(int userId, int farmId) {
+		sc.addAccessRights(userId, farmId);
+	}
+	
 	/**Sends the parameter to database via DatabaseConnector
 	 * 
 	 * @param username
@@ -37,7 +41,7 @@ public class DatabasePopulator {
 	 * @param cellphone
 	 * @param email
 	 */
-	public void adduser(String [][] user) {
+	public void addUser(String [][] user) {
 		sc.insertUser(user);
 	}
 	

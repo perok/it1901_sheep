@@ -20,7 +20,7 @@ public final class HelpPrinter {
 	
 	public static String printPopHelp() {
 		String help = new String("Following command are available for pop: \n");
-		help += "pop sheep add x y - Adds x number of sheep to farm with id y \n";
+		help += "pop add sheep x y - Adds x number of sheep to farm with id y \n";
 		return help;
 	}
 	
@@ -34,6 +34,7 @@ public final class HelpPrinter {
 		String help = new String();
 		help += "db ls farms - Lists all farms with Id \n";
 		help += "db ls users - Lists all users with name and Id \n";
+		help += "db access add x y - Adds access for user id x to farm id y \n";
 		return help;
 	}
 

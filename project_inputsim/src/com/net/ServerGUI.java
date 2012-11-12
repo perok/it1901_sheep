@@ -31,7 +31,6 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 	 */
 	ServerGUI(int port) {
 		super("Sheep Shield");
-		populator = new DatabasePopulator();
 		server = null;
 
 		//Startpanel
@@ -84,13 +83,13 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 	 * 
 	 */
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(e.getActionCommand());
 		if(e.getSource() == stopStart){
 			if(server != null) {
 				server.stop();
 				server = null;
 				tPortNumber.setEditable(true);
 				stopStart.setText("Start");
+				populator = new DatabasePopulator();
 				return;
 			}
 			else{
@@ -154,22 +153,42 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 		case("help"):
 			appendEvent(HelpPrinter.printHelp());
 		break;
+		
 		case("sim"):
 			appendEvent(HelpPrinter.printSimHelp());
 		break;
+		
 		case("pop"):
 			switch(decoded[1]){
 			case("help"):
 				appendEvent(HelpPrinter.printPopHelp());
 			break;
+			
 			case("add"):
 				if(decoded[2].equalsIgnoreCase("sheep")) {
 					populator.addSheep(Integer.parseInt(decoded[3]), Integer.parseInt(decoded[3]));
+					System.out.println(decoded[0] + decoded[1] + decoded[2] + decoded[3]);
 				}
 			break;
+			
 			default:
 				appendEvent("Invalid command \n");
 				appendEvent(HelpPrinter.printPopHelp());
+				break;
+			}
+		break;
+		
+		case("db"):
+			switch(decoded[1]){
+			case("ls"):
+				System.out.println("ls");
+				break;
+				
+			case("access"):
+				if(decoded[2].equalsIgnoreCase("add")) {
+					populator.addAccessRights(Integer.parseInt(decoded[2]), Integer.parseInt(decoded[3]));
+				}
+				
 				break;
 			}
 		break;
