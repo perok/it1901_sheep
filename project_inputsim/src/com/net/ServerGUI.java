@@ -4,6 +4,8 @@ import javax.swing.*;
 
 import com.sun.org.apache.xml.internal.security.utils.HelperNodeList;
 import core.*;
+import core.sim.DatabasePopulator;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -21,6 +23,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 	private JTextArea event;
 	private JTextField tPortNumber;
 	private Server server;
+	private DatabasePopulator populator;
 
 	/**Constructor for GUI with desiered portname.
 	 * 
@@ -28,6 +31,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 	 */
 	ServerGUI(int port) {
 		super("Sheep Shield");
+		populator = new DatabasePopulator();
 		server = null;
 
 		//Startpanel
@@ -48,9 +52,9 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 		cmdButton = new JButton("Execute command");
 		cmdButton.addActionListener(this);
 		cmdButton.registerKeyboardAction(cmdButton.getActionForKeyStroke(
-                KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false)),
-                KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false),
-                JComponent.WHEN_FOCUSED);
+				KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false)),
+				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false),
+				JComponent.WHEN_FOCUSED);
 		commandPanel.add(command);
 		commandPanel.add(cmdButton);
 		add(commandPanel, BorderLayout.SOUTH);
@@ -76,11 +80,10 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 		event.append(str);
 	}
 
-		/**Action listener for the buttons
+	/**Action listener for the buttons
 	 * 
 	 */
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(e.getSource());
 		System.out.println(e.getActionCommand());
 		if(e.getSource() == stopStart){
 			if(server != null) {
@@ -150,12 +153,28 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 		switch(decoded[0]){
 		case("help"):
 			appendEvent(HelpPrinter.printHelp());
+		break;
 		case("sim"):
 			appendEvent(HelpPrinter.printSimHelp());
+		break;
 		case("pop"):
-			appendEvent(HelpPrinter.printPopHelp());
+			switch(decoded[1]){
+			case("help"):
+				appendEvent(HelpPrinter.printPopHelp());
+			break;
+			case("add"):
+				if(decoded[2].equalsIgnoreCase("sheep")) {
+					populator.addSheep(Integer.parseInt(decoded[3]), Integer.parseInt(decoded[3]));
+				}
+			break;
+			default:
+				appendEvent("Invalid command \n");
+				appendEvent(HelpPrinter.printPopHelp());
+				break;
+			}
+		break;
 		default:
-			appendEvent("Invalid command. Try 'help'");
+			appendEvent("Invalid command. Try 'help' \n");
 		}
 
 	}

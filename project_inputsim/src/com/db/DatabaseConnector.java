@@ -174,7 +174,7 @@ public class DatabaseConnector {
 
 		try{
 			Statement s = conn.createStatement();
-			s.executeUpdate("UPDATE user SET name = '" + sheep.getName() + "', weight = '" + sheep.getWeight() + "', alive = " + sheep.isAlive() + ", "+
+			s.executeUpdate("UPDATE sheep SET name = '" + sheep.getName() + "', weight = '" + sheep.getWeight() + "', alive = " + sheep.isAlive() + ", "+
 					"date_of_birth = " + sheep.getDateOfBirth() + ", farm_id = '" + sheep.getFarmId() + "' WHERE id = " + sheepId + ";");
 		}
 		catch(Exception e){
@@ -283,6 +283,10 @@ public class DatabaseConnector {
 		}	
 	}
 
+	/**@deprecated
+	 * 
+	 * @return
+	 */
 	public ArrayList<SheepAlert> getNewSheepAlert() {
 		ArrayList<SheepAlert> list = new ArrayList<SheepAlert>();
 		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE notified = " + 0 + ";");
@@ -293,7 +297,10 @@ public class DatabaseConnector {
 		}
 		return list;
 	}
-
+/**@deprecated
+ * 
+ * @return
+ */
 	public boolean newAlertExists() {
 		ArrayList<SheepAlert> list = new ArrayList<SheepAlert>();
 		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE notified = " + 0 + ";");
@@ -337,9 +344,9 @@ public class DatabaseConnector {
 		try {
 			Statement s = conn.createStatement();
 			for (int i = 0; i < sheep.length; i++) {
-				s.executeUpdate("INSERT INTO sheep (id,name,farm_id,date_of_birth,alive,weight" +
-						") VALUES (" + ""+sheep[i][0]+"," + "'"+sheep[i][1]+"'," + ""+sheep[i][2]+"," +
-						""+sheep[i][3]+"," + ""+sheep[i][4]+"," + ""+sheep[i][5]+");");
+				s.executeUpdate("INSERT INTO sheep (name,farm_id,date_of_birth,alive,weight" +
+						") VALUES (" + "'"+sheep[i][0]+"'," + ""+sheep[i][1]+"," +
+						""+sheep[i][2]+"," + ""+sheep[i][3]+"," + ""+sheep[i][4]+");");
 
 			}
 		} catch (SQLException e) {

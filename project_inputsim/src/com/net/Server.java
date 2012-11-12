@@ -25,7 +25,7 @@ public class Server {
 	private Settings settings;
 	public ServerGUI sg;
 	public AlertNotifier notifier;
-	private SheepStatusSim simulator;
+	public SheepStatusSim simulator;
 
 	/**Constructor without GUI.
 	 * 
