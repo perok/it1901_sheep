@@ -1,21 +1,16 @@
 package com.gui;
 
-import com.trolltech.qt.QtBlockedSlot;
 import com.trolltech.qt.core.QRegExp;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
-import com.trolltech.qt.gui.QInputDialog;
 import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QRegExpValidator;
-import com.trolltech.qt.gui.QTextItem;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QValidator;
 import com.trolltech.qt.gui.QWidget;
-import com.trolltech.qt.gui.QValidator.QValidationData;
-import com.trolltech.qt.gui.QValidator.State;
 
 public class BrukerInnstillinger extends QWidget // implements ChangeNotifier
 {

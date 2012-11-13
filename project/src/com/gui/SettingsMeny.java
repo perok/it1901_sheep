@@ -48,7 +48,7 @@ public class SettingsMeny extends QDialog
 	@SuppressWarnings("unused")
 	private void checkForChange()
 	{
-		System.out.println("uh oh");
+		System.out.println("uh oh V-E-R-N, uh oh");
 		/*-
 		 *  For each of modifiable input *
 		 *  do
