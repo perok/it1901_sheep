@@ -6,7 +6,9 @@ import java.util.List;
 import com.storage.Sheeps;
 import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
+import com.trolltech.qt.core.QAbstractItemModel;
 import com.trolltech.qt.core.QModelIndex;
+import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.core.Qt.MatchFlags;
 import com.trolltech.qt.core.Qt.SortOrder;
 import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
@@ -54,6 +56,9 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	
 	private int QtSheepDataRole = 32;
 	
+	//FIXME: sorting prioritizes 100 before 10,
+	//		 Qt.SortOrder is also a final static enum, so behaviour cannot be
+	//		 overridden.
 	SortOrder sortOrder = SortOrder.AscendingOrder;
 	
 	Signal1<Sheep> sheepSelected;
