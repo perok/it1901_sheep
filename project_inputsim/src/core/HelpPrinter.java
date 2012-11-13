@@ -30,7 +30,7 @@ public final class HelpPrinter {
 		return help;
 	}
 	
-	public static String dbHelp() {
+	public static String printDbHelp() {
 		String help = new String();
 		help += "db ls farms - Lists all farms with Id \n";
 		help += "db ls users - Lists all users with name and Id \n";

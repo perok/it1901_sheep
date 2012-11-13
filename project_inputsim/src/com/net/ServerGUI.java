@@ -154,10 +154,15 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 			appendEvent(HelpPrinter.printHelp());
 		break;
 		
+		// Simulator
 		case("sim"):
-			appendEvent(HelpPrinter.printSimHelp());
-		break;
+			switch(decoded[1]){
+			case("help"):
+				appendEvent(HelpPrinter.printSimHelp());
+			break;
+			}
 		
+		// Populator
 		case("pop"):
 			switch(decoded[1]){
 			case("help"):
@@ -178,18 +183,35 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 			}
 		break;
 		
+		// Database
 		case("db"):
+			System.out.println("db");
 			switch(decoded[1]){
+			case("help"):
+				appendEvent(HelpPrinter.printDbHelp());
+				break;
+				
 			case("ls"):
-				System.out.println("ls");
+				if(decoded[2].equalsIgnoreCase("users")) {
+					appendEvent(populator.listUsers());
+					System.out.println("ListUsers");
+				}
+				else if(decoded[2].equalsIgnoreCase("farms")) {
+					appendEvent(populator.listFarms());
+					System.out.println("Listfarms");
+				}
 				break;
 				
 			case("access"):
 				if(decoded[2].equalsIgnoreCase("add")) {
 					populator.addAccessRights(Integer.parseInt(decoded[2]), Integer.parseInt(decoded[3]));
 				}
+				else if(decoded[2].equalsIgnoreCase("delete")) {
+					populator.removeAccessRights(Integer.parseInt(decoded[2]), Integer.parseInt(decoded[3]));
+				}
 				
 				break;
+				
 			}
 		break;
 		default:

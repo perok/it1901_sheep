@@ -33,6 +33,10 @@ public class DatabasePopulator {
 		sc.addAccessRights(userId, farmId);
 	}
 	
+	public void removeAccessRights(int userId, int farmId) {
+		sc.removeAccessRights(userId, farmId);
+	}
+	
 	/**Sends the parameter to database via DatabaseConnector
 	 * 
 	 * @param username
@@ -130,5 +134,23 @@ public class DatabasePopulator {
 	 */
 	public void deleteSheep() {
 		sc.deleteSheep();
+	}
+	
+	public String listUsers() {
+		String[][] users = sc.listUsers();
+		String res = new String();
+		for (int i = 0; i < users.length; i++) {
+			res += "Name: " + users[i][0]+", Id: " + users[i][1] + "\n";
+		}
+		return res;
+	}
+	
+	public String listFarms() {
+		String[][] farms = sc.listFarms();
+		String res = new String();
+		for (int i = 0; i < farms.length; i++) {
+			res += "Name: " + farms[i][0]+", Id: " + farms[i][1] + "\n";
+		}
+		return res;
 	}
 }

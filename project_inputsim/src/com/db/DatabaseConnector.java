@@ -432,6 +432,16 @@ public class DatabaseConnector {
 			e.printStackTrace();
 		}	
 	}
+	
+	public String[][] listUsers() {
+		String[][] results = processQuery("SELECT name,id FROM user WHERE true;");
+		return results;
+	}
+	
+	public String[][] listFarms() {
+		String[][] results = processQuery("SELECT name,id FROM farm WHERE true;");
+		return results;
+	}
 
 	/** A method for processing SELECT queries easier. Returns a String[][] instead of using result sets given 
 	 * from the sql query. 
