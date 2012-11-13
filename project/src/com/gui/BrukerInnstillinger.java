@@ -1,4 +1,4 @@
-package alt;
+package com.gui;
 
 import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QGroupBox;
@@ -10,7 +10,7 @@ import com.trolltech.qt.gui.QWidget;
 
 public class BrukerInnstillinger extends QWidget
 {
-	public static final String CLASS_ICON = "./farmer.png";
+	public static final String CLASS_ICON = "./icons/farmer.png";
 	
 	private QComboBox qcbFarmCombo;
 	private QGroupBox qgbConfigGroup;

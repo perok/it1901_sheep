@@ -1,4 +1,4 @@
-package alt;
+package com.gui;
 
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt.AlignmentFlag;
@@ -35,7 +35,7 @@ public class SettingsMeny extends QDialog
 	    initIcons();
 	    
 	    super.setWindowTitle(tr("Innstillinger"));
-	    super.setWindowIcon(new QIcon("./sheep.png"));
+	    super.setWindowIcon(new QIcon("./icons/sheep.png"));
 	}
 
 	protected void changePage(QListWidgetItem current, QListWidgetItem previous)
