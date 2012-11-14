@@ -1,11 +1,8 @@
 package com.net;
 
 import javax.swing.*;
-
-import com.sun.org.apache.xml.internal.security.utils.HelperNodeList;
 import core.*;
 import core.sim.DatabasePopulator;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -160,6 +157,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 				appendEvent(HelpPrinter.printAlertHelp());
 			break;
 			}
+		break;
 
 		// Simulator
 		case("sim"):
@@ -168,6 +166,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 				appendEvent(HelpPrinter.printSimHelp());
 			break;
 			}
+		break;
 
 		// Populator
 		case("pop"):
