@@ -3,8 +3,9 @@ package com.gui;
 import com.gui.logic.UiLoginWindowLogic;
 import com.gui.logic.UiMainWindowLogic;
 import com.gui.logic.ServerLogic;
-import com.gui.logic.sheepListWidgetHandler;
-import com.gui.logic.tableWidgetHandler;
+import com.gui.logic.SheepListWidgetLogic;
+import com.gui.logic.TableWidgetLogic;
+import com.storage.Constants;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
@@ -21,12 +22,6 @@ import com.trolltech.qt.gui.QWidget;
  */
 public class MainWindow extends QMainWindow 
 {
-	private static final double SHEEP_WINDOW_COVERAGE = 0.2;
-	
-	public  static final int INIT_SCREEN_WIDTH      = 900, 
-							 INIT_SCREEN_HEIGHT 	= 800;
-	public  static final int INIT_SHEEP_WIDGET_SIZE = (int) (INIT_SCREEN_WIDTH * SHEEP_WINDOW_COVERAGE);
-        
     private UiMainWindow uiMainWindow;
     private UiLoginWindow uiLoginWindow;
     
@@ -34,8 +29,8 @@ public class MainWindow extends QMainWindow
     /* DB */
     
     /* Handlers */
-    private tableWidgetHandler twhandler;
-    private sheepListWidgetHandler slwHandler;
+    private TableWidgetLogic twhandler;
+    private SheepListWidgetLogic slwHandler;
     private UiMainWindowLogic mwLogic;
     private UiLoginWindowLogic lwLogic;
     private ServerLogic serverLogic;
@@ -54,7 +49,6 @@ public class MainWindow extends QMainWindow
         MainWindow mainWindow = new MainWindow(null);
         mainWindow.show();
     	
-        
         QApplication.exec();
         
         /*
@@ -75,7 +69,7 @@ public class MainWindow extends QMainWindow
         serverLogic = new ServerLogic();
         uiLoginWindow = new UiLoginWindow();
         
-        uiLoginWindow.setupUi(this, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
+        uiLoginWindow.setupUi(this, Constants.INIT_SCREEN_WIDTH, Constants.INIT_SCREEN_WIDTH);
     	
         lwLogic = new UiLoginWindowLogic(uiLoginWindow, serverLogic);
         serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");
@@ -92,10 +86,10 @@ public class MainWindow extends QMainWindow
 		
 		
 		uiMainWindow = new UiMainWindow();
-		uiMainWindow.setupUi(this, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
+		uiMainWindow.setupUi(this, this.size().width(), this.size().height());//INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
 		
-		twhandler = new tableWidgetHandler(uiMainWindow.tableWidget);
-		slwHandler = new sheepListWidgetHandler(uiMainWindow.listWidget);		
+		twhandler = new TableWidgetLogic(uiMainWindow.tableWidget);
+		slwHandler = new SheepListWidgetLogic(uiMainWindow.listWidget);		
         mwLogic = new UiMainWindowLogic(uiMainWindow, slwHandler, twhandler, serverLogic);
                 
         mwLogic.signalShowAbout.connect(this, "about()");
@@ -106,14 +100,16 @@ public class MainWindow extends QMainWindow
      * APPLICATION 
      */
     
-    /** Handle "about" trigger
-	*/
+    /** 
+     * Shows the about window
+     */
 	protected void about() {
-	    QMessageBox.information(this, "About", "Sheep surveilance application." 
-	    		+ "Created by Anders Sildnes, Lars erik Grasdal, Tor Økland Barstad"
-	    		+ ", Svenn K and Per Øyvind Kanestrøm");
+	    QMessageBox.information(this, "About", Constants.about);
 	}
 	
+	/**
+	 * Shows the about Qt window
+	 */
 	protected void aboutQt() {
 	    QMessageBox.aboutQt(this);
 	}
@@ -121,6 +117,7 @@ public class MainWindow extends QMainWindow
 	/*
 	 * EVENTS
 	 */
+	
 	/**
 	 * Close event
 	 * 
@@ -133,8 +130,11 @@ public class MainWindow extends QMainWindow
 		super.closeEvent(event);
 	}
 	
+	/**
+	 * Global keypress event.
+	 */
 	@Override
-	public void keyPressEvent(QKeyEvent event){
+	protected void keyPressEvent(QKeyEvent event){
 		if(uiLoginWindow != null){
 			if (event.key() == Qt.Key.Key_Return.value()){
 				uiLoginWindow.loginCheck();

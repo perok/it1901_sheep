@@ -15,6 +15,9 @@ public class ServerLogic extends QSignalEmitter{
 
     public Signal0 loggedIn;
 
+    /**
+     * Constructs the object
+     */
 	public ServerLogic(){
 		loggedIn = new Signal0();
 	}

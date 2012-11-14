@@ -3,6 +3,7 @@ package com.gui.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.storage.Constants;
 import com.storage.Sheeps;
 import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
@@ -24,11 +25,8 @@ import com.trolltech.qt.gui.QWidget;
 
 import core.classes.Sheep;
 
-public class sheepListWidgetHandler extends QSignalEmitter{	
+public class SheepListWidgetLogic extends QSignalEmitter{	
 	private QListWidget qlWidget;
-	
-	// Valuas >= 32 are private data not handles by Qt.
-	private int QtSheepDataRole = 32;
 	
 	//Stores a reference the current sheeps in the view.
 	ArrayList<QListWidgetItem> currentItems;
@@ -45,7 +43,7 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	
 	/** Constructor. Initialize..
 	 */
-	public sheepListWidgetHandler(QListWidget qlWidget)//QTreeView qtvModView)
+	public SheepListWidgetLogic(QListWidget qlWidget)//QTreeView qtvModView)
 	{
 		sheepSelected = new Signal1<Sheep>();
 		multiSheepSelect = new Signal1<ArrayList<Sheep>>();
@@ -78,30 +76,32 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	}
 	
 	/**
-	 * Receives an item in the view that is doouble clicked
+	 * Receives an item in the view that is double clicked
 	 * 
 	 * @param item Item doubleclicked
 	 */
 	public void onSheepDoubleClicked(QListWidgetItem item){//QItemSelection selected, QItemSelection deselected){
-		if(item.data(QtSheepDataRole) != null){
-			Sheep dClicked = (Sheep)item.data(QtSheepDataRole);
+		if(item.data(Constants.QtSheepDataRole) != null){
+			Sheep dClicked = (Sheep)item.data(Constants.QtSheepDataRole);
 			sheepSelected.emit(dClicked);
 		}
 	}
 	
 	/**
-	 * 
+	 * Event fired when sheep(s) are selected
 	 */
 	public void itemSelectionChanged(){
 		ArrayList<Sheep> sheepSelected = new ArrayList<Sheep>();
 		
 		for(QListWidgetItem item : currentItems){
 			if (item.isSelected()){
-				sheepSelected.add((Sheep)item.data(QtSheepDataRole));
+				sheepSelected.add((Sheep)item.data(Constants.QtSheepDataRole));
 			}
 		}
 		
-		multiSheepSelect.emit(sheepSelected);
+		//Only fire event when more than one sheep is selected
+		if(sheepSelected.size() != 1)
+			multiSheepSelect.emit(sheepSelected);
 	}
 	
 	/** debug and test purposes - add sheep */
@@ -119,7 +119,7 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 		
 		for(Sheep sheep : UserStorage.getUser().getFarmlist().get(UserStorage.getCurrentFarm()).getSheepList()){
 			QListWidgetItem item = new QListWidgetItem();
-			item.setData(QtSheepDataRole, sheep);
+			item.setData(Constants.QtSheepDataRole, sheep);
 			item.setData(Qt.ItemDataRole.DisplayRole, sheep.getName());
 			
 			//Qt should handle GC now. 
