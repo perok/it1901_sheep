@@ -23,12 +23,18 @@ public class Request implements Serializable {
 	
 	public Request(int type, String message, User user) {
 		this.type = type;
-		this.user = user;
+		this.message = message;
+		this.user = new User(user.getId(),user.getUsername(),user.getName(),user.getPassword(),
+				user.getMobileNumber(),user.getEmail(),user.getFarmlist());
 	}
 	
 	public Request(int type, String message, Sheep sheep) {
+		System.out.println("Constructor called");
 		this.type = type;
-		this.sheep = sheep;
+		this.message = message;
+		this.sheep = new Sheep(sheep.getId(), sheep.getName(), sheep.getFarmId(), sheep.getDateOfBirth(),
+				sheep.isAlive(), sheep.getWeight());
+		System.out.println(sheep.getName());
 	}
 	
 	public Request(int type, String message, HashMap parameters) {
