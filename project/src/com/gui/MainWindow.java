@@ -146,6 +146,5 @@ public class MainWindow extends QMainWindow
     		super.keyPressEvent(event);
    	}
 }
-/* 14.10.2012 - worked about 5 hours to fix everything */
 
 /* EOF */

@@ -1,4 +1,4 @@
-package alt;
+package com.gui;
 
 /* Interface for listener...? */
 
@@ -12,7 +12,7 @@ import com.trolltech.qt.gui.QWidget;
 
 public class SauInnstillinger extends QWidget
 {
-	public static final String CLASS_ICON = "./alert.png";
+	public static final String CLASS_ICON = "./icons/alert.png";
 	
 	private QGroupBox qgbUpdateGroup;
 	private QCheckBox qcbSystemCheckBox;

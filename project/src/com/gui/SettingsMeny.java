@@ -1,4 +1,4 @@
-package alt;
+package com.gui;
 
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt.AlignmentFlag;
@@ -21,6 +21,8 @@ import com.trolltech.qt.gui.QWidget;
 
 public class SettingsMeny extends QDialog
 {
+	public static final String CLASS_ICON = "./icons/sheep.png";
+	
 	private QListWidget qlwParentcontentsWidget;
     private QStackedWidget qswPagesWidget;
     private QPushButton qpbCloseButton;
@@ -35,7 +37,7 @@ public class SettingsMeny extends QDialog
 	    initIcons();
 	    
 	    super.setWindowTitle(tr("Innstillinger"));
-	    super.setWindowIcon(new QIcon("./sheep.png"));
+	    super.setWindowIcon(new QIcon(CLASS_ICON));
 	}
 
 	protected void changePage(QListWidgetItem current, QListWidgetItem previous)
@@ -46,7 +48,13 @@ public class SettingsMeny extends QDialog
 	@SuppressWarnings("unused")
 	private void checkForChange()
 	{
-		
+		System.out.println("uh oh V-E-R-N, uh oh");
+		/*-
+		 *  For each of modifiable input *
+		 *  do
+		 *  		isModified && writeChange
+		 * 	done
+		 */	
 	}
 
     private void initConnectEvents()
@@ -64,18 +72,15 @@ public class SettingsMeny extends QDialog
 	    qlwiBtnIconUser.setIcon(new QIcon(BrukerInnstillinger.CLASS_ICON));
 	    qlwiBtnIconUser.setText(tr("Bruker"));
 	    qlwiBtnIconUser.setTextAlignment(AlignmentFlag.AlignHCenter.value());
-	    qlwiBtnIconUser
-	            .setFlags(ItemFlag.ItemIsSelectable, ItemFlag.ItemIsEnabled);
+	    qlwiBtnIconUser.setFlags(ItemFlag.ItemIsSelectable, ItemFlag.ItemIsEnabled);
 	
 	    qlwiBtnIconApp.setIcon(new QIcon(SauInnstillinger.CLASS_ICON));
 	    qlwiBtnIconApp.setText(tr("Applikasjon"));
 	    qlwiBtnIconApp.setTextAlignment(AlignmentFlag.AlignHCenter.value());
-	    qlwiBtnIconApp
-	            .setFlags(ItemFlag.ItemIsSelectable, ItemFlag.ItemIsEnabled);
+	    qlwiBtnIconApp.setFlags(ItemFlag.ItemIsSelectable, ItemFlag.ItemIsEnabled);
 	
 	    this.qlwParentcontentsWidget.currentItemChanged.connect(this,
 	            "changePage(QListWidgetItem , QListWidgetItem)");
-	
 	}
 
 	private void initLayout()

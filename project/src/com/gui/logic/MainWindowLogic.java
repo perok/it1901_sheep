@@ -13,8 +13,7 @@ public class MainWindowLogic extends QSignalEmitter{
 	UiMainWindow mw;
 	sheepListWidgetHandler slwHandler;
 	tableWidgetHandler twHandler;
-	
-	
+
 	QLabel statusbarMessage;
 	
 	public MainWindowLogic(UiMainWindow mw, sheepListWidgetHandler slwHandler, tableWidgetHandler twHandler){
@@ -46,10 +45,12 @@ public class MainWindowLogic extends QSignalEmitter{
 		
 	}
 	
+	@SuppressWarnings("unused")
 	private void newStatusBarMessage(String text){
 		statusbarMessage.setText(text);
 	}
 	
+	@SuppressWarnings("unused")
 	private void populateTableWidget(Sheep sheep){
 		System.out.println("Sheep selected: " + sheep.getName());
 		//Get messages for sheep
