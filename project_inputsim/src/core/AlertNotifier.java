@@ -73,7 +73,7 @@ public class AlertNotifier implements Runnable{
 	}
 	
 	public void recieveStatus(String[][] status) {
-		
+		db.insertSheepStatus(status);
 	}
 
 }

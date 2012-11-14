@@ -82,7 +82,13 @@ public class DatabaseConnector {
 			String [][] r4 = processQuery("SELECT * from sheep WHERE farm_id = " + farm.getId() + ";");
 			for (int j = 0; j < r4.length; j++) {
 				Sheep sheep = new Sheep(Integer.parseInt(r4[j][0]), r4[j][1], Integer.parseInt(r4[j][2]), Integer.parseInt(r4[j][3]), getBoolean(r4[j][4]), Integer.parseInt(r4[j][5]));
-				String [][] r5 = processQuery("SELECT * from sheep_status WHERE sheep_id = " + sheep.getId() + ";");
+				String [][] r5 = processQuery("SELECT * from sheep_status WHERE sheep_id = " + sheep.getId() + " LIMIT 10;");
+				for (int k = 0; k < r5.length; k++) {
+					for (int k2 = 0; k2 < r5[k].length; k2++) {
+						sheep.addSheepStatus(new SheepStatus(Integer.parseInt(r5[k][k2]),Integer.parseInt(r5[k][k2]),Integer.parseInt(r5[k][k2]),
+								Float.parseFloat(r5[k][k2]),new GPSPosition(Double.parseDouble(r5[k][k2]), Double.parseDouble(r5[k][k2])),Integer.parseInt(r5[k][k2])));
+					}
+				}
 				farm.addSheep(sheep);
 			}
 			farms.add(farm);

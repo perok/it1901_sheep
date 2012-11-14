@@ -1,6 +1,7 @@
 package core.classes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Sheep implements Serializable{
 	
@@ -14,6 +15,20 @@ public class Sheep implements Serializable{
 	int dateOfBirth;
 	boolean alive;
 	int weight;
+	ArrayList<SheepStatus> recentStatuses;
+	
+	public Sheep (int id, String name, int farmId, int dateOfBirth, boolean alive, int weight, ArrayList<SheepStatus> stats) {
+		this.id = id;
+		this.name = name;
+		this.farmId = farmId;
+		this.dateOfBirth = dateOfBirth;
+		this.alive = alive;
+		this.weight = weight;
+		recentStatuses = new ArrayList<SheepStatus>();
+		for (int i = 0; i < recentStatuses.size(); i++) {
+			this.recentStatuses.add(stats.get(i));
+		}
+	}
 	
 	public Sheep (int id, String name, int farmId, int dateOfBirth, boolean alive, int weight) {
 		this.id = id;
@@ -22,8 +37,8 @@ public class Sheep implements Serializable{
 		this.dateOfBirth = dateOfBirth;
 		this.alive = alive;
 		this.weight = weight;
+		recentStatuses = new ArrayList<SheepStatus>();
 	}
-	
 	public int getId() {
 		return id;
 	}
@@ -75,4 +90,20 @@ public class Sheep implements Serializable{
 	public String toString() {
 		return name;
 	}
+
+	public ArrayList<SheepStatus> getRecentStatuses() {
+		return recentStatuses;
+	}
+
+	public void setRecentStatuses(ArrayList<SheepStatus> recentStatuses) {
+		for (int i = 0; i < recentStatuses.size(); i++) {
+			this.recentStatuses.add(recentStatuses.get(i));
+		}
+	}
+	
+	public void addSheepStatus(SheepStatus status) {
+		recentStatuses.add(status);
+	}
+	
+	
 }
