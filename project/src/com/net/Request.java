@@ -23,23 +23,25 @@ public class Request implements Serializable {
 	
 	public Request(int type, String message, User user) {
 		this.type = type;
-		this.user = user;
+		this.message = message;
+		this.user = new User(user.getId(),user.getUsername(),user.getName(),user.getPassword(),
+				user.getMobileNumber(),user.getEmail(),user.getFarmlist());
 	}
 	
 	public Request(int type, String message, Sheep sheep) {
-		this.type = type;
-		this.sheep = sheep;
-	}
-	
-	public Request(int type, String message, HashMap _parameters) {
+		System.out.println("Constructor called");
 		this.type = type;
 		this.message = message;
-		
+		this.sheep = new Sheep(sheep.getId(), sheep.getName(), sheep.getFarmId(), sheep.getDateOfBirth(),
+				sheep.isAlive(), sheep.getWeight());
+		System.out.println(sheep.getName());
+	}
+	
+	public Request(int type, String message, HashMap parameters) {
+		this.type = type;
+		this.message = message;
 		parameters = new HashMap();
-		
-		for( Object key : _parameters.keySet()){
-			parameters.put(key, _parameters.get(key));
-		}
+		this.parameters = parameters;
 	}
 	
 	public Request(int type) {
@@ -58,10 +60,8 @@ public class Request implements Serializable {
 		return parameters;
 	}
 
-	public void setparameters(HashMap _parameters) {
-		for( Object key : _parameters.keySet()){
-			parameters.put(key, _parameters.get(key));
-		}
+	public void setparameters(HashMap parameters) {
+		this.parameters = parameters;
 	}
 	
 	public void addparameter(String name, String value) {

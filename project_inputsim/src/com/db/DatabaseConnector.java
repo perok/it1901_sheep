@@ -6,6 +6,10 @@ import core.classes.*;
 import java.sql.*;
 import java.util.ArrayList;
 
+/** Class to connect to a given database.
+ * 
+ * @author Lars Erik
+ */
 public class DatabaseConnector {
 	private String sqlUrl;
 	private String username;
@@ -13,6 +17,10 @@ public class DatabaseConnector {
 	private String password;
 	private Connection conn;
 
+	/** Creates a connection to the database with given settings.
+	 * 
+	 * @param settings
+	 */
 	public DatabaseConnector(Settings settings) {
 		sqlUrl = settings.getDbUrl();
 		database = settings.getDbDatabase();
@@ -50,10 +58,15 @@ public class DatabaseConnector {
 		}
 	}
 
-	/*
-	 * CLIENT SECTION
-	 */
+	// CLIENT SECTION
 
+	/** Login query that returns the user, if he exists.
+	 * It also contains farms with sheep and their statuses.
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
 	public User loginQuery(String username, String password) {
 		try{
 		String[][] r = processQuery("SELECT id,username,password,name,mobile_number,email FROM user WHERE username = '" + username + "'" + " AND password = '" + password + "';");
@@ -68,12 +81,13 @@ public class DatabaseConnector {
 			Farm farm = new Farm(Integer.parseInt(r2[i][0]),r3[0][0]);
 			String [][] r4 = processQuery("SELECT * from sheep WHERE farm_id = " + farm.getId() + ";");
 			for (int j = 0; j < r4.length; j++) {
-				farm.addSheep(new Sheep(Integer.parseInt(r4[j][0]), r4[j][1], Integer.parseInt(r4[j][2]), Integer.parseInt(r4[j][3]), getBoolean(r4[j][4]), Integer.parseInt(r4[j][5])));
+				Sheep sheep = new Sheep(Integer.parseInt(r4[j][0]), r4[j][1], Integer.parseInt(r4[j][2]), Integer.parseInt(r4[j][3]), getBoolean(r4[j][4]), Integer.parseInt(r4[j][5]));
+				String [][] r5 = processQuery("SELECT * from sheep_status WHERE sheep_id = " + sheep.getId() + ";");
+				farm.addSheep(sheep);
 			}
 			farms.add(farm);
 		}
 		user.addFarms(farms);
-		System.out.println("DBNAME:  " +user.getName());
 		return user;
 		
 		}
@@ -382,13 +396,20 @@ public class DatabaseConnector {
 		}	
 	}
 
+	/** Returns the number of farms in the database.
+	 * 
+	 * @return
+	 */
 	public int getNumberOfFarms() {
 		String[][] results = processQuery("SELECT * FROM farm");
 		return results.length;
 	}
 
+	/** Returns the ID of the most recent farm
+	 * 
+	 * @return
+	 */
 	public int getLatestFarm() {
-
 		int latest = -1;
 		String[][] results = processQuery("SELECT * FROM farm");
 		for (int i = 0; i < results.length; i++) {
@@ -398,6 +419,9 @@ public class DatabaseConnector {
 		return latest;
 	}
 
+	/** Deletes all farms in database.
+	 * 
+	 */
 	public void deleteFarm() {
 		try {
 			Statement s = conn.createStatement();
@@ -408,6 +432,10 @@ public class DatabaseConnector {
 		}	
 	}
 
+	/** Method used to insert a user into the database.
+	 * 
+	 * @param users
+	 */
 	public void insertUser(String[][] users) {
 		try {
 			Statement s = conn.createStatement();
@@ -423,6 +451,9 @@ public class DatabaseConnector {
 
 	}
 
+	/** Deletes all users in database.
+	 * 
+	 */
 	public void deleteUser() {
 		try {
 			Statement s = conn.createStatement();
@@ -433,11 +464,19 @@ public class DatabaseConnector {
 		}	
 	}
 	
+	/** Returns a String[] with id and name of all users in database.
+	 * 
+	 * @return
+	 */
 	public String[][] listUsers() {
 		String[][] results = processQuery("SELECT name,id FROM user WHERE true;");
 		return results;
 	}
 	
+	/** Returns a String[] with id and name of all farms in database.
+	 * 
+	 * @return
+	 */
 	public String[][] listFarms() {
 		String[][] results = processQuery("SELECT name,id FROM farm WHERE true;");
 		return results;
@@ -471,10 +510,6 @@ public class DatabaseConnector {
 				}
 				i++;
 				if(!r.next()) break;
-			}
-			for (int y = 0; y < result.length; y++)
-			for (int j = 0; j < result[y].length; j++) {
-				System.out.println("processquery: " + y + "  " + j + " "+result[y][j]);
 			}
 			return result;
 		} catch (SQLException e) {
