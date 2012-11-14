@@ -18,9 +18,9 @@ public class AlertSettings extends QWidget
 	public static final String CLASS_ICON = "./icons/alert.png";
 	
 	private QGroupBox qgbUpdateGroup;
-	private QCheckBox qcbSystemCheckBox;
-	private QCheckBox qcbAppsCheckBox;
-	private QCheckBox qcbDocsCheckBox;
+	private QCheckBox qcbSmsCheckbox;
+	private QCheckBox qcbMailCheckbox;
+	private QCheckBox qcbCallCheckbox;
 	
 	private QGroupBox qgbPackageGroup;
 	
@@ -52,7 +52,6 @@ public class AlertSettings extends QWidget
     {
     	this.qpbBtnAlarm.clicked.connect(this, "dispatchAlarm()");
     }
-    
     
     @SuppressWarnings("unused")
     /** Function used to call for an alarm
@@ -94,9 +93,9 @@ public class AlertSettings extends QWidget
     	/** The layout for the package manager */
     	QVBoxLayout qvbPackageLayout 		 = new QVBoxLayout();        	
     	
-        qbvSheepSettingsLayout.addWidget(qcbSystemCheckBox);
-        qbvSheepSettingsLayout.addWidget(qcbAppsCheckBox);
-        qbvSheepSettingsLayout.addWidget(qcbDocsCheckBox);
+        qbvSheepSettingsLayout.addWidget(qcbSmsCheckbox);
+        qbvSheepSettingsLayout.addWidget(qcbMailCheckbox);
+        qbvSheepSettingsLayout.addWidget(qcbCallCheckbox);
         
         qvbPackageLayout.addWidget(qlwPackageList);
 
@@ -116,12 +115,12 @@ public class AlertSettings extends QWidget
     private void initCheckBox()
     {
     	/* - Title */
-        qgbUpdateGroup = new QGroupBox(tr("Ved en alarm.."));
+        this.qgbUpdateGroup = new QGroupBox(tr("Ved en alarm.."));
         
         /* - Checkboxes */
-        qcbSystemCheckBox = new QCheckBox(tr("Send SMS"));
-        qcbAppsCheckBox   = new QCheckBox(tr("Send mail"));
-        qcbDocsCheckBox   = new QCheckBox(tr("Ring på telefon"));        	
+        this.qcbSmsCheckbox = new QCheckBox(tr("Send SMS"));
+        this.qcbMailCheckbox   = new QCheckBox(tr("Send mail"));
+        this.qcbCallCheckbox   = new QCheckBox(tr("Ring på telefon"));        	
     }
 
 }

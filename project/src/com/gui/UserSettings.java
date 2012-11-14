@@ -29,7 +29,8 @@ public class UserSettings extends QWidget // implements ChangeNotifier
 	private QLineEdit qleUsername;
 	private QLineEdit qleUserSurname;
 	
-	volatile private int iSelectedCombo = 0;
+	@SuppressWarnings("unused")
+	private int iSelectedCombo = 0;
 	
 	/** Constructor. Initialize..
 	 * @param parent the host of THIS
@@ -77,6 +78,7 @@ public class UserSettings extends QWidget // implements ChangeNotifier
 	 */
 	private void initUserInput()
 	{
+		final int LABEL_WIDTH = 59;
 		this.qgbUserField = new QGroupBox(tr("Brukerdata"));
 		this.qleUsername 	= new QLineEdit();
 		this.qleUserSurname = new QLineEdit();
@@ -84,6 +86,9 @@ public class UserSettings extends QWidget // implements ChangeNotifier
 		this.qlUserSurname = new QLabel(tr("Etternavn:"));
 		QRegExp qreNameInput = new QRegExp("^[A-Za-z\\ ]+$");
 		QValidator qvRegex = new QRegExpValidator(qreNameInput, this.qleUsername);
+		
+		this.qlUsername.setFixedWidth(LABEL_WIDTH);
+		this.qlUserSurname.setFixedWidth(LABEL_WIDTH);
 		
 		/* Settings for input-field for first name */
 		this.qleUsername.setMaxLength(20);
