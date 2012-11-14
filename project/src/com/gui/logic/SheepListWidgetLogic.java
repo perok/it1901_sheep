@@ -3,6 +3,7 @@ package com.gui.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.storage.Constants;
 import com.storage.Sheeps;
 import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
@@ -26,9 +27,6 @@ import core.classes.Sheep;
 
 public class SheepListWidgetLogic extends QSignalEmitter{	
 	private QListWidget qlWidget;
-	
-	// Valuas >= 32 are private data not handles by Qt.
-	private int QtSheepDataRole = 32;
 	
 	//Stores a reference the current sheeps in the view.
 	ArrayList<QListWidgetItem> currentItems;
@@ -83,8 +81,8 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	 * @param item Item doubleclicked
 	 */
 	public void onSheepDoubleClicked(QListWidgetItem item){//QItemSelection selected, QItemSelection deselected){
-		if(item.data(QtSheepDataRole) != null){
-			Sheep dClicked = (Sheep)item.data(QtSheepDataRole);
+		if(item.data(Constants.QtSheepDataRole) != null){
+			Sheep dClicked = (Sheep)item.data(Constants.QtSheepDataRole);
 			sheepSelected.emit(dClicked);
 		}
 	}
@@ -97,7 +95,7 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 		
 		for(QListWidgetItem item : currentItems){
 			if (item.isSelected()){
-				sheepSelected.add((Sheep)item.data(QtSheepDataRole));
+				sheepSelected.add((Sheep)item.data(Constants.QtSheepDataRole));
 			}
 		}
 		
@@ -123,7 +121,7 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 		
 		for(Sheep sheep : UserStorage.getUser().getFarmlist().get(UserStorage.getCurrentFarm()).getSheepList()){
 			QListWidgetItem item = new QListWidgetItem();
-			item.setData(QtSheepDataRole, sheep);
+			item.setData(Constants.QtSheepDataRole, sheep);
 			item.setData(Qt.ItemDataRole.DisplayRole, sheep.getName());
 			
 			//Qt should handle GC now. 

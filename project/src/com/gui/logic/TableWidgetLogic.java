@@ -3,6 +3,7 @@ package com.gui.logic;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.storage.Constants;
 import com.trolltech.qt.gui.QTableWidget;
 import com.trolltech.qt.gui.QTableWidgetItem;
 
@@ -13,9 +14,6 @@ import core.classes.Sheep;
 public class TableWidgetLogic {
 	
 	private QTableWidget widget;
-	
-	private int QtSheepDataRole = 32;
-
 	
 	public TableWidgetLogic(QTableWidget widget){
 		this.widget = widget;
@@ -74,24 +72,24 @@ public class TableWidgetLogic {
 			for(Message message : messages){
 				QTableWidgetItem item = new QTableWidgetItem(message.getId());
 				item.disableGarbageCollection();
-				item.setData(QtSheepDataRole, sheep);
+				item.setData(Constants.QtSheepDataRole, sheep);
 				
 				
 				item = new QTableWidgetItem(message.getTimestamp());
 				item.disableGarbageCollection();
-				item.setData(QtSheepDataRole, sheep);
+				item.setData(Constants.QtSheepDataRole, sheep);
 				
 				item = new QTableWidgetItem(String.valueOf(message.getTemperature()));
 				item.disableGarbageCollection();
-				item.setData(QtSheepDataRole, sheep);
+				item.setData(Constants.QtSheepDataRole, sheep);
 				
 				item = new QTableWidgetItem(message.getWeight());
 				item.disableGarbageCollection();
-				item.setData(QtSheepDataRole, sheep);
+				item.setData(Constants.QtSheepDataRole, sheep);
 				
 				item = new QTableWidgetItem(message.getGpsPosition().getLatitute() + " - " + message.getGpsPosition().getLongditude());
 				item.disableGarbageCollection();
-				item.setData(QtSheepDataRole, sheep);
+				item.setData(Constants.QtSheepDataRole, sheep);
 			}
 		
 	}

@@ -5,6 +5,7 @@ import com.gui.logic.UiMainWindowLogic;
 import com.gui.logic.ServerLogic;
 import com.gui.logic.SheepListWidgetLogic;
 import com.gui.logic.TableWidgetLogic;
+import com.storage.Constants;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
@@ -21,12 +22,6 @@ import com.trolltech.qt.gui.QWidget;
  */
 public class MainWindow extends QMainWindow 
 {
-	private static final double SHEEP_WINDOW_COVERAGE = 0.2;
-	
-	public  static final int INIT_SCREEN_WIDTH      = 900, 
-							 INIT_SCREEN_HEIGHT 	= 800;
-	public  static final int INIT_SHEEP_WIDGET_SIZE = (int) (INIT_SCREEN_WIDTH * SHEEP_WINDOW_COVERAGE);
-        
     private UiMainWindow uiMainWindow;
     private UiLoginWindow uiLoginWindow;
     
@@ -54,7 +49,6 @@ public class MainWindow extends QMainWindow
         MainWindow mainWindow = new MainWindow(null);
         mainWindow.show();
     	
-        
         QApplication.exec();
         
         /*
@@ -75,7 +69,7 @@ public class MainWindow extends QMainWindow
         serverLogic = new ServerLogic();
         uiLoginWindow = new UiLoginWindow();
         
-        uiLoginWindow.setupUi(this, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
+        uiLoginWindow.setupUi(this, Constants.INIT_SCREEN_WIDTH, Constants.INIT_SCREEN_WIDTH);
     	
         lwLogic = new UiLoginWindowLogic(uiLoginWindow, serverLogic);
         serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");
