@@ -14,4 +14,8 @@ public class Constants {
 	 * Valuas >= 32 are private data not handles by Qt.
 	 */
 	public final static int QtSheepDataRole = 32;
+	
+	public static final String about = "The Greatest and Only SSA® (Sheep Surveilance Application).\n\n" 
+    		+ "Created by: \n\tAnders Sildnes \n\tLars erik Grasdal \n\tTor Økland Barstad"
+    		+ "\n\tSvenn K \n\tPer Øyvind Kanestrøm";
 }

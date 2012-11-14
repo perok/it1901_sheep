@@ -104,9 +104,7 @@ public class MainWindow extends QMainWindow
      * Shows the about window
      */
 	protected void about() {
-	    QMessageBox.information(this, "About", "The Greatest and Only SSA® (Sheep Surveilance Application)." 
-	    		+ "Created by Anders Sildnes, Lars erik Grasdal, Tor Økland Barstad"
-	    		+ ", Svenn K and Per Øyvind Kanestrøm");
+	    QMessageBox.information(this, "About", Constants.about);
 	}
 	
 	/**
