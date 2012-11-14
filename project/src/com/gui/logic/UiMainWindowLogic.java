@@ -83,14 +83,26 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	
 	/* ACTIONS */
 	
+	/**
+	 * Shows a popupmessage about the program
+	 * @param trigg
+	 */
 	private void actionAbout_toggled(boolean trigg){
 		signalShowAbout.emit();
 	}
 	
+	/**
+	 * Shows a popupmessage about Qt
+	 * @param trigg
+	 */
 	private void actionAbout_Qt_Jambi_triggerd(boolean trigg){
 		signalShowAboutQt.emit();
 	}
 	    
+	/**
+	 * Pops up the settings widget
+	 * @param triggered
+	 */
     public void actionSettings_triggered(boolean triggered)
     {
     	new SettingsMenu(null).show();
