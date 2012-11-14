@@ -9,9 +9,11 @@ import com.storage.Constants;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
+import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QKeyEvent;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMessageBox;
+import com.trolltech.qt.gui.QPixmap;
 import com.trolltech.qt.gui.QStyleFactory;
 import com.trolltech.qt.gui.QWidget;
 
@@ -43,9 +45,8 @@ public class MainWindow extends QMainWindow
     {
         QApplication.initialize(args);
         
-        System.out.println("Available themes: " + QStyleFactory.keys());
-        
         QApplication.setStyle("Plastique");
+        
         MainWindow mainWindow = new MainWindow(null);
         mainWindow.show();
     	
@@ -65,12 +66,14 @@ public class MainWindow extends QMainWindow
     public MainWindow(QWidget parent)
     {
         super(parent);
-       
+        
+        this.setWindowIcon(new QIcon(new QPixmap("res/sheep.png")));
+        
         serverLogic = new ServerLogic();
         uiLoginWindow = new UiLoginWindow();
         
         uiLoginWindow.setupUi(this, Constants.INIT_SCREEN_WIDTH, Constants.INIT_SCREEN_WIDTH);
-    	
+        
         lwLogic = new UiLoginWindowLogic(uiLoginWindow, serverLogic);
         serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");
     }
