@@ -68,11 +68,13 @@ public class MainWindow extends QMainWindow
         super(parent);
         
         this.setWindowIcon(new QIcon(new QPixmap("res/sheep.png")));
-        
         serverLogic = new ServerLogic();
         uiLoginWindow = new UiLoginWindow();
         
         uiLoginWindow.setupUi(this, Constants.INIT_SCREEN_WIDTH, Constants.INIT_SCREEN_WIDTH);
+        
+        this.setWindowTitle(Constants.title);
+
         
         lwLogic = new UiLoginWindowLogic(uiLoginWindow, serverLogic);
         serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");

@@ -218,6 +218,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	
 	private void cmbTabMessages_currentIndexChanged(int index){
 		UserStorage.setCurrentMessageType(index);
+		this.twHandler.updateMessages(currentSheep);
 	}
 	
 	private void pBSubmit_Add_clicked(boolean click){
