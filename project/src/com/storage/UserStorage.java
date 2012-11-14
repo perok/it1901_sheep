@@ -7,6 +7,9 @@ public class UserStorage {
 	private static int currentMessageType;
 	private static User user;
 	
+	private static int msgType = 0;
+	
+	
 	public UserStorage(User user_){
 		user = user_;
 	}
@@ -34,6 +37,17 @@ public class UserStorage {
 
 	public static void setCurrentMessageType(int currentMessageType) {
 		UserStorage.currentMessageType = currentMessageType;
+	}
+	
+	public int getCurrentMessageTpe(){
+		return msgType;
+	}
+	
+	public void setCurrentMessageType1(int i) throws Exception{
+		if(i >= 0 && i <= 1)
+			msgType = i;
+		else
+			throw new Exception("MessageType don't ekist");
 	}
 	
 }

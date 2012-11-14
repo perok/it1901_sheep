@@ -37,6 +37,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		for(int i = 0; i < UserStorage.getUser().getFarmlist().size(); i++)
 			mw.cmbDockFarmId.addItem(UserStorage.getUser().getFarmlist().get(i).getName());
 		
+		
 		/* Setting up extra widgets*/
 		statusbarMessage = new QLabel("Ready");
 		mw.statusbar.addWidget(statusbarMessage);
@@ -216,7 +217,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	}
 	
 	private void cmbTabMessages_currentIndexChanged(int index){
-		System.out.println("INDEX CHAGNED " + index);
+		UserStorage.setCurrentMessageType(index);
 	}
 	
 	private void pBSubmit_Add_clicked(boolean click){
@@ -231,6 +232,10 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	
 	//OTHER EVENTS
 	
+	/**
+	 * Populates the tabWidget
+	 * @param sheep
+	 */
 	private void populateTableWidget(Sheep sheep){
 		currentSheep = sheep;
 		
@@ -249,7 +254,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		//Get messages for sheep
 		//Send them to twHandler
 		
-		//this.twHandler.addSheep(Message)
+		this.twHandler.updateMessages(sheep);
 	}
 }
 
