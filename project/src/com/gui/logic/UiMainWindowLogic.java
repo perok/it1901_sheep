@@ -78,7 +78,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		
 		System.out.println("Logic applied");
 		
-		slwHandler.addSheep();
+		slwHandler.refreshSheepList();
 	}
 	
 	/* ACTIONS */
@@ -96,7 +96,6 @@ public class UiMainWindowLogic extends QSignalEmitter{
     	new SettingsMenu(null).show();
     }
 	
-	
 	//NOT WORKING 
 	private void actionInformation_Window_toggled(boolean toggle){
 		mw.tableWidget.setVisible(toggle);
@@ -113,12 +112,20 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		
 		System.out.println(toggle);
 	}
+	
 	private void actionMap_toggled(boolean trigg){
 		System.out.println(trigg);
 	}
+	
+	/**
+	 * Closes the program
+	 * @param trigg
+	 */
 	private void actionExit_toggled(boolean trigg){
-		System.out.println(trigg);
+		sLogic.closeConnection();
+		System.exit(0);
 	}
+	
 	private void actionUndo_toggled(boolean trigg){
 		System.out.println(trigg);
 	}
@@ -134,10 +141,8 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	}
 	
 	private void cmbDockFarmId_currentIndexChanged(int index){
-		System.out.println("INDEX CHAGNED " + index);
-
 		UserStorage.setCurrentFarm(index);
-		slwHandler.addSheep();
+		slwHandler.refreshSheepList();
 	}
 	
 	private void lineEdit_textChanged(String text){
@@ -232,8 +237,6 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		
 		//this.twHandler.addSheep(Message)
 	}
-	
-
 }
 
 /* EOF */

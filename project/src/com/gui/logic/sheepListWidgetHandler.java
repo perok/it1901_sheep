@@ -85,55 +85,22 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 
 		//Select multiple items
 		this.qlWidget.setSelectionMode(SelectionMode.ExtendedSelection);
-		/*
-		String s = "vertical {"
-			+ "border: 2px solid grey;"
-			+ "background: #32CC99;"
-			+ " width: 15px;"
-			+ "margin: 20px 0px 20px 0px ;}";
-		
-		this.qlWidget.setStyleSheet(s);*/
-		
+	
 		//this.qlWidget.contentsMargins().setLeft(200);
 		
 		//doubleclick event
 		this.qlWidget.itemDoubleClicked.connect(this, "onSheepDoubleClicked(QListWidgetItem)");
 		
-		//this.qlWidget.itemSelectionChanged.connect(this, "multipleSheepsSelected(QItemSelection, QItemSelection)");
 		
 		//this.qsimModel = createSheepModel(this);
 		//this.qtvModelView = qtvModView;
 		//this.ssProxyModel.setSourceModel(this.qsimModel);
 		//this.ssProxyModel.setDynamicSortFilter(true);
 		
-
 		//this.qtvModelView.setModel(this.ssProxyModel);
 		//this.qtvModelView.setSortingEnabled(true);
 		//this.qlWidget.setModel(this.ssProxyModel);
-		
-		//super.setLayout(this.mainLayout);
-		
-		/*Click event*/
-		//qtvModelView.selectionModel().selectionChanged.connect(this, "onSheepClicked(QItemSelection, QItemSelection)");
 	}
-	
-		
-	/** Initialize how sheeps should be listed
-	 * 
-	 * @param parent the graphical "host" of this widget 
-	 * @return a modeled layout of our list of sheep
-	 */
-	/*
-	private QStandardItemModel createSheepModel(QObject parent)
-	{
-														/* Rows, columns, parent 
-		QStandardItemModel qsimModel = new QStandardItemModel(0, 1, parent);
-		
-		qsimModel.setHeaderData(0, Qt.Orientation.Horizontal, tr("Sheep ID"));
-		return qsimModel;
-	}*/
-	
-	
 	
 	/**
 	 * Receives the qsimModels click events
@@ -151,9 +118,8 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 		System.out.println("hello");
 	}
 	
-	
 	/** debug and test purposes - add sheep */
-	public void addSheep()
+	public void refreshSheepList()
 	{
 		statusBarMessage.emit("Populating Sheeps");
 		System.out.println();
@@ -182,7 +148,9 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	public void searchSheeps(String searchString){
 		//qlWidget.findItems(searchString, new MatchFlags(1));
 	}
-	
+	/**
+	 * Changes the sorting order from ascending order to descending order or vica versa
+	 */
 	public void changeSortOrder(){
 		if(sortOrder == SortOrder.AscendingOrder)
 			sortOrder = SortOrder.DescendingOrder;
@@ -190,49 +158,5 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 			sortOrder = SortOrder.AscendingOrder;
 		
 		qlWidget.sortItems(sortOrder);
-		
-		
-		//qlWidget.
-		
-		
-		//qlWidget.sortItems();
-	}
-	
-	
-	/**
-	 * Updates the sheep list
-	 *
-	 * Adds only new sheep to the tree
-	 * 
-	 * @Param sheeps the sheeps being added
-	 */
-	public void updateSheepList(){
-		ArrayList<Sheep> sheeps = Sheeps.getSHeeps();
-		//Sheep sau = new Sheep(25, "Olga", 0, 250291, true, 70);
-		
-		if(sheeps != null){
-			/* Takes out the previous column and all the sheep referances*/
-			List<QStandardItem> preCol = qsimModel.takeColumn(0);
-			List<Sheep> data = new ArrayList<Sheep>();
-			
-			for (QStandardItem item : preCol){
-				if(item.data() instanceof Sheep)
-					data.add((Sheep)item.data());
-			}
-			
-			for(Sheep sheep : sheeps){
-				/*Add only new sheep*/
-				if(!data.contains(sheep)){
-					QStandardItem item = new QStandardItem();
-					item.setText(sheep.getId() + " " +sheep.getName());
-					item.setData(sheep);
-					
-					qsimModel.appendRow(item);
-				}
-			}
-			
-			/*Insert back the previous column*/
-			qsimModel.insertColumn(0, preCol);
-		}		
 	}
 }
