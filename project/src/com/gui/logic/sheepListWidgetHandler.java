@@ -24,49 +24,22 @@ import com.trolltech.qt.gui.QWidget;
 
 import core.classes.Sheep;
 
-public class sheepListWidgetHandler extends QSignalEmitter{
-	
-	/** A class that acts a way to filter and sort data passed between a model and a view
-	 */
-	private class SortSheep extends QSortFilterProxyModel
-	{
-		/** Compare one table entry to the next
-		 * 
-		 * @param qmiLeft first entry in the list, or "left-most-entry" relative to param right
-		 * @param qmiRight second entry in the list, or "rigt-most-entry" relative to param left
-		 * @usage used autonomously via super-methods from QSortFilterProxyModel
-		 * @return true if left string is greater than rightstring
-		 */
-		@Override
-		protected boolean lessThan(QModelIndex qmiLeft, QModelIndex qmiRight)
-		{
-		   Object leftData  = sourceModel().data(qmiLeft);
-	       Object rightData = sourceModel().data(qmiRight);
-           String sLeftString = leftData.toString();
-           String sRightString = rightData.toString();
-
-           return sLeftString.compareTo(sRightString) < 0;
-		}
-	}
-	
-	//private SortSheep ssProxyModel;
-	//private QStandardItemModel qsimModel;
-	
-	//private QTreeView qtvModelView;
-	
+public class sheepListWidgetHandler extends QSignalEmitter{	
 	private QListWidget qlWidget;
 	
 	// Valuas >= 32 are private data not handles by Qt.
 	private int QtSheepDataRole = 32;
 	
+	//Stores a reference the current sheeps in the view.
 	ArrayList<QListWidgetItem> currentItems;
-	//FIXME: sorting prioritizes 100 before 10,
-	//		 Qt.SortOrder is also a final static enum, so behaviour cannot be
-	//		 overridden.
+	
+	//FIXME: sorting is done with strings and thus, numbered sheeps does'nt get sorted correctly
 	SortOrder sortOrder = SortOrder.AscendingOrder;
 	
-	Signal1<Sheep> sheepSelected;
-	Signal1<ArrayList<Sheep>> multiSheepSelect;
+	protected Signal1<Sheep> sheepSelected;
+	
+	protected Signal1<ArrayList<Sheep>> multiSheepSelect;
+	
 	protected Signal1<String> statusBarMessage;
 	
 	
@@ -91,6 +64,7 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 		
 		//doubleclick event
 		this.qlWidget.itemDoubleClicked.connect(this, "onSheepDoubleClicked(QListWidgetItem)");
+		this.qlWidget.itemSelectionChanged.connect(this, "itemSelectionChanged()");
 		
 		
 		//this.qsimModel = createSheepModel(this);
@@ -104,7 +78,7 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	}
 	
 	/**
-	 * Receives the qsimModels click events
+	 * Receives an item in the view that is doouble clicked
 	 * 
 	 * @param item Item doubleclicked
 	 */
@@ -115,8 +89,19 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 		}
 	}
 	
-	public void multipleSheepsSelected(QItemSelection selected, QItemSelection deselected){
-		System.out.println("hello");
+	/**
+	 * 
+	 */
+	public void itemSelectionChanged(){
+		ArrayList<Sheep> sheepSelected = new ArrayList<Sheep>();
+		
+		for(QListWidgetItem item : currentItems){
+			if (item.isSelected()){
+				sheepSelected.add((Sheep)item.data(QtSheepDataRole));
+			}
+		}
+		
+		multiSheepSelect.emit(sheepSelected);
 	}
 	
 	/** debug and test purposes - add sheep */
@@ -147,9 +132,15 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 		statusBarMessage.emit("done");
 	}
 	
-	//Qt MatchContains 1 == contained in the item
+	/**
+	 * Searches through the list of sheeps and shows the ones that match
+	 * 
+	 * @param searchString The searchstring given by the textinput
+	 */
 	public void searchSheeps(String searchString){
-		List<QListWidgetItem> foundItems = qlWidget.findItems(searchString, new MatchFlags(1));
+		List<QListWidgetItem> foundItems = qlWidget.findItems(searchString, new MatchFlags(Qt.MatchFlag.MatchContains));
+
+		statusBarMessage.emit("Found: " + foundItems.size());
 
 		for(QListWidgetItem item : currentItems){
 			if(foundItems.contains(item)){
@@ -170,4 +161,32 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 		
 		qlWidget.sortItems(sortOrder);
 	}
+	
+	/*
+	 *  !! DEPRECATED !! 
+	 */
+	
+	/** A class that acts a way to filter and sort data passed between a model and a view
+	 */
+	private class SortSheep extends QSortFilterProxyModel
+	{
+		/** Compare one table entry to the next
+		 * 
+		 * @param qmiLeft first entry in the list, or "left-most-entry" relative to param right
+		 * @param qmiRight second entry in the list, or "rigt-most-entry" relative to param left
+		 * @usage used autonomously via super-methods from QSortFilterProxyModel
+		 * @return true if left string is greater than rightstring
+		 */
+		@Override
+		protected boolean lessThan(QModelIndex qmiLeft, QModelIndex qmiRight)
+		{
+		   Object leftData  = sourceModel().data(qmiLeft);
+	       Object rightData = sourceModel().data(qmiRight);
+           String sLeftString = leftData.toString();
+           String sRightString = rightData.toString();
+
+           return sLeftString.compareTo(sRightString) < 0;
+		}
+	}
+	
 }
