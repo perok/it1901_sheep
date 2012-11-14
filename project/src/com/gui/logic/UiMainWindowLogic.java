@@ -1,7 +1,7 @@
 package com.gui.logic;
 
-import com.gui.SettingsMenu;
 import com.gui.UiMainWindow;
+import com.gui.widgets.SettingsMenu;
 import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.core.QDate;
