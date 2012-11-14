@@ -109,8 +109,6 @@ public class ClientSocket  {
 	 */
 	void sendRequest(Request req) {
 		try {
-			System.out.println(req.getType());
-			System.out.println(req.getMessage());
 			sOutput.writeObject(req);
 			sOutput.flush();
 		}

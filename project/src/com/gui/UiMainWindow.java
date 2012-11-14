@@ -571,6 +571,9 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         dockWidget.setWindowTitle(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Sheeps", null));
         dockWidgetContents.setAccessibleName("");
         rbAscDesc.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Ascending", null));
+        
+        System.out.println("IHFDDSGHGVGHDSV");
+        fuckmeRight();
     } // retranslateUi
     
     @Override
@@ -592,8 +595,8 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
     
     public void fuckmeRightYeah()
     {
+    	System.out.println("I BE TRIGGERED");
     	new SettingsMeny(null).show();
     }
 
 }
-

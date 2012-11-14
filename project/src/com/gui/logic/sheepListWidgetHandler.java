@@ -164,11 +164,10 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 		//READ DIZ SHIT 
 		// http://lists.qt.nokia.com/pipermail/qt-jambi-interest/2008-November/000746.html
 		
-		
 		for(Sheep sheep : UserStorage.getUser().getFarmlist().get(UserStorage.getCurrentFarm()).getSheepList()){
 			QListWidgetItem item = new QListWidgetItem();
 			item.setData(QtSheepDataRole, sheep);
-			item.setData(0, sheep.getName());
+			item.setData(Qt.ItemDataRole.DisplayRole, sheep.getName());
 			
 			//Qt should handle GC now. 
 			item.disableGarbageCollection();
@@ -191,6 +190,12 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 			sortOrder = SortOrder.AscendingOrder;
 		
 		qlWidget.sortItems(sortOrder);
+		
+		
+		//qlWidget.
+		
+		
+		//qlWidget.sortItems();
 	}
 	
 	
