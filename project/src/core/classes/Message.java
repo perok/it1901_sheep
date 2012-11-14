@@ -13,16 +13,14 @@ public class Message implements Serializable{
 	private float temperature;
 	private GPSPosition gpsPosition;
 	private int farmId;
-	private int weight;
 	
-	public Message(int id, int sheepId, int timestamp, float temperature, GPSPosition gpsPosition, int farmId, int weight) {
+	public Message(int id, int sheepId, int timestamp, float temperature, GPSPosition gpsPosition, int farmId) {
 		this.setId(id);
 		this.setSheep(sheepId);
 		this.setTimestamp(timestamp);
 		this.setTemperature(temperature);
 		this.setGpsPosition(gpsPosition);
 		this.setFarmId(farmId);
-		this.setWeight(weight);
 	}
 
 	public int getId() {
@@ -73,11 +71,5 @@ public class Message implements Serializable{
 		this.farmId = farmId;
 	}
 	
-	public void setWeight(int weight){
-		this.weight = weight;
-	}
-	
-	public int getWeight(){
-		return weight;
-	}
+
 }

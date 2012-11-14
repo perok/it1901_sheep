@@ -15,7 +15,7 @@ public class SheepStatus extends Message  implements Serializable {
 
 	public SheepStatus(int parseInt, int parseInt2, int parseInt3,
 			float parseFloat, GPSPosition gpsPosition, int parseInt4) {
-		super(parseInt4, parseInt4, parseInt4, parseFloat, gpsPosition, parseInt4);
+		super(parseInt, parseInt2, parseInt3, parseFloat, gpsPosition, parseInt4);
 	}
 
 }
