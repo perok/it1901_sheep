@@ -26,6 +26,7 @@ public class SheepStatusSim {
 	private Random rand;
 	private int numberOfFarms;
 	private Server server;
+	private Timer timer;
 
 	/** Default constructor. Sets interval to one minute
 	 * 
@@ -51,16 +52,23 @@ public class SheepStatusSim {
 		rand = new Random();
 		numberOfFarms = sq.getNumberOfFarms();
 		this.server = server;
+		timer = new Timer(timerInterval, updateStatus);	
 	}
 
-	/** Starts the timer and keeps it running until the program terminates.
+	/** Starts the timer and keeps it running until the program terminates or stop is called.
 	 * 
 	 */
-	public void init() {
-		new Timer(timerInterval, updateStatus).start();	
-		while (true) {
-
-		}
+	public void start() {
+		timer.start();
+		server.display("Simulator started");
+	}
+	
+	/** Stops the timer.
+	 * 
+	 */
+	public void stop() {
+		timer.stop();
+		server.display("Simulator stopped");
 	}
 
 	/** Adds alert via DatabaseConnector to the database. Randomly generates alerts for

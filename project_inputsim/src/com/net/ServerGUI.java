@@ -83,7 +83,6 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 				server = null;
 				tPortNumber.setEditable(true);
 				stopStart.setText("Start");
-				populator = new DatabasePopulator();
 				return;
 			}
 			else{
@@ -99,6 +98,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 				new ServerRunning().start();
 				stopStart.setText("Stop");
 				tPortNumber.setEditable(false);
+				populator = new DatabasePopulator();
 			}
 		}
 		if(e.getSource() == cmdButton || e.getSource() == command){
@@ -165,6 +165,12 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 			case("help"):
 				appendEvent(HelpPrinter.printSimHelp());
 			break;
+			case("start"):
+				server.simulator.stop();
+			break;
+			case("stop"):
+				server.simulator.start();
+				break;
 			}
 		break;
 
