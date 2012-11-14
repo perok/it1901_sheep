@@ -179,10 +179,7 @@ public class ClientSocket  {
 	 * @param user
 	 */
 	public void editSheep(Sheep sheep) {
-		HashMap params = new HashMap();
-
 		sendRequest((new Request(Request.EDITSHEEP, "editSheep", sheep)));
-
 	}
 	/**Makes a request with the given paramters and sends it to the server.
 	 * 

@@ -7,7 +7,7 @@ import java.net.Socket;
 import com.db.DatabaseConnector;
 import core.settings.Settings;
 
-/**Thread to handle connections from Client Socket,
+/** Thread to handle connections from Client Socket.
  * 
  * @author Lars Erik
  *
@@ -23,6 +23,12 @@ public class ClientHandler implements Runnable {
 	private DatabaseConnector db;
 	private Settings settings;
 
+	/** Constructor.
+	 * 
+	 * @param socket
+	 * @param server
+	 * @param settings
+	 */
 	public ClientHandler(Socket socket,Server server, Settings settings) {
 		this.settings = settings;
 		this.socket = socket;
@@ -30,7 +36,9 @@ public class ClientHandler implements Runnable {
 		db = new DatabaseConnector(this.settings);
 	}
 
-
+/** Starts the thread to allow communication with client.
+ * 
+ */
 	@Override
 	public void run() {
 		try{
@@ -44,7 +52,7 @@ public class ClientHandler implements Runnable {
 				switch(req.getType()) {
 
                 case Request.REQUEST:
-                	server.sg.appendEvent(username + ": " + req.getMessage() );
+                	server.display(username + ": " + req.getMessage() );
                     Response res = HandleRequest(req);
     				sOutput.writeObject(res);
     				sOutput.flush();
@@ -65,6 +73,10 @@ public class ClientHandler implements Runnable {
 
 	}
 	
+	/** Kills streams and socket.
+	 * 
+	 * @throws IOException
+	 */
 	public void kill() throws IOException {
 		sOutput.close();
 		sInput.close();
