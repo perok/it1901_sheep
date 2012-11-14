@@ -572,8 +572,6 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         dockWidgetContents.setAccessibleName("");
         rbAscDesc.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Ascending", null));
         
-        System.out.println("IHFDDSGHGVGHDSV");
-        fuckmeRight();
     } // retranslateUi
     
     @Override
@@ -581,22 +579,4 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
 		setupUi(arg0, 800, 800);
 		
 	}
-    
- // WARNING, these functions will be overriden if someone re-designs using Qt graphical designer
-    //		    (...hence the names)
-    private void fuckmeRight()
-    {
-    	QAction qaShowSettings = new QAction("&Settings...", null);
-    	qaShowSettings.setStatusTip("Show the settings for this application");
-    	
-    	qaShowSettings.triggered.connect(this, "fuckmeRightYeah()");
-    	this.menuEdit.addAction(qaShowSettings);    	
-    }
-    
-    public void fuckmeRightYeah()
-    {
-    	System.out.println("I BE TRIGGERED");
-    	new SettingsMeny(null).show();
-    }
-
 }

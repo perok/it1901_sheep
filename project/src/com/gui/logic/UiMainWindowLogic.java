@@ -1,9 +1,11 @@
 package com.gui.logic;
 
+import com.gui.SettingsMenu;
 import com.gui.UiMainWindow;
 import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.core.QDate;
+import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QLabel;
 
 import core.classes.Sheep;
@@ -52,6 +54,9 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		mw.actionAbout.triggered.connect(this, "actionAbout_toggled(boolean)");
 		mw.actionExit.triggered.connect(this, "actionExit_toggled(boolean)");
 		mw.actionUndo.triggered.connect(this, "actionUndo_toggled(boolean)");
+		mw.actionSettings.triggered.connect(this, "actionSettings_triggered(boolean)");
+		mw.actionSettings.setStatusTip("Show the settings for this application");
+
 		
 				//DOCKWIDGET
 		mw.rbAscDesc.toggled.connect(this, "rbAscDesc_toggled(boolean)");
@@ -85,6 +90,12 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	private void actionAbout_Qt_Jambi_triggerd(boolean trigg){
 		signalShowAboutQt.emit();
 	}
+	    
+    public void actionSettings_triggered(boolean triggered)
+    {
+    	new SettingsMenu(null).show();
+    }
+	
 	
 	//NOT WORKING 
 	private void actionInformation_Window_toggled(boolean toggle){
