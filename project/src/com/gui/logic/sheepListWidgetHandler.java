@@ -56,9 +56,10 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	
 	private QListWidget qlWidget;
 	
+	// Valuas >= 32 are private data not handles by Qt.
 	private int QtSheepDataRole = 32;
 	
-	
+	ArrayList<QListWidgetItem> currentItems;
 	//FIXME: sorting prioritizes 100 before 10,
 	//		 Qt.SortOrder is also a final static enum, so behaviour cannot be
 	//		 overridden.
@@ -122,7 +123,8 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	public void refreshSheepList()
 	{
 		statusBarMessage.emit("Populating Sheeps");
-		System.out.println();
+		currentItems = new ArrayList<QListWidgetItem>();
+		
 		//Empty list
 		//Muligen sette på GC igjen??
 		qlWidget.clear();
@@ -139,6 +141,7 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 			item.disableGarbageCollection();
 			
 			qlWidget.addItem(item);
+			currentItems.add(item);
 		}
 		
 		statusBarMessage.emit("done");
@@ -146,7 +149,15 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	
 	//Qt MatchContains 1 == contained in the item
 	public void searchSheeps(String searchString){
-		//qlWidget.findItems(searchString, new MatchFlags(1));
+		List<QListWidgetItem> foundItems = qlWidget.findItems(searchString, new MatchFlags(1));
+
+		for(QListWidgetItem item : currentItems){
+			if(foundItems.contains(item)){
+				item.setHidden(false);
+			}
+			else
+				item.setHidden(true);
+		}
 	}
 	/**
 	 * Changes the sorting order from ascending order to descending order or vica versa
