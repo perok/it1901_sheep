@@ -594,11 +594,6 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
     {
     	new SettingsMeny(null).show();
     }
-        
-    public void setupUi(QMainWindow arg0) {
-		setupUi(arg0, 800, 800);
-		
-	}
 
 }
 
