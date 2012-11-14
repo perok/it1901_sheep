@@ -5,7 +5,6 @@ import com.gui.UiMainWindow;
 import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.core.QDate;
-import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QLabel;
 
 import core.classes.Sheep;
@@ -52,6 +51,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		mw.actionInformation_Window.toggled.connect(this, "actionInformation_Window_toggled(boolean)");
 		mw.actionMap.toggled.connect(this, "actionMap_toggled(boolean)");
 		mw.actionAbout.triggered.connect(this, "actionAbout_toggled(boolean)");
+		mw.actionAbout_Qt_Jambi.triggered.connect(this, "actionAbout_Qt_Jambi_triggerd(boolean)");
 		mw.actionExit.triggered.connect(this, "actionExit_toggled(boolean)");
 		mw.actionUndo.triggered.connect(this, "actionUndo_toggled(boolean)");
 		mw.actionSettings.triggered.connect(this, "actionSettings_triggered(boolean)");
