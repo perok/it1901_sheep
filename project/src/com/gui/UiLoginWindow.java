@@ -31,7 +31,9 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
     /* Signals */
     public Signal2<String, String> tryLogin = new Signal2<String, String>();
 
-    public UiLoginWindow() { super(); }
+    public UiLoginWindow() { 
+    	super(); 
+    }
 
     public void setupUi(QMainWindow MainWindow, int width, int height)
     {

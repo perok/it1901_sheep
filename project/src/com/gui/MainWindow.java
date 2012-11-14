@@ -106,14 +106,18 @@ public class MainWindow extends QMainWindow
      * APPLICATION 
      */
     
-    /** Handle "about" trigger
-	*/
+    /** 
+     * Shows the about window
+     */
 	protected void about() {
-	    QMessageBox.information(this, "About", "Sheep surveilance application." 
+	    QMessageBox.information(this, "About", "The Greatest and Only SSA® (Sheep Surveilance Application)." 
 	    		+ "Created by Anders Sildnes, Lars erik Grasdal, Tor Økland Barstad"
 	    		+ ", Svenn K and Per Øyvind Kanestrøm");
 	}
 	
+	/**
+	 * Shows the about Qt window
+	 */
 	protected void aboutQt() {
 	    QMessageBox.aboutQt(this);
 	}
@@ -121,6 +125,7 @@ public class MainWindow extends QMainWindow
 	/*
 	 * EVENTS
 	 */
+	
 	/**
 	 * Close event
 	 * 
@@ -133,8 +138,11 @@ public class MainWindow extends QMainWindow
 		super.closeEvent(event);
 	}
 	
+	/**
+	 * Global keypress event.
+	 */
 	@Override
-	public void keyPressEvent(QKeyEvent event){
+	protected void keyPressEvent(QKeyEvent event){
 		if(uiLoginWindow != null){
 			if (event.key() == Qt.Key.Key_Return.value()){
 				uiLoginWindow.loginCheck();
