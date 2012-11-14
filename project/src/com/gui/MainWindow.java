@@ -3,8 +3,8 @@ package com.gui;
 import com.gui.logic.UiLoginWindowLogic;
 import com.gui.logic.UiMainWindowLogic;
 import com.gui.logic.ServerLogic;
-import com.gui.logic.sheepListWidgetHandler;
-import com.gui.logic.tableWidgetHandler;
+import com.gui.logic.SheepListWidgetLogic;
+import com.gui.logic.TableWidgetLogic;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCloseEvent;
@@ -34,8 +34,8 @@ public class MainWindow extends QMainWindow
     /* DB */
     
     /* Handlers */
-    private tableWidgetHandler twhandler;
-    private sheepListWidgetHandler slwHandler;
+    private TableWidgetLogic twhandler;
+    private SheepListWidgetLogic slwHandler;
     private UiMainWindowLogic mwLogic;
     private UiLoginWindowLogic lwLogic;
     private ServerLogic serverLogic;
@@ -92,10 +92,10 @@ public class MainWindow extends QMainWindow
 		
 		
 		uiMainWindow = new UiMainWindow();
-		uiMainWindow.setupUi(this, INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
+		uiMainWindow.setupUi(this, this.size().width(), this.size().height());//INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
 		
-		twhandler = new tableWidgetHandler(uiMainWindow.tableWidget);
-		slwHandler = new sheepListWidgetHandler(uiMainWindow.listWidget);		
+		twhandler = new TableWidgetLogic(uiMainWindow.tableWidget);
+		slwHandler = new SheepListWidgetLogic(uiMainWindow.listWidget);		
         mwLogic = new UiMainWindowLogic(uiMainWindow, slwHandler, twhandler, serverLogic);
                 
         mwLogic.signalShowAbout.connect(this, "about()");

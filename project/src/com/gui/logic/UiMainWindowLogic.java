@@ -11,19 +11,21 @@ import core.classes.Sheep;
 
 public class UiMainWindowLogic extends QSignalEmitter{
 	
-	UiMainWindow mw;
-	sheepListWidgetHandler slwHandler;
-	tableWidgetHandler twHandler;
-	ServerLogic sLogic;
 	
-	QLabel statusbarMessage;
+	private UiMainWindow mw;
+	
+	private SheepListWidgetLogic slwHandler;
+	private TableWidgetLogic twHandler;
+	private ServerLogic sLogic;
+	
+	private QLabel statusbarMessage;
 	
 	public Signal0 signalShowAbout;
 	public Signal0 signalShowAboutQt;
 	
 	private Sheep currentSheep;
 
-	public UiMainWindowLogic(UiMainWindow mw, sheepListWidgetHandler slwHandler, tableWidgetHandler twHandler, ServerLogic sLogic){
+	public UiMainWindowLogic(UiMainWindow mw, SheepListWidgetLogic slwHandler, TableWidgetLogic twHandler, ServerLogic sLogic){
 		System.out.println("Applying logic");
 		/* Storing referances */
 		this.mw = mw;
