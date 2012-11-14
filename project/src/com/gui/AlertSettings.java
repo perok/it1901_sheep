@@ -1,10 +1,14 @@
 package com.gui;
 
+import java.util.List;
+
+import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCheckBox;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QListWidgetItem;
 import com.trolltech.qt.gui.QPushButton;
+import com.trolltech.qt.gui.QStyleFactory;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
@@ -25,22 +29,20 @@ public class AlertSettings extends QWidget
 	private QGroupBox qgbPackageGroup;
 	
 	private QListWidget qlwPackageList;
-	private QListWidgetItem qlwiQtItem;
-	private QListWidgetItem qlwiQsaItem;
-	private QListWidgetItem qlwiTeamBuilderItem;
 	
 	private QPushButton qpbBtnAlarm;
 	
 	/** Constructor. Initialize..
 	 * 
 	 * @param parent host of THIS
+	 * @param lThemes a list of strings with the currently availible themes
 	 */
     public AlertSettings(QWidget parent) 
     {
         super(parent);
 
         initCheckBox(); 
-        initPackageList();
+        initThemeList();
         initWidgets();  
         initConnectEvents();
         initLayout();
@@ -51,6 +53,27 @@ public class AlertSettings extends QWidget
     private void initConnectEvents()
     {
     	this.qpbBtnAlarm.clicked.connect(this, "dispatchAlarm()");
+    	this.qlwPackageList.currentItemChanged.connect(this, "updateTheme()");
+    }
+    
+    @SuppressWarnings("unused")
+    /** When the user asks for it, change the theme.
+     * The new theme is the current item in the selection box
+     */
+    // ... Should this really be the handle to change the current theme?
+    // ... Perhaps a call to super.parent().parent()..... Errh
+    private void updateTheme()
+    {
+    	String sSelectedText = this.qlwPackageList.currentItem().text();
+    	
+    	try
+    	{
+    		QApplication.setStyle(sSelectedText);
+    	}
+    	catch(Throwable t)
+    	{
+    		System.out.println("Attempt to set new theme failed");
+    	}
     }
     
     @SuppressWarnings("unused")
@@ -68,18 +91,28 @@ public class AlertSettings extends QWidget
     	this.qpbBtnAlarm = new QPushButton(tr("Simuler alarm"));
     }        
     
-    /** Initialize */
-    private void initPackageList()
+    /** Initialize the theme selector
+     */
+    private void initThemeList()
     {
-    	this.qgbPackageGroup = new QGroupBox(tr("Existing packages"));
+    	String sCurrentStyle = QApplication.style().objectName();
+    	this.qgbPackageGroup = new QGroupBox(tr("Applikasjons-stil"));
     	this.qlwPackageList = new QListWidget();
-    	this.qlwiQtItem = new QListWidgetItem(qlwPackageList);
-    	this.qlwiQsaItem = new QListWidgetItem(qlwPackageList);
-    	this.qlwiTeamBuilderItem = new QListWidgetItem(qlwPackageList);
     	
-    	this.qlwiQtItem.setText(tr("Qt"));    	
-    	this.qlwiQsaItem.setText(tr("QSA"));    	
-    	this.qlwiTeamBuilderItem.setText(tr("Teambuilder"));
+    	/* For each of passed arguments */
+    	for(String s : QStyleFactory.keys())
+    	{
+    		/* Add an item to the box, and set the text given by arg */
+    		QListWidgetItem cur = new QListWidgetItem(this.qlwPackageList);
+    		cur.setText(s);
+    		
+    		/* If one of the string matches the current theme, 
+    		 * set it to the currently selected item */
+    		if(s.toLowerCase().equalsIgnoreCase(sCurrentStyle))
+    		{
+    			this.qlwPackageList.setCurrentItem(cur);
+    		}
+    	}
     }
     
     /** Initialize the layout of THIS

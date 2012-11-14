@@ -1,15 +1,13 @@
 package com.gui;
 
+import java.util.List;
+
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt.AlignmentFlag;
 import com.trolltech.qt.core.Qt.ItemFlag;
 import com.trolltech.qt.gui.QApplication;
-import com.trolltech.qt.gui.QCheckBox;
-import com.trolltech.qt.gui.QComboBox;
-import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QIcon;
-import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QListView;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QListWidgetItem;
@@ -28,6 +26,9 @@ public class SettingsMenu extends QDialog
 {
 	public static final String CLASS_ICON = "./icons/sheep.png";
 	
+	private AlertSettings asAlertWidget;
+	private UserSettings usUserWidget;
+	
 	private QListWidget qlwParentcontentsWidget;
     private QStackedWidget qswPagesWidget;
     private QPushButton qpbCloseButton;
@@ -41,7 +42,7 @@ public class SettingsMenu extends QDialog
 	    super(parent);
 	    
 	    /* Initialize */
-	    initWidget();
+	    initWidgets();
 	    initConnectEvents();
 	    initLayout();
 	    initIcons();
@@ -50,7 +51,7 @@ public class SettingsMenu extends QDialog
 	    super.setWindowTitle(tr("Innstillinger"));
 	    super.setWindowIcon(new QIcon(CLASS_ICON));
 	}
-
+    
     /** The configuration dialog holds different widgets.
      * This function can be used to change between them.
      * 
@@ -132,10 +133,13 @@ public class SettingsMenu extends QDialog
 
 	/** Initialize widgets of THIS
 	 */
-	private void initWidget()
+	private void initWidgets()
     {
+		this.asAlertWidget = new AlertSettings(this);
+		this.usUserWidget = new UserSettings(this);
         this.qpbCloseButton = new QPushButton(tr("Close"));
     	this.qlwParentcontentsWidget = new QListWidget(this);
+    	this.qswPagesWidget = new QStackedWidget(this);
     	
     	this.qlwParentcontentsWidget.setCurrentRow(0);
         this.qlwParentcontentsWidget.setIconSize(new QSize(96, 84));
@@ -144,11 +148,10 @@ public class SettingsMenu extends QDialog
         this.qlwParentcontentsWidget.setSpacing(12);
         this.qlwParentcontentsWidget.setViewMode(QListView.ViewMode.IconMode);
 
-        this.qswPagesWidget = new QStackedWidget(this);
-        this.qswPagesWidget.addWidget(new UserSettings(this));
-        this.qswPagesWidget.addWidget(new AlertSettings(this));
+        this.qswPagesWidget.addWidget(this.usUserWidget);
+        this.qswPagesWidget.addWidget(this.asAlertWidget);
     }
-    
+	    
 	/** For test and debugging purposes
 	 * 
 	 * @see MainWindow.main(args)
@@ -158,7 +161,7 @@ public class SettingsMenu extends QDialog
     {
         QApplication.initialize(args);
 
-        SettingsMenu dialog = new SettingsMenu(null);
+        SettingsMenu dialog = new SettingsMenu(new MainWindow(null));
         dialog.show();
 
         QApplication.exec();
