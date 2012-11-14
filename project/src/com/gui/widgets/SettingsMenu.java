@@ -3,7 +3,6 @@ package com.gui.widgets;
 import java.util.List;
 
 import com.gui.MainWindow;
-import com.gui.UserSettings;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt.AlignmentFlag;
 import com.trolltech.qt.core.Qt.ItemFlag;
