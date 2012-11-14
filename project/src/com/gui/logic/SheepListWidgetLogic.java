@@ -102,8 +102,6 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 		//Only fire event when more than one sheep is selected
 		if(sheepSelected.size() != 1)
 			multiSheepSelect.emit(sheepSelected);
-		else
-			System.out.println("ERR");
 	}
 	
 	/** debug and test purposes - add sheep */
