@@ -4,8 +4,12 @@ import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt.AlignmentFlag;
 import com.trolltech.qt.core.Qt.ItemFlag;
 import com.trolltech.qt.gui.QApplication;
+import com.trolltech.qt.gui.QCheckBox;
+import com.trolltech.qt.gui.QComboBox;
+import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QIcon;
+import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QListView;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QListWidgetItem;
@@ -17,6 +21,8 @@ import com.trolltech.qt.gui.QWidget;
 
 public class SettingsMeny extends QDialog
 {
+	public static final String CLASS_ICON = "./icons/sheep.png";
+	
 	private QListWidget qlwParentcontentsWidget;
     private QStackedWidget qswPagesWidget;
     private QPushButton qpbCloseButton;
@@ -31,7 +37,7 @@ public class SettingsMeny extends QDialog
 	    initIcons();
 	    
 	    super.setWindowTitle(tr("Innstillinger"));
-	    super.setWindowIcon(new QIcon("./sheep.png"));
+	    super.setWindowIcon(new QIcon(CLASS_ICON));
 	}
 
 	protected void changePage(QListWidgetItem current, QListWidgetItem previous)
@@ -39,10 +45,24 @@ public class SettingsMeny extends QDialog
         this.qswPagesWidget.setCurrentIndex(this.qlwParentcontentsWidget.row(current));
     }
 
+	@SuppressWarnings("unused")
+	private void checkForChange()
+	{
+		System.out.println("uh oh V-E-R-N, uh oh");
+		/*-
+		 *  For each of modifiable input *
+		 *  do
+		 *  		isModified && writeChange
+		 * 	done
+		 */	
+	}
+
     private void initConnectEvents()
     {
+    	this.qpbCloseButton.clicked.connect(this, "checkForChange()");
     	this.qpbCloseButton.clicked.connect(this, "close()");
     }
+    
     
     private void initIcons() 
 	{
@@ -61,7 +81,6 @@ public class SettingsMeny extends QDialog
 	
 	    this.qlwParentcontentsWidget.currentItemChanged.connect(this,
 	            "changePage(QListWidgetItem , QListWidgetItem)");
-	
 	}
 
 	private void initLayout()

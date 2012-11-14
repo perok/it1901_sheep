@@ -1,7 +1,15 @@
 package core;
 
+/** Static class for less strings in the ServerGUI class
+ * @author Lars Erik
+ *
+ */
 public final class HelpPrinter {
 
+	/**Returns general help message.
+	 * 
+	 * @return
+	 */
 	public static String printHelp() {
 		String help = new String("Following command are available: \n");
 		help += "sim help - Simulator commands \n";
@@ -12,24 +20,40 @@ public final class HelpPrinter {
 		return help;
 	}
 	
+	/**Returns general help message for the status simulator.
+	 * 
+	 * @return
+	 */
 	public static String printSimHelp() {
 		String help = new String("Following command are available for sim: \n");
 		help += "sim help - Sim commands \n";
 		return help;
 	}
 	
+	/**Returns general help message for the database populator.
+	 * 
+	 * @return
+	 */
 	public static String printPopHelp() {
 		String help = new String("Following command are available for pop: \n");
 		help += "pop add sheep x y - Adds x number of sheep to farm with id y \n";
 		return help;
 	}
 	
-	public static String alertHelp() {
+	/**Returns general help message for alert invoking.
+	 * 
+	 * @return
+	 */
+	public static String printAlertHelp() {
 		String help = new String();
 		help += "alert invoke x - Invokes alert for farm with id x \n";
 		return help;
 	}
 	
+	/**Returns general help message for db manipulation.
+	 * 
+	 * @return
+	 */
 	public static String printDbHelp() {
 		String help = new String();
 		help += "db ls farms - Lists all farms with Id \n";

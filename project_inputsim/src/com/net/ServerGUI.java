@@ -72,9 +72,6 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 		setVisible(true);
 	}		
 
-	// append message to the two JTextArea
-	// position at the end
-
 	void appendEvent(String str) {
 		event.append(str);
 	}
@@ -143,17 +140,27 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 	public void windowActivated(WindowEvent e) {}
 	public void windowDeactivated(WindowEvent e) {}
 
-	/**Performs commands given by the Admin GUI.
-	 * 
+	/**Performs commands given by the Admin GUI. Splits up the string into
+	 * an array split by whitespaces. The following switches decode the command
+	 * and give the proper respone. 
 	 */
 	public void performCommand(String cmd) {
 		String[] decoded = cmd.split("\\s+");
-		int length = decoded.length;
 		switch(decoded[0]){
+
+		// General help
 		case("help"):
 			appendEvent(HelpPrinter.printHelp());
 		break;
-		
+
+		// Alert invoker
+		case("alert"):
+			switch(decoded[1]){
+			case("help"):
+				appendEvent(HelpPrinter.printAlertHelp());
+			break;
+			}
+
 		// Simulator
 		case("sim"):
 			switch(decoded[1]){
@@ -161,58 +168,58 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 				appendEvent(HelpPrinter.printSimHelp());
 			break;
 			}
-		
+
 		// Populator
 		case("pop"):
 			switch(decoded[1]){
 			case("help"):
 				appendEvent(HelpPrinter.printPopHelp());
 			break;
-			
+
 			case("add"):
 				if(decoded[2].equalsIgnoreCase("sheep")) {
 					populator.addSheep(Integer.parseInt(decoded[3]), Integer.parseInt(decoded[3]));
 					System.out.println(decoded[0] + decoded[1] + decoded[2] + decoded[3]);
 				}
 			break;
-			
+
 			default:
 				appendEvent("Invalid command \n");
 				appendEvent(HelpPrinter.printPopHelp());
 				break;
 			}
 		break;
-		
+
 		// Database
 		case("db"):
 			System.out.println("db");
-			switch(decoded[1]){
-			case("help"):
-				appendEvent(HelpPrinter.printDbHelp());
-				break;
-				
-			case("ls"):
-				if(decoded[2].equalsIgnoreCase("users")) {
-					appendEvent(populator.listUsers());
-					System.out.println("ListUsers");
-				}
-				else if(decoded[2].equalsIgnoreCase("farms")) {
-					appendEvent(populator.listFarms());
-					System.out.println("Listfarms");
-				}
-				break;
-				
-			case("access"):
-				if(decoded[2].equalsIgnoreCase("add")) {
-					populator.addAccessRights(Integer.parseInt(decoded[2]), Integer.parseInt(decoded[3]));
-				}
-				else if(decoded[2].equalsIgnoreCase("delete")) {
-					populator.removeAccessRights(Integer.parseInt(decoded[2]), Integer.parseInt(decoded[3]));
-				}
-				
-				break;
-				
+		switch(decoded[1]){
+		case("help"):
+			appendEvent(HelpPrinter.printDbHelp());
+		break;
+
+		case("ls"):
+			if(decoded[2].equalsIgnoreCase("users")) {
+				appendEvent(populator.listUsers());
+				System.out.println("ListUsers");
 			}
+			else if(decoded[2].equalsIgnoreCase("farms")) {
+				appendEvent(populator.listFarms());
+				System.out.println("Listfarms");
+			}
+		break;
+
+		case("access"):
+			if(decoded[2].equalsIgnoreCase("add")) {
+				populator.addAccessRights(Integer.parseInt(decoded[2]), Integer.parseInt(decoded[3]));
+			}
+			else if(decoded[2].equalsIgnoreCase("delete")) {
+				populator.removeAccessRights(Integer.parseInt(decoded[2]), Integer.parseInt(decoded[3]));
+			}
+
+		break;
+
+		}
 		break;
 		default:
 			appendEvent("Invalid command. Try 'help' \n");

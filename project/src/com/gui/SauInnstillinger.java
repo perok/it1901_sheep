@@ -1,5 +1,7 @@
 package com.gui;
 
+/* Interface for listener...? */
+
 import com.trolltech.qt.gui.QCheckBox;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QListWidget;
@@ -8,9 +10,9 @@ import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
 
-public class SauInnstillinger extends QWidget 
+public class SauInnstillinger extends QWidget
 {
-	public static final String CLASS_ICON = "./alert.png";
+	public static final String CLASS_ICON = "./icons/alert.png";
 	
 	private QGroupBox qgbUpdateGroup;
 	private QCheckBox qcbSystemCheckBox;
@@ -24,7 +26,7 @@ public class SauInnstillinger extends QWidget
 	private QListWidgetItem qlwiQsaItem;
 	private QListWidgetItem qlwiTeamBuilderItem;
 	
-	private QPushButton qpbStartUpdateButto;
+	private QPushButton qpbBtnAlarm;
 	
     public SauInnstillinger(QWidget parent) 
     {
@@ -32,24 +34,38 @@ public class SauInnstillinger extends QWidget
 
         initCheckBox(); 
         initComboList();
-        initWidgets();         
+        initWidgets();  
+        initConnectEvents();
         initLayout();
+    }
+    
+    @SuppressWarnings("unused")
+    private void initConnectEvents()
+    {
+    	this.qpbBtnAlarm.clicked.connect(this, "dispatchAlarm()");
+    }
+    
+    
+    @SuppressWarnings("unused")
+	private void dispatchAlarm()
+    {
+    	System.out.println("BEEP");
     }
     
     private void initWidgets()
     {
-    	this.qpbStartUpdateButto = new QPushButton(tr("Simuler alarm"));
+    	this.qpbBtnAlarm = new QPushButton(tr("Simuler alarm"));
     }        
     private void initComboList()
     {
     	this.qgbPackageGroup = new QGroupBox(tr("Existing packages"));
     	this.qlwPackageList = new QListWidget();
-    	
     	this.qlwiQtItem = new QListWidgetItem(qlwPackageList);
-    	this.qlwiQtItem.setText(tr("Qt"));
     	this.qlwiQsaItem = new QListWidgetItem(qlwPackageList);
-    	this.qlwiQsaItem.setText(tr("QSA"));
     	this.qlwiTeamBuilderItem = new QListWidgetItem(qlwPackageList);
+    	
+    	this.qlwiQtItem.setText(tr("Qt"));    	
+    	this.qlwiQsaItem.setText(tr("QSA"));    	
     	this.qlwiTeamBuilderItem.setText(tr("Teambuilder"));
     }
     
@@ -67,7 +83,7 @@ public class SauInnstillinger extends QWidget
 
         qvbMainLayout.addWidget(qgbUpdateGroup);
         qvbMainLayout.addWidget(qgbPackageGroup);
-        qvbMainLayout.addWidget(qpbStartUpdateButto);
+        qvbMainLayout.addWidget(qpbBtnAlarm);
         qvbMainLayout.addSpacing(12);
         qvbMainLayout.addStretch(1);
         
@@ -86,4 +102,5 @@ public class SauInnstillinger extends QWidget
         qcbAppsCheckBox   = new QCheckBox(tr("Send mail"));
         qcbDocsCheckBox   = new QCheckBox(tr("Ring på telefon"));        	
     }
+
 } /* End Class */

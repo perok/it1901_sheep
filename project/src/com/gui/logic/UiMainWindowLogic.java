@@ -21,7 +21,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	public Signal0 signalShowAboutQt;
 	
 	private Sheep currentSheep;
-	
+
 	public UiMainWindowLogic(UiMainWindow mw, sheepListWidgetHandler slwHandler, tableWidgetHandler twHandler, ServerLogic sLogic){
 		System.out.println("Applying logic");
 		/* Storing referances */
@@ -221,3 +221,5 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	
 
 }
+
+/* EOF */
