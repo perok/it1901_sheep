@@ -4,11 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import com.db.DatabaseConnector;
 import core.AlertNotifier;
-import core.classes.Farm;
-import core.classes.SheepAlert;
-import core.classes.SheepStatus;
 import core.settings.Settings;
 import core.sim.SheepStatusSim;
 
@@ -60,8 +56,8 @@ public class Server {
 
 			while(keepGoing) 
 			{
-				
-				
+
+
 				display("Server waiting for Clients on port " + port + ".");
 
 				Socket socket = serverSocket.accept();				
@@ -92,13 +88,14 @@ public class Server {
 			display(msg);
 		}
 	}       
+	
 	/**Gui-method to stop the server
 	 * 
 	 */
 	protected void stop() {
 		keepGoing = false;
 		// connect to myself as Client to exit statement 
-//		 Socket socket = serverSocket.accept();
+		//		 Socket socket = serverSocket.accept();
 		try {
 			new Socket("localhost", port);
 		}
@@ -106,27 +103,13 @@ public class Server {
 			// nothing I can really do
 		}
 	}
+	
 	/**
-	 * Display an event to the console or the GUI
+	 * Display an event to the GUI
 	 */
-	private void display(String msg) {
+	public void display(String msg) {
 		String time = sdf.format(new Date()) + " " + msg;
-		if(sg == null)
-			System.out.println(time);
-		else
-			sg.appendEvent(time + "\n");
+		sg.appendEvent(time + "\n");
 	}
 
-	/**Starts the server at port 1500
-	 * 
-	 */ 
-	public static void main(String[] args) {
-		int portNumber = 1500;
-		Server server = new Server(portNumber);
-		server.start();
 	}
-
-	
-	
-	
-}

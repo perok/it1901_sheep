@@ -61,6 +61,10 @@ public class AlertNotifier implements Runnable{
 		mail.notifyUser(recipient, gps);
 	}
 	
+	/** Method called by simulator to notify users about alerts
+	 * 
+	 * @param sheepAlert
+	 */
 	public void recieveAlert(SheepAlert sheepAlert) {
 		notifyPhone(sheepAlert);
 		notifyEmail(sheepAlert);

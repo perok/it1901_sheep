@@ -31,12 +31,9 @@ public class Response implements Serializable {
 	
 	public Response(int type, User user) {
 		this.type = type;
-		System.out.println("RHELLA" + user.getName());
 		this.user = new User(user.getId(),user.getUsername(),user.getName(),user.getPassword(),
 				user.getMobileNumber(),user.getEmail(),user.getFarmlist());
-		
-		System.out.println(this.user.getName());
-	}
+		}
 	
 	public int getType() {
 		return type;

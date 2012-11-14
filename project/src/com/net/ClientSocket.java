@@ -109,6 +109,8 @@ public class ClientSocket  {
 	 */
 	void sendRequest(Request req) {
 		try {
+			System.out.println(req.getType());
+			System.out.println(req.getMessage());
 			sOutput.writeObject(req);
 			sOutput.flush();
 		}
@@ -161,7 +163,7 @@ public class ClientSocket  {
 		HashMap params = new HashMap();
 		params.put("username", username);
 		params.put("password", password);
-		sendRequest((new Request(Request.REQUEST, "login" ,params)));
+		sendRequest(new Request(Request.REQUEST, "login" ,params));
 	}
 	
 	/**Makes a request with the given paramter and sends it to the server.
@@ -170,7 +172,7 @@ public class ClientSocket  {
 	 */
 	public void editUser(User user) {
 		HashMap params = new HashMap();
-		sendRequest((new Request(Request.EDITUSER, "edituser", user)));
+		sendRequest(new Request(Request.EDITUSER, "editUser", user));
 
 	}
 
@@ -179,10 +181,10 @@ public class ClientSocket  {
 	 * @param user
 	 */
 	public void editSheep(Sheep sheep) {
-		HashMap params = new HashMap();
-
-		sendRequest((new Request(Request.EDITSHEEP, "editSheep", sheep)));
-
+		System.out.println("EditSheep called");
+		System.out.println(sheep.getId() + sheep.getName());
+		sendRequest(new Request(Request.EDITSHEEP, "editSheep", sheep));
+		System.out.println("Request sent");
 	}
 	/**Makes a request with the given paramters and sends it to the server.
 	 * 
