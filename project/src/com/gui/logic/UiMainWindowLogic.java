@@ -1,6 +1,7 @@
 package com.gui.logic;
 
 import com.gui.UiMainWindow;
+import com.gui.UiMainWindow_oldy;
 import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.core.QDate;
@@ -142,6 +143,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	 * @param click
 	 */
 	private void pbTabInformationUpdate_clicked(boolean click){
+		System.out.println("Sheep updated clicked");
 		Sheep sheepUpdate;
 		//Not empty
 		if(!mw.lEName.text().equals("") && !mw.lEFarmId.text().equals("") && Integer.parseInt(mw.lEFarmId.text()) != 0){
@@ -150,9 +152,11 @@ public class UiMainWindowLogic extends QSignalEmitter{
 					mw.chbAlive.isChecked(), (int)mw.dSBWeight.value()); //MÅ FIKSES, skal ikke være int
 			
 			try{
+				System.out.println("Sending edited sheep");
 				sLogic.editSheep(sheepUpdate);
 			}
 			catch(Exception e){
+				System.out.println("Sheep updating went in the toilet");
 				e.printStackTrace();
 			}
 		}

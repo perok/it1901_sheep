@@ -1,6 +1,6 @@
 package com.gui;
 /********************************************************************************
- ** Form generated from reading ui file 'mainVIEWv2.jui'
+ ** Form generated from reading ui file 'mainVIEW.jui'
  **
  ** Created by: Qt User Interface Compiler version 4.7.1
  **
@@ -9,15 +9,13 @@ package com.gui;
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
 
-public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
+public class UiMainWindow_oldy implements com.trolltech.qt.QUiForm<QMainWindow>
 {
     public QAction actionExit;
     public QAction actionAbout;
     public QAction actionInformation_Window;
     public QAction actionMap;
     public QAction actionUndo;
-    public QAction actionAbout_Qt_Jambi;
-    public QAction actionSettings;
     public QWidget centralwidget;
     public QGridLayout gridLayout;
     public QSplitter splitter;
@@ -86,7 +84,7 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
     public QComboBox cmbDockFarmId;
     public QLineEdit lineEdit;
 
-    public UiMainWindow() { super(); }
+    public UiMainWindow_oldy() { super(); }
 
     public void setupUi(QMainWindow MainWindow, int width, int height)
     {
@@ -126,16 +124,6 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         QFont font4 = new QFont();
         font4.setPointSize(9);
         actionUndo.setFont(font4);
-        actionAbout_Qt_Jambi = new QAction(MainWindow);
-        actionAbout_Qt_Jambi.setObjectName("actionAbout_Qt_Jambi");
-        QFont font5 = new QFont();
-        font5.setPointSize(9);
-        actionAbout_Qt_Jambi.setFont(font5);
-        actionSettings = new QAction(MainWindow);
-        actionSettings.setObjectName("actionSettings");
-        QFont font6 = new QFont();
-        font6.setPointSize(9);
-        actionSettings.setFont(font6);
         centralwidget = new QWidget(MainWindow);
         centralwidget.setObjectName("centralwidget");
         gridLayout = new QGridLayout(centralwidget);
@@ -418,9 +406,9 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         menubar.setObjectName("menubar");
         menubar.setGeometry(new QRect(0, 0, 974, 30));
         menubar.setMinimumSize(new QSize(1, 20));
-        QFont font7 = new QFont();
-        font7.setPointSize(7);
-        menubar.setFont(font7);
+        QFont font5 = new QFont();
+        font5.setPointSize(7);
+        menubar.setFont(font5);
         menuFile = new QMenu(menubar);
         menuFile.setObjectName("menuFile");
         QSizePolicy sizePolicy3 = new QSizePolicy(com.trolltech.qt.gui.QSizePolicy.Policy.Ignored, com.trolltech.qt.gui.QSizePolicy.Policy.Preferred);
@@ -428,31 +416,31 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         sizePolicy3.setVerticalStretch((byte)0);
         sizePolicy3.setHeightForWidth(menuFile.sizePolicy().hasHeightForWidth());
         menuFile.setSizePolicy(sizePolicy3);
-        QFont font8 = new QFont();
-        font8.setPointSize(8);
-        menuFile.setFont(font8);
+        QFont font6 = new QFont();
+        font6.setPointSize(8);
+        menuFile.setFont(font6);
         menuEdit = new QMenu(menubar);
         menuEdit.setObjectName("menuEdit");
-        QFont font9 = new QFont();
-        font9.setPointSize(8);
-        menuEdit.setFont(font9);
+        QFont font7 = new QFont();
+        font7.setPointSize(8);
+        menuEdit.setFont(font7);
         menuView = new QMenu(menubar);
         menuView.setObjectName("menuView");
-        QFont font10 = new QFont();
-        font10.setPointSize(8);
-        menuView.setFont(font10);
+        QFont font8 = new QFont();
+        font8.setPointSize(8);
+        menuView.setFont(font8);
         menuAbout = new QMenu(menubar);
         menuAbout.setObjectName("menuAbout");
-        QFont font11 = new QFont();
-        font11.setPointSize(8);
-        menuAbout.setFont(font11);
+        QFont font9 = new QFont();
+        font9.setPointSize(8);
+        menuAbout.setFont(font9);
         MainWindow.setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar.setObjectName("statusbar");
         MainWindow.setStatusBar(statusbar);
         dockWidget = new QDockWidget(MainWindow);
         dockWidget.setObjectName("dockWidget");
-        dockWidget.setMinimumSize(new QSize(252, 193));
+        dockWidget.setMinimumSize(new QSize(200, 193));
         dockWidget.setFeatures(com.trolltech.qt.gui.QDockWidget.DockWidgetFeature.createQFlags(com.trolltech.qt.gui.QDockWidget.DockWidgetFeature.DockWidgetMovable));
         dockWidget.setAllowedAreas(com.trolltech.qt.core.Qt.DockWidgetArea.createQFlags(com.trolltech.qt.core.Qt.DockWidgetArea.LeftDockWidgetArea,com.trolltech.qt.core.Qt.DockWidgetArea.RightDockWidgetArea));
         dockWidgetContents = new QWidget();
@@ -463,9 +451,9 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         gridLayout_2.setObjectName("gridLayout_2");
         listWidget = new QListWidget(dockWidgetContents);
         listWidget.setObjectName("listWidget");
-        QFont font12 = new QFont();
-        font12.setPointSize(9);
-        listWidget.setFont(font12);
+        QFont font10 = new QFont();
+        font10.setPointSize(9);
+        listWidget.setFont(font10);
         listWidget.setSelectionMode(com.trolltech.qt.gui.QAbstractItemView.SelectionMode.ExtendedSelection);
         listWidget.setTextElideMode(com.trolltech.qt.core.Qt.TextElideMode.ElideMiddle);
         listWidget.setLayoutMode(com.trolltech.qt.gui.QListView.LayoutMode.SinglePass);
@@ -518,14 +506,14 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         menuView.addAction(actionInformation_Window);
         menuView.addAction(actionMap);
         menuAbout.addAction(actionAbout);
-        menuAbout.addAction(actionAbout_Qt_Jambi);
-        menuAbout.addAction(actionSettings);
         retranslateUi(MainWindow);
 
         tabWidget.setCurrentIndex(2);
 
 
         MainWindow.connectSlotsByName();
+        
+        fuckmeRight();
     } // setupUi
 
     void retranslateUi(QMainWindow MainWindow)
@@ -537,8 +525,6 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         actionInformation_Window.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Information", null));
         actionMap.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Map", null));
         actionUndo.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Undo", null));
-        actionAbout_Qt_Jambi.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "About Qt Jambi", null));
-        actionSettings.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Settings", null));
         label.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Name", null));
         label_2.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Birthdate", null));
         label_3.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Weight", null));
@@ -551,7 +537,7 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         tableWidget.clear();
         tableWidget.setColumnCount(0);
         tableWidget.setRowCount(0);
-        lblTabMessages.setText("");
+        lblTabMessages.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "TextLabel", null));
         cmbTabMessages.clear();
         cmbTabMessages.addItem(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Messages", null));
         cmbTabMessages.addItem(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Alarms", null));
@@ -572,14 +558,8 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         dockWidgetContents.setAccessibleName("");
         rbAscDesc.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Ascending", null));
     } // retranslateUi
-    
-    @Override
-	public void setupUi(QMainWindow arg0) {
-		setupUi(arg0, 800, 800);
-		
-	}
-    
- // WARNING, these functions will be overriden if someone re-designs using Qt graphical designer
+  
+    // WARNING, these functions will be overriden if someone re-designs using Qt graphical designer
     //		    (...hence the names)
     private void fuckmeRight()
     {
@@ -599,6 +579,5 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
 		setupUi(arg0, 800, 800);
 		
 	}
-
 }
 

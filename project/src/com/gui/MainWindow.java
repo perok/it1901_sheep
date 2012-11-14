@@ -50,7 +50,7 @@ public class MainWindow extends QMainWindow
         
         System.out.println("Available themes: " + QStyleFactory.keys());
         
-        QApplication.setStyle("WindowsVista");
+        QApplication.setStyle("Plastique");
         MainWindow mainWindow = new MainWindow(null);
         mainWindow.show();
     	
