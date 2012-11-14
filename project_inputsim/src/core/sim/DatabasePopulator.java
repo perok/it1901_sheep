@@ -4,7 +4,7 @@ import com.db.*;
 import core.settings.*;
 
 
-/**
+/** Makes population of database easier. Provides creation and changing of users, sheep etc.
  * @version 0.2
  * @author Lars Erik
  *
@@ -13,7 +13,7 @@ public class DatabasePopulator {
 	private DatabaseConnector sc;
 	private Random rand;
 
-	/**Constructor
+	/** Constructor.
 	 * @return DatabasePopulator
 	 */
 	public DatabasePopulator() {
@@ -21,23 +21,25 @@ public class DatabasePopulator {
 		rand = new Random();
 	}
 
-	/**
-	 * @deprecated
-	 * @param numberOfUsers
+	/** Calls the database and adds access rights.
+	 * 
+	 * @param userId
+	 * @param farmId
 	 */
-	public void addUsers(int numberOfUsers) {
-
-	}
-
 	public void addAccessRights(int userId, int farmId) {
 		sc.addAccessRights(userId, farmId);
 	}
 	
+	/** Calls the database and removes access rights.
+	 * 
+	 * @param userId
+	 * @param farmId
+	 */
 	public void removeAccessRights(int userId, int farmId) {
 		sc.removeAccessRights(userId, farmId);
 	}
 	
-	/**Sends the parameter to database via DatabaseConnector
+	/** Sends the parameter to database via DatabaseConnector to create a user
 	 * 
 	 * @param username
 	 * @param password
@@ -121,7 +123,7 @@ public class DatabasePopulator {
 		}
 	}
 
-	/**Adds the parameter via det DatabaseConnector class
+	/** Adds the parameter via DatabaseConnector class.
 	 * 
 	 * @param sheep
 	 */
@@ -129,13 +131,17 @@ public class DatabasePopulator {
 		sc.insertSheep(sheep);
 	}
 
-	/**Sends a message to DatabaseConnector that wipes everything in sheep table
+	/** Sends a message to DatabaseConnector that wipes everything in sheep table
 	 * @return void
 	 */
 	public void deleteSheep() {
 		sc.deleteSheep();
 	}
 	
+	/** Returns a string of all users in database with id and name.
+	 * 
+	 * @return
+	 */
 	public String listUsers() {
 		String[][] users = sc.listUsers();
 		String res = new String();
@@ -145,6 +151,10 @@ public class DatabasePopulator {
 		return res;
 	}
 	
+	/** Returns a string of all farms in database with id and name.
+	 * 
+	 * @return
+	 */
 	public String listFarms() {
 		String[][] farms = sc.listFarms();
 		String res = new String();

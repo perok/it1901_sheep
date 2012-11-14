@@ -12,7 +12,8 @@ import core.classes.SheepAlert;
 import core.settings.*;
 
 
-/**
+/** Simulator to create sheep statuses and invoke alerts.
+ * 
  * @category Simulator/Server
  * @author Lars Erik
  * @version 0.1
@@ -26,11 +27,11 @@ public class SheepStatusSim {
 	private int numberOfFarms;
 	private Server server;
 
-	/**Default constructor. Sets interval to one minute
+	/** Default constructor. Sets interval to one minute
 	 * 
 	 */
 	public SheepStatusSim(Server server) {
-		timerInterval = DEFAULT_INTERVAL*1000;
+		timerInterval = DEFAULT_INTERVAL*60000;
 		sq = new DatabaseConnector(new Settings());
 		numberOfSheep = sq.getNumberOfSheep();
 		rand = new Random();
@@ -38,13 +39,13 @@ public class SheepStatusSim {
 		this.server = server;
 	}
 
-	/**Constructor that sets the status intervals equal to the 
-	 * parameter in seconds
+	/** Constructor that sets the status intervals equal to the 
+	 * parameter in minutes.
 	 * 
 	 * @param interval
 	 */
 	public SheepStatusSim(int interval,Server server) {
-		timerInterval = interval*1000;
+		timerInterval = interval*60000;
 		sq = new DatabaseConnector(new Settings());
 		numberOfSheep = sq.getNumberOfSheep();
 		rand = new Random();
@@ -52,7 +53,7 @@ public class SheepStatusSim {
 		this.server = server;
 	}
 
-	/**Starts the timer and keeps it running until the program terminates.
+	/** Starts the timer and keeps it running until the program terminates.
 	 * 
 	 */
 	public void init() {
@@ -62,8 +63,9 @@ public class SheepStatusSim {
 		}
 	}
 
-	/**Adds alert via DatabaseConnector to the database. Randomly generates alerts for
+	/** Adds alert via DatabaseConnector to the database. Randomly generates alerts for
 	 * all the sheep in the database. 
+	 * @deprecated
 	 */
 	private void addAlert() {
 		String[][] alerts = new String[numberOfSheep][7];
@@ -82,6 +84,11 @@ public class SheepStatusSim {
 		}
 	}
 	
+	/** Adds alert via database constructor. 
+	 * 
+	 * @param farmId
+	 * @param amount
+	 */
 	public void addAlert(int farmId, int amount) {
 		String[][] alerts = new String[amount][7];
 
@@ -99,6 +106,10 @@ public class SheepStatusSim {
 		}
 	}
 	
+	/** Adds alert for a random farm via database constructor.
+	 * 
+	 * @param amount
+	 */
 	public void addAlert(int amount) {
 		String[][] alerts = new String[amount][7];
 
@@ -134,13 +145,6 @@ public class SheepStatusSim {
 			stats[i][6] = Integer.toString(rand.nextInt(numberOfFarms)+1);
 		}
 		server.notifier.recieveStatus(stats);
-	}
-
-	/**
-	 * @deprecated
-	 */
-	public void kill() {
-
 	}
 
 	/**Action listener class that listens for the timer interval.

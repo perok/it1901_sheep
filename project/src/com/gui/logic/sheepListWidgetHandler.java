@@ -13,12 +13,14 @@ import com.trolltech.qt.core.Qt.MatchFlags;
 import com.trolltech.qt.core.Qt.SortOrder;
 import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
 import com.trolltech.qt.gui.QItemSelection;
+import com.trolltech.qt.gui.QLayoutItemInterface;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QListWidgetItem;
 import com.trolltech.qt.gui.QSortFilterProxyModel;
 import com.trolltech.qt.gui.QStandardItem;
 import com.trolltech.qt.gui.QStandardItemModel;
 import com.trolltech.qt.gui.QTreeView;
+import com.trolltech.qt.gui.QWidget;
 
 import core.classes.Sheep;
 
@@ -55,6 +57,7 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	private QListWidget qlWidget;
 	
 	private int QtSheepDataRole = 32;
+	
 	
 	//FIXME: sorting prioritizes 100 before 10,
 	//		 Qt.SortOrder is also a final static enum, so behaviour cannot be
@@ -153,17 +156,23 @@ public class sheepListWidgetHandler extends QSignalEmitter{
 	public void addSheep()
 	{
 		statusBarMessage.emit("Populating Sheeps");
-		System.out.println("Adding new sheeps to listView. Old amount of sheeps are: " + qlWidget.count());
-
+		System.out.println();
 		//Empty list
-		for(int i = 0; i < qlWidget.count(); i++)
-			qlWidget.takeItem(i);
+		//Muligen sette på GC igjen??
+		qlWidget.clear();
+		
+		//READ DIZ SHIT 
+		// http://lists.qt.nokia.com/pipermail/qt-jambi-interest/2008-November/000746.html
+		
 		
 		for(Sheep sheep : UserStorage.getUser().getFarmlist().get(UserStorage.getCurrentFarm()).getSheepList()){
 			QListWidgetItem item = new QListWidgetItem();
 			item.setData(QtSheepDataRole, sheep);
 			item.setData(0, sheep.getName());
+			
+			//Qt should handle GC now. 
 			item.disableGarbageCollection();
+			
 			qlWidget.addItem(item);
 		}
 		
