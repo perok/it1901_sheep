@@ -530,7 +530,6 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
 
     void retranslateUi(QMainWindow MainWindow)
     {
-        MainWindow.setWindowTitle(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "MainWindow", null));
         actionExit.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Exit", null));
         actionExit.setToolTip(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Exit the program", null));
         actionAbout.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "About", null));

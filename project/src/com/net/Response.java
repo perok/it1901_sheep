@@ -11,19 +11,19 @@ public class Response implements Serializable {
 	private int type;
 	private boolean success;
 	private User user;
-	private ArrayList content;
+	private ArrayList<?> content;
 	
 	public Response(int type, boolean success) {
 		this.type = type;
 		this.success = success;
 	}
 	
-	public Response(int type, ArrayList content) {
+	public Response(int type, ArrayList<?> content) {
 		this.type = type;
 		this.content = content;
 	}
 	
-	public Response(int type, boolean success, ArrayList content) {
+	public Response(int type, boolean success, ArrayList<?> content) {
 		this.type = type;
 		this.success = success;
 		this.content = content;
@@ -50,11 +50,11 @@ public class Response implements Serializable {
 		this.success = success;
 	}
 
-	public ArrayList getContent() {
+	public ArrayList<?> getContent() {
 		return content;
 	}
 
-	public void setContent(ArrayList content) {
+	public void setContent(ArrayList<?> content) {
 		this.content = content;
 	}
 	

@@ -14,12 +14,11 @@ import com.trolltech.qt.gui.QKeyEvent;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QPixmap;
-import com.trolltech.qt.gui.QStyleFactory;
 import com.trolltech.qt.gui.QWidget;
 
 /** Class to hold all graphical components (and itself).
  * 
- * @author Gruppe 10 <3
+ * @author Gruppe 10
  *
  */
 public class MainWindow extends QMainWindow 
@@ -34,6 +33,7 @@ public class MainWindow extends QMainWindow
     private TableWidgetLogic twhandler;
     private SheepListWidgetLogic slwHandler;
     private UiMainWindowLogic mwLogic;
+    @SuppressWarnings("unused")
     private UiLoginWindowLogic lwLogic;
     private ServerLogic serverLogic;
     
@@ -58,7 +58,6 @@ public class MainWindow extends QMainWindow
          */
     }
     
-
     /** Constructor. Initialize..
      * 
      * @param parent potential parent for this window. Should be set to null for now.
@@ -68,11 +67,12 @@ public class MainWindow extends QMainWindow
         super(parent);
         
         this.setWindowIcon(new QIcon(new QPixmap("res/sheep.png")));
-        
         serverLogic = new ServerLogic();
         uiLoginWindow = new UiLoginWindow();
         
         uiLoginWindow.setupUi(this, Constants.INIT_SCREEN_WIDTH, Constants.INIT_SCREEN_WIDTH);
+        
+        this.setWindowTitle(Constants.title);
         
         lwLogic = new UiLoginWindowLogic(uiLoginWindow, serverLogic);
         serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");

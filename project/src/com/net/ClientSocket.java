@@ -19,7 +19,6 @@ public class ClientSocket  {
 	private ServerLogic caller;
 	private String server, username;
 	private int port;
-	private Settings settings;
 
 	/**Console constructor
 	 * 
@@ -32,7 +31,7 @@ public class ClientSocket  {
 	}
 	
 	public ClientSocket(Settings settings, String username) {
-		this.settings = settings;
+		//this.settings = settings
 		this.username = username;
 	}
 
@@ -158,7 +157,7 @@ public class ClientSocket  {
 	 * @param password
 	 */
 	public void login(String username, String password) {
-		HashMap params = new HashMap();
+		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("username", username);
 		params.put("password", password);
 		sendRequest(new Request(Request.REQUEST, "login" ,params));
@@ -169,9 +168,7 @@ public class ClientSocket  {
 	 * @param user
 	 */
 	public void editUser(User user) {
-		HashMap params = new HashMap();
 		sendRequest(new Request(Request.EDITUSER, "editUser", user));
-
 	}
 
 	/**Makes a request with the given paramter and sends it to the server.
@@ -189,7 +186,7 @@ public class ClientSocket  {
 	 * @param farm
 	 */
 	public void getSheep(Farm farm) {
-		HashMap params = new HashMap();
+		HashMap<String, Integer> params = new HashMap<String, Integer>();
 		params.put("farmId", farm.getId());
 		sendRequest(new Request(Request.REQUEST, "getSheep", params));
 	}
@@ -199,7 +196,7 @@ public class ClientSocket  {
 	 * @param sheepId
 	 */
 	public void removeSheep(int sheepId) {
-		HashMap params = new HashMap();
+		HashMap<String, Integer> params = new HashMap<String, Integer>();
 		params.put("sheepId", sheepId);
 		sendRequest(new Request(Request.REQUEST, "removeSheep", params));
 	}
@@ -210,7 +207,7 @@ public class ClientSocket  {
 	 * @param farm
 	 */
 	public void addAccessRights(User user, Farm farm) {
-		HashMap params = new HashMap();
+		HashMap<String, Integer> params = new HashMap<String, Integer>();
 		params.put("userId", user.getId());
 		params.put("farmId", farm.getId());
 		sendRequest(new Request(Request.REQUEST, "removeSheep", params));
@@ -221,7 +218,7 @@ public class ClientSocket  {
 	 * @param farm
 	 */
 	public void removeAccessRights(User user, Farm farm) {
-		HashMap params = new HashMap();
+		HashMap<String, Integer> params = new HashMap<String, Integer>();
 		params.put("userId", user.getId());
 		params.put("farmId", farm.getId());
 		sendRequest(new Request(Request.REQUEST, "removeSheep", params));
@@ -232,7 +229,7 @@ public class ClientSocket  {
 	 * @param farm
 	 */
 	public void getSheepStatus(Farm farm) {
-		HashMap params = new HashMap();
+		HashMap<String, Integer> params = new HashMap<String, Integer>();
 		params.put("farmId", farm.getId());
 		sendRequest(new Request(Request.REQUEST, "getSheepStatus", params));
 	}
@@ -242,7 +239,7 @@ public class ClientSocket  {
 	 * @param farm
 	 */
 	public void getSheepAlert(Farm farm) {
-		HashMap params = new HashMap();
+		HashMap<String, Integer> params = new HashMap<String, Integer>();
 		params.put("farmId", farm.getId());
 		sendRequest(new Request(Request.REQUEST, "getSheepAlert", params));
 	}

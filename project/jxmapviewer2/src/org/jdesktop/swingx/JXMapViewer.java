@@ -37,8 +37,6 @@ import org.jdesktop.swingx.mapviewer.empty.EmptyTileFactory;
 import org.jdesktop.swingx.painter.AbstractPainter;
 import org.jdesktop.swingx.painter.Painter;
 
-import com.trolltech.research.qtjambiawtbridge.generated.QComponentHostNative;
-
 /**
  * A tile oriented map component that can easily be used with tile sources on
  * the web like Google and Yahoo maps, satellite data such as NASA imagery, and
@@ -299,7 +297,6 @@ public class JXMapViewer extends JPanel implements DesignMode {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	private void drawOverlays(final int zoom, final Graphics g,
 			final Rectangle viewportBounds) {
 		if (overlay != null) {

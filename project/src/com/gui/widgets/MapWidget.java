@@ -11,8 +11,6 @@ import org.jdesktop.swingx.input.ZoomMouseWheelListenerCenter;
 import org.jdesktop.swingx.mapviewer.GeoPosition;
 import org.jdesktop.swingx.mapviewer.wms.WMSService;
 import org.jdesktop.swingx.mapviewer.wms.WMSTileFactory;
-import com.mapWidgetExtras.FancyWaypointRenderer;
-import com.mapWidgetExtras.MyWaypoint;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QResizeEvent;
 import com.trolltech.qt.gui.QSizePolicy.Policy;
@@ -48,8 +46,6 @@ public class MapWidget extends QWidget
 		GeoPosition trondheimLocation = new GeoPosition( 63.430515, 10.395053);
 		WMSService wmsService = new WMSService(wmsStatensKartVerk, layer);
 		WMSTileFactory wmsTileFactory = new WMSTileFactory(wmsService);
-		
-			
 		
 		this.mapKit  = new JXMapKit();
 		mapKitChild = (JXMapViewer) this.mapKit.getComponent(0);

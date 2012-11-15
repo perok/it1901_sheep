@@ -19,6 +19,8 @@ public class Constants {
 	 */
 	public final static int QtSheepDataRole = 32;
 	
+	public static final String title = "SSA® (Sheep Surveilance Application)";
+	
 	public static final String about = "The Greatest and Only SSA® (Sheep Surveilance Application).\n\n" 
     		+ "Created by: \n\tAnders Sildnes \n\tLars erik Grasdal \n\tTor Økland Barstad"
     		+ "\n\tSvenn K \n\tPer Øyvind Kanestrøm";

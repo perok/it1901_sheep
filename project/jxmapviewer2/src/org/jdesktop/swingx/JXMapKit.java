@@ -37,8 +37,6 @@ import org.jdesktop.swingx.painter.AbstractPainter;
 import org.jdesktop.swingx.painter.CompoundPainter;
 import org.jdesktop.swingx.painter.Painter;
 
-import com.trolltech.research.qtjambiawtbridge.generated.QComponentHostNative;
-
 /**
  * <p>
  * The JXMapKit is a pair of JXMapViewers preconfigured to be easy to use with
@@ -389,7 +387,6 @@ public class JXMapKit extends JPanel {
 		add(mainMap, gridBagConstraints);
 	}// </editor-fold>//GEN-END:initComponents
 
-	@SuppressWarnings("unused")
 	private void zoomInButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_zoomInButtonActionPerformed
 																				// TODO
 																				// add
@@ -399,7 +396,6 @@ public class JXMapKit extends JPanel {
 																				// here:
 	}// GEN-LAST:event_zoomInButtonActionPerformed
 
-	@SuppressWarnings("unused")
 	private void zoomSliderStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_zoomSliderStateChanged
 		if (!zoomChanging) {
 			setZoom(zoomSlider.getValue());

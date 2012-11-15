@@ -9,9 +9,8 @@ import com.trolltech.qt.gui.QLabel;
 
 import core.classes.Sheep;
 
-public class UiMainWindowLogic extends QSignalEmitter{
-	
-	
+public class UiMainWindowLogic extends QSignalEmitter
+{
 	private UiMainWindow mw;
 	
 	private SheepListWidgetLogic slwHandler;
@@ -90,6 +89,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	 * Shows a popupmessage about the program
 	 * @param trigg
 	 */
+	@SuppressWarnings("unused")
 	private void actionAbout_toggled(boolean trigg){
 		signalShowAbout.emit();
 	}
@@ -98,7 +98,9 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	 * Shows a popupmessage about Qt
 	 * @param trigg
 	 */
+	@SuppressWarnings("unused")
 	private void actionAbout_Qt_Jambi_triggerd(boolean trigg){
+		System.out.println("WEREHO");
 		signalShowAboutQt.emit();
 	}
 	    
@@ -112,6 +114,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
     }
 	
 	//NOT WORKING 
+	@SuppressWarnings("unused")
 	private void actionInformation_Window_toggled(boolean toggle){
 		mw.tableWidget.setVisible(toggle);
 		
@@ -128,6 +131,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		System.out.println(toggle);
 	}
 	
+	@SuppressWarnings("unused")
 	private void actionMap_toggled(boolean trigg){
 		System.out.println(trigg);
 	}
@@ -136,35 +140,98 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	 * Closes the program
 	 * @param trigg
 	 */
+	@SuppressWarnings("unused")
 	private void actionExit_toggled(boolean trigg){
 		sLogic.closeConnection();
 		System.exit(0);
 	}
 	
+	@SuppressWarnings("unused")
 	private void actionUndo_toggled(boolean trigg){
 		System.out.println(trigg);
 	}
 	
-		//DockWidget
-	private void rbAscDesc_toggled(boolean toggled){
-		slwHandler.changeSortOrder();
-		if(toggled)
-			mw.rbAscDesc.setText("Ascending");
-		else
-			mw.rbAscDesc.setText("Descending");
-
-	}
-	
+	@SuppressWarnings("unused")
 	private void cmbDockFarmId_currentIndexChanged(int index){
 		UserStorage.setCurrentFarm(index);
 		slwHandler.refreshSheepList();
 	}
 	
+	@SuppressWarnings("unused")
+	private void cmbTabMessages_currentIndexChanged(int index){
+			UserStorage.setCurrentMessageType(index);
+			this.twHandler.updateMessages(currentSheep);
+		}
+
+	@SuppressWarnings("unused")
 	private void lineEdit_textChanged(String text){
 		slwHandler.searchSheeps(text);
 	}
 	
-		//TABWIDGET	
+		//STATUSBAR
+	@SuppressWarnings("unused")
+	private void newStatusBarMessage(String text){
+			statusbarMessage.setText(text);
+	}
+
+	//OTHER EVENTS
+		
+		/**
+		 * Populates the tabWidget
+		 * @param sheep
+		 */
+	@SuppressWarnings("unused")
+	private void populateTableWidget(Sheep sheep){
+		currentSheep = sheep;
+		
+		//Sheep id, Sheep name, farmId
+		mw.lblTabMessages.setText("Sheep#: " + sheep.getId() + "\tFarm#: " + sheep.getFarmId() + "\tName: " + sheep.getName());
+		
+		mw.lEName.setText(sheep.getName());
+		mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//sheep.getDateOfBirth(), m, d))
+		mw.dSBWeight.setValue((double)sheep.getWeight());
+		mw.lEFarmId.setText(String.valueOf(sheep.getFarmId()));
+		if(sheep.isAlive())
+			mw.chbAlive.setChecked(true);
+		else
+			mw.chbAlive.setChecked(false);
+		
+		//Get messages for sheep
+		//Send them to twHandler
+			
+		this.twHandler.updateMessages(sheep);
+	}
+
+	@SuppressWarnings("unused")
+	private void pBSubmit_Add_clicked(boolean click){
+		System.out.println("CLICK");
+	
+	}
+	
+	/**
+	 * Resets the sheep information tab
+	 * 
+	 * @param click
+	 */
+	@SuppressWarnings("unused")
+	private void pbTabInformationReset_clicked(boolean click){
+		if(currentSheep != null){			
+			mw.lEName.setText(currentSheep.getName());
+			mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//sheep.getDateOfBirth(), m, d))
+			mw.dSBWeight.setValue((double)currentSheep.getWeight());
+			mw.lEFarmId.setText(String.valueOf(currentSheep.getFarmId()));
+			if(currentSheep.isAlive())
+				mw.chbAlive.setChecked(true);
+			else
+				mw.chbAlive.setChecked(false);
+			
+			statusbarMessage.setText("Information reset done");
+		}
+			
+	
+	}
+
+	//TABWIDGET	
 	/**
 	 * Update button for the informaton tab
 	 * 
@@ -172,6 +239,7 @@ public class UiMainWindowLogic extends QSignalEmitter{
 	 * 
 	 * @param click
 	 */
+	@SuppressWarnings("unused")
 	private void pbTabInformationUpdate_clicked(boolean click){
 		System.out.println("Sheep updated clicked");
 		Sheep sheepUpdate;
@@ -193,68 +261,20 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		else
 			statusbarMessage.setText("Some fields are blank, or not valid input..");
 	}
-	
-	/**
-	 * Resets the sheep information tab
-	 * 
-	 * @param click
-	 */
-	private void pbTabInformationReset_clicked(boolean click){
-		if(currentSheep != null){			
-			mw.lEName.setText(currentSheep.getName());
-			mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//sheep.getDateOfBirth(), m, d))
-			mw.dSBWeight.setValue((double)currentSheep.getWeight());
-			mw.lEFarmId.setText(String.valueOf(currentSheep.getFarmId()));
-			if(currentSheep.isAlive())
-				mw.chbAlive.setChecked(true);
-			else
-				mw.chbAlive.setChecked(false);
-			
-			statusbarMessage.setText("Information reset done");
-		}
-			
 
-	}
 	
-	private void cmbTabMessages_currentIndexChanged(int index){
-		UserStorage.setCurrentMessageType(index);
-	}
-	
-	private void pBSubmit_Add_clicked(boolean click){
-		System.out.println("CLICK");
-
-	}
-	
-	//STATUSBAR
-	private void newStatusBarMessage(String text){
-		statusbarMessage.setText(text);
-	}
 	
 	//OTHER EVENTS
 	
-	/**
-	 * Populates the tabWidget
-	 * @param sheep
-	 */
-	private void populateTableWidget(Sheep sheep){
-		currentSheep = sheep;
-		
-		//Sheep id, Sheep name, farmId
-		mw.lblTabMessages.setText("Sheep#: " + sheep.getId() + "\tFarm#: " + sheep.getFarmId() + "\tName: " + sheep.getName());
-		
-		mw.lEName.setText(sheep.getName());
-		mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//sheep.getDateOfBirth(), m, d))
-		mw.dSBWeight.setValue((double)sheep.getWeight());
-		mw.lEFarmId.setText(String.valueOf(sheep.getFarmId()));
-		if(sheep.isAlive())
-			mw.chbAlive.setChecked(true);
+	//DockWidget
+	@SuppressWarnings("unused")
+	private void rbAscDesc_toggled(boolean toggled){
+		slwHandler.changeSortOrder();
+		if(toggled)
+			mw.rbAscDesc.setText("Ascending");
 		else
-			mw.chbAlive.setChecked(false);
-		
-		//Get messages for sheep
-		//Send them to twHandler
-		
-		this.twHandler.updateMessages(sheep);
+			mw.rbAscDesc.setText("Descending");
+	
 	}
 }
 
