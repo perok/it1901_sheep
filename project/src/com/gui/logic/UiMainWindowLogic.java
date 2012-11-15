@@ -9,9 +9,8 @@ import com.trolltech.qt.gui.QLabel;
 
 import core.classes.Sheep;
 
-public class UiMainWindowLogic extends QSignalEmitter{
-	
-	
+public class UiMainWindowLogic extends QSignalEmitter
+{
 	private UiMainWindow mw;
 	
 	private SheepListWidgetLogic slwHandler;
@@ -145,26 +144,80 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		System.out.println(trigg);
 	}
 	
-		//DockWidget
-	private void rbAscDesc_toggled(boolean toggled){
-		slwHandler.changeSortOrder();
-		if(toggled)
-			mw.rbAscDesc.setText("Ascending");
-		else
-			mw.rbAscDesc.setText("Descending");
-
-	}
-	
-	private void cmbDockFarmId_currentIndexChanged(int index){
+		private void cmbDockFarmId_currentIndexChanged(int index){
 		UserStorage.setCurrentFarm(index);
 		slwHandler.refreshSheepList();
 	}
 	
+	private void cmbTabMessages_currentIndexChanged(int index){
+			UserStorage.setCurrentMessageType(index);
+			this.twHandler.updateMessages(currentSheep);
+		}
+
 	private void lineEdit_textChanged(String text){
 		slwHandler.searchSheeps(text);
 	}
 	
-		//TABWIDGET	
+		//STATUSBAR
+		private void newStatusBarMessage(String text){
+			statusbarMessage.setText(text);
+		}
+
+	//OTHER EVENTS
+		
+		/**
+		 * Populates the tabWidget
+		 * @param sheep
+		 */
+		private void populateTableWidget(Sheep sheep){
+			currentSheep = sheep;
+			
+			//Sheep id, Sheep name, farmId
+			mw.lblTabMessages.setText("Sheep#: " + sheep.getId() + "\tFarm#: " + sheep.getFarmId() + "\tName: " + sheep.getName());
+			
+			mw.lEName.setText(sheep.getName());
+			mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//sheep.getDateOfBirth(), m, d))
+			mw.dSBWeight.setValue((double)sheep.getWeight());
+			mw.lEFarmId.setText(String.valueOf(sheep.getFarmId()));
+			if(sheep.isAlive())
+				mw.chbAlive.setChecked(true);
+			else
+				mw.chbAlive.setChecked(false);
+			
+			//Get messages for sheep
+			//Send them to twHandler
+			
+			this.twHandler.updateMessages(sheep);
+		}
+
+	private void pBSubmit_Add_clicked(boolean click){
+		System.out.println("CLICK");
+	
+	}
+	
+	/**
+	 * Resets the sheep information tab
+	 * 
+	 * @param click
+	 */
+	private void pbTabInformationReset_clicked(boolean click){
+		if(currentSheep != null){			
+			mw.lEName.setText(currentSheep.getName());
+			mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//sheep.getDateOfBirth(), m, d))
+			mw.dSBWeight.setValue((double)currentSheep.getWeight());
+			mw.lEFarmId.setText(String.valueOf(currentSheep.getFarmId()));
+			if(currentSheep.isAlive())
+				mw.chbAlive.setChecked(true);
+			else
+				mw.chbAlive.setChecked(false);
+			
+			statusbarMessage.setText("Information reset done");
+		}
+			
+	
+	}
+
+	//TABWIDGET	
 	/**
 	 * Update button for the informaton tab
 	 * 
@@ -193,69 +246,19 @@ public class UiMainWindowLogic extends QSignalEmitter{
 		else
 			statusbarMessage.setText("Some fields are blank, or not valid input..");
 	}
-	
-	/**
-	 * Resets the sheep information tab
-	 * 
-	 * @param click
-	 */
-	private void pbTabInformationReset_clicked(boolean click){
-		if(currentSheep != null){			
-			mw.lEName.setText(currentSheep.getName());
-			mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//sheep.getDateOfBirth(), m, d))
-			mw.dSBWeight.setValue((double)currentSheep.getWeight());
-			mw.lEFarmId.setText(String.valueOf(currentSheep.getFarmId()));
-			if(currentSheep.isAlive())
-				mw.chbAlive.setChecked(true);
-			else
-				mw.chbAlive.setChecked(false);
-			
-			statusbarMessage.setText("Information reset done");
-		}
-			
 
-	}
 	
-	private void cmbTabMessages_currentIndexChanged(int index){
-		UserStorage.setCurrentMessageType(index);
-		this.twHandler.updateMessages(currentSheep);
-	}
-	
-	private void pBSubmit_Add_clicked(boolean click){
-		System.out.println("CLICK");
-
-	}
-	
-	//STATUSBAR
-	private void newStatusBarMessage(String text){
-		statusbarMessage.setText(text);
-	}
 	
 	//OTHER EVENTS
 	
-	/**
-	 * Populates the tabWidget
-	 * @param sheep
-	 */
-	private void populateTableWidget(Sheep sheep){
-		currentSheep = sheep;
-		
-		//Sheep id, Sheep name, farmId
-		mw.lblTabMessages.setText("Sheep#: " + sheep.getId() + "\tFarm#: " + sheep.getFarmId() + "\tName: " + sheep.getName());
-		
-		mw.lEName.setText(sheep.getName());
-		mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//sheep.getDateOfBirth(), m, d))
-		mw.dSBWeight.setValue((double)sheep.getWeight());
-		mw.lEFarmId.setText(String.valueOf(sheep.getFarmId()));
-		if(sheep.isAlive())
-			mw.chbAlive.setChecked(true);
+	//DockWidget
+	private void rbAscDesc_toggled(boolean toggled){
+		slwHandler.changeSortOrder();
+		if(toggled)
+			mw.rbAscDesc.setText("Ascending");
 		else
-			mw.chbAlive.setChecked(false);
-		
-		//Get messages for sheep
-		//Send them to twHandler
-		
-		this.twHandler.updateMessages(sheep);
+			mw.rbAscDesc.setText("Descending");
+	
 	}
 }
 

@@ -19,7 +19,7 @@ import com.trolltech.qt.gui.QWidget;
 
 /** Class to hold all graphical components (and itself).
  * 
- * @author Gruppe 10 <3
+ * @author Gruppe 10
  *
  */
 public class MainWindow extends QMainWindow 
@@ -58,7 +58,6 @@ public class MainWindow extends QMainWindow
          */
     }
     
-
     /** Constructor. Initialize..
      * 
      * @param parent potential parent for this window. Should be set to null for now.
@@ -74,7 +73,6 @@ public class MainWindow extends QMainWindow
         uiLoginWindow.setupUi(this, Constants.INIT_SCREEN_WIDTH, Constants.INIT_SCREEN_WIDTH);
         
         this.setWindowTitle(Constants.title);
-
         
         lwLogic = new UiLoginWindowLogic(uiLoginWindow, serverLogic);
         serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");

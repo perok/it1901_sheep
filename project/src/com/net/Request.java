@@ -13,12 +13,12 @@ public class Request implements Serializable {
 	private String message;
 	private User user;
 	private Sheep sheep;
-	private HashMap parameters;
+	private HashMap<Object, Object> parameters;
 
 	public Request(int type, String message) {
 		this.type = type;
 		this.message = message;
-		parameters = new HashMap();
+		parameters = new HashMap<Object, Object>();
 	}
 
 	public Request(int type, String message, User user) {
@@ -37,10 +37,11 @@ public class Request implements Serializable {
 		System.out.println(sheep.getName());
 	}
 
-	public Request(int type, String message, HashMap _parameters) {
+//	public Request(int type, String message, HashMap<Object, Object> _parameters) {
+	public Request(int type, String message, HashMap<?, ?> _parameters) {
 		this.type = type;
 		this.message = message;
-		parameters = new HashMap();
+		parameters = new HashMap<Object, Object>();
 		for(Object key : _parameters.keySet()){
 			parameters.put(key, _parameters.get(key));
 		}
@@ -48,7 +49,7 @@ public class Request implements Serializable {
 
 	public Request(int type) {
 		this.type = type;
-		parameters = new HashMap();
+		parameters = new HashMap<Object, Object>();
 	}
 
 	int getType() {
