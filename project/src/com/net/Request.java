@@ -59,11 +59,11 @@ public class Request implements Serializable {
 		return message;
 	} 
 
-	public HashMap getparameters() {
+	public HashMap<Object, Object> getparameters() {
 		return parameters;
 	}
 
-	public void setparameters(HashMap parameters) {
+	public void setparameters(HashMap<Object, Object> parameters) {
 		this.parameters = parameters;
 	}
 

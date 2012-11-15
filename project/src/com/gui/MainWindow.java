@@ -14,7 +14,6 @@ import com.trolltech.qt.gui.QKeyEvent;
 import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QMessageBox;
 import com.trolltech.qt.gui.QPixmap;
-import com.trolltech.qt.gui.QStyleFactory;
 import com.trolltech.qt.gui.QWidget;
 
 /** Class to hold all graphical components (and itself).
@@ -34,6 +33,7 @@ public class MainWindow extends QMainWindow
     private TableWidgetLogic twhandler;
     private SheepListWidgetLogic slwHandler;
     private UiMainWindowLogic mwLogic;
+    @SuppressWarnings("unused")
     private UiLoginWindowLogic lwLogic;
     private ServerLogic serverLogic;
     

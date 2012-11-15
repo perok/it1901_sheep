@@ -4,24 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.storage.Constants;
-import com.storage.Sheeps;
 import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
-import com.trolltech.qt.core.QAbstractItemModel;
-import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.core.Qt.MatchFlags;
 import com.trolltech.qt.core.Qt.SortOrder;
 import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
-import com.trolltech.qt.gui.QItemSelection;
-import com.trolltech.qt.gui.QLayoutItemInterface;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QListWidgetItem;
-import com.trolltech.qt.gui.QSortFilterProxyModel;
-import com.trolltech.qt.gui.QStandardItem;
-import com.trolltech.qt.gui.QStandardItemModel;
-import com.trolltech.qt.gui.QTreeView;
-import com.trolltech.qt.gui.QWidget;
 
 import core.classes.Sheep;
 
@@ -168,25 +158,25 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	
 	/** A class that acts a way to filter and sort data passed between a model and a view
 	 */
-	private class SortSheep extends QSortFilterProxyModel
-	{
-		/** Compare one table entry to the next
-		 * 
-		 * @param qmiLeft first entry in the list, or "left-most-entry" relative to param right
-		 * @param qmiRight second entry in the list, or "rigt-most-entry" relative to param left
-		 * @usage used autonomously via super-methods from QSortFilterProxyModel
-		 * @return true if left string is greater than rightstring
-		 */
-		@Override
-		protected boolean lessThan(QModelIndex qmiLeft, QModelIndex qmiRight)
-		{
-		   Object leftData  = sourceModel().data(qmiLeft);
-	       Object rightData = sourceModel().data(qmiRight);
-           String sLeftString = leftData.toString();
-           String sRightString = rightData.toString();
-
-           return sLeftString.compareTo(sRightString) < 0;
-		}
-	}
-	
+//	private class SortSheep extends QSortFilterProxyModel
+//	{
+//		/** Compare one table entry to the next
+//		 * 
+//		 * @param qmiLeft first entry in the list, or "left-most-entry" relative to param right
+//		 * @param qmiRight second entry in the list, or "rigt-most-entry" relative to param left
+//		 * @usage used autonomously via super-methods from QSortFilterProxyModel
+//		 * @return true if left string is greater than rightstring
+//		 */
+//		@Override
+//		protected boolean lessThan(QModelIndex qmiLeft, QModelIndex qmiRight)
+//		{
+//		   Object leftData  = sourceModel().data(qmiLeft);
+//	       Object rightData = sourceModel().data(qmiRight);
+//           String sLeftString = leftData.toString();
+//           String sRightString = rightData.toString();
+//
+//           return sLeftString.compareTo(sRightString) < 0;
+//		}
+//	}
+//	
 }

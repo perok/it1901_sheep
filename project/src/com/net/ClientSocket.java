@@ -19,7 +19,6 @@ public class ClientSocket  {
 	private ServerLogic caller;
 	private String server, username;
 	private int port;
-	private Settings settings;
 
 	/**Console constructor
 	 * 
@@ -32,7 +31,7 @@ public class ClientSocket  {
 	}
 	
 	public ClientSocket(Settings settings, String username) {
-		this.settings = settings;
+		//this.settings = settings
 		this.username = username;
 	}
 

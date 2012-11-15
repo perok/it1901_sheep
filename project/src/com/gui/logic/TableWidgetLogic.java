@@ -3,14 +3,11 @@ package com.gui.logic;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.print.attribute.standard.SheetCollate;
-
 import com.storage.Constants;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QTableWidget;
 import com.trolltech.qt.gui.QTableWidgetItem;
 
-import core.classes.GPSPosition;
 import core.classes.Message;
 import core.classes.Sheep;
 import core.classes.SheepStatus;
@@ -18,7 +15,6 @@ import core.classes.SheepAlert;
 
 
 import com.storage.UserStorage;
-import com.storage.MessageType;
 
 public class TableWidgetLogic {
 	

@@ -37,8 +37,6 @@ import org.jdesktop.swingx.mapviewer.empty.EmptyTileFactory;
 import org.jdesktop.swingx.painter.AbstractPainter;
 import org.jdesktop.swingx.painter.Painter;
 
-import com.trolltech.research.qtjambiawtbridge.generated.QComponentHostNative;
-
 /**
  * A tile oriented map component that can easily be used with tile sources on
  * the web like Google and Yahoo maps, satellite data such as NASA imagery, and

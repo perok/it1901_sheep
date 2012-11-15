@@ -37,8 +37,6 @@ import org.jdesktop.swingx.painter.AbstractPainter;
 import org.jdesktop.swingx.painter.CompoundPainter;
 import org.jdesktop.swingx.painter.Painter;
 
-import com.trolltech.research.qtjambiawtbridge.generated.QComponentHostNative;
-
 /**
  * <p>
  * The JXMapKit is a pair of JXMapViewers preconfigured to be easy to use with
