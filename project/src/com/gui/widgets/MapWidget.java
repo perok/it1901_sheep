@@ -19,7 +19,7 @@ import com.trolltech.research.qtjambiawtbridge.QComponentHost;
 
 /** Stream an external source of media
  * 
- * @author Gruppe 10 <3
+ * @author Gruppe 10
  */
 public class MapWidget extends QWidget
 {
