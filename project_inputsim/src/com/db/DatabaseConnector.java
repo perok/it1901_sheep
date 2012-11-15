@@ -488,6 +488,21 @@ public class DatabaseConnector {
 		return results;
 	}
 
+	/** Returns a list of all living sheep. Used by simulator
+	 * 
+	 * @param farmId
+	 * @return
+	 */
+	public ArrayList<Sheep> listSheep() {
+		ArrayList<Sheep> list = new ArrayList<Sheep>();
+		String[][] r = processQuery("SELECT * FROM sheep WHERE alive = 1;");
+		for (int i = 0; i < r.length; i++) {
+			list.add(new Sheep(Integer.parseInt(r[i][0]),r[i][1],Integer.parseInt(r[i][2]),Integer.parseInt(r[i][3]),
+					true,Integer.parseInt(r[i][5])));
+		}
+		return list;
+	}
+	
 	/** A method for processing SELECT queries easier. Returns a String[][] instead of using result sets given 
 	 * from the sql query. 
 	 * 

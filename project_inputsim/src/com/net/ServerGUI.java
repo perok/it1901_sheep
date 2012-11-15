@@ -166,10 +166,13 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 				appendEvent(HelpPrinter.printSimHelp());
 			break;
 			case("start"):
-				server.simulator.stop();
+				server.simulator.start();
 			break;
 			case("stop"):
-				server.simulator.start();
+				server.simulator.stop();
+				break;
+			case("interval"):
+				server.simulator.setTimerInterval(Integer.parseInt(decoded[2]));
 				break;
 			}
 		break;
