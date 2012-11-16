@@ -46,14 +46,23 @@ public class AlertSettings extends QWidget implements InputComponentHost
         initWidgets();  
         initConnectEvents();
         initLayout();
+        
+        this.qpbBtnAlarm.toggle();
+        
+        // the alarm is independent
+        // On activate, set text to stop
+        
+        //TODO: add inputcomponents here
     }
     
-    /** Initialize event-driven actions
+    @SuppressWarnings("unused")
+    /** Function used to call for an alarm
      */
-    private void initConnectEvents()
+	private void toggleAlarm()
     {
-    	this.qpbBtnAlarm.clicked.connect(this, "dispatchAlarm()");
-    	this.qlwPackageList.currentItemChanged.connect(this, "updateTheme()");
+    	System.out.println("BEEP");
+    	
+    	/* If alarm active, set text to */
     }
     
     @SuppressWarnings("unused")
@@ -75,15 +84,14 @@ public class AlertSettings extends QWidget implements InputComponentHost
     		System.out.println("Attempt to set new theme failed");
     	}
     }
-    
-    @SuppressWarnings("unused")
-    /** Function used to call for an alarm
+    /** Initialize event-driven actions
      */
-	private void dispatchAlarm()
+    private void initConnectEvents()
     {
-    	System.out.println("BEEP");
+    	this.qpbBtnAlarm.clicked.connect(this, "toggleAlarm()");
+    	this.qlwPackageList.currentItemChanged.connect(this, "updateTheme()");
     }
-    
+        
     /** Initialize the widgets belonging to THIS
      */
     private void initWidgets()
@@ -123,14 +131,14 @@ public class AlertSettings extends QWidget implements InputComponentHost
     	QVBoxLayout qbvSheepSettingsLayout   = new QVBoxLayout();
     	/** The main layout, holding all sub-layouts to THIS */
     	QVBoxLayout qvbMainLayout 			 = new QVBoxLayout();
-    	/** The layout for the package manager */
-    	QVBoxLayout qvbPackageLayout 		 = new QVBoxLayout();        	
+    	/** The layout for the theme manager */
+    	QVBoxLayout qvbThemeLayout 		 = new QVBoxLayout();        	
     	
         qbvSheepSettingsLayout.addWidget(qcbSmsCheckbox);
         qbvSheepSettingsLayout.addWidget(qcbMailCheckbox);
         qbvSheepSettingsLayout.addWidget(qcbCallCheckbox);
         
-        qvbPackageLayout.addWidget(qlwPackageList);
+        qvbThemeLayout.addWidget(qlwPackageList);
 
         qvbMainLayout.addWidget(qgbUpdateGroup);
         qvbMainLayout.addWidget(qgbPackageGroup);
@@ -139,7 +147,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
         qvbMainLayout.addStretch(1);
         
         this.qgbUpdateGroup .setLayout(qbvSheepSettingsLayout);
-        this.qgbPackageGroup.setLayout(qvbPackageLayout);
+        this.qgbPackageGroup.setLayout(qvbThemeLayout);
         super			    .setLayout(qvbMainLayout);
     }
     

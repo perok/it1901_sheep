@@ -14,9 +14,6 @@ import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QValidator;
 import com.trolltech.qt.gui.QWidget;
 
-import core.classes.User;
-
-
 /** Show the settings for the user.
  * 
  * @author Gruppe 10
