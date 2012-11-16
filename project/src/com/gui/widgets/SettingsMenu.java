@@ -28,7 +28,7 @@ public class SettingsMenu extends QDialog
 	private AlertSettings asAlertWidget;
 	private UserSettings usUserWidget;
 
-	private List<DyanmicComponentHost> lDynamicComponents = new ArrayList<DyanmicComponentHost>();
+	private List<InputComponentHost> lDynamicComponents = new ArrayList<InputComponentHost>();
 
 	private QListWidget qlwParentcontentsWidget;
     private QStackedWidget qswPagesWidget;
@@ -47,6 +47,10 @@ public class SettingsMenu extends QDialog
 	    initConnectEvents();
 	    initLayout();
 	    initIcons();
+	    
+	    /* Add listeners */
+	    this.lDynamicComponents.add(this.asAlertWidget);
+	    this.lDynamicComponents.add(this.usUserWidget);
 	    
 	    /* Set properties of THIS */
 	    super.setWindowTitle(tr("Innstillinger"));
@@ -69,14 +73,10 @@ public class SettingsMenu extends QDialog
 	 */
 	private void checkForChange()
 	{
-		this.usUserWidget.writeChange();
-		System.out.println("uh oh, V-E-R-N, uh oh");
-		/*-
-		 *  For each of modifiable input *
-		 *  do
-		 *  		isModified && writeChange
-		 * 	done
-		 */	
+		for(InputComponentHost dch : this.lDynamicComponents)
+		{
+			dch.writeChange();			
+		}
 	}
 
 	/** Initialize event-driven actions
@@ -152,25 +152,7 @@ public class SettingsMenu extends QDialog
 
         this.qswPagesWidget.addWidget(this.usUserWidget);
         this.qswPagesWidget.addWidget(this.asAlertWidget);
-        
-        this.lDynamicComponents.add(this.asAlertWidget);
-        this.lDynamicComponents.add(this.usUserWidget);
     }
-	    
-//	/** For test and debugging purposes
-//	 * 
-//	 * @see MainWindow.main(args)
-//	 * @param args arguments to pass over for QApplication
-//	 */
-//    public static void main(String args[])
-//    {
-//        QApplication.initialize(args);
-//
-//        SettingsMenu dialog = new SettingsMenu(new MainWindow(null));
-//        dialog.show();
-//
-//        QApplication.exec();
-//    }
 }
 
 /* EOF */

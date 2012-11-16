@@ -1,5 +1,7 @@
 package com.gui.widgets;
 
+import java.util.ArrayList;
+import java.util.List;
 import com.trolltech.qt.core.QRegExp;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QComboBox;
@@ -12,11 +14,14 @@ import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QValidator;
 import com.trolltech.qt.gui.QWidget;
 
+import core.classes.User;
+
+
 /** Show the settings for the user.
  * 
  * @author Gruppe 10
  */
-public class UserSettings extends QWidget implements DyanmicComponentHost
+public class UserSettings extends QWidget implements InputComponentHost
 {
 	public static final String CLASS_ICON = "./icons/farmer.png";
 		
@@ -29,8 +34,8 @@ public class UserSettings extends QWidget implements DyanmicComponentHost
 	private QLineEdit qleUsername;
 	private QLineEdit qleUserSurname;
 	
-	ComponentConnector<QLineEdit> oUsername;
-	
+	private List<ComponentConnector> lComponents = new ArrayList<ComponentConnector>();
+		
 	/** Constructor. Initialize..
 	 * @param parent the host of THIS
 	 */
@@ -43,15 +48,21 @@ public class UserSettings extends QWidget implements DyanmicComponentHost
         initUserInput();
         initLayout();
         
+        ComponentConnector oUsername;
+        
         try 
         {
-			oUsername = new ComponentConnector<QLineEdit>
-						(this.qleUsername, this.qleUsername.getClass().getMethod("text"), null);
+			oUsername = new ComponentConnector
+						(this.qleUsername, this.qleUsername.getClass().getMethod("text"),
+								com.storage.UserStorage.class.getDeclaredMethod("setUserName", String.class));
 		} 
         catch (NoSuchMethodException|SecurityException e)
 		{
-			oUsername = new ComponentConnector<QLineEdit>(null,  null,  null);
-		}        
+        	System.out.println("error: " + e.getMessage());
+			oUsername = new ComponentConnector(null,  null, null);
+		}
+        
+        this.lComponents.add(oUsername);
     }
 	
 	@SuppressWarnings("unused")
@@ -159,10 +170,10 @@ public class UserSettings extends QWidget implements DyanmicComponentHost
 	@Override
 	public void writeChange() 
 	{
-		if(this.oUsername.changeMade())
-			System.out.println("a change has been made to text");
-		else
-			System.out.println("a change has NOT been made to text");
+		for(ComponentConnector cc : this.lComponents)
+		{
+			cc.writeChanges();
+		}
 	}
 }
 // Add all methods and listen for if they are used..

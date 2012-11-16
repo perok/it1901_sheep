@@ -18,11 +18,11 @@ import com.trolltech.qt.gui.QWidget;
  * @author Gruppe 10
  *
  */
-public class AlertSettings extends QWidget implements DyanmicComponentHost
+public class AlertSettings extends QWidget implements InputComponentHost
 {
 	public static final String CLASS_ICON = "./icons/alert.png";
 	
-	List<ChangeWriter> lListener = new ArrayList<ChangeWriter>();
+	private List<ComponentConnector> lComponents = new ArrayList<ComponentConnector>();
 	
 	private QGroupBox qgbPackageGroup;	
 	private QGroupBox qgbUpdateGroup;
@@ -157,9 +157,12 @@ public class AlertSettings extends QWidget implements DyanmicComponentHost
     }
 
 	@Override
-	public void writeChange() {
-		// TODO Auto-generated method stub
-		
+	public void writeChange() 
+	{
+		for(ComponentConnector cc : this.lComponents)
+		{
+			cc.writeChanges();
+		}	
 	}
 
 }
