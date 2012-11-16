@@ -1,10 +1,10 @@
 package com.gui.widgets;
 
-import com.gui.MainWindow;
+import java.util.List;
+import java.util.ArrayList;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt.AlignmentFlag;
 import com.trolltech.qt.core.Qt.ItemFlag;
-import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QListView;
@@ -27,7 +27,9 @@ public class SettingsMenu extends QDialog
 	
 	private AlertSettings asAlertWidget;
 	private UserSettings usUserWidget;
-	
+
+	private List<DyanmicComponentHost> lDynamicComponents = new ArrayList<DyanmicComponentHost>();
+
 	private QListWidget qlwParentcontentsWidget;
     private QStackedWidget qswPagesWidget;
     private QPushButton qpbCloseButton;
@@ -67,6 +69,7 @@ public class SettingsMenu extends QDialog
 	 */
 	private void checkForChange()
 	{
+		this.usUserWidget.writeChange();
 		System.out.println("uh oh, V-E-R-N, uh oh");
 		/*-
 		 *  For each of modifiable input *
@@ -149,22 +152,25 @@ public class SettingsMenu extends QDialog
 
         this.qswPagesWidget.addWidget(this.usUserWidget);
         this.qswPagesWidget.addWidget(this.asAlertWidget);
+        
+        this.lDynamicComponents.add(this.asAlertWidget);
+        this.lDynamicComponents.add(this.usUserWidget);
     }
 	    
-	/** For test and debugging purposes
-	 * 
-	 * @see MainWindow.main(args)
-	 * @param args arguments to pass over for QApplication
-	 */
-    public static void main(String args[])
-    {
-        QApplication.initialize(args);
-
-        SettingsMenu dialog = new SettingsMenu(new MainWindow(null));
-        dialog.show();
-
-        QApplication.exec();
-    }
+//	/** For test and debugging purposes
+//	 * 
+//	 * @see MainWindow.main(args)
+//	 * @param args arguments to pass over for QApplication
+//	 */
+//    public static void main(String args[])
+//    {
+//        QApplication.initialize(args);
+//
+//        SettingsMenu dialog = new SettingsMenu(new MainWindow(null));
+//        dialog.show();
+//
+//        QApplication.exec();
+//    }
 }
 
 /* EOF */

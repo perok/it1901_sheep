@@ -16,10 +16,10 @@ import com.trolltech.qt.gui.QWidget;
  * 
  * @author Gruppe 10
  */
-public class UserSettings extends QWidget // implements ChangeNotifier
+public class UserSettings extends QWidget implements DyanmicComponentHost
 {
 	public static final String CLASS_ICON = "./icons/farmer.png";
-	
+		
 	private QComboBox qcbFarmCombo;
 	private QGroupBox qgbFarmGroup;
 	private QGroupBox qgbUserField;
@@ -29,8 +29,7 @@ public class UserSettings extends QWidget // implements ChangeNotifier
 	private QLineEdit qleUsername;
 	private QLineEdit qleUserSurname;
 	
-	@SuppressWarnings("unused")
-	private int iSelectedCombo = 0;
+	ComponentConnector<QLineEdit> oUsername;
 	
 	/** Constructor. Initialize..
 	 * @param parent the host of THIS
@@ -43,6 +42,16 @@ public class UserSettings extends QWidget // implements ChangeNotifier
         initConnectEvents();
         initUserInput();
         initLayout();
+        
+        try 
+        {
+			oUsername = new ComponentConnector<QLineEdit>
+						(this.qleUsername, this.qleUsername.getClass().getMethod("text"), null);
+		} 
+        catch (NoSuchMethodException|SecurityException e)
+		{
+			oUsername = new ComponentConnector<QLineEdit>(null,  null,  null);
+		}        
     }
 	
 	@SuppressWarnings("unused")
@@ -50,9 +59,9 @@ public class UserSettings extends QWidget // implements ChangeNotifier
 	 */
 	private void farmChanged()
 	{
-		System.out.println("changed farm to " + this.qcbFarmCombo.currentIndex());
+		// TODO: there needs to be some supplementary functionality to make use of this.
 		
-		this.iSelectedCombo = this.qcbFarmCombo.currentIndex();
+		//com.storage.UserStorage.setCurrentFarm(this.qcbFarmCombo.currentIndex());
 	}
 	
 	/** Initialize event-driven actions
@@ -72,35 +81,43 @@ public class UserSettings extends QWidget // implements ChangeNotifier
         
         this.qcbFarmCombo.addItem(tr("Gård 0"));
         this.qcbFarmCombo.addItem(tr("Gård 1"));
+        
+        this.qcbFarmCombo.setCurrentIndex(com.storage.UserStorage.getCurrentFarm());
 	}
 	
 	/** Initialize fields for use with user input
+
 	 */
 	private void initUserInput()
 	{
 		final int LABEL_WIDTH = 59;
 		this.qgbUserField = new QGroupBox(tr("Brukerdata"));
 		this.qleUsername 	= new QLineEdit();
-		this.qleUserSurname = new QLineEdit();
+		
+		this.qleUserSurname = new QLineEdit() ;
 		this.qlUsername    = new QLabel(tr("Fornavn:"));
 		this.qlUserSurname = new QLabel(tr("Etternavn:"));
-		QRegExp qreNameInput = new QRegExp("^[A-Za-z\\ ]+$");
+		QRegExp qreNameInput = new QRegExp("^[A-Za-z\\ ]+$"); /* Letters and space only */
 		QValidator qvRegex = new QRegExpValidator(qreNameInput, this.qleUsername);
 		
 		this.qlUsername.setFixedWidth(LABEL_WIDTH);
 		this.qlUserSurname.setFixedWidth(LABEL_WIDTH);
 		
 		/* Settings for input-field for first name */
-		this.qleUsername.setMaxLength(20);
+		this.qleUsername.setEnabled(true);
+		this.qleUsername.setText(com.storage.UserStorage.getUser().getName());
+		this.qleUsername.setMaxLength(25);
 		this.qleUsername.setAlignment(Qt.AlignmentFlag.AlignRight);
 		this.qleUsername.setValidator(qvRegex);
 		
 		/* Settings for input-field for surname */
-		this.qleUserSurname.setMaxLength(20);
+		this.qleUserSurname.setText("<sett inn etternavn her>");
+		this.qleUserSurname.setEnabled(true);
+		this.qleUserSurname.setMaxLength(25);
 		this.qleUserSurname.setAlignment(Qt.AlignmentFlag.AlignRight);
 		this.qleUserSurname.setValidator(qvRegex);
 	}
-    
+	
 	/** Initialize all the layouts and add them to THIS.
 	 */
 	// POT_TODO: How far do we go before making an acquaintance with QGridLayout?
@@ -138,6 +155,18 @@ public class UserSettings extends QWidget // implements ChangeNotifier
          this.qgbUserField  .setLayout(qvblUserLay);
          super			    .setLayout(qvblMainLayout);
     }
+
+	@Override
+	public void writeChange() 
+	{
+		if(this.oUsername.changeMade())
+			System.out.println("a change has been made to text");
+		else
+			System.out.println("a change has NOT been made to text");
+	}
 }
+// Add all methods and listen for if they are used..
+// Just report what functions and associated field..
+//	.. hashmap
 
 /* EOF */

@@ -1,5 +1,8 @@
 package com.gui.widgets;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCheckBox;
 import com.trolltech.qt.gui.QGroupBox;
@@ -15,19 +18,18 @@ import com.trolltech.qt.gui.QWidget;
  * @author Gruppe 10
  *
  */
-public class AlertSettings extends QWidget
+public class AlertSettings extends QWidget implements DyanmicComponentHost
 {
 	public static final String CLASS_ICON = "./icons/alert.png";
 	
+	List<ChangeWriter> lListener = new ArrayList<ChangeWriter>();
+	
+	private QGroupBox qgbPackageGroup;	
 	private QGroupBox qgbUpdateGroup;
 	private QCheckBox qcbSmsCheckbox;
 	private QCheckBox qcbMailCheckbox;
 	private QCheckBox qcbCallCheckbox;
-	
-	private QGroupBox qgbPackageGroup;
-	
-	private QListWidget qlwPackageList;
-	
+	private QListWidget qlwPackageList;	
 	private QPushButton qpbBtnAlarm;
 	
 	/** Constructor. Initialize..
@@ -153,6 +155,12 @@ public class AlertSettings extends QWidget
         this.qcbMailCheckbox   = new QCheckBox(tr("Send mail"));
         this.qcbCallCheckbox   = new QCheckBox(tr("Ring på telefon"));        	
     }
+
+	@Override
+	public void writeChange() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
 
