@@ -72,6 +72,10 @@ public class AlertNotifier implements Runnable{
 		db.alertNotified(sheepAlert.getId());
 	}
 	
+	/** Inserts SheepStatus into the db.
+	 * 
+	 * @param status
+	 */
 	public void recieveStatus(String[][] status) {
 		db.insertSheepStatus(status);
 	}

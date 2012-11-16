@@ -303,33 +303,6 @@ public class DatabaseConnector {
 		}	
 	}
 
-	/**@deprecated
-	 * 
-	 * @return
-	 */
-	public ArrayList<SheepAlert> getNewSheepAlert() {
-		ArrayList<SheepAlert> list = new ArrayList<SheepAlert>();
-		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE notified = " + 0 + ";");
-		for (int i = 0; i < r.length; i++) {
-			list.add(new SheepAlert(Integer.parseInt(r[i][0]),Integer.parseInt(r[i][1]),Integer.parseInt(r[i][2])
-					,Float.parseFloat(r[i][3]), new GPSPosition(Double.parseDouble(r[i][4]), Double.parseDouble(r[i][5])),
-					Integer.parseInt(r[i][6])));
-		}
-		return list;
-	}
-/**@deprecated
- * 
- * @return
- */
-	public boolean newAlertExists() {
-		ArrayList<SheepAlert> list = new ArrayList<SheepAlert>();
-		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE notified = " + 0 + ";");
-
-		if(r[0][0] == null)
-			return false;
-		else
-			return true;
-	}
 
 	public void alertNotified(int alertId) {
 		try {
