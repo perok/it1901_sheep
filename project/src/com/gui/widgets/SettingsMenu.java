@@ -1,10 +1,10 @@
 package com.gui.widgets;
 
-import com.gui.MainWindow;
+import java.util.List;
+import java.util.ArrayList;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt.AlignmentFlag;
 import com.trolltech.qt.core.Qt.ItemFlag;
-import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QListView;
@@ -27,7 +27,9 @@ public class SettingsMenu extends QDialog
 	
 	private AlertSettings asAlertWidget;
 	private UserSettings usUserWidget;
-	
+
+	private List<InputComponentHost> lDynamicComponents = new ArrayList<InputComponentHost>();
+
 	private QListWidget qlwParentcontentsWidget;
     private QStackedWidget qswPagesWidget;
     private QPushButton qpbCloseButton;
@@ -45,6 +47,10 @@ public class SettingsMenu extends QDialog
 	    initConnectEvents();
 	    initLayout();
 	    initIcons();
+	    
+	    /* Add listeners */
+	    this.lDynamicComponents.add(this.asAlertWidget);
+	    this.lDynamicComponents.add(this.usUserWidget);
 	    
 	    /* Set properties of THIS */
 	    super.setWindowTitle(tr("Innstillinger"));
@@ -67,13 +73,10 @@ public class SettingsMenu extends QDialog
 	 */
 	private void checkForChange()
 	{
-		System.out.println("uh oh, V-E-R-N, uh oh");
-		/*-
-		 *  For each of modifiable input *
-		 *  do
-		 *  		isModified && writeChange
-		 * 	done
-		 */	
+		for(InputComponentHost dch : this.lDynamicComponents)
+		{
+			dch.writeChange();			
+		}
 	}
 
 	/** Initialize event-driven actions
@@ -149,21 +152,6 @@ public class SettingsMenu extends QDialog
 
         this.qswPagesWidget.addWidget(this.usUserWidget);
         this.qswPagesWidget.addWidget(this.asAlertWidget);
-    }
-	    
-	/** For test and debugging purposes
-	 * 
-	 * @see MainWindow.main(args)
-	 * @param args arguments to pass over for QApplication
-	 */
-    public static void main(String args[])
-    {
-        QApplication.initialize(args);
-
-        SettingsMenu dialog = new SettingsMenu(new MainWindow(null));
-        dialog.show();
-
-        QApplication.exec();
     }
 }
 

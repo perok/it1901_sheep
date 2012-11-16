@@ -1,5 +1,8 @@
 package com.gui.widgets;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QCheckBox;
 import com.trolltech.qt.gui.QGroupBox;
@@ -15,19 +18,18 @@ import com.trolltech.qt.gui.QWidget;
  * @author Gruppe 10
  *
  */
-public class AlertSettings extends QWidget
+public class AlertSettings extends QWidget implements InputComponentHost
 {
 	public static final String CLASS_ICON = "./icons/alert.png";
 	
+	private List<ComponentConnector> lComponents = new ArrayList<ComponentConnector>();
+	
+	private QGroupBox qgbPackageGroup;	
 	private QGroupBox qgbUpdateGroup;
 	private QCheckBox qcbSmsCheckbox;
 	private QCheckBox qcbMailCheckbox;
 	private QCheckBox qcbCallCheckbox;
-	
-	private QGroupBox qgbPackageGroup;
-	
-	private QListWidget qlwPackageList;
-	
+	private QListWidget qlwPackageList;	
 	private QPushButton qpbBtnAlarm;
 	
 	/** Constructor. Initialize..
@@ -44,14 +46,23 @@ public class AlertSettings extends QWidget
         initWidgets();  
         initConnectEvents();
         initLayout();
+        
+        this.qpbBtnAlarm.toggle();
+        
+        // the alarm is independent
+        // On activate, set text to stop
+        
+        //TODO: add inputcomponents here
     }
     
-    /** Initialize event-driven actions
+    @SuppressWarnings("unused")
+    /** Function used to call for an alarm
      */
-    private void initConnectEvents()
+	private void toggleAlarm()
     {
-    	this.qpbBtnAlarm.clicked.connect(this, "dispatchAlarm()");
-    	this.qlwPackageList.currentItemChanged.connect(this, "updateTheme()");
+    	System.out.println("BEEP");
+    	
+    	/* If alarm active, set text to */
     }
     
     @SuppressWarnings("unused")
@@ -73,15 +84,14 @@ public class AlertSettings extends QWidget
     		System.out.println("Attempt to set new theme failed");
     	}
     }
-    
-    @SuppressWarnings("unused")
-    /** Function used to call for an alarm
+    /** Initialize event-driven actions
      */
-	private void dispatchAlarm()
+    private void initConnectEvents()
     {
-    	System.out.println("BEEP");
+    	this.qpbBtnAlarm.clicked.connect(this, "toggleAlarm()");
+    	this.qlwPackageList.currentItemChanged.connect(this, "updateTheme()");
     }
-    
+        
     /** Initialize the widgets belonging to THIS
      */
     private void initWidgets()
@@ -121,14 +131,14 @@ public class AlertSettings extends QWidget
     	QVBoxLayout qbvSheepSettingsLayout   = new QVBoxLayout();
     	/** The main layout, holding all sub-layouts to THIS */
     	QVBoxLayout qvbMainLayout 			 = new QVBoxLayout();
-    	/** The layout for the package manager */
-    	QVBoxLayout qvbPackageLayout 		 = new QVBoxLayout();        	
+    	/** The layout for the theme manager */
+    	QVBoxLayout qvbThemeLayout 		 = new QVBoxLayout();        	
     	
         qbvSheepSettingsLayout.addWidget(qcbSmsCheckbox);
         qbvSheepSettingsLayout.addWidget(qcbMailCheckbox);
         qbvSheepSettingsLayout.addWidget(qcbCallCheckbox);
         
-        qvbPackageLayout.addWidget(qlwPackageList);
+        qvbThemeLayout.addWidget(qlwPackageList);
 
         qvbMainLayout.addWidget(qgbUpdateGroup);
         qvbMainLayout.addWidget(qgbPackageGroup);
@@ -137,7 +147,7 @@ public class AlertSettings extends QWidget
         qvbMainLayout.addStretch(1);
         
         this.qgbUpdateGroup .setLayout(qbvSheepSettingsLayout);
-        this.qgbPackageGroup.setLayout(qvbPackageLayout);
+        this.qgbPackageGroup.setLayout(qvbThemeLayout);
         super			    .setLayout(qvbMainLayout);
     }
     
@@ -153,6 +163,15 @@ public class AlertSettings extends QWidget
         this.qcbMailCheckbox   = new QCheckBox(tr("Send mail"));
         this.qcbCallCheckbox   = new QCheckBox(tr("Ring på telefon"));        	
     }
+
+	@Override
+	public void writeChange() 
+	{
+		for(ComponentConnector cc : this.lComponents)
+		{
+			cc.writeChanges();
+		}	
+	}
 
 }
 

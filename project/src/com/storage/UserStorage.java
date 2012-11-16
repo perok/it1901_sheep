@@ -22,6 +22,11 @@ public class UserStorage {
 		user = user_;
 	}
 	
+	public static void setUserName(String sUsername)
+	{
+		user.setName(sUsername);
+	}
+	
 
 	public static int getCurrentFarm() {
 		return currentFarm;

@@ -23,19 +23,15 @@ import com.trolltech.qt.gui.QWidget;
  */
 public class MainWindow extends QMainWindow 
 {
+	private UiLoginWindow uiLoginWindow;   
     private UiMainWindow uiMainWindow;
-    private UiLoginWindow uiLoginWindow;
-    
-    
     /* DB */
     
     /* Handlers */
-    private TableWidgetLogic twhandler;
-    private SheepListWidgetLogic slwHandler;
-    private UiMainWindowLogic mwLogic;
-    @SuppressWarnings("unused")
-    private UiLoginWindowLogic lwLogic;
     private ServerLogic serverLogic;
+    private SheepListWidgetLogic slwHandler;
+    private TableWidgetLogic twhandler;
+    private UiMainWindowLogic mwLogic;
     
     /** Main.
      * 
@@ -43,8 +39,8 @@ public class MainWindow extends QMainWindow
      */
     public static void main(String[] args) 
     {
-        QApplication.initialize(args);
-        
+    	/* Initialize qt-framework, set default style */
+        QApplication.initialize(args);        
         QApplication.setStyle("Plastique");
         
         MainWindow mainWindow = new MainWindow(null);
@@ -56,7 +52,7 @@ public class MainWindow extends QMainWindow
          * http://doc.qt.digia.com/qt/gallery.html
          * http://www.slideshare.net/qtbynokia/how-to-make-your-qt-app-look-native
          */
-    }
+     }
     
     /** Constructor. Initialize..
      * 
@@ -74,7 +70,7 @@ public class MainWindow extends QMainWindow
         
         this.setWindowTitle(Constants.title);
         
-        lwLogic = new UiLoginWindowLogic(uiLoginWindow, serverLogic);
+        new UiLoginWindowLogic(uiLoginWindow, serverLogic);
         serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");
     }
     
@@ -85,8 +81,6 @@ public class MainWindow extends QMainWindow
 	public void setupUi_MainWindow(){
 		System.out.println("Setting up Main Window UI");
 		uiLoginWindow = null;
-		lwLogic = null;
-		
 		
 		uiMainWindow = new UiMainWindow();
 		uiMainWindow.setupUi(this, this.size().width(), this.size().height());//INIT_SCREEN_WIDTH, INIT_SCREEN_HEIGHT);
