@@ -27,6 +27,9 @@ public final class HelpPrinter {
 	public static String printSimHelp() {
 		String help = new String("Following command are available for sim: \n");
 		help += "sim help - Sim commands \n";
+		help += "sim start - Starts the simulator \n";
+		help += "sim stop - Stops the simulator \n";
+		help += "sim interval x - Sets interval of sim to x minutes \n";
 		return help;
 	}
 	
@@ -59,6 +62,7 @@ public final class HelpPrinter {
 		help += "db ls farms - Lists all farms with Id \n";
 		help += "db ls users - Lists all users with name and Id \n";
 		help += "db access add x y - Adds access for user id x to farm id y \n";
+		help += "db access remove x y - Removes access for user id x to farm id y \n";
 		return help;
 	}
 

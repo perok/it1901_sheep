@@ -112,10 +112,17 @@ public class SheepStatusSim {
 	 */
 	public boolean addAlert(int farmId, int amount) {
 		String[][] alerts = new String[amount][7];
+		ArrayList<Sheep> thisFarm = new ArrayList<>();
+		
+		for (int k = 0; k < livingSheep.size(); k++) {
+			if(livingSheep.get(k).getFarmId() == farmId){
+				thisFarm.add(livingSheep.get(k));
+			}
+		}
 
 		for (int i = 0; i < amount; i++) {
-			alerts[i][0] = Integer.toString((rand.nextInt(livingSheep.size())+1));
-			alerts[i][1] = Integer.toString(rand.nextInt(3600)+ 1389080800);
+			alerts[i][0] = Integer.toString(thisFarm.get(rand.nextInt(thisFarm.size())).getId());
+			alerts[i][1] = Long.toString(System.currentTimeMillis()/1000);
 			alerts[i][2] = Integer.toString(rand.nextInt(4)+37);
 			alerts[i][3] = Integer.toString(rand.nextInt(40)+140);
 			alerts[i][4] = Integer.toString(rand.nextInt(400));
@@ -137,7 +144,7 @@ public class SheepStatusSim {
 
 		for (int i = 0; i < amount; i++) {
 			alerts[i][0] = Integer.toString(i+1);
-			alerts[i][1] = Integer.toString(rand.nextInt(3600)+ 1389080800);
+			alerts[i][1] = Long.toString(System.currentTimeMillis()/1000);
 			alerts[i][2] = Integer.toString(rand.nextInt(4)+37);
 			alerts[i][3] = Integer.toString(rand.nextInt(40)+140);
 			alerts[i][4] = Integer.toString(rand.nextInt(0));
@@ -160,7 +167,7 @@ public class SheepStatusSim {
 
 		for (int i = 0; i < livingSheep.size(); i++) {
 			stats[i][0] = Integer.toString(livingSheep.get(i).getId());
-			stats[i][1] = Integer.toString(rand.nextInt(3600)+ 1389080800);
+			stats[i][1] = Long.toString(System.currentTimeMillis()/1000);
 			stats[i][2] = Integer.toString(rand.nextInt(4)+37);
 			stats[i][3] = Integer.toString(rand.nextInt(40)+140);
 			stats[i][4] = Integer.toString(rand.nextInt(400));
