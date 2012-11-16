@@ -118,7 +118,13 @@ public class ClientHandler implements Runnable {
 
 		case("editUser"):
 			return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()));
+		
+		case("invokeAlert"):
+			return new Response(Response.BOOLEAN,server.simulator.addAlert(Integer.parseInt(request.getparameter("farmId")), 1));
 		}
+	
+	
+	
 
 		return null;
 	}

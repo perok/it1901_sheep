@@ -243,6 +243,16 @@ public class ClientSocket  {
 		params.put("farmId", farm.getId());
 		sendRequest(new Request(Request.REQUEST, "getSheepAlert", params));
 	}
+	
+	/**Makes a request with the given paramters and sends it to the server.
+	 * 
+	 * @param farm
+	 */
+	public void invokeAlert(Farm farm) {
+		HashMap<String, Integer> params = new HashMap<String, Integer>();
+		params.put("farmId", farm.getId());
+		sendRequest(new Request(Request.REQUEST, "invokeAlert", params));
+	}
 
 	/**Internal class(thread) that listens for input from the server. The object "caller"
 	 * must have a method to handle the response it is given. When started the thread constantly

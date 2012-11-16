@@ -108,8 +108,9 @@ public class SheepStatusSim {
 	 * 
 	 * @param farmId
 	 * @param amount
+	 * @return 
 	 */
-	public void addAlert(int farmId, int amount) {
+	public boolean addAlert(int farmId, int amount) {
 		String[][] alerts = new String[amount][7];
 
 		for (int i = 0; i < amount; i++) {
@@ -124,13 +125,14 @@ public class SheepStatusSim {
 					Integer.parseInt(alerts[i][2]), Integer.parseInt(alerts[i][3]), new GPSPosition(Integer.parseInt(alerts[i][4]), 
 							Integer.parseInt(alerts[i][5])), Integer.parseInt(alerts[i][6])));
 		}
+		return true;
 	}
 
 	/** Adds alert for a random farm via database constructor.
 	 * 
 	 * @param amount
 	 */
-	public void addAlert(int amount) {
+	public boolean addAlert(int amount) {
 		String[][] alerts = new String[amount][7];
 
 		for (int i = 0; i < amount; i++) {
@@ -145,6 +147,7 @@ public class SheepStatusSim {
 					Integer.parseInt(alerts[i][2]), Integer.parseInt(alerts[i][3]), new GPSPosition(Integer.parseInt(alerts[i][4]), 
 							Integer.parseInt(alerts[i][5])), Integer.parseInt(alerts[i][6])));
 		}
+		return true;
 	}
 
 
