@@ -181,6 +181,7 @@ public class ClientSocket  {
 		sendRequest(new Request(Request.EDITSHEEP, "editSheep", sheep));
 		System.out.println("Request sent");
 	}
+	
 	/**Makes a request with the given paramters and sends it to the server.
 	 * 
 	 * @param farm
@@ -188,6 +189,16 @@ public class ClientSocket  {
 	public void getSheep(Farm farm) {
 		HashMap<String, Integer> params = new HashMap<String, Integer>();
 		params.put("farmId", farm.getId());
+		sendRequest(new Request(Request.REQUEST, "getSheep", params));
+	}
+	
+	/**Makes a request with the given paramters and sends it to the server.
+	 * 
+	 * @param farm
+	 */
+	public void getSheep(int farmId) {
+		HashMap<String, Integer> params = new HashMap<String, Integer>();
+		params.put("farmId", farmId);
 		sendRequest(new Request(Request.REQUEST, "getSheep", params));
 	}
 	
