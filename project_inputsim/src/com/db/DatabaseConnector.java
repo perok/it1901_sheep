@@ -69,7 +69,7 @@ public class DatabaseConnector {
 	 */
 	public User loginQuery(String username, String password) {
 		try{
-		String[][] r = processQuery("SELECT id,username,password,name,mobile_number,email FROM user WHERE username = '" + username + "'" + " AND password = '" + password + "';");
+		String[][] r = processQuery("SELECT id,username,name,password,mobile_number,email FROM user WHERE username = '" + username + "'" + " AND password = '" + password + "';");
 		
 		User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5]);
 		String[][] r2 = processQuery("SELECT farm_id FROM access_rights WHERE user_id = " + user.getId() + ";");
@@ -191,7 +191,7 @@ public class DatabaseConnector {
 	}
 	
 	public boolean editSheep(int sheepId, Sheep sheep) {
-
+		System.out.println("Editing: " + sheep.getName() + "," + sheep.getId());
 		try{
 			Statement s = conn.createStatement();
 			s.executeUpdate("UPDATE sheep SET name = '" + sheep.getName() + "', weight = '" + sheep.getWeight() + "', alive = " + sheep.isAlive() + ", "+

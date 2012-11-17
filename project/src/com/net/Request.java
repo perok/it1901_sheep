@@ -29,7 +29,7 @@ public class Request implements Serializable {
 	}
 
 	public Request(int type, String message, Sheep sheep) {
-		System.out.println("Constructor called");
+		System.out.println("Sheep constructor called");
 		this.type = type;
 		this.message = message;
 		this.sheep = new Sheep(sheep.getId(), sheep.getName(), sheep.getFarmId(), sheep.getDateOfBirth(),
