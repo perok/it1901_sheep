@@ -155,8 +155,8 @@ public class ClientSocket  {
 	 * @param farm
 	 */
 	public void getSheep(Farm farm) {
-		HashMap<String, Integer> params = new HashMap<String, Integer>();
-		params.put("farmId", farm.getId());
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("farmId", Integer.toString(farm.getId()));
 		sendRequest(new Request(Request.REQUEST, "getSheep", params));
 	}
 
@@ -165,8 +165,8 @@ public class ClientSocket  {
 	 * @param farm
 	 */
 	public void getSheep(int farmId) {
-		HashMap<String, Integer> params = new HashMap<String, Integer>();
-		params.put("farmId", farmId);
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("farmId", Integer.toString(farmId));
 		sendRequest(new Request(Request.REQUEST, "getSheep", params));
 	}
 
@@ -175,8 +175,8 @@ public class ClientSocket  {
 	 * @param sheepId
 	 */
 	public void removeSheep(int sheepId) {
-		HashMap<String, Integer> params = new HashMap<String, Integer>();
-		params.put("sheepId", sheepId);
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("sheepId", Integer.toString(sheepId));
 		sendRequest(new Request(Request.REQUEST, "removeSheep", params));
 	}
 
@@ -186,9 +186,9 @@ public class ClientSocket  {
 	 * @param farm
 	 */
 	public void addAccessRights(User user, Farm farm) {
-		HashMap<String, Integer> params = new HashMap<String, Integer>();
-		params.put("userId", user.getId());
-		params.put("farmId", farm.getId());
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("userId", Integer.toString(user.getId()));
+		params.put("farmId", Integer.toString(farm.getId()));
 		sendRequest(new Request(Request.REQUEST, "removeSheep", params));
 	}
 	/**Makes a request with the given paramters and sends it to the server.
@@ -197,9 +197,9 @@ public class ClientSocket  {
 	 * @param farm
 	 */
 	public void removeAccessRights(User user, Farm farm) {
-		HashMap<String, Integer> params = new HashMap<String, Integer>();
-		params.put("userId", user.getId());
-		params.put("farmId", farm.getId());
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("userId", Integer.toString(user.getId()));
+		params.put("farmId", Integer.toString(farm.getId()));
 		sendRequest(new Request(Request.REQUEST, "removeSheep", params));
 	}
 
@@ -208,8 +208,8 @@ public class ClientSocket  {
 	 * @param farm
 	 */
 	public void getSheepStatus(Farm farm) {
-		HashMap<String, Integer> params = new HashMap<String, Integer>();
-		params.put("farmId", farm.getId());
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("farmId", Integer.toString(farm.getId()));
 		sendRequest(new Request(Request.REQUEST, "getSheepStatus", params));
 	}
 
@@ -218,8 +218,8 @@ public class ClientSocket  {
 	 * @param farm
 	 */
 	public void getSheepAlert(Farm farm) {
-		HashMap<String, Integer> params = new HashMap<String, Integer>();
-		params.put("farmId", farm.getId());
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("farmId", Integer.toString(farm.getId()));
 		sendRequest(new Request(Request.REQUEST, "getSheepAlert", params));
 	}
 
@@ -228,8 +228,8 @@ public class ClientSocket  {
 	 * @param farm
 	 */
 	public void invokeAlert(Farm farm) {
-		HashMap<String, Integer> params = new HashMap<String, Integer>();
-		params.put("farmId", farm.getId());
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("farmId", Integer.toString(farm.getId()));
 		sendRequest(new Request(Request.REQUEST, "invokeAlert", params));
 	}
 
