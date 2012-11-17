@@ -11,6 +11,9 @@ import core.classes.Sheep;
 import core.classes.User;
 import core.settings.Settings;
 
+/** Connects the system to a server via sockets. Also handles sending
+ * of requests to the server.
+ */
 public class ClientSocket  {
 
 	private ObjectInputStream sInput;
@@ -19,21 +22,6 @@ public class ClientSocket  {
 	private ServerLogic caller;
 	private String server, username;
 	private int port;
-
-	/**Console constructor
-	 * 
-	 * @param server
-	 * @param port
-	 * @param username
-	 */
-	public ClientSocket(String server, int port, String username) {
-		this(server, port, username, null);
-	}
-	
-	public ClientSocket(Settings settings, String username) {
-		//this.settings = settings
-		this.username = username;
-	}
 
 	/**Gui constructor
 	 * 
@@ -90,16 +78,12 @@ public class ClientSocket  {
 
 
 	/** Writes parameter to command line or GUI, depending on mode. 
-	 * This method shows status and connections to the server
+	 * This primarily send error messages to the server.
 	 * 
 	 * @param req
 	 */
-	
 	private void display(String req) {
-		if(caller == null)
-			System.out.println(req);
-		else
-			caller.handleMessage(req + "\n");
+		caller.handleMessage(req + "\n");
 	}
 
 	/**Transmits the request via outputstream to the server.
@@ -138,19 +122,6 @@ public class ClientSocket  {
 
 	}
 
-
-	public static void main(String[] args) {
-		int portNumber = 1500;
-		String serverAddress = "localhost";
-		String userName = "Anonymous";
-
-		ClientSocket ClientSocket = new ClientSocket(serverAddress, portNumber, userName);
-		if(!ClientSocket.start())
-			return;
-
-		ClientSocket.disconnect();	
-	}
-
 	/**Makes a request with the given paramters and sends it to the server.
 	 * 
 	 * @param username
@@ -162,7 +133,7 @@ public class ClientSocket  {
 		params.put("password", password);
 		sendRequest(new Request(Request.REQUEST, "login" ,params));
 	}
-	
+
 	/**Makes a request with the given paramter and sends it to the server.
 	 * 
 	 * @param user
@@ -176,12 +147,9 @@ public class ClientSocket  {
 	 * @param user
 	 */
 	public void editSheep(Sheep sheep) {
-		System.out.println("EditSheep called");
-		System.out.println(sheep.getId() + sheep.getName());
 		sendRequest(new Request(Request.EDITSHEEP, "editSheep", sheep));
-		System.out.println("Request sent");
 	}
-	
+
 	/**Makes a request with the given paramters and sends it to the server.
 	 * 
 	 * @param farm
@@ -191,7 +159,7 @@ public class ClientSocket  {
 		params.put("farmId", farm.getId());
 		sendRequest(new Request(Request.REQUEST, "getSheep", params));
 	}
-	
+
 	/**Makes a request with the given paramters and sends it to the server.
 	 * 
 	 * @param farm
@@ -201,7 +169,7 @@ public class ClientSocket  {
 		params.put("farmId", farmId);
 		sendRequest(new Request(Request.REQUEST, "getSheep", params));
 	}
-	
+
 	/**Makes a request with the given paramters and sends it to the server.
 	 * 
 	 * @param sheepId
@@ -211,7 +179,7 @@ public class ClientSocket  {
 		params.put("sheepId", sheepId);
 		sendRequest(new Request(Request.REQUEST, "removeSheep", params));
 	}
-	
+
 	/**Makes a request with the given paramters and sends it to the server.
 	 * 
 	 * @param user
@@ -234,7 +202,7 @@ public class ClientSocket  {
 		params.put("farmId", farm.getId());
 		sendRequest(new Request(Request.REQUEST, "removeSheep", params));
 	}
-	
+
 	/**Makes a request with the given paramters and sends it to the server.
 	 * 
 	 * @param farm
@@ -244,7 +212,7 @@ public class ClientSocket  {
 		params.put("farmId", farm.getId());
 		sendRequest(new Request(Request.REQUEST, "getSheepStatus", params));
 	}
-	
+
 	/**Makes a request with the given paramters and sends it to the server.
 	 * 
 	 * @param farm
@@ -254,7 +222,7 @@ public class ClientSocket  {
 		params.put("farmId", farm.getId());
 		sendRequest(new Request(Request.REQUEST, "getSheepAlert", params));
 	}
-	
+
 	/**Makes a request with the given paramters and sends it to the server.
 	 * 
 	 * @param farm
@@ -276,16 +244,7 @@ public class ClientSocket  {
 			while(true) {
 				try {
 					Response res = (Response) sInput.readObject();			
-					
-
-					
-					if(caller == null) {
-						System.out.println(res.toString());
-						System.out.print("> ");
-					}
-					else {
-						caller.handleResponse(res);
-					}
+					caller.handleResponse(res);
 				}
 				catch(IOException e) {
 					display("Server has close the connection: " + e);

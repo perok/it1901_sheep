@@ -50,7 +50,6 @@ public class ClientHandler implements Runnable {
 				req = (Request) sInput.readObject();
 
 				switch(req.getType()) {
-
 				case Request.LOGOUT:
 					server.sg.appendEvent(username + " disconnected with a LOGOUT message.");
 					keepGoing = false;
@@ -113,8 +112,7 @@ public class ClientHandler implements Runnable {
 			Response lol = new Response(Response.USER,db.loginQuery(request.getparameter("username"), request.getparameter("password")));
 		return lol;
 		case("editSheep"):
-			System.out.println("Client handler editSheep: "+request.getSheep().getName());
-		return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()));
+			return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()));
 
 		case("editUser"):
 			return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()));
@@ -122,8 +120,6 @@ public class ClientHandler implements Runnable {
 		case("invokeAlert"):
 			return new Response(Response.BOOLEAN,server.simulator.addAlert(Integer.parseInt(request.getparameter("farmId")), 1));
 		}
-
-
 
 
 		return null;

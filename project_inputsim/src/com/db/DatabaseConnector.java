@@ -2,7 +2,6 @@ package com.db;
 
 import core.settings.*;
 import core.classes.*;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -40,7 +39,7 @@ public class DatabaseConnector {
 		}
 	}
 
-	/**Helper method to get boolean value of a db-entry
+	/** Helper method to get boolean value of a db-entry
 	 * 
 	 * @param string
 	 * @return
@@ -102,27 +101,40 @@ public class DatabaseConnector {
 			return null;
 		}
 		catch(ArrayIndexOutOfBoundsException e){
-			System.out.println("AIOOBE");
 			e.printStackTrace();
 			return null;
-		}
-		
-				
-		
+		}		
 	}
 
-
-
+	/** Gets a list of all sheep in farm specified in paramter.
+	 * Adds the last SheepStatuses from the DB to the sheep before returning
+	 * 
+	 * @param farmId
+	 * @return
+	 */
 	public ArrayList<Sheep> getSheep(int farmId) {
 		ArrayList<Sheep> list = new ArrayList<Sheep>();
 		String[][] r = processQuery("SELECT * FROM sheep WHERE farm_id = " + farmId + "");
 		for (int i = 0; i < r.length; i++) {
-			list.add(new Sheep(Integer.parseInt(r[i][0]),r[i][1],Integer.parseInt(r[i][2]),Integer.parseInt(r[i][3]),
-					Boolean.parseBoolean(r[i][4]),Integer.parseInt(r[i][5])));
+			Sheep sheep = new Sheep(Integer.parseInt(r[i][0]),r[i][1],Integer.parseInt(r[i][2]),Integer.parseInt(r[i][3]),
+					Boolean.parseBoolean(r[i][4]),Integer.parseInt(r[i][5]));
+			String [][] r5 = processQuery("SELECT * from sheep_status WHERE sheep_id = " + sheep.getId() + " LIMIT 10;");
+			for (int k = 0; k < r5.length; k++) {
+				for (int k2 = 0; k2 < r5[k].length; k2++) {
+					sheep.addSheepStatus(new SheepStatus(Integer.parseInt(r5[k][k2]),Integer.parseInt(r5[k][k2]),Integer.parseInt(r5[k][k2]),
+							Float.parseFloat(r5[k][k2]),new GPSPosition(Double.parseDouble(r5[k][k2]), Double.parseDouble(r5[k][k2])),Integer.parseInt(r5[k][k2])));
+				}
+			}
+			list.add(sheep);
 		}
 		return list;
 	}
 
+	/** Deletes sheep in parameter from database.
+	 * 
+	 * @param sheep
+	 * @return
+	 */
 	public boolean removeSheep(Sheep sheep) {
 		try {
 			Statement s = conn.createStatement();
@@ -134,6 +146,11 @@ public class DatabaseConnector {
 		}
 	}
 
+	/** Deletes sheep with id provided in parameter from database.
+	 * 
+	 * @param sheep
+	 * @return
+	 */
 	public boolean removeSheep(int sheepId) {
 		try {
 			Statement s = conn.createStatement();
@@ -145,6 +162,11 @@ public class DatabaseConnector {
 		}
 	}
 
+	/** Returns a list of all the farms a user has access to.
+	 * 
+	 * @param user
+	 * @return
+	 */
 	public ArrayList<Farm> getFarms(User user) {
 		ArrayList<Farm> list = new ArrayList<Farm>();
 		String[][] r = processQuery("SELECT * FROM access_rights WHERE user_id = " + user.getId() + "");
@@ -153,7 +175,13 @@ public class DatabaseConnector {
 		}
 		return list;
 	}
-
+	
+	/** Adds access rights for the userId to the given farmId.
+	 * 
+	 * @param userId
+	 * @param farmId
+	 * @return
+	 */
 	public boolean addAccessRights(int userId, int farmId) {
 		try{
 			Statement s = conn.createStatement();
@@ -165,6 +193,12 @@ public class DatabaseConnector {
 		return true;
 	}
 
+	/** Removes access rights for the userId to the given farmId.
+	 * 
+	 * @param userId
+	 * @param farmId
+	 * @return
+	 */
 	public boolean removeAccessRights(int userId, int farmId) {
 
 		try{
@@ -255,6 +289,9 @@ public class DatabaseConnector {
 		}	
 	}
 
+	/** Purges database of all SheepStatuses
+	 * 
+	 */
 	public void deleteSheepStatus() {
 		try {
 			Statement s = conn.createStatement();
@@ -265,6 +302,10 @@ public class DatabaseConnector {
 		}	
 	}
 
+	/** Creates an entry of the given paramter in the database.
+	 * 
+	 * @param sheepalerts
+	 */
 	public void insertSheepAlert(String[][] sheepalerts) {
 		try {
 			Statement s = conn.createStatement();
@@ -279,6 +320,10 @@ public class DatabaseConnector {
 		}	
 	}
 	
+	/** Creates an entry of the given paramter in the database.
+	 * 
+	 * @param alert
+	 */
 	public void insertSheepAlert(SheepAlert alert) {
 		try {
 			Statement s = conn.createStatement();
@@ -293,6 +338,9 @@ public class DatabaseConnector {
 		}	
 	}
 
+	/** Purges database of all SheepAlerts
+	 * 
+	 */
 	public void deleteSheepAlert() {
 		try {
 			Statement s = conn.createStatement();
@@ -303,7 +351,10 @@ public class DatabaseConnector {
 		}	
 	}
 
-
+	/** Sets a notified flag in the database when the user has been notified.
+	 * 
+	 * @param alertId
+	 */
 	public void alertNotified(int alertId) {
 		try {
 			Statement s = conn.createStatement();
@@ -315,6 +366,11 @@ public class DatabaseConnector {
 		}	
 	}
 
+	/** Returns the email address of a farms admin.
+	 * 
+	 * @param farmId
+	 * @return
+	 */
 	public String getAlertResponderEmail(int farmId) {
 		System.out.println(farmId);
 		String[][] r = processQuery("SELECT user_id FROM access_rights WHERE farm_id = " + farmId + 
@@ -325,6 +381,11 @@ public class DatabaseConnector {
 
 	}
 
+	/** Returns the phone number of a farms admin.
+	 * 
+	 * @param farmId
+	 * @return
+	 */
 	public int getAlertResponderPhone(int farmId) {
 		String[][] r = processQuery("SELECT user_id FROM access_rights WHERE farm_id = " + farmId + 
 				" AND admin=1;");
@@ -333,6 +394,10 @@ public class DatabaseConnector {
 
 	}
 
+	/** Creates a sheep entry of the given paramter in the database.
+	 * 
+	 * @param sheep
+	 */
 	public void insertSheep(String[][] sheep) {
 		try {
 			Statement s = conn.createStatement();
@@ -347,11 +412,18 @@ public class DatabaseConnector {
 		}	
 	}
 
+	/** Returns the number of sheep in the database.
+	 * 
+	 * @return
+	 */
 	public int getNumberOfSheep() {
 		String[][] results = processQuery("SELECT * FROM sheep");
 		return results.length;
 	}
 
+	/** Purges database of all sheep.
+	 * 
+	 */
 	public void deleteSheep() {
 		try {
 			Statement s = conn.createStatement();
@@ -362,6 +434,10 @@ public class DatabaseConnector {
 		}	
 	}
 
+	/** Creates a farm entry for the given parameter in the database.
+	 * 
+	 * @param farms
+	 */
 	public void insertFarms(String[] farms) {
 		try {
 			Statement s = conn.createStatement();
