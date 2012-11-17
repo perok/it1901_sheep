@@ -27,6 +27,19 @@ public class UserStorage {
 		user.setName(sUsername);
 	}
 	
+	public static void setUsermail(String sMail)
+	{
+		user.setEmail(sMail);
+	}
+	
+	public static void setPhone(String sPhoneNumber)
+	{
+		/* Should be safe as the input needs to pass a regex match */
+		int iPhoneNumber = Integer.parseInt(sPhoneNumber);
+		
+		user.setMobileNumber(iPhoneNumber);
+	}
+	
 
 	public static int getCurrentFarm() {
 		return currentFarm;
