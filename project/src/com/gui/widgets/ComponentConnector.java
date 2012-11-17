@@ -23,7 +23,9 @@ public class ComponentConnector
 	{
 		try
 		{
-			return o.getClass().getMethod(this.f_read.getName(), this.f_read.getParameterTypes()).invoke(o);
+			Object oOutput =  o.getClass().getMethod(this.f_read.getName(), this.f_read.getParameterTypes()).invoke(o);
+						
+			return oOutput;
 		}
 		
 		catch(Throwable t)

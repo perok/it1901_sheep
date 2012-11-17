@@ -30,7 +30,6 @@ public class AlertSettings extends QWidget implements InputComponentHost
 	private QCheckBox qcbMailCheckbox;
 	private QCheckBox qcbCallCheckbox;
 	private QListWidget qlwPackageList;	
-	private QPushButton qpbBtnAlarm;
 	
 	/** Constructor. Initialize..
 	 * 
@@ -47,22 +46,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
         initConnectEvents();
         initLayout();
         
-        this.qpbBtnAlarm.toggle();
-        
-        // the alarm is independent
-        // On activate, set text to stop
-        
         //TODO: add inputcomponents here
-    }
-    
-    @SuppressWarnings("unused")
-    /** Function used to call for an alarm
-     */
-	private void toggleAlarm()
-    {
-    	System.out.println("BEEP");
-    	
-    	/* If alarm active, set text to */
     }
     
     @SuppressWarnings("unused")
@@ -88,7 +72,6 @@ public class AlertSettings extends QWidget implements InputComponentHost
      */
     private void initConnectEvents()
     {
-    	this.qpbBtnAlarm.clicked.connect(this, "toggleAlarm()");
     	this.qlwPackageList.currentItemChanged.connect(this, "updateTheme()");
     }
         
@@ -96,7 +79,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
      */
     private void initWidgets()
     {
-    	this.qpbBtnAlarm = new QPushButton(tr("Simuler alarm"));
+    	//TODO: init all widgets here
     }        
     
     /** Initialize the theme selector
@@ -142,7 +125,6 @@ public class AlertSettings extends QWidget implements InputComponentHost
 
         qvbMainLayout.addWidget(qgbUpdateGroup);
         qvbMainLayout.addWidget(qgbPackageGroup);
-        qvbMainLayout.addWidget(qpbBtnAlarm);
         qvbMainLayout.addSpacing(12);
         qvbMainLayout.addStretch(1);
         

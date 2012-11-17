@@ -110,7 +110,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 */
     public void actionSettings_triggered(boolean triggered)
     {
-    	new SettingsMenu(null).show();
+    	new SettingsMenu(this.mw.getMother()).show();
     }
 	
 	//NOT WORKING 

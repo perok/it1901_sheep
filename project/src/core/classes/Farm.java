@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /*Ser at ikke alt her er likt som i diagrammet.
- * Er fult villig til Œ forandre pŒ ting sŒklart, men vil gjerne snakke om det f¿rst.*/
+ * Er fullt villig til å forandre på ting såklart, men vil gjerne snakke om det først.*/
 
-public class Farm implements Serializable {
-	
+public class Farm implements Serializable 
+{	
 	/**
 	 * 
 	 */

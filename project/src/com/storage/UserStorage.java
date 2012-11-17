@@ -27,14 +27,14 @@ public class UserStorage {
 		user.setName(sUsername);
 	}
 	
-	public static void setUsermail(String sMail)
+	public static void setUserMail(String sMail)
 	{
 		user.setEmail(sMail);
 	}
 	
-	public static void setPhone(String sPhoneNumber)
+	public static void setUserPhone(String sPhoneNumber)
 	{
-		/* Should be safe as the input needs to pass a regex match */
+		/* Parameter shoudl be safe as the input needs to pass a regex match */
 		int iPhoneNumber = Integer.parseInt(sPhoneNumber);
 		
 		user.setMobileNumber(iPhoneNumber);

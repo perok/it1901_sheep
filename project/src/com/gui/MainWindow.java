@@ -49,7 +49,6 @@ public class MainWindow extends QMainWindow
         QApplication.exec();
         
         /*
-         * http://doc.qt.digia.com/qt/gallery.html
          * http://www.slideshare.net/qtbynokia/how-to-make-your-qt-app-look-native
          */
      }
@@ -75,7 +74,7 @@ public class MainWindow extends QMainWindow
     }
     
 	/**
-	 * Event fired when user has made a succesfull loggin.
+	 * Event fired when user has made a successful login.
 	 * Changes the view to application mode
 	 */
 	public void setupUi_MainWindow(){

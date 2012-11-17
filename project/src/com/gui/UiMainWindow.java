@@ -85,11 +85,17 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
     public QSpacerItem horizontalSpacer_3;
     public QComboBox cmbDockFarmId;
     public QLineEdit lineEdit;
+    
+    private QMainWindow qmw = null;
+    
+    public QMainWindow getMother() { return this.qmw; } 
 
     public UiMainWindow() { super(); }
 
     public void setupUi(QMainWindow MainWindow, int width, int height)
     {
+    	this.qmw = MainWindow;
+    	
         MainWindow.setObjectName("MainWindow");
         MainWindow.setWindowModality(com.trolltech.qt.core.Qt.WindowModality.NonModal);
         MainWindow.resize(new QSize(width, height).expandedTo(MainWindow.minimumSizeHint()));

@@ -22,6 +22,11 @@ public class ServerLogic extends QSignalEmitter{
 		loggedIn = new Signal0();
 	}
 	
+	public static ClientSocket getClientsocket()
+	{
+		return clientSocket;
+	}
+	
 	/**
 	 * Signaled method for setting up network connection and log in
 	 * 

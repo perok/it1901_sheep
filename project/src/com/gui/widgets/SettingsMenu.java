@@ -2,6 +2,9 @@ package com.gui.widgets;
 
 import java.util.List;
 import java.util.ArrayList;
+
+import com.gui.UiMainWindow;
+import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt.AlignmentFlag;
 import com.trolltech.qt.core.Qt.ItemFlag;
@@ -56,6 +59,11 @@ public class SettingsMenu extends QDialog
 	    super.setWindowTitle(tr("Innstillinger"));
 	    super.setWindowIcon(new QIcon(CLASS_ICON));
 	}
+    
+    protected QObject getParent()
+    {
+    	return super.parent();
+    }
     
     /** The configuration dialog holds different widgets.
      * This function can be used to change between them.
