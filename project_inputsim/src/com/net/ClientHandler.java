@@ -36,9 +36,9 @@ public class ClientHandler implements Runnable {
 		db = new DatabaseConnector(this.settings);
 	}
 
-/** Starts the thread to allow communication with client.
- * 
- */
+	/** Starts the thread to allow communication with client.
+	 * 
+	 */
 	@Override
 	public void run() {
 		try{
@@ -48,21 +48,22 @@ public class ClientHandler implements Runnable {
 
 			while(keepGoing){
 				req = (Request) sInput.readObject();
-				
+
 				switch(req.getType()) {
 
-                case Request.REQUEST:
-                	server.display(username + ": " + req.getMessage() );
-                    Response res = HandleRequest(req);
-    				sOutput.writeObject(res);
-    				sOutput.flush();
-                    break;
-                case Request.LOGOUT:
-                    server.sg.appendEvent(username + " disconnected with a LOGOUT message.");
-                    keepGoing = false;
-    				kill();
-                    break;
-                }
+				case Request.LOGOUT:
+					server.sg.appendEvent(username + " disconnected with a LOGOUT message.");
+					keepGoing = false;
+					kill();
+					break;
+
+				default :
+					server.display(username + ": " + req.getMessage() );
+					Response res = HandleRequest(req);
+					sOutput.writeObject(res);
+					sOutput.flush();
+					break;
+				}
 			}
 		}
 		catch(IOException e) {
@@ -72,7 +73,7 @@ public class ClientHandler implements Runnable {
 		}
 
 	}
-	
+
 	/** Kills streams and socket.
 	 * 
 	 * @throws IOException
@@ -82,7 +83,7 @@ public class ClientHandler implements Runnable {
 		sInput.close();
 		socket.close(); 
 	}
-	
+
 	/**Processes requests from clients. Calls the appropriate db method based on the input given.
 	 * 
 	 * @param request
@@ -92,38 +93,38 @@ public class ClientHandler implements Runnable {
 		switch(request.getMessage()){
 		case("getSheep"):
 			return new Response(Response.LIST,db.getSheep(Integer.parseInt(request.getparameter("farmId"))));
-		
+
 		case("getSheepStatus"):
 			return new Response(Response.LIST,db.getSheepStatus(Integer.parseInt(request.getparameter("farmId"))));
-			
+
 		case("getSheepAlert"):
 			return new Response(Response.LIST,db.getSheepAlert(Integer.parseInt(request.getparameter("farmId"))));
-			
+
 		case("deleteAccessRights"):
 			return new Response(Response.BOOLEAN,db.removeAccessRights(Integer.parseInt(request.getparameter("userId")), Integer.parseInt(request.getparameter("farmId"))));
-			
+
 		case("addAccessRights"):
 			return new Response(Response.BOOLEAN,db.addAccessRights(Integer.parseInt(request.getparameter("userId")), Integer.parseInt(request.getparameter("farmId"))));
-			
+
 		case("removeSheep"):
 			return new Response(Response.BOOLEAN,db.removeSheep(Integer.parseInt(request.getparameter("sheepId"))));
 
 		case("login"):
 			Response lol = new Response(Response.USER,db.loginQuery(request.getparameter("username"), request.getparameter("password")));
-			return lol;
+		return lol;
 		case("editSheep"):
 			System.out.println("Client handler editSheep: "+request.getSheep().getName());
-			return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()));
+		return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()));
 
 		case("editUser"):
 			return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()));
-		
+
 		case("invokeAlert"):
 			return new Response(Response.BOOLEAN,server.simulator.addAlert(Integer.parseInt(request.getparameter("farmId")), 1));
 		}
-	
-	
-	
+
+
+
 
 		return null;
 	}
