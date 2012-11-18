@@ -71,6 +71,7 @@ public class WMSService {
 				+ ts + "&height=" + ts + "&SRS=" + srs + "&Styles=" + styles +
 				// "&transparent=TRUE"+
 				"";
+		System.out.println(url);
 		return url;
 	}
 
