@@ -40,12 +40,14 @@ public class UserSettings extends QWidget implements InputComponentHost
 	private QLineEdit qlePhone;
 	private QPushButton qpbBtnAlarm;
 	
+	public Signal0 signalFarmUpdate;
+	
 	private List<ComponentConnector> lComponents = new ArrayList<ComponentConnector>();
 		
 	/** Constructor. Initialize..
 	 * @param parent the host of THIS
 	 */
-	public UserSettings(QWidget parent)
+	public UserSettings(SettingsMenu parent)
     {
         super(parent);
                     
@@ -54,6 +56,8 @@ public class UserSettings extends QWidget implements InputComponentHost
         initUserInput();
         initLayout();
         
+        this.signalFarmUpdate = new Signal0();
+
         addConnector(this.qleUsername, "text", com.storage.UserStorage.class, "setUserName", String.class);
         addConnector(this.qleEmail, "text", com.storage.UserStorage.class, "setUserMail", String.class);
         addConnector(this.qlePhone, "text", com.storage.UserStorage.class, "setUserPhone", String.class);
@@ -105,6 +109,7 @@ public class UserSettings extends QWidget implements InputComponentHost
 		// TODO: there needs to be some supplementary functionality to make use of this.
 		
 		com.storage.UserStorage.setCurrentFarm(this.qcbFarmCombo.currentIndex());
+		signalFarmUpdate.emit();
 	}
 	
 	/** Initialize event-driven actions

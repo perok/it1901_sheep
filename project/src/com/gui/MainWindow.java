@@ -53,6 +53,8 @@ public class MainWindow extends QMainWindow
          */
      }
     
+    
+    
     /** Constructor. Initialize..
      * 
      * @param parent potential parent for this window. Should be set to null for now.

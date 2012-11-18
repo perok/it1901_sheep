@@ -21,6 +21,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 	
 	public Signal0 signalShowAbout;
 	public Signal0 signalShowAboutQt;
+	public Signal0 signalUpdateSheepList;
+	
 	
 	private Sheep currentSheep;
 
@@ -48,6 +50,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		/* Setting up signals */
 		signalShowAbout = new Signal0();
 		signalShowAboutQt = new Signal0();
+		signalUpdateSheepList = new Signal0();
 			//MainWinow
 				//MENU
 		mw.actionInformation_Window.toggled.connect(this, "actionInformation_Window_toggled(boolean)");
@@ -58,6 +61,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		mw.actionUndo.triggered.connect(this, "actionUndo_toggled(boolean)");
 		mw.actionSettings.triggered.connect(this, "actionSettings_triggered(boolean)");
 		mw.actionSettings.setStatusTip("Show the settings for this application");
+
 
 		
 				//DOCKWIDGET
@@ -110,7 +114,17 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 */
     public void actionSettings_triggered(boolean triggered)
     {
-    	new SettingsMenu(this.mw.getMother()).show();
+    	SettingsMenu spawn = new SettingsMenu(this.mw.getMother());
+    	
+    	spawn.show();
+    	spawn.signalSubChildrenEmit.connect(this, "updateSheepList()");
+    }
+    
+    @SuppressWarnings("unused")
+    private void updateSheepList()
+    {
+    	this.slwHandler.refreshSheepList();
+    	this.mw.cmbDockFarmId.setCurrentIndex(UserStorage.getCurrentFarm());
     }
 	
 	//NOT WORKING 

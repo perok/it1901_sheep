@@ -65,7 +65,7 @@ public class UserStorage {
 		if(i >= 0 && i <= 1)
 			msgType = i;
 		else
-			throw new Exception("MessageType don't ekist");
+			throw new Exception("MessageType don't exist");
 	}
 	
 }

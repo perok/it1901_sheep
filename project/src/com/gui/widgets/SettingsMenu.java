@@ -36,6 +36,8 @@ public class SettingsMenu extends QDialog
 	private QListWidget qlwParentcontentsWidget;
     private QStackedWidget qswPagesWidget;
     private QPushButton qpbCloseButton;
+    
+    public Signal0 signalSubChildrenEmit;
      
     /** Constructor. Initialize
      *
@@ -51,6 +53,10 @@ public class SettingsMenu extends QDialog
 	    initLayout();
 	    initIcons();
 	    
+	    this.signalSubChildrenEmit = new Signal0();
+	    
+	    this.usUserWidget.signalFarmUpdate.connect(this, "throwUpSignals()");
+	    
 	    /* Add listeners */
 	    this.lDynamicComponents.add(this.asAlertWidget);
 	    this.lDynamicComponents.add(this.usUserWidget);
@@ -59,6 +65,12 @@ public class SettingsMenu extends QDialog
 	    super.setWindowTitle(tr("Innstillinger"));
 	    super.setWindowIcon(new QIcon(CLASS_ICON));
 	}
+    
+    @SuppressWarnings("unused")
+    private void throwUpSignals()
+    {
+    	signalSubChildrenEmit.emit();
+    }
     
     protected QObject getParent()
     {
@@ -83,7 +95,7 @@ public class SettingsMenu extends QDialog
 	{
 		for(InputComponentHost dch : this.lDynamicComponents)
 		{
-			dch.writeChange();			
+			dch.writeChange();
 		}
 	}
 
