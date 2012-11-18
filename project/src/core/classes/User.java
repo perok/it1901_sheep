@@ -86,7 +86,6 @@ public class User  implements Serializable{
 	}
 	
 	public void addFarms(ArrayList<Farm> farms) {
-		System.out.println(farms.size());
 		for (int i = 0; i < farms.size(); i++) {
 			this.farmlist.add(farms.get(i));
 		}

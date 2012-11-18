@@ -16,7 +16,6 @@ import core.settings.Settings;
 public class AlertNotifier implements Runnable{
 	private DatabaseConnector db;
 	private PhoneNotifier skype;
-	private ArrayList<SheepAlert> alerts;
 	private MailNotifier mail;
 	private Settings settings;
 
