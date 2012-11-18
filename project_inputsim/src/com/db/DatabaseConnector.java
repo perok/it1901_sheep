@@ -161,6 +161,7 @@ public class DatabaseConnector {
 			return false;
 		}
 	}
+	
 
 	/** Returns a list of all the farms a user has access to.
 	 * 
@@ -211,6 +212,12 @@ public class DatabaseConnector {
 		return true;
 	}
 
+	/** Takes in a user and changes the values for given user in database.
+	 * 
+	 * @param userId
+	 * @param user
+	 * @return
+	 */
 	public boolean editUser(int userId, User user) {
 
 		try{
@@ -224,8 +231,13 @@ public class DatabaseConnector {
 		return true;
 	}
 	
+	/** Takes in a sheep and changes the values for given user in database.
+	 * 
+	 * @param sheepId
+	 * @param sheep
+	 * @return
+	 */
 	public boolean editSheep(int sheepId, Sheep sheep) {
-		System.out.println("Editing: " + sheep.getName() + "," + sheep.getId());
 		try{
 			Statement s = conn.createStatement();
 			s.executeUpdate("UPDATE sheep SET name = '" + sheep.getName() + "', weight = '" + sheep.getWeight() + "', alive = " + sheep.isAlive() + ", "+
@@ -238,6 +250,11 @@ public class DatabaseConnector {
 	}
 
 
+	/** Returns all sheepStatuses for given farm.
+	 * 
+	 * @param farmId
+	 * @return
+	 */
 	public ArrayList<SheepStatus> getSheepStatus(int farmId) {
 		ArrayList<SheepStatus> list = new ArrayList<SheepStatus>();
 		String[][] r = processQuery("SELECT * FROM sheep_status WHERE farm_id = " + farmId + ";");
@@ -249,6 +266,11 @@ public class DatabaseConnector {
 		return list;
 	}
 
+	/** Returns all sheepAlert for given farm.
+	 * 
+	 * @param farmId
+	 * @return
+	 */
 	public ArrayList<SheepAlert> getSheepAlert(int farmId) {
 		ArrayList<SheepAlert> list = new ArrayList<SheepAlert>();
 		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE farm_id = " + farmId + ";");
@@ -265,16 +287,30 @@ public class DatabaseConnector {
 	 * SERVER SECTION
 	 */
 
+	/** Returns phoneNumber for given user.
+	 * 
+	 * @param username
+	 * @return
+	 */
 	public String getPhoneNumber(String username) {
 		String[][] results = processQuery("SELECT phone_number FROM user WHERE username = '" + username + "';");
 		return results[0][0];
 	}
 
+	/** Returns email for given user.
+	 * 
+	 * @param username
+	 * @return
+	 */
 	public String getEmailAddress(String username) {
 		String[][] results = processQuery("SELECT e-mail FROM user WHERE username = '" + username + "';");
 		return results[0][0];
 	}
 
+	/** Inserts the given paramter into the database.
+	 * 
+	 * @param sheepstats
+	 */
 	public void insertSheepStatus(String[][] sheepstats) {
 		try {
 			Statement s = conn.createStatement();
@@ -433,6 +469,15 @@ public class DatabaseConnector {
 			e.printStackTrace();
 		}	
 	}
+	
+	public void setSheepAlive(int id, int status) {
+		try{
+			Statement s = conn.createStatement();
+			s.executeUpdate("UPDATE sheep SET alive = " + status + " WHERE id = " + id + ";");
+		}
+		catch(Exception e){
+		}
+	}
 
 	/** Creates a farm entry for the given parameter in the database.
 	 * 
@@ -527,6 +572,34 @@ public class DatabaseConnector {
 		String[][] results = processQuery("SELECT name,id FROM user WHERE true;");
 		return results;
 	}
+	
+	/** Returns an ArrayList with id and name of all users in database.
+	 * 
+	 * @return
+	 */
+	public ArrayList<User> listUsersArrayList() {
+		try{
+			String[][] r = processQuery("SELECT id,username,name,password,mobile_number,email FROM user WHERE true;");
+			ArrayList<User> users = new ArrayList<User>();
+
+			for (int i = 0; i < r[0].length; i++) {
+				User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5]);
+			users.add(user);
+			}
+			
+			return users;
+			
+			}
+			catch(NullPointerException e){
+				e.printStackTrace();
+				return null;
+			}
+			catch(ArrayIndexOutOfBoundsException e){
+				System.out.println("Unauthorized login attempt detected");
+				return null;
+			}	
+	}
+	
 	
 	/** Returns a String[] with id and name of all farms in database.
 	 * 

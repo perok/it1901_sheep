@@ -11,37 +11,37 @@ public class Response implements Serializable {
 	private int type;
 	private boolean success;
 	private User user;
-	private ArrayList<?> content;
+	private ArrayList content;
 	
 	public Response(int type, boolean success) {
 		this.type = type;
 		this.success = success;
 	}
 	
-	public Response(int type, ArrayList<?> content) {
+	public Response(int type, ArrayList content) {
 		this.type = type;
-		this.content = content;
+		for (int i = 0; i < content.size(); i++) {
+			this.content.add(content.get(i));
+		}
 	}
 	
-	public Response(int type, boolean success, ArrayList<?> content) {
+	public Response(int type, boolean success, ArrayList content) {
 		this.type = type;
 		this.success = success;
-		this.content = content;
+		for (int i = 0; i < content.size(); i++) {
+			this.content.add(content.get(i));
+		}
 	}
 	
 	public Response(int type, User user) {
 		this.type = type;
-		this.user = user;
-	}
+		this.user = new User(user.getId(),user.getUsername(),user.getName(),user.getPassword(),
+				user.getMobileNumber(),user.getEmail(),user.getFarmlist());
+		}
 	
 	public int getType() {
 		return type;
 	}
-	
-	public User getUser() {
-		return user;
-	}
-	
 	public boolean getSuccess() {
 		return success;
 	}
@@ -50,14 +50,24 @@ public class Response implements Serializable {
 		this.success = success;
 	}
 
-	public ArrayList<?> getContent() {
+	public ArrayList getContent() {
 		return content;
 	}
 
-	public void setContent(ArrayList<?> content) {
-		this.content = content;
+	public void setContent(ArrayList content) {
+		for (int i = 0; i < content.size(); i++) {
+			this.content.add(content.get(i));
+		}
 	}
 	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public String toString() {
 		if(this.type == Response.LIST) {
 			String out = new String();
@@ -73,5 +83,3 @@ public class Response implements Serializable {
 				return "Fail";
 	}
 }
-
-
