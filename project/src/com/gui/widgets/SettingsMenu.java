@@ -93,9 +93,9 @@ public class SettingsMenu extends QDialog
 	 */
 	private void checkForChange()
 	{
-		for(InputComponentHost dch : this.lDynamicComponents)
+		for(InputComponentHost ich : this.lDynamicComponents)
 		{
-			dch.writeChange();
+			ich.writeChange();
 		}
 	}
 

@@ -19,6 +19,7 @@ import com.trolltech.qt.gui.QValidator;
 import com.trolltech.qt.gui.QWidget;
 
 import core.classes.Farm;
+import core.classes.User;
 
 /** Show the settings for the user.
  * 
@@ -228,9 +229,23 @@ public class UserSettings extends QWidget implements InputComponentHost
 	@Override
 	public void writeChange() 
 	{
+		User origUser = com.storage.UserStorage.getUser().copyShallowUser(),
+			 newUser  = null;
+		
 		for(ComponentConnector cc : this.lComponents)
 		{
+			// We could pass of a new user object anyhoooo
 			cc.writeChanges();
+		}
+		
+		newUser = com.storage.UserStorage.getUser().copyShallowUser();
+		System.out.println(origUser.getName());
+		System.out.println(newUser.getName());
+		
+		if(origUser.shallowEquals(newUser) == false)
+		{
+			//TODO: pass off new user
+			System.out.println("user was updated!");
 		}
 	}
 }
