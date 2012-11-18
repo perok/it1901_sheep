@@ -228,6 +228,7 @@ public class ClientSocket  {
 	 * @param farm
 	 */
 	public void invokeAlert(Farm farm) {
+		System.out.println("InvokeAlert!" + farm.getId());
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("farmId", Integer.toString(farm.getId()));
 		sendRequest(new Request(Request.REQUEST, "invokeAlert", params));

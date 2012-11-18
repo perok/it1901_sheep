@@ -72,8 +72,8 @@ public class UserSettings extends QWidget implements InputComponentHost
     	
     	//TODO: legg til en "er du sikker på at du vil simulere alarm" popup box...
     	
-    	//ServerLogic.getClientsocket().invokeAlert(com.storage.UserStorage.getUser().getFarmlist().get(
-    		//	com.storage.UserStorage.getCurrentFarm()));
+    	ServerLogic.getClientsocket().invokeAlert(com.storage.UserStorage.getUser().getFarmlist().get(
+    			com.storage.UserStorage.getCurrentFarm()));
     }
 	
 	private <T> void addConnector
