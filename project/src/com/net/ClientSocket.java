@@ -228,10 +228,16 @@ public class ClientSocket  {
 	 * @param farm
 	 */
 	public void invokeAlert(Farm farm) {
-		System.out.println("InvokeAlert!" + farm.getId());
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("farmId", Integer.toString(farm.getId()));
 		sendRequest(new Request(Request.REQUEST, "invokeAlert", params));
+	}
+	
+	/** Makes a request for all the users in an ArrayList and sends it to the server.
+	 * 
+	 */
+	public void listUsers() {
+		sendRequest(new Request(Request.REQUEST, "listUsersArrayList"));
 	}
 
 	/**Internal class(thread) that listens for input from the server. The object "caller"
