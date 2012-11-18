@@ -66,7 +66,7 @@ public class ClientHandler implements Runnable {
 			}
 		}
 		catch(IOException e) {
-			System.err.println(e);
+			server.sg.appendEvent(username + " Disconnected");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -115,7 +115,7 @@ public class ClientHandler implements Runnable {
 			return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()));
 
 		case("editUser"):
-			return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()));
+			return new Response(Response.BOOLEAN,db.editUser(request.getUser().getId(), request.getUser()));
 
 		case("invokeAlert"):
 			return new Response(Response.BOOLEAN,server.simulator.addAlert(Integer.parseInt(request.getparameter("farmId")), 1));
