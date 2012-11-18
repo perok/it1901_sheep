@@ -573,6 +573,34 @@ public class DatabaseConnector {
 		return results;
 	}
 	
+	/** Returns an ArrayList with id and name of all users in database.
+	 * 
+	 * @return
+	 */
+	public ArrayList<User> listUsersArrayList() {
+		try{
+			String[][] r = processQuery("SELECT id,username,name,password,mobile_number,email FROM user WHERE true;");
+			ArrayList<User> users = new ArrayList<User>();
+
+			for (int i = 0; i < r[0].length; i++) {
+				User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5]);
+			users.add(user);
+			}
+			
+			return users;
+			
+			}
+			catch(NullPointerException e){
+				e.printStackTrace();
+				return null;
+			}
+			catch(ArrayIndexOutOfBoundsException e){
+				System.out.println("Unauthorized login attempt detected");
+				return null;
+			}	
+	}
+	
+	
 	/** Returns a String[] with id and name of all farms in database.
 	 * 
 	 * @return

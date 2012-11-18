@@ -48,7 +48,7 @@ public class Request implements Serializable {
 
 	public Request(int type) {
 		this.type = type;
-		parameters = new HashMap();
+		parameters = new HashMap<String, String>();
 	}
 
 	int getType() {
