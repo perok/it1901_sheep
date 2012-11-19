@@ -36,7 +36,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
 	 * @param parent host of THIS
 	 * @param lThemes a list of strings with the currently availible themes
 	 */
-    public AlertSettings(QWidget parent) 
+    public AlertSettings(SettingsMenu parent) 
     {
         super(parent);
 
@@ -47,6 +47,13 @@ public class AlertSettings extends QWidget implements InputComponentHost
         initLayout();
         
         //TODO: add inputcomponents here
+        //parent.parent().
+    }
+    
+    @SuppressWarnings("unused")
+	private void processUserData(ArrayList lUsers)
+    {
+    	
     }
     
     @SuppressWarnings("unused")
@@ -73,6 +80,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
     private void initConnectEvents()
     {
     	this.qlwPackageList.currentItemChanged.connect(this, "updateTheme()");
+    	
     }
         
     /** Initialize the widgets belonging to THIS

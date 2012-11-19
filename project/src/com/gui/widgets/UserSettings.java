@@ -5,15 +5,18 @@ import java.util.List;
 
 import com.gui.logic.ServerLogic;
 
+import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.core.QRegExp;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QLayout.SizeConstraint;
 import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QRegExpValidator;
+import com.trolltech.qt.gui.QSizePolicy;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QValidator;
 import com.trolltech.qt.gui.QWidget;
@@ -188,6 +191,7 @@ public class UserSettings extends QWidget implements InputComponentHost
 	// POT_TODO: How far do we go before making an acquaintance with QGridLayout?
     private void initLayout()
     {
+    	 QHBoxLayout qhblAccessListLayout = this.alwAccessList.getLayout();
     	 QHBoxLayout qhblFarmsLayout  = new QHBoxLayout();
     	 QHBoxLayout qhblUserLay 	  = new QHBoxLayout();
     	 QHBoxLayout qhblMailLay	  = new QHBoxLayout();
@@ -195,6 +199,8 @@ public class UserSettings extends QWidget implements InputComponentHost
     	 QVBoxLayout qvblUserLay 	  = new QVBoxLayout();
     	 QVBoxLayout qvblFarmsLayout  = new QVBoxLayout();
     	 QVBoxLayout qvblMainLayout   = new QVBoxLayout();
+    	  
+    	 this.qgbAccessGroup.setMaximumWidth(400); // FIXME: I would just like this to be the initial size
     	 
     	 /* Each line for name entry is a horizontal box layout that gets added to a vboxlayout */    	 
     	 qhblUserLay.addWidget(this.qlUsername);
@@ -225,7 +231,7 @@ public class UserSettings extends QWidget implements InputComponentHost
          /* Apply the layout to comboboxes */
          this.qgbFarmGroup  .setLayout(qvblFarmsLayout);
          this.qgbUserField  .setLayout(qvblUserLay);
-         this.qgbAccessGroup.setLayout(this.alwAccessList.getLayout());
+         this.qgbAccessGroup.setLayout(qhblAccessListLayout);
          super			    .setLayout(qvblMainLayout);
     }
 

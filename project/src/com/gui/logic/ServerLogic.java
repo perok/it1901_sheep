@@ -3,9 +3,12 @@ package com.gui.logic;
 import com.net.Response;
 import com.net.ClientSocket;
 import com.storage.UserStorage;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 import com.trolltech.qt.QSignalEmitter;
 
+import java.util.ArrayList;
 import core.classes.Sheep;
+import core.classes.User;
 
 
 public class ServerLogic extends QSignalEmitter{
@@ -14,12 +17,15 @@ public class ServerLogic extends QSignalEmitter{
     private Object objectAskingForResponse = null;
 
     public Signal0 loggedIn;
+    public Signal1<ArrayList<User>> signalUserDataRecieved ;
 
     /**
      * Constructs the object
      */
-	public ServerLogic(){
+	public ServerLogic()
+	{
 		loggedIn = new Signal0();
+		this.signalUserDataRecieved = new Signal1<ArrayList<User>>();
 	}
 	
 	public static ClientSocket getClientsocket()
@@ -84,11 +90,15 @@ public class ServerLogic extends QSignalEmitter{
 					//objectAskingForResponse = null;
 				//}
 			}
-			System.out.println("respinse 1");
+			System.out.println("response 1");
 		}
 		/* Boolean */
 		else if(responseType == 2)
+		{
 			System.out.println("response 2");
+			this.signalUserDataRecieved.emit(response.getContent());
+		}
+		
 		/* User */
 		else if(response.getType() == 3)
 			if(response.getUser() == null)
