@@ -39,7 +39,7 @@ public class DatabasePopulator {
 		sc.removeAccessRights(userId, farmId);
 	}
 	
-	/** Sends the parameter to database via DatabaseConnector to create a user
+	/** Sends the parameter to database via DatabaseConnector to create a user.
 	 * 
 	 * @param username
 	 * @param password
@@ -51,14 +51,14 @@ public class DatabasePopulator {
 		sc.insertUser(user);
 	}
 	
-	/**Deletes all users from the database via DatabaseConnector
+	/** Deletes all users from the database via DatabaseConnector.
 	 * 
 	 */
 	public void deleteUser() {
 		sc.deleteUser();
 	}
 
-	/**Generates random farms based on given parameter.
+	/** Generates random farms based on given parameter.
 	 * 
 	 * @param numberOfFarms
 	 */
@@ -73,7 +73,7 @@ public class DatabasePopulator {
 		}
 	}
 	
-	/**Sends a message to DatabaseConnector to wipe farm database
+	/** Sends a message to DatabaseConnector to wipe farm database.
 	 * 
 	 */
 	public void deleteFarm() {
@@ -82,7 +82,7 @@ public class DatabasePopulator {
 	
 	/** Takes in the number of sheep to be generated.
 	 * Generates a String[][] with number of sheep and calls DatabaseConnector.
-	 * Farms is specified in parameter
+	 * Farms is specified in parameter.
 	 * 
 	 * @return void
 	 * @param numberOfSheep
@@ -102,7 +102,7 @@ public class DatabasePopulator {
 
 	/** Takes in the number of sheep to be generated.
 	 * Generates a String[][] with number of sheep and calls DatabaseConnector.
-	 * Farms is randomly chosen from the farms in the database
+	 * Farms is randomly chosen from the farms in the database.
 	 * 
 	 * @return void
 	 * @param numberOfSheep
@@ -131,7 +131,7 @@ public class DatabasePopulator {
 		sc.insertSheep(sheep);
 	}
 
-	/** Sends a message to DatabaseConnector that wipes everything in sheep table
+	/** Sends a message to DatabaseConnector that wipes everything in sheep table.
 	 * @return void
 	 */
 	public void deleteSheep() {
@@ -162,5 +162,12 @@ public class DatabasePopulator {
 			res += "Name: " + farms[i][0]+", Id: " + farms[i][1] + "\n";
 		}
 		return res;
+	}
+	
+	/** Sends a message to DatabaseConnector that wipes everything in status table.
+	 * @return void
+	 */
+	public void deleteStatus() {
+		sc.deleteSheepStatus();
 	}
 }
