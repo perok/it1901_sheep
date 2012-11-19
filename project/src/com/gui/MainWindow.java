@@ -63,9 +63,7 @@ public class MainWindow extends QMainWindow
          * http://www.slideshare.net/qtbynokia/how-to-make-your-qt-app-look-native
          */
      }
-    
-    
-    
+        
     /** Constructor. Initialize..
      * 
      * @param parent potential parent for this window. Should be set to null for now.
