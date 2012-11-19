@@ -5,6 +5,7 @@ import com.gui.widgets.SettingsMenu;
 import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.core.QDate;
+import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.gui.QLabel;
 
 import core.classes.Sheep;
@@ -45,7 +46,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		//Fiks mapWidget her..
 		
 		/* Adding values to ui */
-		
+		mw.MAPWIDGET.setUrl(new QUrl("http://folk.ntnu.no/perok/it1901"));
 		
 		/* Setting up signals */
 		signalShowAbout = new Signal0();
