@@ -78,7 +78,7 @@ public class DatabaseConnector {
 			for (int i = 0; i < r2.length; i++) {
 
 				String[][] r3 = processQuery("SELECT name FROM farm WHERE id = " + r2[i][0] + ";");
-				Farm farm = new Farm(Integer.parseInt(r2[i][0]),r3[i][0],getBoolean(r2[i][2]));
+				Farm farm = new Farm(Integer.parseInt(r2[i][0]),r3[0][0],getBoolean(r2[i][2]));
 				String [][] r4 = processQuery("SELECT * from sheep WHERE farm_id = " + farm.getId() + ";");
 				for (int j = 0; j < r4.length; j++) {
 					Sheep sheep = new Sheep(Integer.parseInt(r4[j][0]), r4[j][1], Integer.parseInt(r4[j][2]), Integer.parseInt(r4[j][3]), getBoolean(r4[j][4]), Integer.parseInt(r4[j][5]));

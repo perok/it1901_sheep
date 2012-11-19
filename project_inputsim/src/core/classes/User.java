@@ -21,12 +21,14 @@ public class User  implements Serializable{
 	public User(int id, String username, String name, String password, int mobileNumber, String email,  
 			ArrayList<Farm> farmlist) {
 		this.id = id;
+		this.username = username;
 		this.name = name;
 		this.password = password;
 		this.mobileNumber = mobileNumber;
 		this.email = email;
-		this.username = username;
-		this.farmlist = farmlist;
+		for (int i = 0; i < farmlist.size(); i++) {
+			this.farmlist.add(farmlist.get(i));
+		}
 	}
 	
 	public User(int id, String username, String name, String password, int mobileNumber, String email) {
