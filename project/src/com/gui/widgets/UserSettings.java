@@ -134,13 +134,13 @@ public class UserSettings extends QWidget implements InputComponentHost
 	 */
 	private void initGaardSettings()
 	{
-		this.qgbFarmGroup = new QGroupBox(tr("Gård-innstillinger"));
-		this.qlGaardLabel = new QLabel(tr("Gård:"));
+		this.qgbFarmGroup = new QGroupBox(tr("Gï¿½rd-innstillinger"));
+		this.qlGaardLabel = new QLabel(tr("Gï¿½rd:"));
         this.qcbFarmCombo = new QComboBox();
-        this.qpbBtnAlarm = new QPushButton(tr("Simuler alarm for angitt gård"));
+        this.qpbBtnAlarm = new QPushButton(tr("Simuler alarm for angitt gï¿½rd"));
         
-        this.qcbFarmCombo.addItem(tr("Gård 0"));
-        this.qcbFarmCombo.addItem(tr("Gård 1"));
+        this.qcbFarmCombo.addItem(tr("GÃ¥rd 0"));
+        this.qcbFarmCombo.addItem(tr("GÃ¥rd 1"));
         
         this.qcbFarmCombo.setCurrentIndex(com.storage.UserStorage.getCurrentFarm());
 	}

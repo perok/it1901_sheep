@@ -2,6 +2,7 @@ package com.gui.widgets;
 
 import java.util.ArrayList;
 import com.gui.logic.ServerLogic;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 import com.trolltech.qt.gui.QAbstractItemView;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QListWidget;
@@ -11,8 +12,15 @@ import com.trolltech.qt.gui.QVBoxLayout;
 
 import com.trolltech.qt.gui.QWidget;
 
+import core.classes.Farm;
 import core.classes.User;
 
+/** Host a list of admin and non-admin users,
+ * offer a way to raise/lower priviliges for given users.
+ * 
+ * @author Gruppe 10
+ *
+ */
 public class AccessListWidget extends QWidget
 {
 	private QListWidget qlwUserList,
@@ -21,42 +29,67 @@ public class AccessListWidget extends QWidget
 	private QPushButton qpbBtnAddUsers,
 						qpbBtnRemoveUsers;
 	
+	/** Constructor. Initialize..
+	 *
+	 * @param parent
+	 */
 	public AccessListWidget(UserSettings parent)
 	{		
 		initWidgets();
 		initLayout();
 		initConnectEvents();
 		
+		/* When this line is done, a signal sends info back to THIS */
 		ServerLogic.getClientsocket().listUsers();
 	}
 	
+	/** Set up event-triggers
+	 * 
+	 */
 	private void initConnectEvents()
 	{
 		this.qpbBtnAddUsers.clicked.connect(this, "transferToAdmin()");
 		this.qpbBtnRemoveUsers.clicked.connect(this, "transferFromAdmin()");
 	}
 	
+	/** Recive a list of users, and update the widget displaying the users
+	 * 
+	 * @param lUsers a list of all the users
+	 */
 	public void recieveUserData(ArrayList<User> lUsers)
 	{
+		if(lUsers.isEmpty() == true) { return; }
+
+		int iFarm = com.storage.UserStorage.getCurrentFarm();
+		String sCurrentUserName = com.storage.UserStorage.getUser().getName();		
+		ArrayList<Farm> lFarm = com.storage.UserStorage.getUser().getFarmlist();
+		Farm fCurrentFarm = lFarm.get(iFarm);
+		
 		for(User u : lUsers)
 		{
-			//if(u.getFarmlist()
+			//if(u.getName().equals(sCurrentUserName)) { continue; }
+			System.out.println(u.getFarmlist());
+			
 			QListWidgetItem cur = new QListWidgetItem(this.qlwUserList);
 			cur.setText(u.getName());
 		}
 	}
 	
 	@SuppressWarnings("unused")
+	/** For every selected non-admin user, escalate priviliges to admin.
+	 */
 	private void transferFromAdmin()
 	{
 		for(QListWidgetItem qlwi : this.qlwAdminList.selectedItems())
 		{
 			this.qlwUserList.insertItem(0, qlwi.clone());
 			this.qlwAdminList.takeItem(this.qlwAdminList.row(qlwi));
-		}				
+		}
 	}
 	
 	@SuppressWarnings("unused")
+	/** For every selected admin-user, lower priviliges to non-admin
+	 */
 	private void transferToAdmin()
 	{
 		for(QListWidgetItem qlwi : this.qlwUserList.selectedItems())
@@ -66,6 +99,8 @@ public class AccessListWidget extends QWidget
 		}
 	}
 	
+	/** Initialize all widgets used in THIS
+	 */
 	private void initWidgets()
 	{
 		this.qlwUserList = new QListWidget();
@@ -77,10 +112,14 @@ public class AccessListWidget extends QWidget
 		this.qlwAdminList.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection);
 	}
 		
+	/** Return the layout used to display this widgets
+	 * 
+	 * @see 
+	 * @return the layout used to display this widget.
+	 */
 	public QHBoxLayout getLayout()
 	{
 		this.qhblMainLayout.setSpacing(10);
-		//this.qhblMainLayout.setStretchF
 		return this.qhblMainLayout;
 	}
 	
