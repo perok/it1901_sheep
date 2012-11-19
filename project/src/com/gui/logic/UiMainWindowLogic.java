@@ -1,11 +1,9 @@
 package com.gui.logic;
 
-<<<<<<< HEAD
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-=======
+
 import java.util.ArrayList;
->>>>>>> a05d446ff69e1a0751ff4a9ce11840d0ce6af0dc
 
 import com.gui.UiMainWindow;
 import com.gui.widgets.SettingsMenu;
@@ -17,11 +15,10 @@ import com.trolltech.qt.gui.QLabel;
 
 import core.classes.Message;
 import core.classes.Sheep;
-<<<<<<< HEAD
+
 import core.classes.SheepJS;
-=======
+
 import core.classes.User;
->>>>>>> a05d446ff69e1a0751ff4a9ce11840d0ce6af0dc
 
 public class UiMainWindowLogic extends QSignalEmitter
 {
@@ -67,19 +64,13 @@ public class UiMainWindowLogic extends QSignalEmitter
 		//Fiks mapWidget her..
 		
 		/* Adding values to ui */
-<<<<<<< HEAD
+
 		//mw.MAPWIDGET.setUrl(new QUrl("http://folk.ntnu.no/perok/it1901"));
 		mw.MAPWIDGET.setUrl(new QUrl("web/index.html"));
 		
 	    //json_str = json.dumps(data).replace('"', '\\"')
 	    //rootObject.evaluateJavaScript('receiveJSON("%s")' % json_str)
-	    
-	 
-=======
-		mw.MAPWIDGET.load(new QUrl("http://folk.ntnu.no/perok/it1901"));
-		mw.MAPWIDGET.show();
->>>>>>> a05d446ff69e1a0751ff4a9ce11840d0ce6af0dc
-		
+
 		//mw.MAPWIDGET.updatesEnabled(true);
 		/* Setting up signals */
 		signalShowAbout = new Signal0();
