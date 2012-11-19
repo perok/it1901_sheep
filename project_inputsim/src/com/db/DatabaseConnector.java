@@ -86,7 +86,7 @@ public class DatabaseConnector {
 					for (int k = 0; k < r5.length; k++) {
 						for (int k2 = 0; k2 < r5[k].length; k2++) {
 							sheep.addSheepStatus(new SheepStatus(Integer.parseInt(r5[k][k2]),Integer.parseInt(r5[k][k2]),Integer.parseInt(r5[k][k2]),
-									Float.parseFloat(r5[k][k2]),new GPSPosition(Double.parseDouble(r5[k][k2]), Double.parseDouble(r5[k][k2])),Integer.parseInt(r5[k][k2])));
+									Float.parseFloat(r5[k][k2]), Integer.parseInt(r5[k][k2]),new GPSPosition(Double.parseDouble(r5[k][k2]), Double.parseDouble(r5[k][k2])),Integer.parseInt(r5[k][k2])));
 						}
 					}
 					farm.addSheep(sheep);
@@ -123,7 +123,7 @@ public class DatabaseConnector {
 			for (int k = 0; k < r5.length; k++) {
 				for (int k2 = 0; k2 < r5[k].length; k2++) {
 					sheep.addSheepStatus(new SheepStatus(Integer.parseInt(r5[k][k2]),Integer.parseInt(r5[k][k2]),Integer.parseInt(r5[k][k2]),
-							Float.parseFloat(r5[k][k2]),new GPSPosition(Double.parseDouble(r5[k][k2]), Double.parseDouble(r5[k][k2])),Integer.parseInt(r5[k][k2])));
+							Float.parseFloat(r5[k][k2]), Integer.parseInt(r5[k][k2]),new GPSPosition(Double.parseDouble(r5[k][k2]), Double.parseDouble(r5[k][k2])),Integer.parseInt(r5[k][k2])));
 				}
 			}
 			list.add(sheep);
@@ -261,8 +261,8 @@ public class DatabaseConnector {
 		String[][] r = processQuery("SELECT * FROM sheep_status WHERE farm_id = " + farmId + ";");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new SheepStatus(Integer.parseInt(r[i][0]),Integer.parseInt(r[i][1]),Integer.parseInt(r[i][2])
-					,Float.parseFloat(r[i][3]), new GPSPosition(Double.parseDouble(r[i][4]), Double.parseDouble(r[i][5])),
-					Integer.parseInt(r[i][6])));
+					,Float.parseFloat(r[i][3]), Integer.parseInt(r[i][4]), new GPSPosition(Double.parseDouble(r[i][5]), Double.parseDouble(r[i][6])),
+					Integer.parseInt(r[i][7])));
 		}
 		return list;
 	}
@@ -277,8 +277,8 @@ public class DatabaseConnector {
 		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE farm_id = " + farmId + ";");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new SheepAlert(Integer.parseInt(r[i][0]),Integer.parseInt(r[i][1]),Integer.parseInt(r[i][2])
-					,Float.parseFloat(r[i][3]), new GPSPosition(Double.parseDouble(r[i][4]), Double.parseDouble(r[i][5])),
-					Integer.parseInt(r[i][6])));
+					,Float.parseFloat(r[i][3]), Integer.parseInt(r[i][4]), new GPSPosition(Double.parseDouble(r[i][5]), Double.parseDouble(r[i][6])),
+					Integer.parseInt(r[i][7])));
 		}
 		return list;
 	}
