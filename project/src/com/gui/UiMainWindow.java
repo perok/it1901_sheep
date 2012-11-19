@@ -181,56 +181,41 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         formLayout_2.setObjectName("formLayout_2");
         formLayout_2.setFieldGrowthPolicy(com.trolltech.qt.gui.QFormLayout.FieldGrowthPolicy.FieldsStayAtSizeHint);
         formLayout_2.setFormAlignment(com.trolltech.qt.core.Qt.AlignmentFlag.createQFlags(com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter));
+        
+        //TAB 1
         label = new QLabel(tabInformation);
         label.setObjectName("label");
-
-        formLayout_2.addWidget(label);
 
         lEName = new QLineEdit(tabInformation);
         lEName.setObjectName("lEName");
         lEName.setAlignment(com.trolltech.qt.core.Qt.AlignmentFlag.createQFlags(com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter));
 
-        formLayout_2.addWidget(lEName);
-
         label_2 = new QLabel(tabInformation);
         label_2.setObjectName("label_2");
-
-        formLayout_2.addWidget(label_2);
 
         label_3 = new QLabel(tabInformation);
         label_3.setObjectName("label_3");
 
-        formLayout_2.addWidget(label_3);
-
         label_4 = new QLabel(tabInformation);
         label_4.setObjectName("label_4");
-
-        formLayout_2.addWidget(label_4);
 
         lEFarmId = new QLineEdit(tabInformation);
         lEFarmId.setObjectName("lEFarmId");
         //lEFarmId.setInputMethodHints(com.trolltech.qt.core.Qt.InputMethodHint.createQFlags(com.trolltech.qt.core.Qt.InputMethodHint.ImhUppercaseOnly));
         lEFarmId.setAlignment(com.trolltech.qt.core.Qt.AlignmentFlag.createQFlags(com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter));
 
-        formLayout_2.addWidget(lEFarmId);
-
         label_5 = new QLabel(tabInformation);
         label_5.setObjectName("label_5");
-
-        formLayout_2.addWidget(label_5);
 
         chbAlive = new QCheckBox(tabInformation);
         chbAlive.setObjectName("chbAlive");
         chbAlive.setTristate(false);
 
-        formLayout_2.addWidget(chbAlive);
 
         dSBWeight = new QDoubleSpinBox(tabInformation);
         dSBWeight.setObjectName("dSBWeight");
         dSBWeight.setMinimumSize(new QSize(178, 0));
         dSBWeight.setAlignment(com.trolltech.qt.core.Qt.AlignmentFlag.createQFlags(com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter));
-
-        formLayout_2.addWidget(dSBWeight);
 
         dEBirthdaye = new QDateEdit(tabInformation);
         dEBirthdaye.setObjectName("dEBirthdaye");
@@ -238,9 +223,16 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         dEBirthdaye.setAlignment(com.trolltech.qt.core.Qt.AlignmentFlag.createQFlags(com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter));
         dEBirthdaye.setCalendarPopup(true);
 
-        formLayout_2.addWidget(dEBirthdaye);
+        //Add tabs
+        formLayout_2.addRow(label, lEName);
+        formLayout_2.addRow(label_2, dEBirthdaye);
+        formLayout_2.addRow(label_3, dSBWeight);
+        formLayout_2.addRow(label_4, lEFarmId);
+        formLayout_2.addRow(label_5, chbAlive);
 
-
+        
+        
+        
         gridLayout_4.addLayout(formLayout_2, 0, 0, 1, 1);
 
         gridLayout_8 = new QGridLayout();
@@ -351,18 +343,12 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         label_11 = new QLabel(tabAddSheep);
         label_11.setObjectName("label_11");
 
-        formLayout_5.addWidget(label_11);
-
         lEName_Add_2 = new QLineEdit(tabAddSheep);
         lEName_Add_2.setObjectName("lEName_Add_2");
         lEName_Add_2.setAlignment(com.trolltech.qt.core.Qt.AlignmentFlag.createQFlags(com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter));
 
-        formLayout_5.addWidget(lEName_Add_2);
-
         label_12 = new QLabel(tabAddSheep);
         label_12.setObjectName("label_12");
-
-        formLayout_5.addWidget(label_12);
 
         dEBirthdate_Add = new QDateEdit(tabAddSheep);
         dEBirthdate_Add.setObjectName("dEBirthdate_Add");
@@ -371,40 +357,34 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         dEBirthdate_Add.setMinimumDate(new QDate(1752, 9, 25));
         dEBirthdate_Add.setCalendarPopup(true);
 
-        formLayout_5.addWidget(dEBirthdate_Add);
 
         label_13 = new QLabel(tabAddSheep);
         label_13.setObjectName("label_13");
-
-        formLayout_5.addWidget(label_13);
 
         dSBWeight_Add_2 = new QDoubleSpinBox(tabAddSheep);
         dSBWeight_Add_2.setObjectName("dSBWeight_Add_2");
         dSBWeight_Add_2.setMinimumSize(new QSize(178, 0));
         dSBWeight_Add_2.setAlignment(com.trolltech.qt.core.Qt.AlignmentFlag.createQFlags(com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter));
 
-        formLayout_5.addWidget(dSBWeight_Add_2);
-
         label_14 = new QLabel(tabAddSheep);
         label_14.setObjectName("label_14");
-
-        formLayout_5.addWidget(label_14);
 
         lEFar_Add = new QLineEdit(tabAddSheep);
         lEFar_Add.setObjectName("lEFar_Add");
         lEFar_Add.setAlignment(com.trolltech.qt.core.Qt.AlignmentFlag.createQFlags(com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter));
 
-        formLayout_5.addWidget(lEFar_Add);
-
         label_15 = new QLabel(tabAddSheep);
         label_15.setObjectName("label_15");
 
-        formLayout_5.addWidget(label_15);
-
         cBAlive_Add = new QCheckBox(tabAddSheep);
         cBAlive_Add.setObjectName("cBAlive_Add");
-
-        formLayout_5.addWidget(cBAlive_Add);
+        
+        //TAB2
+        formLayout_2.addRow(label_11, lEName_Add_2);
+        formLayout_2.addRow(label_12, dEBirthdate_Add);
+        formLayout_2.addRow(label_13, dSBWeight_Add_2);
+        formLayout_2.addRow(label_14, lEFar_Add);
+        formLayout_2.addRow(label_15, cBAlive_Add);
 
 
         gridLayout_11.addLayout(formLayout_5, 0, 0, 1, 1);
