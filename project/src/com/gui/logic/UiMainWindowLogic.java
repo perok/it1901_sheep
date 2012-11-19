@@ -46,8 +46,18 @@ public class UiMainWindowLogic extends QSignalEmitter
 		//Fiks mapWidget her..
 		
 		/* Adding values to ui */
-		mw.MAPWIDGET.setUrl(new QUrl("http://folk.ntnu.no/perok/it1901"));
+		try
+		{
+			mw.MAPWIDGET.load(new QUrl("http://folk.ntnu.no/perok/it1901"));
+			mw.MAPWIDGET.show();
+		}
 		
+		catch(Throwable t)
+		{
+			System.out.println(t.getMessage());
+		}
+		
+		//mw.MAPWIDGET.updatesEnabled(true);
 		/* Setting up signals */
 		signalShowAbout = new Signal0();
 		signalShowAboutQt = new Signal0();

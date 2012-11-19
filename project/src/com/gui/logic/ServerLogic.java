@@ -84,11 +84,12 @@ public class ServerLogic extends QSignalEmitter{
 					//objectAskingForResponse = null;
 				//}
 			}
-			System.out.println("respinse 1");
+			System.out.println("response 1");
 		}
 		/* Boolean */
 		else if(responseType == 2)
 			System.out.println("response 2");
+		
 		/* User */
 		else if(response.getType() == 3)
 			if(response.getUser() == null)

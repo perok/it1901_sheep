@@ -1,5 +1,6 @@
 package com.gui.widgets;
 
+import com.gui.logic.ServerLogic;
 import com.trolltech.qt.gui.QAbstractItemView;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QHBoxLayout;
@@ -18,7 +19,7 @@ public class AccessListWidget extends QWidget
 	private QPushButton qpbBtnAddUsers,
 						qpbBtnRemoveUsers;
 	
-	public AccessListWidget(QWidget parent)
+	public AccessListWidget(UserSettings parent)
 	{		
 		initWidgets();
 		initLayout();
@@ -55,6 +56,8 @@ public class AccessListWidget extends QWidget
 	
 	public void addUsers()
 	{
+		ServerLogic.getClientsocket().listUsers();
+		
 		for(int iPos = 0; iPos <= 10; iPos++)
 		{
 			String s = "abc" + Integer.toString((int)(Math.random() * 9));
@@ -85,6 +88,8 @@ public class AccessListWidget extends QWidget
 		
 	public QHBoxLayout getLayout()
 	{
+		this.qhblMainLayout.setSpacing(10);
+		//this.qhblMainLayout.setStretchF
 		return this.qhblMainLayout;
 	}
 	
@@ -105,14 +110,14 @@ public class AccessListWidget extends QWidget
 		super.setLayout(qhblMainLayout);	
 	}
 
-	public static void main(String[] args)
-	{
-		QApplication.initialize(args);
-		
-		new AccessListWidget(null).show();
-		QApplication.exec();
-		
-	}
+//	public static void main(String[] args)
+//	{
+//		QApplication.initialize(args);
+//		
+//		new AccessListWidget(null).show();
+//		QApplication.exec();
+//		
+//	}
 }
 
 /* EOF */
