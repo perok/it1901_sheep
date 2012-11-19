@@ -79,7 +79,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
      */
     private void initWidgets()
     {
-    	//TODO: init all widgets here
+    	//TODO: init all "standalone" widgets here
     }        
     
     /** Initialize the theme selector
