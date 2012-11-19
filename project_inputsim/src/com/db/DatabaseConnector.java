@@ -581,7 +581,7 @@ public class DatabaseConnector {
 		ArrayList<User> users = new ArrayList<User>();
 		try{
 			String[][] r = processQuery("SELECT id,username,name,password,mobile_number,email FROM user WHERE true;");
-			for (int i = 0; i < r[0].length; i++) {
+			for (int i = 0; i < r.length; i++) {
 				User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5]);
 				users.add(user);
 			}
