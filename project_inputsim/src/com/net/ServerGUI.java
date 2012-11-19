@@ -67,7 +67,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 		addWindowListener(this);
 		setSize(400, 600);
 		setVisible(true);
-		appendEvent("Start the server before entering commands");
+		appendEvent("Start the server before entering commands \n");
 	}		
 
 	/** Appends an event given as string to the log window
