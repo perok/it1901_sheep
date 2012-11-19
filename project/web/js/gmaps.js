@@ -108,8 +108,8 @@ function setMarkers(map, locations) {
   // Origins, anchor positions and coordinates of the marker
   // increase in the X direction to the right and in
   // the Y direction down.
-  var image = new google.maps.MarkerImage('images/sheep_small.png',
-    // This marker is 20 pixels wide by 32 pixels tall.
+  var image = new google.maps.MarkerImage('images/Sheep_WO_backround.png',
+    // This marker is 23 pixels wide by 2 pixels tall.
     new google.maps.Size(23, 22),
     // The origin for this image is 0,0.
     new google.maps.Point(0,0),
@@ -121,7 +121,7 @@ function setMarkers(map, locations) {
     // coordinate closes the poly by connecting to the first
     // coordinate.
     var shape = {
-      coord: [1, 1, 1, 20, 18, 20, 18 , 1],
+      coord: [1, 1, 1, 23, 23, 22, 23 , 1],
       type: 'poly'
    };
 
