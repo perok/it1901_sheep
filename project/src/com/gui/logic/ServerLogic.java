@@ -103,7 +103,6 @@ public class ServerLogic extends QSignalEmitter{
 					System.out.println("\tNumber of sheep: " + response.getUser().getFarmlist().get(i).getSheepList().size());
 				}
 				
-				
 				new UserStorage(response.getUser());
 				UserStorage.setCurrentFarm(0);
 				UserStorage.setCurrentMessageType(0);

@@ -141,8 +141,7 @@ public class ClientSocket  {
 	 */
 	public void editUser(User user) 
 	{
-		user.setPassword("1337"); // FIXME: ...
-		//sendRequest(new Request(Request.EDITUSER, "editUser", user));
+		sendRequest(new Request(Request.EDITUSER, "editUser", user));
 	}
 
 	/**Makes a request with the given paramter and sends it to the server.
@@ -150,7 +149,7 @@ public class ClientSocket  {
 	 * @param user
 	 */
 	public void editSheep(Sheep sheep) {
-		sendRequest(new Request(Request.EDITSHEEP, "editSheep", sheep));
+		//sendRequest(new Request(Request.EDITSHEEP, "editSheep", sheep));
 	}
 
 	/**Makes a request with the given paramters and sends it to the server.
