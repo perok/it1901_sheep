@@ -22,6 +22,7 @@ public class User  implements Serializable{
 			ArrayList<Farm> farmlist) {
 		this.id = id;
 		this.name = name;
+		this.password = password;
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.username = username;
@@ -31,12 +32,25 @@ public class User  implements Serializable{
 	public User(int id, String username, String name, String password, int mobileNumber, String email) {
 		this.id = id;
 		this.name = name;
+		this.password = password;
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.username = username;
 		this.farmlist = new ArrayList<Farm>();
 	}
-
+	
+	public User copyShallowUser()
+	{
+		return new User(this.id, "", this.name, "", this.mobileNumber, this.email);
+	}
+	public boolean shallowEquals(User other)
+	{
+		return 
+			 (this.name.equals(other.getName()) )
+	     &&  (this.mobileNumber == other.getMobileNumber())
+	     &&  (this.email.equals(other.getEmail()));
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -86,12 +100,9 @@ public class User  implements Serializable{
 	}
 	
 	public void addFarms(ArrayList<Farm> farms) {
-		System.out.println(farms.size());
 		for (int i = 0; i < farms.size(); i++) {
-			System.out.println("forløkke" + i + farms.get(i));
 			this.farmlist.add(farms.get(i));
 		}
-		
 	}
 
 	public String getPassword() {

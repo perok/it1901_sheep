@@ -67,9 +67,14 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 		addWindowListener(this);
 		setSize(400, 600);
 		setVisible(true);
+		appendEvent("Start the server before entering commands \n");
 	}		
 
-	void appendEvent(String str) {
+	/** Appends an event given as string to the log window
+	 * 
+	 * @param str
+	 */
+	public void appendEvent(String str) {
 		event.append(str);
 	}
 
@@ -187,7 +192,15 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 			case("add"):
 				if(decoded[2].equalsIgnoreCase("sheep")) {
 					populator.addSheep(Integer.parseInt(decoded[3]), Integer.parseInt(decoded[3]));
-					System.out.println(decoded[0] + decoded[1] + decoded[2] + decoded[3]);
+				}
+			break;
+			
+			case("sheep"):
+				if(decoded[2].equalsIgnoreCase("alive")) {
+					if(Integer.parseInt(decoded[4]) == 1)
+						populator.reviveSheep(Integer.parseInt(decoded[3]));
+					else
+						populator.killSheep(Integer.parseInt(decoded[3]));
 				}
 			break;
 

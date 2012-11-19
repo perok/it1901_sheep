@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.*;
 
 import com.gui.logic.ServerLogic;
+import com.storage.UserStorage;
 
 import core.classes.Farm;
 import core.classes.Sheep;
@@ -122,7 +123,7 @@ public class ClientSocket  {
 
 	}
 
-	/**Makes a request with the given paramters and sends it to the server.
+	/**Makes a request with the given parameters and sends it to the server.
 	 * 
 	 * @param username
 	 * @param password
@@ -134,11 +135,12 @@ public class ClientSocket  {
 		sendRequest(new Request(Request.REQUEST, "login" ,params));
 	}
 
-	/**Makes a request with the given paramter and sends it to the server.
+	/**Makes a request with the given parameter and sends it to the server.
 	 * 
 	 * @param user
 	 */
-	public void editUser(User user) {
+	public void editUser(User user) 
+	{
 		sendRequest(new Request(Request.EDITUSER, "editUser", user));
 	}
 
@@ -147,7 +149,7 @@ public class ClientSocket  {
 	 * @param user
 	 */
 	public void editSheep(Sheep sheep) {
-		sendRequest(new Request(Request.EDITSHEEP, "editSheep", sheep));
+		//sendRequest(new Request(Request.EDITSHEEP, "editSheep", sheep));
 	}
 
 	/**Makes a request with the given paramters and sends it to the server.
@@ -231,6 +233,13 @@ public class ClientSocket  {
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("farmId", Integer.toString(farm.getId()));
 		sendRequest(new Request(Request.REQUEST, "invokeAlert", params));
+	}
+	
+	/** Makes a request for all the users in an ArrayList and sends it to the server.
+	 * 
+	 */
+	public void listUsers() {
+		sendRequest(new Request(Request.REQUEST, "listUsersArrayList"));
 	}
 
 	/**Internal class(thread) that listens for input from the server. The object "caller"

@@ -33,12 +33,37 @@ public class MainWindow extends QMainWindow
     private TableWidgetLogic twhandler;
     private UiMainWindowLogic mwLogic;
     
+    /*
+    static {
+        try {
+        	System.out.println("loading");
+        	System.loadLibrary("libeay32.dll");
+        	System.loadLibrary("libs/libssl32.dll");
+        	System.loadLibrary("libs/ssleay32.dll");
+
+        	
+        } catch (UnsatisfiedLinkError e) {
+          System.err.println("Native code library failed to load.\n" + e);
+          System.exit(1);
+        }
+      }*/
+    
+    
     /** Main.
      * 
      * @param args parameters for program. Not used.
      */
     public static void main(String[] args) 
     {
+    	
+        com.trolltech.qt.Utilities.loadQtLibrary("QtXml"); 
+        com.trolltech.qt.Utilities.loadQtLibrary("QtSql"); 
+        com.trolltech.qt.Utilities.loadQtLibrary("QtSvg");
+    	com.trolltech.qt.Utilities.loadQtLibrary("QtNetwork");
+        com.trolltech.qt.Utilities.loadQtLibrary("QtXmlPatterns");
+
+        //com.trolltech.qt.Utilities.loadQtLibrary("QtWebKit");
+
     	/* Initialize qt-framework, set default style */
         QApplication.initialize(args);        
         QApplication.setStyle("Plastique");
@@ -52,7 +77,7 @@ public class MainWindow extends QMainWindow
          * http://www.slideshare.net/qtbynokia/how-to-make-your-qt-app-look-native
          */
      }
-    
+        
     /** Constructor. Initialize..
      * 
      * @param parent potential parent for this window. Should be set to null for now.

@@ -2,6 +2,7 @@ package com.db;
 
 import core.settings.*;
 import core.classes.*;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -68,33 +69,33 @@ public class DatabaseConnector {
 	 */
 	public User loginQuery(String username, String password) {
 		try{
-		String[][] r = processQuery("SELECT id,username,name,password,mobile_number,email FROM user WHERE username = '" + username + "'" + " AND password = '" + password + "';");
-		
-		User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5]);
-		String[][] r2 = processQuery("SELECT farm_id FROM access_rights WHERE user_id = " + user.getId() + ";");
-		ArrayList<Farm> farms = new ArrayList<Farm>();
-		
-		for (int i = 0; i < r2.length; i++) {
-			
-			String[][] r3 = processQuery("SELECT name FROM farm WHERE id = " + r2[i][0] + ";");
-			Farm farm = new Farm(Integer.parseInt(r2[i][0]),r3[0][0]);
-			String [][] r4 = processQuery("SELECT * from sheep WHERE farm_id = " + farm.getId() + ";");
-			for (int j = 0; j < r4.length; j++) {
-				Sheep sheep = new Sheep(Integer.parseInt(r4[j][0]), r4[j][1], Integer.parseInt(r4[j][2]), Integer.parseInt(r4[j][3]), getBoolean(r4[j][4]), Integer.parseInt(r4[j][5]));
-				String [][] r5 = processQuery("SELECT * from sheep_status WHERE sheep_id = " + sheep.getId() + " LIMIT 10;");
-				for (int k = 0; k < r5.length; k++) {
-					for (int k2 = 0; k2 < r5[k].length; k2++) {
-						sheep.addSheepStatus(new SheepStatus(Integer.parseInt(r5[k][k2]),Integer.parseInt(r5[k][k2]),Integer.parseInt(r5[k][k2]),
-								Float.parseFloat(r5[k][k2]),new GPSPosition(Double.parseDouble(r5[k][k2]), Double.parseDouble(r5[k][k2])),Integer.parseInt(r5[k][k2])));
+			String[][] r = processQuery("SELECT id,username,name,password,mobile_number,email FROM user WHERE username = '" + username + "'" + " AND password = '" + password + "';");
+
+			User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5]);
+			String[][] r2 = processQuery("SELECT farm_id, admin FROM access_rights WHERE user_id = " + user.getId() + ";");
+			ArrayList<Farm> farms = new ArrayList<Farm>();
+
+			for (int i = 0; i < r2.length; i++) {
+
+				String[][] r3 = processQuery("SELECT name FROM farm WHERE id = " + r2[i][0] + ";");
+				Farm farm = new Farm(Integer.parseInt(r2[i][0]),r3[i][0],getBoolean(r2[i][2]));
+				String [][] r4 = processQuery("SELECT * from sheep WHERE farm_id = " + farm.getId() + ";");
+				for (int j = 0; j < r4.length; j++) {
+					Sheep sheep = new Sheep(Integer.parseInt(r4[j][0]), r4[j][1], Integer.parseInt(r4[j][2]), Integer.parseInt(r4[j][3]), getBoolean(r4[j][4]), Integer.parseInt(r4[j][5]));
+					String [][] r5 = processQuery("SELECT * from sheep_status WHERE sheep_id = " + sheep.getId() + " LIMIT 10;");
+					for (int k = 0; k < r5.length; k++) {
+						for (int k2 = 0; k2 < r5[k].length; k2++) {
+							sheep.addSheepStatus(new SheepStatus(Integer.parseInt(r5[k][k2]),Integer.parseInt(r5[k][k2]),Integer.parseInt(r5[k][k2]),
+									Float.parseFloat(r5[k][k2]),new GPSPosition(Double.parseDouble(r5[k][k2]), Double.parseDouble(r5[k][k2])),Integer.parseInt(r5[k][k2])));
+						}
 					}
+					farm.addSheep(sheep);
 				}
-				farm.addSheep(sheep);
+				farms.add(farm);
 			}
-			farms.add(farm);
-		}
-		user.addFarms(farms);
-		return user;
-		
+			user.addFarms(farms);
+			return user;
+
 		}
 		catch(NullPointerException e){
 			e.printStackTrace();
@@ -162,6 +163,7 @@ public class DatabaseConnector {
 		}
 	}
 
+
 	/** Returns a list of all the farms a user has access to.
 	 * 
 	 * @param user
@@ -175,7 +177,7 @@ public class DatabaseConnector {
 		}
 		return list;
 	}
-	
+
 	/** Adds access rights for the userId to the given farmId.
 	 * 
 	 * @param userId
@@ -211,6 +213,12 @@ public class DatabaseConnector {
 		return true;
 	}
 
+	/** Takes in a user and changes the values for given user in database.
+	 * 
+	 * @param userId
+	 * @param user
+	 * @return
+	 */
 	public boolean editUser(int userId, User user) {
 
 		try{
@@ -223,9 +231,14 @@ public class DatabaseConnector {
 		}
 		return true;
 	}
-	
+
+	/** Takes in a sheep and changes the values for given user in database.
+	 * 
+	 * @param sheepId
+	 * @param sheep
+	 * @return
+	 */
 	public boolean editSheep(int sheepId, Sheep sheep) {
-		System.out.println("Editing: " + sheep.getName() + "," + sheep.getId());
 		try{
 			Statement s = conn.createStatement();
 			s.executeUpdate("UPDATE sheep SET name = '" + sheep.getName() + "', weight = '" + sheep.getWeight() + "', alive = " + sheep.isAlive() + ", "+
@@ -238,8 +251,13 @@ public class DatabaseConnector {
 	}
 
 
-	public ArrayList<SheepStatus> getSheepStatus(int farmId) {
-		ArrayList<SheepStatus> list = new ArrayList<SheepStatus>();
+	/** Returns all sheepStatuses for given farm.
+	 * 
+	 * @param farmId
+	 * @return
+	 */
+	public ArrayList<Message> getSheepStatus(int farmId) {
+		ArrayList<Message> list = new ArrayList<Message>();
 		String[][] r = processQuery("SELECT * FROM sheep_status WHERE farm_id = " + farmId + ";");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new SheepStatus(Integer.parseInt(r[i][0]),Integer.parseInt(r[i][1]),Integer.parseInt(r[i][2])
@@ -249,6 +267,11 @@ public class DatabaseConnector {
 		return list;
 	}
 
+	/** Returns all sheepAlert for given farm.
+	 * 
+	 * @param farmId
+	 * @return
+	 */
 	public ArrayList<SheepAlert> getSheepAlert(int farmId) {
 		ArrayList<SheepAlert> list = new ArrayList<SheepAlert>();
 		String[][] r = processQuery("SELECT * FROM sheep_alert WHERE farm_id = " + farmId + ";");
@@ -265,16 +288,30 @@ public class DatabaseConnector {
 	 * SERVER SECTION
 	 */
 
+	/** Returns phoneNumber for given user.
+	 * 
+	 * @param username
+	 * @return
+	 */
 	public String getPhoneNumber(String username) {
 		String[][] results = processQuery("SELECT phone_number FROM user WHERE username = '" + username + "';");
 		return results[0][0];
 	}
 
+	/** Returns email for given user.
+	 * 
+	 * @param username
+	 * @return
+	 */
 	public String getEmailAddress(String username) {
 		String[][] results = processQuery("SELECT e-mail FROM user WHERE username = '" + username + "';");
 		return results[0][0];
 	}
 
+	/** Inserts the given paramter into the database.
+	 * 
+	 * @param sheepstats
+	 */
 	public void insertSheepStatus(String[][] sheepstats) {
 		try {
 			Statement s = conn.createStatement();
@@ -319,7 +356,7 @@ public class DatabaseConnector {
 			e.printStackTrace();
 		}	
 	}
-	
+
 	/** Creates an entry of the given paramter in the database.
 	 * 
 	 * @param alert
@@ -327,12 +364,12 @@ public class DatabaseConnector {
 	public void insertSheepAlert(SheepAlert alert) {
 		try {
 			Statement s = conn.createStatement();
-			
-				s.executeUpdate("INSERT INTO sheep_alert (id,sheep_id,timestamp,temperature,heart_rate,latitude,longditude,farm_id" +
-						") VALUES (" + ""+alert.getId()+"," + ""+alert.getSheep()+"," + ""+alert.getTimestamp()+"," +
-						""+alert.getTemperature()+"," + ""+alert.getTemperature()+"," + ""+alert.getGpsPosition().getLatitute()+ "," +alert.getGpsPosition().getLongditude()+ "," +alert.getFarmId()+");");
 
-			
+			s.executeUpdate("INSERT INTO sheep_alert (id,sheep_id,timestamp,temperature,heart_rate,latitude,longditude,farm_id" +
+					") VALUES (" + ""+alert.getId()+"," + ""+alert.getSheep()+"," + ""+alert.getTimestamp()+"," +
+					""+alert.getTemperature()+"," + ""+alert.getTemperature()+"," + ""+alert.getGpsPosition().getLatitute()+ "," +alert.getGpsPosition().getLongditude()+ "," +alert.getFarmId()+");");
+
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
@@ -434,6 +471,15 @@ public class DatabaseConnector {
 		}	
 	}
 
+	public void setSheepAlive(int id, int status) {
+		try{
+			Statement s = conn.createStatement();
+			s.executeUpdate("UPDATE sheep SET alive = " + status + " WHERE id = " + id + ";");
+		}
+		catch(Exception e){
+		}
+	}
+
 	/** Creates a farm entry for the given parameter in the database.
 	 * 
 	 * @param farms
@@ -518,7 +564,7 @@ public class DatabaseConnector {
 			e.printStackTrace();
 		}	
 	}
-	
+
 	/** Returns a String[] with id and name of all users in database.
 	 * 
 	 * @return
@@ -527,7 +573,32 @@ public class DatabaseConnector {
 		String[][] results = processQuery("SELECT name,id FROM user WHERE true;");
 		return results;
 	}
-	
+
+	/** Returns an ArrayList with id and name of all users in database.
+	 * 
+	 * @return
+	 */
+	public ArrayList<User> listUsersArrayList() {
+		ArrayList<User> users = new ArrayList<User>();
+		try{
+			String[][] r = processQuery("SELECT id,username,name,password,mobile_number,email FROM user WHERE true;");
+			for (int i = 0; i < r.length; i++) {
+				User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5]);
+				users.add(user);
+			}
+			return users;
+		}
+		catch(NullPointerException e){
+			e.printStackTrace();
+			return null;
+		}
+		catch(ArrayIndexOutOfBoundsException e){
+			System.out.println("Unauthorized login attempt detected");
+			return null;
+		}	
+	}
+
+
 	/** Returns a String[] with id and name of all farms in database.
 	 * 
 	 * @return
@@ -551,7 +622,12 @@ public class DatabaseConnector {
 		}
 		return list;
 	}
-	
+
+	public GPSPosition getLastPosition(int id) {
+		String[][] results = processQuery("SELECT latitude, longditude FROM sheep_status WHERE sheep_id = " + id + " ORDER BY timestamp DESC LIMIT 1;");
+		return new GPSPosition(Double.parseDouble(results[0][0]), Double.parseDouble(results[0][0]));
+	}
+
 	/** A method for processing SELECT queries easier. Returns a String[][] instead of using result sets given 
 	 * from the sql query. 
 	 * 

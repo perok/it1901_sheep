@@ -4,21 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gui.logic.ServerLogic;
-import com.net.ClientSocket;
+
+import com.trolltech.qt.core.QRect;
 import com.trolltech.qt.core.QRegExp;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QLayout.SizeConstraint;
 import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QRegExpValidator;
+import com.trolltech.qt.gui.QSizePolicy;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QValidator;
 import com.trolltech.qt.gui.QWidget;
 
-import core.classes.Farm;
+import core.classes.User;
 
 /** Show the settings for the user.
  * 
@@ -27,37 +30,51 @@ import core.classes.Farm;
 public class UserSettings extends QWidget implements InputComponentHost
 {
 	public static final String CLASS_ICON = "./icons/farmer.png";
-		
+
 	private QComboBox qcbFarmCombo;
-	private QGroupBox qgbFarmGroup;
-	private QGroupBox qgbUserField;
-	private QLabel qlGaardLabel;
-	private QLabel qlUsername;
-	private QLabel qlUserEmail;
-	private QLabel qlUserPhone;
-	private QLineEdit qleUsername;
-	private QLineEdit qleEmail;
-	private QLineEdit qlePhone;
+	private QGroupBox qgbFarmGroup,
+					  qgbUserField,
+					  qgbAccessGroup;
+	private QLabel qlGaardLabel,
+				   qlUsername,
+				   qlUserEmail,
+				   qlUserPhone;
+	private QLineEdit qleUsername,
+					  qleEmail,
+					  qlePhone;
 	private QPushButton qpbBtnAlarm;
+	
+	private AccessListWidget alwAccessList;
+	
+	public Signal0 signalFarmUpdate;
 	
 	private List<ComponentConnector> lComponents = new ArrayList<ComponentConnector>();
 		
 	/** Constructor. Initialize..
 	 * @param parent the host of THIS
 	 */
-	public UserSettings(QWidget parent)
+	public UserSettings(SettingsMenu parent)
     {
         super(parent);
-                    
+        
+        initAccessRights();
         initGaardSettings();
         initConnectEvents();
         initUserInput();
         initLayout();
         
+        this.signalFarmUpdate = new Signal0();
+
         addConnector(this.qleUsername, "text", com.storage.UserStorage.class, "setUserName", String.class);
         addConnector(this.qleEmail, "text", com.storage.UserStorage.class, "setUserMail", String.class);
         addConnector(this.qlePhone, "text", com.storage.UserStorage.class, "setUserPhone", String.class);
     }
+	
+	private void initAccessRights()
+	{
+		this.alwAccessList = new AccessListWidget(this);
+		this.qgbAccessGroup = new QGroupBox(tr("Endre brukerrettigheter"));			
+	}
 	
     
     @SuppressWarnings("unused")
@@ -65,15 +82,7 @@ public class UserSettings extends QWidget implements InputComponentHost
      */
 	private void toggleAlarm()
     {
-    	System.out.println("BEEP");
-    	
-    	// Vi vet ikke om denne virker enda eller ikke. Merk at dersom den virker, sendes det SMS osv osv.
-    	// Derfor burde ikke denne knappen settes opp og spammes.
-    	
-    	//TODO: legg til en "er du sikker på at du vil simulere alarm" popup box...
-    	
-    	//ServerLogic.getClientsocket().invokeAlert(com.storage.UserStorage.getUser().getFarmlist().get(
-    		//	com.storage.UserStorage.getCurrentFarm()));
+    	new AlarmPromptDialog(this).show();
     }
 	
 	private <T> void addConnector
@@ -97,14 +106,20 @@ public class UserSettings extends QWidget implements InputComponentHost
 		}
 	}
 	
+    
+    @SuppressWarnings("unused")
+	private void processUserData(ArrayList<User> lUsers)
+    {
+    	this.alwAccessList.recieveUserData(lUsers);
+    }
+	
 	@SuppressWarnings("unused")
 	/** Handle for whenever the farm is changed by the user
 	 */
 	private void farmChanged()
 	{
-		// TODO: there needs to be some supplementary functionality to make use of this.
-		
 		com.storage.UserStorage.setCurrentFarm(this.qcbFarmCombo.currentIndex());
+		signalFarmUpdate.emit();
 	}
 	
 	/** Initialize event-driven actions
@@ -119,13 +134,13 @@ public class UserSettings extends QWidget implements InputComponentHost
 	 */
 	private void initGaardSettings()
 	{
-		this.qgbFarmGroup = new QGroupBox(tr("Gård-innstillinger"));
-		this.qlGaardLabel = new QLabel(tr("Gård:"));
+		this.qgbFarmGroup = new QGroupBox(tr("Gï¿½rd-innstillinger"));
+		this.qlGaardLabel = new QLabel(tr("Gï¿½rd:"));
         this.qcbFarmCombo = new QComboBox();
-        this.qpbBtnAlarm = new QPushButton(tr("Simuler alarm for angitt gård"));
+        this.qpbBtnAlarm = new QPushButton(tr("Simuler alarm for angitt gï¿½rd"));
         
-        this.qcbFarmCombo.addItem(tr("Gård 0"));
-        this.qcbFarmCombo.addItem(tr("Gård 1"));
+        this.qcbFarmCombo.addItem(tr("GÃ¥rd 0"));
+        this.qcbFarmCombo.addItem(tr("GÃ¥rd 1"));
         
         this.qcbFarmCombo.setCurrentIndex(com.storage.UserStorage.getCurrentFarm());
 	}
@@ -181,6 +196,7 @@ public class UserSettings extends QWidget implements InputComponentHost
 	// POT_TODO: How far do we go before making an acquaintance with QGridLayout?
     private void initLayout()
     {
+    	 QHBoxLayout qhblAccessListLayout = this.alwAccessList.getLayout();
     	 QHBoxLayout qhblFarmsLayout  = new QHBoxLayout();
     	 QHBoxLayout qhblUserLay 	  = new QHBoxLayout();
     	 QHBoxLayout qhblMailLay	  = new QHBoxLayout();
@@ -188,6 +204,8 @@ public class UserSettings extends QWidget implements InputComponentHost
     	 QVBoxLayout qvblUserLay 	  = new QVBoxLayout();
     	 QVBoxLayout qvblFarmsLayout  = new QVBoxLayout();
     	 QVBoxLayout qvblMainLayout   = new QVBoxLayout();
+    	  
+    	 this.qgbAccessGroup.setMaximumWidth(400); // FIXME: I would just like this to be the initial size
     	 
     	 /* Each line for name entry is a horizontal box layout that gets added to a vboxlayout */    	 
     	 qhblUserLay.addWidget(this.qlUsername);
@@ -212,25 +230,36 @@ public class UserSettings extends QWidget implements InputComponentHost
          /* Apply all the comboboxgroups to the main layout */
          qvblMainLayout.addWidget(this.qgbFarmGroup);
          qvblMainLayout.addWidget(this.qgbUserField);
+	     qvblMainLayout.addWidget(this.qgbAccessGroup);
          qvblMainLayout.addStretch(1);
-         
+                 
          /* Apply the layout to comboboxes */
          this.qgbFarmGroup  .setLayout(qvblFarmsLayout);
          this.qgbUserField  .setLayout(qvblUserLay);
+         this.qgbAccessGroup.setLayout(qhblAccessListLayout);
          super			    .setLayout(qvblMainLayout);
     }
 
 	@Override
 	public void writeChange() 
 	{
+		User origUser = com.storage.UserStorage.getUser().copyShallowUser(),
+			 newUser  = null;
+		
 		for(ComponentConnector cc : this.lComponents)
 		{
 			cc.writeChanges();
 		}
+		
+		newUser = com.storage.UserStorage.getUser();
+		
+		if(origUser.shallowEquals(newUser) == false)
+		{
+			ServerLogic.getClientsocket().editUser(newUser);
+		}
 	}
+	
+
 }
-// Add all methods and listen for if they are used..
-// Just report what functions and associated field..
-//	.. hashmap
 
 /* EOF */

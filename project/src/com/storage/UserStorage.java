@@ -34,7 +34,7 @@ public class UserStorage {
 	
 	public static void setUserPhone(String sPhoneNumber)
 	{
-		/* Parameter shoudl be safe as the input needs to pass a regex match */
+		/* Parameter should be safe as the input needs to pass a regex match */
 		int iPhoneNumber = Integer.parseInt(sPhoneNumber);
 		
 		user.setMobileNumber(iPhoneNumber);
@@ -65,7 +65,7 @@ public class UserStorage {
 		if(i >= 0 && i <= 1)
 			msgType = i;
 		else
-			throw new Exception("MessageType don't ekist");
+			throw new Exception("MessageType don't exist");
 	}
 	
 }

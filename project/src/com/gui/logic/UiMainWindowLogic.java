@@ -1,13 +1,24 @@
 package com.gui.logic;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.util.ArrayList;
+
 import com.gui.UiMainWindow;
 import com.gui.widgets.SettingsMenu;
 import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.core.QDate;
+import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.gui.QLabel;
 
+import core.classes.Message;
 import core.classes.Sheep;
+
+import core.classes.SheepJS;
+
+import core.classes.User;
 
 public class UiMainWindowLogic extends QSignalEmitter
 {
@@ -21,8 +32,16 @@ public class UiMainWindowLogic extends QSignalEmitter
 	
 	public Signal0 signalShowAbout;
 	public Signal0 signalShowAboutQt;
+	public Signal0 signalUpdateSheepList;
+	public Signal1<ArrayList<User>> signalUserListRecieved;
+	
 	
 	private Sheep currentSheep;
+	
+	private void sendUserData(ArrayList lUsers)
+	{
+		this.signalUserListRecieved.emit(lUsers);
+	}
 
 	public UiMainWindowLogic(UiMainWindow mw, SheepListWidgetLogic slwHandler, TableWidgetLogic twHandler, ServerLogic sLogic){
 		System.out.println("Applying logic");
@@ -32,10 +51,12 @@ public class UiMainWindowLogic extends QSignalEmitter
 		this.twHandler = twHandler;
 		this.sLogic = sLogic;
 		
+		this.signalUserListRecieved = new Signal1<ArrayList<User>>();		
+		sLogic.signalUserDataRecieved.connect(this, "sendUserData(ArrayList)");
+		
 		/* Setting up user information*/
 		for(int i = 0; i < UserStorage.getUser().getFarmlist().size(); i++)
 			mw.cmbDockFarmId.addItem(UserStorage.getUser().getFarmlist().get(i).getName());
-		
 		
 		/* Setting up extra widgets*/
 		statusbarMessage = new QLabel("Ready");
@@ -43,11 +64,18 @@ public class UiMainWindowLogic extends QSignalEmitter
 		//Fiks mapWidget her..
 		
 		/* Adding values to ui */
+
+		//mw.MAPWIDGET.setUrl(new QUrl("http://folk.ntnu.no/perok/it1901"));
+		mw.MAPWIDGET.setUrl(new QUrl("web/index.html"));
 		
-		
+	    //json_str = json.dumps(data).replace('"', '\\"')
+	    //rootObject.evaluateJavaScript('receiveJSON("%s")' % json_str)
+
+		//mw.MAPWIDGET.updatesEnabled(true);
 		/* Setting up signals */
 		signalShowAbout = new Signal0();
 		signalShowAboutQt = new Signal0();
+		signalUpdateSheepList = new Signal0();
 			//MainWinow
 				//MENU
 		mw.actionInformation_Window.toggled.connect(this, "actionInformation_Window_toggled(boolean)");
@@ -58,6 +86,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		mw.actionUndo.triggered.connect(this, "actionUndo_toggled(boolean)");
 		mw.actionSettings.triggered.connect(this, "actionSettings_triggered(boolean)");
 		mw.actionSettings.setStatusTip("Show the settings for this application");
+
 
 		
 				//DOCKWIDGET
@@ -77,6 +106,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 			//SheepListWidget
 		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
 		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");		
+		//MULTI
 		
 		System.out.println("Logic applied");
 		
@@ -99,8 +129,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 * @param trigg
 	 */
 	@SuppressWarnings("unused")
-	private void actionAbout_Qt_Jambi_triggerd(boolean trigg){
-		System.out.println("WEREHO");
+	private void actionAbout_Qt_Jambi_triggerd(boolean trigg)
+	{
 		signalShowAboutQt.emit();
 	}
 	    
@@ -110,7 +140,18 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 */
     public void actionSettings_triggered(boolean triggered)
     {
-    	new SettingsMenu(this.mw.getMother()).show();
+    	SettingsMenu spawn = new SettingsMenu(this.mw.getMother());
+    	
+    	spawn.show();
+    	spawn.signalFarmChanged.connect(this, "updateSheepList()");
+    	this.signalUserListRecieved.connect(spawn, "sendData(ArrayList)");
+    }
+    
+    @SuppressWarnings("unused")
+    private void updateSheepList()
+    {
+    	this.slwHandler.refreshSheepList();
+    	this.mw.cmbDockFarmId.setCurrentIndex(UserStorage.getCurrentFarm());
     }
 	
 	//NOT WORKING 
@@ -148,6 +189,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	
 	@SuppressWarnings("unused")
 	private void actionUndo_toggled(boolean trigg){
+
 		System.out.println(trigg);
 	}
 	
@@ -182,6 +224,21 @@ public class UiMainWindowLogic extends QSignalEmitter
 		 */
 	@SuppressWarnings("unused")
 	private void populateTableWidget(Sheep sheep){
+		
+		
+		//MAP
+		
+		JSONArray arr = new JSONArray();
+		for (Message msg : sheep.getRecentStatuses()){
+			arr.add(new SheepJS(sheep.getId(), sheep.getName(), false, msg.getGpsPosition().getLatitute(), msg.getGpsPosition().getLongditude() ));
+		}
+		
+		System.out.println(arr.toJSONString());
+		
+		mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSON("+ arr +")");
+		
+		//TABLEWIDGET
+		
 		currentSheep = sheep;
 		
 		//Sheep id, Sheep name, farmId

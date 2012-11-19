@@ -8,6 +8,7 @@ package com.gui;
  ********************************************************************************/
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
+import com.trolltech.qt.webkit.QWebView;
 
 public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
 {
@@ -21,7 +22,7 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
     public QWidget centralwidget;
     public QGridLayout gridLayout;
     public QSplitter splitter;
-    public QWidget MAPWIDGET;
+    public QWebView MAPWIDGET;
     public QTabWidget tabWidget;
     public QWidget tabInformation;
     public QGridLayout gridLayout_3;
@@ -152,7 +153,7 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         splitter.setFrameShape(com.trolltech.qt.gui.QFrame.Shape.NoFrame);
         splitter.setOrientation(com.trolltech.qt.core.Qt.Orientation.Vertical);
         splitter.setHandleWidth(4);
-        MAPWIDGET = new QWidget(splitter);
+        MAPWIDGET = new QWebView(splitter);
         MAPWIDGET.setObjectName("MAPWIDGET");
         MAPWIDGET.setMinimumSize(new QSize(0, 200));
         splitter.addWidget(MAPWIDGET);
@@ -208,7 +209,7 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
 
         lEFarmId = new QLineEdit(tabInformation);
         lEFarmId.setObjectName("lEFarmId");
-        lEFarmId.setInputMethodHints(com.trolltech.qt.core.Qt.InputMethodHint.createQFlags(com.trolltech.qt.core.Qt.InputMethodHint.ImhUppercaseOnly));
+        //lEFarmId.setInputMethodHints(com.trolltech.qt.core.Qt.InputMethodHint.createQFlags(com.trolltech.qt.core.Qt.InputMethodHint.ImhUppercaseOnly));
         lEFarmId.setAlignment(com.trolltech.qt.core.Qt.AlignmentFlag.createQFlags(com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter));
 
         formLayout_2.addWidget(lEFarmId);

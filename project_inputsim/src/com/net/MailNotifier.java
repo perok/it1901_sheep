@@ -25,8 +25,8 @@ public class MailNotifier {
 	 */
 	public MailNotifier(Settings settings) {
 		this.settings = settings;
-		username = settings.getGoogleUser();
-		password = settings.getGooglePassword();
+		username = this.settings.getGoogleUser();
+		password = this.settings.getGooglePassword();
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");

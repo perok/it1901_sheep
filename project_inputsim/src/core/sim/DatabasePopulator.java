@@ -138,6 +138,22 @@ public class DatabasePopulator {
 		sc.deleteSheep();
 	}
 	
+	/** Sets the sheep id to dead.
+	 * 
+	 * @param id
+	 */
+	public void killSheep(int id) {
+		sc.setSheepAlive(id, 0);
+	}
+	
+	/** Sets the sheep id to alive.
+	 * 
+	 * @param id
+	 */
+	public void reviveSheep(int id) {
+		sc.setSheepAlive(id, 1);
+	}
+	
 	/** Returns a string of all users in database with id and name.
 	 * 
 	 * @return

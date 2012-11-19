@@ -19,14 +19,20 @@ public class Response implements Serializable {
 	}
 	
 	public Response(int type, ArrayList content) {
+		this.content = new ArrayList<>();
 		this.type = type;
-		this.content = content;
+		for (int i = 0; i < content.size(); i++) {
+			this.content.add(content.get(i));
+		}
 	}
 	
 	public Response(int type, boolean success, ArrayList content) {
+		this.content = new ArrayList<>();
 		this.type = type;
 		this.success = success;
-		this.content = content;
+		for (int i = 0; i < content.size(); i++) {
+			this.content.add(content.get(i));
+		}
 	}
 	
 	public Response(int type, User user) {
@@ -51,7 +57,9 @@ public class Response implements Serializable {
 	}
 
 	public void setContent(ArrayList content) {
-		this.content = content;
+		for (int i = 0; i < content.size(); i++) {
+			this.content.add(content.get(i));
+		}
 	}
 	
 	public User getUser() {
@@ -77,5 +85,3 @@ public class Response implements Serializable {
 				return "Fail";
 	}
 }
-
-
