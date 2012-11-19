@@ -578,17 +578,14 @@ public class DatabaseConnector {
 	 * @return
 	 */
 	public ArrayList<User> listUsersArrayList() {
+		ArrayList<User> users = new ArrayList<User>();
 		try{
 			String[][] r = processQuery("SELECT id,username,name,password,mobile_number,email FROM user WHERE true;");
-			ArrayList<User> users = new ArrayList<User>();
-
 			for (int i = 0; i < r[0].length; i++) {
 				User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5]);
 				users.add(user);
 			}
-
 			return users;
-
 		}
 		catch(NullPointerException e){
 			e.printStackTrace();

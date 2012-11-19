@@ -28,11 +28,12 @@ public class SheepStatusSim {
 	private static final double map_y_min = 60;
 	
 	private static final int DEFAULT_INTERVAL = 60;
-	private int timerInterval;
+	private static final int ALERT_INTERVAL = 1440;
+	private int statusInterval;
 	private DatabaseConnector sq;
 	private Random rand;
 	private Server server;
-	private Timer timer;
+	private Timer statusTimer, alertTimer;
 	
 	private HashMap<String,GPSPosition> lastPositions;
 	private ArrayList<Sheep> livingSheep;
@@ -43,11 +44,12 @@ public class SheepStatusSim {
 	 * 
 	 */
 	public SheepStatusSim(Server server) {
-		timerInterval = DEFAULT_INTERVAL*60000;
+		statusInterval = DEFAULT_INTERVAL*60000;
 		sq = new DatabaseConnector(new Settings());
 		rand = new Random();
 		this.server = server;
-		timer = new Timer(timerInterval, updateStatus);	
+		statusTimer = new Timer(statusInterval, updateStatus);
+		alertTimer = new Timer(ALERT_INTERVAL, updateStatus);
 		livingSheep = sq.listSheep();
 		farms = sq.listFarms();
 
@@ -59,11 +61,12 @@ public class SheepStatusSim {
 	 * @param interval
 	 */
 	public SheepStatusSim(int interval, Server server) {
-		timerInterval = interval*60000;
+		statusInterval = interval*60000;
 		sq = new DatabaseConnector(new Settings());
 		rand = new Random();
 		this.server = server;
-		timer = new Timer(timerInterval, updateStatus);	
+		statusTimer = new Timer(statusInterval, updateStatus);	
+		alertTimer = new Timer(ALERT_INTERVAL, updateStatus);
 		livingSheep = sq.listSheep();
 		farms = sq.listFarms();
 	}
@@ -73,7 +76,7 @@ public class SheepStatusSim {
 	 * @return
 	 */
 	public int getTimerInterval() {
-		return timerInterval;
+		return statusInterval;
 	}
 
 	/** Sets the timer interval to specified amount and notifies the server.
@@ -82,17 +85,17 @@ public class SheepStatusSim {
 	 * @param timerInterval
 	 */
 	public void setTimerInterval(int timerInterval) {
-		this.timerInterval = timerInterval;
+		this.statusInterval = timerInterval;
 		server.display("Simulator interval set to " + timerInterval +" minutes");
-		timer = new Timer(timerInterval, updateStatus);
-		timer.start();
+		statusTimer = new Timer(timerInterval, updateStatus);
+		statusTimer.start();
 	}
 
 	/** Starts the timer and keeps it running until the program terminates or stop is called.
 	 * 
 	 */
 	public void start() {
-		timer.start();
+		statusTimer.start();
 		server.display("Simulator started");
 	}
 
@@ -100,7 +103,7 @@ public class SheepStatusSim {
 	 * 
 	 */
 	public void stop() {
-		timer.stop();
+		statusTimer.stop();
 		server.display("Simulator stopped");
 	}
 
@@ -183,7 +186,12 @@ public class SheepStatusSim {
 	 */
 	ActionListener updateStatus = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {
-			addStatus();
+			if(evt.getSource() == statusTimer){
+				addStatus();
+			}
+			if(evt.getSource() == alertTimer){
+				addAlert();
+			}
 		}
 	};
 
