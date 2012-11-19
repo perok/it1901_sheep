@@ -18,14 +18,34 @@ if (!$db_selected) {
   die ('Can\'t use db : ' . mysql_error());
 }
 
-$query
+//Gets the information from GET data
+$user = $_GET['user'];
+$farm = $_GET['farm']
+$sheep = $_GET['sheep'];
 
-// Select all the rows in the markers table
-$all = "SELECT  FROM  WHERE 1";
 
-$many 
+$split = preg_split('/[,]+/', $sheep);
+$len = count($split);
 
-$sheep
+if($sheep = 'all') //A query for gettig all the the sheeps latest positions
+{
+  $query = $sheep;
+}
+else
+{
+  
+  if($len == 0)
+  {
+    die('Invalid url data: ' . mysql_error());
+  }
+  else if ($len == 1 { //One sheep selected. Get all the the positions for that sheep
+    $query =;
+  }
+  else //Some sheeps
+  {
+
+  }
+}
 
 $result = mysql_query($query);
 if (!$result) {

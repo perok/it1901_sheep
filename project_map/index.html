@@ -8,11 +8,14 @@
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&keys=AIzaSyClU-VZGNA7Sq9QTIKM6efXHPzeAITiYyI&sensor=false&region=NO"></script>
   <script>
 
+  //Variables
   var map;
   var trondheimLoc = new google.maps.LatLng(63.430515, 10.395053);
   var wmsType;
 
+  //Function that is started when onload is fired
   function initialize() {
+
 
    var mapOptions = {
     zoom: 10,
@@ -22,13 +25,12 @@
     mapTypeControlOptions: {
       mapTypeIds: ['statkart', google.maps.MapTypeId.ROADMAP],
       style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-    }	
+    } 
   };
 
   map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
   wmsType = new google.maps.ImageMapType(StatKartLayer);
   
-  document.URL
   
   //XML
   downloadUrl("phpsqlajax_genxml.php", function(data) {
@@ -47,18 +49,30 @@
         icon: icon.icon,
         shadow: icon.shadow
       });
-      bindInfoWindow(marker, map, infoWindow, html);
+      //bindInfoWindow(marker, map, infoWindow, html);
     }
-  });
-    }
+    });
 
-//	map.overlayMapTypes.insertAt(0, wmsType); 
-	map.mapTypes.set('statkart',  new google.maps.ImageMapType(StatKartLayer));//statkartMapType);
-	//map.setMapTypeId('statkart');	
-	//setMarkers(map, beaches);
+//  map.overlayMapTypes.insertAt(0, wmsType); 
+  //map.mapTypes.set('statkart', wmsType);
+  //map.setMapTypeId('statkart'); 
+  //setMarkers(map, beaches);
 
 }
 
+//Slices the url from '?' to end or #
+function parseURLParams(url) {
+  var queryStart = url.indexOf("?") + 1;
+  var queryEnd   = url.indexOf("#") + 1 || url.length + 1;
+  var query      = url.slice(queryStart, queryEnd - 1);
+
+  if (query === url || query === "") return;
+
+  console.log(query);
+  return query;
+}
+
+//starts the php script and parses the database
 function downloadUrl(url, callback) {
   var request = window.ActiveXObject ?
   new ActiveXObject('Microsoft.XMLHTTP') :
@@ -71,14 +85,18 @@ function downloadUrl(url, callback) {
     }
   };
 
+
   request.open('GET', url, true);
-  request.send(null);
+  //Send parametre her
+  request.send(parseURLParams(url));
 }
 
+//Helper function
+function doNothing() {}
 
-	/*
-	* WMS
-	*/
+  /*
+  * WMS
+  */
   var StatKartLayer = {
     getTileUrl: function (coord, zoom) {
        /*                 var proj = map.getProjection();
@@ -107,7 +125,7 @@ function downloadUrl(url, callback) {
                         var lUL_Longitude = lULg.x;
                         var lLR_Latitude = lLRg.y;
                         var lLR_Longitude = lLRg.x;
-            	    	//GJ: there is a bug when crossing the -180 longitude border (tile does not render) - this check seems to fix it
+                    //GJ: there is a bug when crossing the -180 longitude border (tile does not render) - this check seems to fix it
                     if (lLR_Longitude < lUL_Longitude){
                      lLR_Longitude = Math.abs(lLR_Longitude);
                    }
@@ -200,9 +218,9 @@ function downloadUrl(url, callback) {
     return new google.maps.Point(x,y);
   };
   
-	/*
-	* MARKERS  
-	*/
+  /*
+  * MARKERS  
+  */
       /**
        * Data for the markers consisting of a name, a LatLng and a zIndex for
        * the order in which these markers should display on top of each
