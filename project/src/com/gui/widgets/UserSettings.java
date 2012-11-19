@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gui.logic.ServerLogic;
-import com.net.ClientSocket;
-import com.trolltech.qt.QSignalEmitter.Signal0;
+
 import com.trolltech.qt.core.QRegExp;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QComboBox;
@@ -19,7 +18,6 @@ import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QValidator;
 import com.trolltech.qt.gui.QWidget;
 
-import core.classes.Farm;
 import core.classes.User;
 
 /** Show the settings for the user.
@@ -31,16 +29,19 @@ public class UserSettings extends QWidget implements InputComponentHost
 	public static final String CLASS_ICON = "./icons/farmer.png";
 		
 	private QComboBox qcbFarmCombo;
-	private QGroupBox qgbFarmGroup;
-	private QGroupBox qgbUserField;
-	private QLabel qlGaardLabel;
-	private QLabel qlUsername;
-	private QLabel qlUserEmail;
-	private QLabel qlUserPhone;
-	private QLineEdit qleUsername;
-	private QLineEdit qleEmail;
-	private QLineEdit qlePhone;
+	private QGroupBox qgbFarmGroup,
+					  qgbUserField,
+					  qgbAccessGroup;
+	private QLabel qlGaardLabel,
+				   qlUsername,
+				   qlUserEmail,
+				   qlUserPhone;
+	private QLineEdit qleUsername,
+					  qleEmail,
+					  qlePhone;
 	private QPushButton qpbBtnAlarm;
+	
+	private AccessListWidget alwAccessList;
 	
 	public Signal0 signalFarmUpdate;
 	
@@ -52,7 +53,8 @@ public class UserSettings extends QWidget implements InputComponentHost
 	public UserSettings(SettingsMenu parent)
     {
         super(parent);
-                    
+        
+        initAccessRights();
         initGaardSettings();
         initConnectEvents();
         initUserInput();
@@ -64,6 +66,12 @@ public class UserSettings extends QWidget implements InputComponentHost
         addConnector(this.qleEmail, "text", com.storage.UserStorage.class, "setUserMail", String.class);
         addConnector(this.qlePhone, "text", com.storage.UserStorage.class, "setUserPhone", String.class);
     }
+	
+	private void initAccessRights()
+	{
+		this.alwAccessList = new AccessListWidget(this);
+		this.qgbAccessGroup = new QGroupBox(tr("Endre brukerrettigheter"));			
+	}
 	
     
     @SuppressWarnings("unused")
@@ -211,11 +219,13 @@ public class UserSettings extends QWidget implements InputComponentHost
          /* Apply all the comboboxgroups to the main layout */
          qvblMainLayout.addWidget(this.qgbFarmGroup);
          qvblMainLayout.addWidget(this.qgbUserField);
+	     qvblMainLayout.addWidget(this.qgbAccessGroup);
          qvblMainLayout.addStretch(1);
-         
+                 
          /* Apply the layout to comboboxes */
          this.qgbFarmGroup  .setLayout(qvblFarmsLayout);
          this.qgbUserField  .setLayout(qvblUserLay);
+         this.qgbAccessGroup.setLayout(this.alwAccessList.getLayout());
          super			    .setLayout(qvblMainLayout);
     }
 
@@ -237,6 +247,8 @@ public class UserSettings extends QWidget implements InputComponentHost
 			ServerLogic.getClientsocket().editUser(newUser);
 		}
 	}
+	
+
 }
 
 /* EOF */

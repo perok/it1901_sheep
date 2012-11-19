@@ -162,6 +162,7 @@ public class SettingsMenu extends QDialog
     	this.qswPagesWidget = new QStackedWidget(this);
     	this.qpbCloseButton = new QPushButton(tr("&Close"));
     	
+    	
     	this.qlwParentcontentsWidget.setCurrentRow(0);
         this.qlwParentcontentsWidget.setIconSize(new QSize(96, 84));
         this.qlwParentcontentsWidget.setMaximumWidth(128);
