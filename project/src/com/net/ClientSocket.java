@@ -135,13 +135,23 @@ public class ClientSocket  {
 		sendRequest(new Request(Request.REQUEST, "login" ,params));
 	}
 
-	/**Makes a request with the given parameter and sends it to the server.
+	/** Makes a request with the given parameter and sends it to the server.
 	 * 
 	 * @param user
 	 */
 	public void editUser(User user) 
 	{
 		sendRequest(new Request(Request.EDITUSER, "editUser", user));
+	}
+	
+	/** Makes a request with the given parameter and sends it to the server.
+	 * 
+	 * @param farm
+	 */
+	public void addSheep(Sheep sheep) {
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("farmId", Integer.toString(sheep.getFarmId()));
+		sendRequest(new Request(Request.REQUEST, "addSheep", sheep));
 	}
 
 	/**Makes a request with the given paramter and sends it to the server.

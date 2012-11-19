@@ -111,6 +111,8 @@ public class ClientHandler implements Runnable {
 		case("login"):
 			Response lol = new Response(Response.USER,db.loginQuery(request.getparameter("username"), request.getparameter("password")));
 		return lol;
+		case("addSheep"):
+			return new Response(Response.BOOLEAN,db.insertSheep(request.getSheep()));
 		case("editSheep"):
 			return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()));
 
