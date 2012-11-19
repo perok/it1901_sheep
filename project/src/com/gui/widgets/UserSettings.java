@@ -241,6 +241,7 @@ public class UserSettings extends QWidget implements InputComponentHost
 		}
 		
 		newUser = com.storage.UserStorage.getUser();
+		System.out.println(newUser.getPassword());
 		
 		if(origUser.shallowEquals(newUser) == false)
 		{

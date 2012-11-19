@@ -124,7 +124,7 @@ public class UiMainWindowLogic extends QSignalEmitter
     @SuppressWarnings("unused")
     private void updateUser()
     {
-    	this.mw.
+    	//this.mw.
     }
     
     @SuppressWarnings("unused")

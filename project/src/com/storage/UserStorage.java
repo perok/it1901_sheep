@@ -34,7 +34,7 @@ public class UserStorage {
 	
 	public static void setUserPhone(String sPhoneNumber)
 	{
-		/* Parameter shoudl be safe as the input needs to pass a regex match */
+		/* Parameter should be safe as the input needs to pass a regex match */
 		int iPhoneNumber = Integer.parseInt(sPhoneNumber);
 		
 		user.setMobileNumber(iPhoneNumber);
