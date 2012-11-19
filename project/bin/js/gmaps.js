@@ -89,12 +89,17 @@
 var beaches = [
 ["TRONDHEIM BETCHES", 63.430515, 10.395053, 1]
 ];
-  
-function receiveJSON(data){
-	//var parsedJSON = eval('('+data+')');
-	setMarkers(map, data);
-	
-	document.getElementById('cake').innerHTML = data.parseJSON();
+
+//function that is called from the application for one sheep selected
+function receiveJSONOne(data){
+	setMarkers(map, data);	
+	//Add lines
+	//makeLines(map);
+} 
+
+//function that is called from the application for many sheep selected
+function receiveJSONMany(data){
+	setMarkers(map, data);	
 } 
 
 function setMarkers(map, locations) {
@@ -143,7 +148,6 @@ function setMarkers(map, locations) {
     }
     
     setAllMap(map);
-    //makeLines(map);
 }
 /*
 function makeLines(map){

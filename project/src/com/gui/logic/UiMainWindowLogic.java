@@ -15,6 +15,7 @@ import com.trolltech.qt.gui.QLabel;
 
 import core.classes.Message;
 import core.classes.Sheep;
+import core.classes.SheepStatus;
 
 import core.classes.SheepJS;
 
@@ -106,7 +107,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 			//SheepListWidget
 		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
 		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");		
-		//MULTI
+		this.slwHandler.multiSheepSelect.connect(this,"multiSheepSelect(ArrayList<Sheep> )");
 		
 		System.out.println("Logic applied");
 		
@@ -215,8 +216,38 @@ public class UiMainWindowLogic extends QSignalEmitter
 	private void newStatusBarMessage(String text){
 			statusbarMessage.setText(text);
 	}
+	
+	
 
 	//OTHER EVENTS
+	
+	/**
+	 * Event triggered when multiple sheeps are selected in the sheep list.
+	 * Used for showing the selected sheeps in the map
+	 * @param sheeps
+	 */
+	private void multiSheepSelect(ArrayList<Sheep> sheeps){
+		JSONArray arr = new JSONArray();
+		
+		//Go through all the sheeps
+		for (Sheep sheep : sheeps){
+			if(sheep.getRecentStatuses() != null){
+				double lat = sheep.getRecentStatuses().get(0).getGpsPosition().getLatitute();
+				double lon = sheep.getRecentStatuses().get(0).getGpsPosition().getLongditude();
+				boolean isAlert = true;
+				
+				//Set right alert prefix
+				if(sheep.getRecentStatuses().get(0) instanceof SheepStatus)
+					isAlert = false;
+				
+				arr.add(new SheepJS(sheep.getId(), sheep.getName(), isAlert, lat, lon));
+			}
+		}
+		
+		if (arr.size() > 0){		
+			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONMany("+ arr +")");
+		}
+	}
 		
 		/**
 		 * Populates the tabWidget
@@ -231,9 +262,6 @@ public class UiMainWindowLogic extends QSignalEmitter
 			arr.add(new SheepJS(sheep.getId(), sheep.getName(), false, msg.getGpsPosition().getLatitute(), msg.getGpsPosition().getLongditude() ));
 		}
 		
-		if (arr.size() > 0){		
-			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSON("+ arr +")");
-		}
 		
 		//TABLEWIDGET	
 		currentSheep = sheep;
@@ -284,6 +312,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 			
 	
 	}
+	
 
 	//TABWIDGET	
 	/**
