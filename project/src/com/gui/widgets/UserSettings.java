@@ -45,10 +45,9 @@ public class UserSettings extends QWidget implements InputComponentHost
 	private QPushButton qpbBtnAlarm;
 	
 	private AccessListWidget alwAccessList;
+	private List<ComponentConnector> lComponents;
 	
 	public Signal0 signalFarmUpdate;
-	
-	private List<ComponentConnector> lComponents = new ArrayList<ComponentConnector>();
 		
 	/** Constructor. Initialize..
 	 * @param parent the host of THIS
@@ -63,6 +62,7 @@ public class UserSettings extends QWidget implements InputComponentHost
         initUserInput();
         initLayout();
         
+        this.lComponents = new ArrayList<ComponentConnector>();
         this.signalFarmUpdate = new Signal0();
 
         addConnector(this.qleUsername, "text", com.storage.UserStorage.class, "setUserName", String.class);
@@ -70,6 +70,8 @@ public class UserSettings extends QWidget implements InputComponentHost
         addConnector(this.qlePhone, "text", com.storage.UserStorage.class, "setUserPhone", String.class);
     }
 	
+	/** Initialize the widget area for modifying access rights
+	 */
 	private void initAccessRights()
 	{
 		this.alwAccessList = new AccessListWidget(this);
@@ -82,9 +84,17 @@ public class UserSettings extends QWidget implements InputComponentHost
      */
 	private void toggleAlarm()
     {
-    	new AlarmPromptDialog(this).show();
+    	new AlarmPromptDialog(this).show(); /* Alarm may or may not be triggered from this dialog */
     }
 	
+    /** Add a component to a connector
+     * 
+     * @param qwInputObject the object holding input-data
+     * @param sInputMethod the method for obtaining input
+     * @param outputClass the type of output data from the input-field
+     * @param sOutputMethod the method for writing data
+     * @param outPutClass the class for write-data
+     */
 	private <T> void addConnector
 	(QWidget qwInputObject,
 	 String sInputMethod, 
@@ -100,6 +110,7 @@ public class UserSettings extends QWidget implements InputComponentHost
 			this.lComponents.add(ccO);
 		}
 		
+		/* Note: if we can't initialize a component, no component is added. In theory. */
 		catch (NoSuchMethodException|SecurityException e)
 		{
         	System.out.println("error: " + e.getMessage());
@@ -108,6 +119,10 @@ public class UserSettings extends QWidget implements InputComponentHost
 	
     
     @SuppressWarnings("unused")
+    /** When given data about the users, send it off to our child widget that processes the info.
+     * 
+     * @param lUsers arraylist holding a list of User objects
+     */
 	private void processUserData(ArrayList<User> lUsers)
     {
     	this.alwAccessList.recieveUserData(lUsers);
@@ -119,7 +134,7 @@ public class UserSettings extends QWidget implements InputComponentHost
 	private void farmChanged()
 	{
 		com.storage.UserStorage.setCurrentFarm(this.qcbFarmCombo.currentIndex());
-		signalFarmUpdate.emit();
+		signalFarmUpdate.emit(); /* Notify about farm-change */
 	}
 	
 	/** Initialize event-driven actions
@@ -139,6 +154,7 @@ public class UserSettings extends QWidget implements InputComponentHost
         this.qcbFarmCombo = new QComboBox();
         this.qpbBtnAlarm = new QPushButton(tr("Simuler alarm for angitt g�rd"));
         
+        // TODO: hardcoded info isn't that sexy.
         this.qcbFarmCombo.addItem(tr("Gård 0"));
         this.qcbFarmCombo.addItem(tr("Gård 1"));
         
@@ -146,7 +162,6 @@ public class UserSettings extends QWidget implements InputComponentHost
 	}
 	
 	/** Initialize fields for use with user input
-
 	 */
 	private void initUserInput()
 	{
@@ -159,8 +174,10 @@ public class UserSettings extends QWidget implements InputComponentHost
 		this.qlUserEmail = new QLabel(tr("Epost:"));
 		this.qlUserPhone = new QLabel(tr("Telefon"));
 		QRegExp qreNameInput = new QRegExp("^[A-Za-z\\ ]+$"); /* Letters and space only */
-		QRegExp qrePhoneInput = new QRegExp("^[0-9]+$");
-		QRegExp qreMailInput = new QRegExp("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}\\b");
+		QRegExp qrePhoneInput = new QRegExp("^[0-9]+$"); /* Numbers only */
+		QRegExp qreMailInput = new QRegExp( /* Valid email-addresses only, */
+				"\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}\\b"); /* Note that user can type invalid email by not finishing the text, e.g.	**
+				 														   ** someuser@domain    (suppressing the .com-ending)						*/
 		QValidator qvRegexName = new QRegExpValidator(qreNameInput, this.qleUsername);
 		QValidator qvRegexPhone = new QRegExpValidator(qrePhoneInput, this.qlePhone);
 		QValidator qvRegexMail = new QRegExpValidator(qreMailInput, this.qlePhone);
@@ -240,26 +257,42 @@ public class UserSettings extends QWidget implements InputComponentHost
          super			    .setLayout(qvblMainLayout);
     }
 
+    /** Write all changes to data from the inputcomponents.
+     * 
+     * @see the parent of this class
+     * @see InputComponentHost
+     */
 	@Override
 	public void writeChange() 
 	{
-		User origUser = com.storage.UserStorage.getUser().copyShallowUser(),
-			 newUser  = null;
+		/** A copy of the user BEFORE writing changes. */
+		User origUser = com.storage.UserStorage.getUser().copyShallowUser();
 		
+		/* For each input-field */
 		for(ComponentConnector cc : this.lComponents)
 		{
+			/* Write whatever changes that are made */
 			cc.writeChanges();
 		}
 		
-		newUser = com.storage.UserStorage.getUser();
+		updateUser(origUser);
+	}
+	
+	/** Update user data to the server
+	 * 
+	 * @param oldUser user-data before edits
+	 */
+	private void updateUser(User oldUser)
+	{
+		User newUser = com.storage.UserStorage.getUser();
 		
-		if(origUser.shallowEquals(newUser) == false)
+		/* If we've made any changes to the user object... */
+		if(oldUser.shallowEquals(newUser) == false)
 		{
+			/* ... make sure this is also reflected in the database */
 			ServerLogic.getClientsocket().editUser(newUser);
 		}
 	}
-	
-
 }
 
 /* EOF */

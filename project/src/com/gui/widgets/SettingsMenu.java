@@ -34,6 +34,7 @@ public class SettingsMenu extends QDialog
 
 	private List<InputComponentHost> lDynamicComponents = new ArrayList<InputComponentHost>();
 
+	/** The list of different dialog pages */
 	private QListWidget qlwParentcontentsWidget;
     private QStackedWidget qswPagesWidget;
     private QPushButton qpbCloseButton;
@@ -54,13 +55,8 @@ public class SettingsMenu extends QDialog
 	    initConnectEvents();
 	    initLayout();
 	    initIcons();
-	    
-	    this.signalFarmChanged = new Signal0();
-	    this.signalUserListRecieved = new Signal1<ArrayList>();
-	    
-	    this.usUserWidget.signalFarmUpdate.connect(this, "sigFarmChanged()");
-	    this.signalUserListRecieved.connect(this.usUserWidget, "processUserData(ArrayList)");
-	    
+	    initSignals();
+	    	    	    
 	    /* Add listeners */
 	    this.lDynamicComponents.add(this.asAlertWidget);
 	    this.lDynamicComponents.add(this.usUserWidget);
@@ -70,17 +66,35 @@ public class SettingsMenu extends QDialog
 	    super.setWindowIcon(new QIcon(CLASS_ICON));
 	}
     
+    /** Initialize the signals of THIS
+     */
+    private void initSignals()
+    {
+    	this.signalFarmChanged 		= new Signal0();
+	    this.signalUserListRecieved = new Signal1<ArrayList>();
+    }
+    
+    /** Transmit data containing users
+     * 
+     * @param lUsers list containing all users to the system
+     */
     private void sendData(ArrayList lUsers)
     {
     	signalUserListRecieved.emit(lUsers);    	
     }
         
     @SuppressWarnings("unused")
+    /** Signalize that farms have been changed
+     */
     private void sigFarmChanged()
     {
     	this.signalFarmChanged.emit();
     }
     
+    /** Get the parent of THIS
+     * 
+     * @return the parent of THIS
+     */
     public QObject getParent()
     {
     	return super.parent();
@@ -102,8 +116,10 @@ public class SettingsMenu extends QDialog
 	 */
 	private void checkForChange()
 	{
+		/* For each component we're listening to */
 		for(InputComponentHost ich : this.lDynamicComponents)
 		{
+			/* Ask components to write all changes */
 			ich.writeChange();
 		}
 	}
@@ -116,6 +132,9 @@ public class SettingsMenu extends QDialog
     	this.qpbCloseButton.clicked.connect(this, "close()");
     	this.qlwParentcontentsWidget.currentItemChanged.connect(this,
 	            "changePage(QListWidgetItem , QListWidgetItem)");
+    	
+    	this.usUserWidget.signalFarmUpdate.connect(this, "sigFarmChanged()");
+	    this.signalUserListRecieved.connect(this.usUserWidget, "processUserData(ArrayList)");
     }
     
     
@@ -144,18 +163,18 @@ public class SettingsMenu extends QDialog
      */
 	private void initLayout()
 	{
-		 QHBoxLayout qhblButtonsLayout 	  = new QHBoxLayout();
-		 QHBoxLayout qhblHorizontalLayout = new QHBoxLayout();
-		 QVBoxLayout qvblMainLayout 	  = new QVBoxLayout();
+		 QHBoxLayout qhblButtonsLayout 	 		= new QHBoxLayout();
+		 QHBoxLayout qhblWidgetContentLayout    = new QHBoxLayout();
+		 QVBoxLayout qvblMainLayout 	  		= new QVBoxLayout();
 		 
-	     qhblHorizontalLayout.addWidget(this.qlwParentcontentsWidget);
-	     qhblHorizontalLayout.addWidget(this.qswPagesWidget, 1);
+	     qhblWidgetContentLayout.addWidget(this.qlwParentcontentsWidget);
+	     qhblWidgetContentLayout.addWidget(this.qswPagesWidget, 1);
 	     
 	     qhblButtonsLayout.addStretch(1);
 	     qhblButtonsLayout.addWidget(qpbCloseButton);
 	
 	     qvblMainLayout.addStretch(1);
-	     qvblMainLayout.addLayout(qhblHorizontalLayout);
+	     qvblMainLayout.addLayout(qhblWidgetContentLayout);
 	     qvblMainLayout.addLayout(qhblButtonsLayout);
 	     qvblMainLayout.addSpacing(12);
 	     
@@ -171,7 +190,6 @@ public class SettingsMenu extends QDialog
     	this.qlwParentcontentsWidget = new QListWidget(this);
     	this.qswPagesWidget = new QStackedWidget(this);
     	this.qpbCloseButton = new QPushButton(tr("&Close"));
-    	
     	
     	this.qlwParentcontentsWidget.setCurrentRow(0);
         this.qlwParentcontentsWidget.setIconSize(new QSize(96, 84));

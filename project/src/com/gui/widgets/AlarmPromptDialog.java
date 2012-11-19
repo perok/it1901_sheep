@@ -6,12 +6,20 @@ import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QVBoxLayout;
 
+/** Prompt user whether he/she really wants to issue an alert
+ * 
+ * @author Gruppe 10
+ */
 public class AlarmPromptDialog extends QDialog 
 {
 	private QLabel qlPrompt;
 	private QPushButton qpbBtnOk,
 					    qpbBtnCancel;
 
+	/** Constructor. Initialize..
+	 * 
+	 * @param parent the issuer of this class
+	 */
 	public AlarmPromptDialog(UserSettings parent)
 	{
 		super(parent);
@@ -21,6 +29,8 @@ public class AlarmPromptDialog extends QDialog
 		initConnectEvents();
 	}
 	
+	/** Setup all event-triggers
+	 */
 	private void initConnectEvents()
 	{
 		this.qpbBtnCancel.clicked.connect(this, "close()");
@@ -28,6 +38,10 @@ public class AlarmPromptDialog extends QDialog
 	}
 	
 	@SuppressWarnings("unused")
+	/** Trigger an alarm and close THIS.
+	 * 
+	 * @see ClientSocket.invokeAlert()
+	 */
 	private void triggerAlarm()
 	{
 		//ServerLogic.getClientsocket().invokeAlert(com.storage.UserStorage.getUser().getFarmlist().get(
@@ -36,13 +50,17 @@ public class AlarmPromptDialog extends QDialog
 		super.close();
 	}
 
+	/** Initialize the widgets used in THIS 
+	*/
 	private void initWidgets()
 	{
 		this.qpbBtnCancel = new QPushButton(tr("&Avbryt"));
 		this.qpbBtnOk = new QPushButton(tr("&Ok"));
-		this.qlPrompt = new QLabel(tr("Du vil nå sette av en alarm, og alle registrerte administratorer vil bli tilsendt varsler"));
+		this.qlPrompt = new QLabel(tr("Du vil nï¿½ sette av en alarm, og alle registrerte administratorer vil bli tilsendt varsler"));
 	}
 	
+	/** Initialize the layouts used in THIS
+	 */
 	private void initLayout()
 	{
 		QHBoxLayout qhblButtonLayout = new QHBoxLayout();

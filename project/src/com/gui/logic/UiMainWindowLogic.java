@@ -1,7 +1,6 @@
 package com.gui.logic;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 
@@ -301,7 +300,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		if(!mw.lEName.text().equals("") && !mw.lEFarmId.text().equals("") && Integer.parseInt(mw.lEFarmId.text()) != 0){
 			sheepUpdate = new Sheep(currentSheep.getId(), mw.lEName.text(), Integer.parseInt(mw.lEFarmId.text()), 
 					Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) + String.valueOf(mw.dEBirthdaye.date().month()) + String.valueOf(mw.dEBirthdaye.date().day())),
-					mw.chbAlive.isChecked(), (int)mw.dSBWeight.value()); //MÅ FIKSES, skal ikke være int
+					mw.chbAlive.isChecked(), (int)mw.dSBWeight.value()); //Mï¿½ FIKSES, skal ikke vï¿½re int
 			
 			try{
 				System.out.println("Sending edited sheep");
