@@ -43,7 +43,6 @@ public class UserSettings extends QWidget implements InputComponentHost
 	private QPushButton qpbBtnAlarm;
 	
 	public Signal0 signalFarmUpdate;
-	public Signal0 signalUserChanged;
 	
 	private List<ComponentConnector> lComponents = new ArrayList<ComponentConnector>();
 		
@@ -60,7 +59,6 @@ public class UserSettings extends QWidget implements InputComponentHost
         initLayout();
         
         this.signalFarmUpdate = new Signal0();
-        this.signalUserChanged = new Signal0();
 
         addConnector(this.qleUsername, "text", com.storage.UserStorage.class, "setUserName", String.class);
         addConnector(this.qleEmail, "text", com.storage.UserStorage.class, "setUserMail", String.class);
@@ -73,15 +71,7 @@ public class UserSettings extends QWidget implements InputComponentHost
      */
 	private void toggleAlarm()
     {
-    	System.out.println("BEEP");
-    	
-    	// Vi vet ikke om denne virker enda eller ikke. Merk at dersom den virker, sendes det SMS osv osv.
-    	// Derfor burde ikke denne knappen settes opp og spammes.
-    	
-    	//TODO: legg til en "er du sikker på at du vil simulere alarm" popup box...
-    	
-    	ServerLogic.getClientsocket().invokeAlert(com.storage.UserStorage.getUser().getFarmlist().get(
-    			com.storage.UserStorage.getCurrentFarm()));
+    	new AlarmPromptDialog(this).show();
     }
 	
 	private <T> void addConnector
@@ -244,7 +234,6 @@ public class UserSettings extends QWidget implements InputComponentHost
 		
 		if(origUser.shallowEquals(newUser) == false)
 		{
-			//this.signalUserChanged.emit();
 			ServerLogic.getClientsocket().editUser(newUser);
 		}
 	}
