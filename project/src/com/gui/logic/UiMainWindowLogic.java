@@ -282,10 +282,32 @@ public class UiMainWindowLogic extends QSignalEmitter
 			
 		this.twHandler.updateMessages(sheep);
 	}
-
+	
+	/**
+	 * Method for sending a new sheep to the server
+	 * @param click
+	 */
 	@SuppressWarnings("unused")
 	private void pBSubmit_Add_clicked(boolean click){
-		System.out.println("CLICK");
+		
+		Sheep sheepAdd;
+		
+		if(!mw.lEName.text().equals("") && !mw.lEFarmId.text().equals("") && Integer.parseInt(mw.lEFarmId.text()) != 0){
+			
+			sheepAdd = new Sheep(currentSheep.getId(), mw.lEName.text(), Integer.parseInt(mw.lEFarmId.text()), 
+					Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) + String.valueOf(mw.dEBirthdaye.date().month()) + String.valueOf(mw.dEBirthdaye.date().day())),
+					mw.chbAlive.isChecked(), (int)mw.dSBWeight.value()); //M� FIKSES, skal ikke v�re int
+			
+			try{
+				sLogic.addSheep(sheepAdd);
+			}
+			catch(Exception e){
+				System.err.println("Sheep updating went in the toilet");
+				System.err.println(e.getStackTrace());
+			}
+		}
+		else
+			statusbarMessage.setText("Some fields are blank, or not valid input..");
 	
 	}
 	
@@ -323,7 +345,6 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 */
 	@SuppressWarnings("unused")
 	private void pbTabInformationUpdate_clicked(boolean click){
-		System.out.println("Sheep updated clicked");
 		Sheep sheepUpdate;
 		//Not empty
 		if(!mw.lEName.text().equals("") && !mw.lEFarmId.text().equals("") && Integer.parseInt(mw.lEFarmId.text()) != 0){
@@ -332,12 +353,11 @@ public class UiMainWindowLogic extends QSignalEmitter
 					mw.chbAlive.isChecked(), (int)mw.dSBWeight.value()); //M� FIKSES, skal ikke v�re int
 			
 			try{
-				System.out.println("Sending edited sheep");
 				sLogic.editSheep(sheepUpdate);
 			}
 			catch(Exception e){
-				System.out.println("Sheep updating went in the toilet");
-				e.printStackTrace();
+				System.err.println("Sheep updating went in the toilet");
+				System.err.println(e.getStackTrace());
 			}
 		}
 		else
