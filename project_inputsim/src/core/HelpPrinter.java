@@ -64,6 +64,8 @@ public final class HelpPrinter {
 		help += "db ls users - Lists all users with name and Id \n";
 		help += "db access add x y - Adds access for user id x to farm id y \n";
 		help += "db access remove x y - Removes access for user id x to farm id y \n";
+		help += "db purge sheep - Purges all sheep from database \n";
+		help += "db purge status - Purges all statuses from database \n";
 		return help;
 	}
 
