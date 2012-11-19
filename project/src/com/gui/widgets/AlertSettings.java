@@ -26,14 +26,14 @@ public class AlertSettings extends QWidget implements InputComponentHost
 	
 	private List<ComponentConnector> lComponents = new ArrayList<ComponentConnector>();
 	
-	private QGroupBox qgbPackageGroup,	
+	private QGroupBox qgbStyleGroup,	
 					  qgbUpdateGroup,
 					  qgbTOAlert;
 	private QCheckBox qcbSmsCheckbox,
 					  qcbMailCheckbox,
 					  qcbCallCheckbox;
 	private QCheckBox qcbMapSetting1;
-	private QListWidget qlwPackageList;
+	private QListWidget qlwQtStyleList;
 	
 	
 	/** Constructor. Initialize..
@@ -52,10 +52,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
         initConnectEvents();
         initLayout();
         
-        initMapSettings();
-        
         //TODO: add inputcomponents here
-        //parent.parent().
     }
     
     private void initMapSettings()
@@ -70,7 +67,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
      */
     private void updateTheme()
     {
-    	String sSelectedText = this.qlwPackageList.currentItem().text();
+    	String sSelectedText = this.qlwQtStyleList.currentItem().text();
     	
     	try
     	{
@@ -86,7 +83,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
      */
     private void initConnectEvents()
     {
-    	this.qlwPackageList.currentItemChanged.connect(this, "updateTheme()");
+    	this.qlwQtStyleList.currentItemChanged.connect(this, "updateTheme()");
     	
     }
         
@@ -102,21 +99,21 @@ public class AlertSettings extends QWidget implements InputComponentHost
     private void initThemeList()
     {
     	String sCurrentStyle = QApplication.style().objectName();
-    	this.qgbPackageGroup = new QGroupBox(tr("Applikasjons-stil"));
-    	this.qlwPackageList = new QListWidget();
+    	this.qgbStyleGroup = new QGroupBox(tr("Applikasjons-stil"));
+    	this.qlwQtStyleList = new QListWidget();
     	
     	/* For each of passed arguments */
     	for(String s : QStyleFactory.keys())
     	{
     		/* Add an item to the box, and set the text given by arg */
-    		QListWidgetItem cur = new QListWidgetItem(this.qlwPackageList);
+    		QListWidgetItem cur = new QListWidgetItem(this.qlwQtStyleList);
     		cur.setText(s);
     		
     		/* If one of the string matches the current theme, 
     		 * set it to the currently selected item */
     		if(s.toLowerCase().equalsIgnoreCase(sCurrentStyle))
     		{
-    			this.qlwPackageList.setCurrentItem(cur);
+    			this.qlwQtStyleList.setCurrentItem(cur);
     		}
     	}
     }
@@ -128,7 +125,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
     	/** The layout for sheep alerts */
     	QVBoxLayout qbvSheepSettingsLayout   = new QVBoxLayout();
     	/** The main layout, holding all sub-layouts to THIS */
-    	QVBoxLayout qvbMainLayout 			 = new QVBoxLayout();
+    	QVBoxLayout qvblMainLayout 			 = new QVBoxLayout();
     	/** The layout for the theme manager */
     	QVBoxLayout qvbThemeLayout 		 = new QVBoxLayout();
     	QVBoxLayout qvbMapSettingsLayout = new QVBoxLayout();
@@ -137,19 +134,20 @@ public class AlertSettings extends QWidget implements InputComponentHost
         qbvSheepSettingsLayout.addWidget(this.qcbMailCheckbox);
         qbvSheepSettingsLayout.addWidget(this.qcbCallCheckbox);
         
-        qvbMapSettingsLayout.addWidget(this.qcbMapSetting1);
+        qvbMapSettingsLayout.addWidget(this.qcbMapSetting1);        
         
-        qvbThemeLayout.addWidget(this.qlwPackageList);
+        qvbThemeLayout.addWidget(this.qlwQtStyleList);
 
-        qvbMainLayout.addWidget(this.qgbUpdateGroup);
-        qvbMainLayout.addWidget(this.qgbPackageGroup);
-        qvbMainLayout.addWidget(this.qgbTOAlert);
-        qvbMainLayout.addSpacing(12);
-        qvbMainLayout.addStretch(1);
+        qvblMainLayout.addWidget(this.qgbUpdateGroup);
+        qvblMainLayout.addWidget(this.qgbStyleGroup);
+        qvblMainLayout.addWidget(this.qgbTOAlert);
+        qvblMainLayout.addSpacing(12);
+        qvblMainLayout.addStretch(1);
         
         this.qgbUpdateGroup .setLayout(qbvSheepSettingsLayout);
-        this.qgbPackageGroup.setLayout(qvbThemeLayout);
-        super			    .setLayout(qvbMainLayout);
+        this.qgbStyleGroup.setLayout(qvbThemeLayout);
+        this.qgbTOAlert		.setLayout(qvbMapSettingsLayout);
+        super			    .setLayout(qvblMainLayout);
     }
     
     /** Initialize checkboxes-widgets to be used in THIS
