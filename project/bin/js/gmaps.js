@@ -2,6 +2,9 @@
   var map;
   var trondheimLoc = new google.maps.LatLng(63.430515, 10.395053);
   var wmsType;
+  var markers = [];
+  var lines = [];
+
 
   //Function that is started when onload is fired
   function initialize() {
@@ -31,67 +34,39 @@
 
 }
   
-function receiveJSON(data){
-	//var parsedJSON = eval('('+data+')');
-	alert(data);
-	alert(data[0].name);
-	document.getElementById('cake').innerHTML = data.parseJSON();
-} 
 
   /*
   * WMS
   */
   var StatKartLayer = {
     getTileUrl: function (coord, zoom) {
-                        var proj = map.getProjection();
-                          var zfactor = Math.pow(2, zoom);
-    // get Long Lat coordinates
-    var top = proj.fromPointToLatLng(new google.maps.Point(coord.x * 256 / zfactor, coord.y * 256 / zfactor));
-    var bot = proj.fromPointToLatLng(new google.maps.Point((coord.x + 1) * 256 / zfactor, (coord.y + 1) * 256 / zfactor));
-
-    //corrections for the slight shift of the SLP (mapserver)
-    var deltaX = 0.0013;
-    var deltaY = 0.00058;
-
-    //create the Bounding box string
-    var bbox = (top.lng()) + "," + (bot.lat()) + "," + (bot.lng()) + "," + (top.lat());
-
-    /*
-    var lULP = new google.maps.Point(coord.x*256,(coord.y+1)*256);
-    var lLRP = new google.maps.Point((coord.x+1)*256,coord.y*256);
-
-    var projectionMap = new MercatorProjection();
-
-    var lULg = projectionMap.fromDivPixelToSphericalMercator(lULP, zoom);
-    var lLRg  = projectionMap.fromDivPixelToSphericalMercator(lLRP, zoom);
-
-    var lUL_Latitude = lULg.y;
-    var lUL_Longitude = lULg.x;
-    var lLR_Latitude = lLRg.y;
-    var lLR_Longitude = lLRg.x;
-    //GJ: there is a bug when crossing the -180 longitude border (tile does not render) - this check seems to fix it
-    if (lLR_Longitude < lUL_Longitude){
-      lLR_Longitude = Math.abs(lLR_Longitude);
-    }
-
-    var urlResult = "&bbox=" + lUL_Longitude + "," + lUL_Latitude + "," + lLR_Longitude + "," + lLR_Latitude;
-    */
-    
-    //base WMS URL
-    var url = "http://openwms.statkart.no/skwms1/wms.topo2?";
-    url += "&REQUEST=GetMap"; //WMS operation
-    url += "&SERVICE=WMS";    //WMS service
-    url += "&VERSION=1.1.1";  //WMS version  
-    url += "&LAYERS=" + "topo2_WMS"; //WMS layers
-    url += "&FORMAT=image/png" ; //WMS format
-    url += "&BGCOLOR=0xFFFFFF";  
-    url += "&TRANSPARENT=FALSE";
-    url += "&SRS=EPSG:4326";     //set WGS84 
-    url += "&BBOX=" + bbox;      // set bounding box
-    url += "&WIDTH=256";         //tile size in google
-    url += "&HEIGHT=256";
-    return url;
-
+    	var proj = map.getProjection();
+        var zfactor = Math.pow(2, zoom);
+	    // get Long Lat coordinates
+	    var top = proj.fromPointToLatLng(new google.maps.Point(coord.x * 256 / zfactor, coord.y * 256 / zfactor));
+	    var bot = proj.fromPointToLatLng(new google.maps.Point((coord.x + 1) * 256 / zfactor, (coord.y + 1) * 256 / zfactor));
+	
+	    //corrections for the slight shift of the SLP (mapserver)
+	    var deltaX = 0.0013;
+	    var deltaY = 0.00058;
+	
+	    //create the Bounding box string
+	    var bbox = (top.lng()) + "," + (bot.lat()) + "," + (bot.lng()) + "," + (top.lat());
+	    
+	    //base WMS URL
+	    var url = "http://openwms.statkart.no/skwms1/wms.topo2?";
+	    url += "&REQUEST=GetMap"; //WMS operation
+	    url += "&SERVICE=WMS";    //WMS service
+	    url += "&VERSION=1.1.1";  //WMS version  
+	    url += "&LAYERS=" + "topo2_WMS"; //WMS layers
+	    url += "&FORMAT=image/png" ; //WMS format
+	    url += "&BGCOLOR=0xFFFFFF";  
+	    url += "&TRANSPARENT=FALSE";
+	    url += "&SRS=EPSG:4326";     //set WGS84 
+	    url += "&BBOX=" + bbox;      // set bounding box
+	    url += "&WIDTH=256";         //tile size in google
+	    url += "&HEIGHT=256";
+	    return url;
     },
 
   tileSize: new google.maps.Size(256, 256),
@@ -114,8 +89,16 @@ function receiveJSON(data){
 var beaches = [
 ["TRONDHEIM BETCHES", 63.430515, 10.395053, 1]
 ];
+  
+function receiveJSON(data){
+	//var parsedJSON = eval('('+data+')');
+	setMarkers(map, data);
+	
+	document.getElementById('cake').innerHTML = data.parseJSON();
+} 
 
 function setMarkers(map, locations) {
+	deleteOverlays();
   // Add markers to the map
 
   // Marker sizes are expressed as a Size of X,Y
@@ -140,18 +123,76 @@ function setMarkers(map, locations) {
     var shape = {
       coord: [1, 1, 1, 20, 18, 20, 18 , 1],
       type: 'poly'
-    };
+   };
 
     for (var i = 0; i < locations.length; i++) {
-      var beach = locations[i];
-      var myLatLng = new google.maps.LatLng(beach[1], beach[2]);
+    	alert(locations[i].lat + "  " + locations[i].lon);
+    	
+      var myLatLng = new google.maps.LatLng(locations[i].lat, locations[i].lon);
       var marker = new google.maps.Marker({
         position: myLatLng,
         map: map,
         icon: image,
         shape: shape,
-        title: beach[0],
-        zIndex: beach[3]
+        animation: google.maps.Animation.DROP,
+        title: locations[i].name,
+        zIndex: 0
       });
+      
+      markers.push(marker);
     }
+    
+    setAllMap(map);
+    //makeLines(map);
+}
+/*
+function makeLines(map){
+	//Remove old lines
+	for ( var i = 0; i < lines.length; i++) {
+		lines[i].setMap(null);
+	}
+	//make new lines
+	//for ( var i = 0; i < (markers.length - 1); i++) {
+		var line = new google.maps.Polyline({
+			//var datline = [markers[i].getPosition(), markers[i+1].getPosition()];
+			path: lineCoordinates,
+			icons: [{
+				icon: lineSymbol,
+				offset: '100%'
+			}],
+			map: map
+			});
+		}
+	
+		lines.push(line);
+	//}
+}*/
+
+var lineCoordinates = [
+                       new google.maps.LatLng(22.291, 153.027),
+                       new google.maps.LatLng(18.291, 153.027)
+                     ];
+
+var lineSymbol = {
+	path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+};
+
+
+
+// Removes the overlays from the map, but keeps them in the array.
+function clearOverlays() {
+  setAllMap(null);
+}
+
+// Sets the map on all markers in the array.
+function setAllMap(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
   }
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteOverlays() {
+  clearOverlays();
+  markers = [];
+}

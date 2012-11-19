@@ -121,7 +121,7 @@ public class ClientHandler implements Runnable {
 			return new Response(Response.BOOLEAN,server.simulator.addAlert(Integer.parseInt(request.getparameter("farmId")), 1));
 		
 		case("listUsersArrayList"):
-			return new Response(Response.BOOLEAN,db.listUsersArrayList());
+			return new Response(Response.LIST,db.listUsersArrayList());
 		}
 		
 		

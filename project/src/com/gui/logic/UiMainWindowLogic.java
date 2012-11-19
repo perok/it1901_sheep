@@ -224,21 +224,18 @@ public class UiMainWindowLogic extends QSignalEmitter
 		 */
 	@SuppressWarnings("unused")
 	private void populateTableWidget(Sheep sheep){
-		
-		
 		//MAP
-		
 		JSONArray arr = new JSONArray();
+		
 		for (Message msg : sheep.getRecentStatuses()){
 			arr.add(new SheepJS(sheep.getId(), sheep.getName(), false, msg.getGpsPosition().getLatitute(), msg.getGpsPosition().getLongditude() ));
 		}
 		
-		System.out.println(arr.toJSONString());
+		if (arr.size() > 0){		
+			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSON("+ arr +")");
+		}
 		
-		mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSON("+ arr +")");
-		
-		//TABLEWIDGET
-		
+		//TABLEWIDGET	
 		currentSheep = sheep;
 		
 		//Sheep id, Sheep name, farmId

@@ -68,19 +68,28 @@ public class ServerLogic extends QSignalEmitter{
 
 	}
 	
-	public void handleResponse(Response response){
+	public void handleResponse(Response response)
+	{
 		System.out.println("Response incoming");
 		System.out.println("Recieved response: "+ response.getType());
 		
 		/*
-		 * Må ha ett system der de ulike viewsa som kaller etter informasjon
+		 * Mï¿½ ha ett system der de ulike viewsa som kaller etter informasjon
 		 * fra serveren blir registrert slikt at de kan sendes dit
 		 */
 		
 		int responseType = response.getType();
 		
 		/* List */
-		if(responseType == 1) {
+		if(responseType == 1) 
+		{			
+			if(response.getContent() != null 
+			&& response.getContent().isEmpty() == false 
+			&& response.getContent().get(0) instanceof User)
+			{
+				this.signalUserDataRecieved.emit(response.getContent());
+			}
+			
 			//A object has called for a list
 			if (objectAskingForResponse != null){
 				//Sheeplist asking for information
@@ -94,9 +103,7 @@ public class ServerLogic extends QSignalEmitter{
 		}
 		/* Boolean */
 		else if(responseType == 2)
-		{
-			System.out.println("response 2");
-			this.signalUserDataRecieved.emit(response.getContent());
+		{	
 		}
 		
 		/* User */

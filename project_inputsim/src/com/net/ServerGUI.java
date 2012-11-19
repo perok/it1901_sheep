@@ -239,6 +239,16 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 			}
 
 		break;
+		
+		case("purge"):
+			if(decoded[2].equalsIgnoreCase("sheep")) {
+				populator.deleteSheep();
+			}
+			else if(decoded[2].equalsIgnoreCase("status")) {
+				populator.deleteStatus();
+			}
+
+		break;
 
 		}
 		break;
