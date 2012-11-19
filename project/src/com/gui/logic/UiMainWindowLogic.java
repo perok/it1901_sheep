@@ -1,5 +1,7 @@
 package com.gui.logic;
 
+import java.util.ArrayList;
+
 import com.gui.UiMainWindow;
 import com.gui.widgets.SettingsMenu;
 import com.storage.UserStorage;
@@ -9,6 +11,7 @@ import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.gui.QLabel;
 
 import core.classes.Sheep;
+import core.classes.User;
 
 public class UiMainWindowLogic extends QSignalEmitter
 {
@@ -23,9 +26,15 @@ public class UiMainWindowLogic extends QSignalEmitter
 	public Signal0 signalShowAbout;
 	public Signal0 signalShowAboutQt;
 	public Signal0 signalUpdateSheepList;
+	public Signal1<ArrayList<User>> signalUserListRecieved;
 	
 	
 	private Sheep currentSheep;
+	
+	private void sendUserData(ArrayList lUsers)
+	{
+		this.signalUserListRecieved.emit(lUsers);
+	}
 
 	public UiMainWindowLogic(UiMainWindow mw, SheepListWidgetLogic slwHandler, TableWidgetLogic twHandler, ServerLogic sLogic){
 		System.out.println("Applying logic");
@@ -35,10 +44,12 @@ public class UiMainWindowLogic extends QSignalEmitter
 		this.twHandler = twHandler;
 		this.sLogic = sLogic;
 		
+		this.signalUserListRecieved = new Signal1<ArrayList<User>>();		
+		sLogic.signalUserDataRecieved.connect(this, "sendUserData(ArrayList)");
+		
 		/* Setting up user information*/
 		for(int i = 0; i < UserStorage.getUser().getFarmlist().size(); i++)
 			mw.cmbDockFarmId.addItem(UserStorage.getUser().getFarmlist().get(i).getName());
-		
 		
 		/* Setting up extra widgets*/
 		statusbarMessage = new QLabel("Ready");
@@ -46,16 +57,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 		//Fiks mapWidget her..
 		
 		/* Adding values to ui */
-		try
-		{
-			mw.MAPWIDGET.load(new QUrl("http://folk.ntnu.no/perok/it1901"));
-			mw.MAPWIDGET.show();
-		}
-		
-		catch(Throwable t)
-		{
-			System.out.println(t.getMessage());
-		}
+		mw.MAPWIDGET.load(new QUrl("http://folk.ntnu.no/perok/it1901"));
+		mw.MAPWIDGET.show();
 		
 		//mw.MAPWIDGET.updatesEnabled(true);
 		/* Setting up signals */
@@ -114,8 +117,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 * @param trigg
 	 */
 	@SuppressWarnings("unused")
-	private void actionAbout_Qt_Jambi_triggerd(boolean trigg){
-		System.out.println("WEREHO");
+	private void actionAbout_Qt_Jambi_triggerd(boolean trigg)
+	{
 		signalShowAboutQt.emit();
 	}
 	    
@@ -129,6 +132,7 @@ public class UiMainWindowLogic extends QSignalEmitter
     	
     	spawn.show();
     	spawn.signalFarmChanged.connect(this, "updateSheepList()");
+    	this.signalUserListRecieved.connect(spawn, "sendData(ArrayList)");
     }
     
     @SuppressWarnings("unused")

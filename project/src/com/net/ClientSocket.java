@@ -123,7 +123,7 @@ public class ClientSocket  {
 
 	}
 
-	/**Makes a request with the given paramters and sends it to the server.
+	/**Makes a request with the given parameters and sends it to the server.
 	 * 
 	 * @param username
 	 * @param password
