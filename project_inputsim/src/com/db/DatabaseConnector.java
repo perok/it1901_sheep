@@ -449,6 +449,24 @@ public class DatabaseConnector {
 		}	
 	}
 
+	/** Creates a sheep entry of the given paramter in the database.
+	 * 
+	 * @param sheep
+	 * @return 
+	 */
+	public boolean insertSheep(Sheep sheep) {
+		try {
+			Statement s = conn.createStatement();
+			s.executeUpdate("INSERT INTO sheep (name,farm_id,date_of_birth,alive,weight" +
+					") VALUES (" + "'"+sheep.getId()+"'," + ""+sheep.getFarmId()+"," +
+					""+sheep.getDateOfBirth()+"," + ""+sheep.isAlive()+"," + ""+sheep.getWeight()+");");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}	
+	}
+
 	/** Returns the number of sheep in the database.
 	 * 
 	 * @return
