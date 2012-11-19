@@ -1,12 +1,8 @@
 package com.gui.widgets;
 
 import java.util.ArrayList;
-
-import javax.jws.soap.SOAPBinding.Use;
-
 import com.gui.logic.ServerLogic;
 import com.trolltech.qt.gui.QAbstractItemView;
-import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QListWidgetItem;
