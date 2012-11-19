@@ -22,6 +22,7 @@ public class User  implements Serializable{
 			ArrayList<Farm> farmlist) {
 		this.id = id;
 		this.name = name;
+		this.password = password;
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.username = username;
@@ -31,6 +32,7 @@ public class User  implements Serializable{
 	public User(int id, String username, String name, String password, int mobileNumber, String email) {
 		this.id = id;
 		this.name = name;
+		this.password = password;
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.username = username;

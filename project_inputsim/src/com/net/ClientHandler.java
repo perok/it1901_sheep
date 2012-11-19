@@ -66,7 +66,7 @@ public class ClientHandler implements Runnable {
 			}
 		}
 		catch(IOException e) {
-			server.sg.appendEvent(username + " Disconnected");
+			server.sg.appendEvent(username + " Disconnected \n");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
