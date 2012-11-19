@@ -48,7 +48,7 @@ public class MainWindow extends QMainWindow
     	com.trolltech.qt.Utilities.loadQtLibrary("QtNetwork");
         com.trolltech.qt.Utilities.loadQtLibrary("QtXmlPatterns");
 
-        com.trolltech.qt.Utilities.loadQtLibrary("QtWebKit");
+        //com.trolltech.qt.Utilities.loadQtLibrary("QtWebKit");
 
     	/* Initialize qt-framework, set default style */
         QApplication.initialize(args);        
