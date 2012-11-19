@@ -209,7 +209,7 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
 
         lEFarmId = new QLineEdit(tabInformation);
         lEFarmId.setObjectName("lEFarmId");
-        lEFarmId.setInputMethodHints(com.trolltech.qt.core.Qt.InputMethodHint.createQFlags(com.trolltech.qt.core.Qt.InputMethodHint.ImhUppercaseOnly));
+        //lEFarmId.setInputMethodHints(com.trolltech.qt.core.Qt.InputMethodHint.createQFlags(com.trolltech.qt.core.Qt.InputMethodHint.ImhUppercaseOnly));
         lEFarmId.setAlignment(com.trolltech.qt.core.Qt.AlignmentFlag.createQFlags(com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter));
 
         formLayout_2.addWidget(lEFarmId);
