@@ -142,7 +142,7 @@ public class ClientSocket  {
 	public void editUser(User user) 
 	{
 		user.setPassword("1337"); // FIXME: ...
-		sendRequest(new Request(Request.EDITUSER, "editUser", user));
+		//sendRequest(new Request(Request.EDITUSER, "editUser", user));
 	}
 
 	/**Makes a request with the given paramter and sends it to the server.
