@@ -10,6 +10,7 @@ import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.core.Qt.MatchFlags;
 import com.trolltech.qt.core.Qt.SortOrder;
 import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
+import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QListWidgetItem;
 
@@ -24,6 +25,8 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	//FIXME: sorting is done with strings and thus, numbered sheeps does'nt get sorted correctly
 	SortOrder sortOrder = SortOrder.AscendingOrder;
 	
+	private QIcon sheepOkPicture;
+	
 	protected Signal1<Sheep> sheepSelected;
 	
 	protected Signal1<ArrayList<Sheep>> multiSheepSelect;
@@ -35,6 +38,8 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	 */
 	public SheepListWidgetLogic(QListWidget qlWidget)//QTreeView qtvModView)
 	{
+		sheepOkPicture = new QIcon("res/Sheep_WO_backround.png");
+		
 		sheepSelected = new Signal1<Sheep>();
 		multiSheepSelect = new Signal1<ArrayList<Sheep>>();
 		statusBarMessage = new Signal1<String>();
@@ -111,6 +116,9 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 			QListWidgetItem item = new QListWidgetItem();
 			item.setData(Constants.QtSheepDataRole, sheep);
 			item.setData(Qt.ItemDataRole.DisplayRole, sheep.getName());
+			
+			if(sheep.isAlive())
+				item.setIcon(sheepOkPicture);
 			
 			//Qt should handle GC now. 
 			item.disableGarbageCollection();

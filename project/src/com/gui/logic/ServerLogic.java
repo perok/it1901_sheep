@@ -143,13 +143,22 @@ public class ServerLogic extends QSignalEmitter{
 		System.out.println("Message from server: " + message);
 	}
 	
+	/**
+	 * TODO: IMPLEMENT
+	 */
+	public void addSheep(Sheep sheep){
+		//clientSocket.
+	}
+	
 	public void editSheep(Sheep sheep){
 		clientSocket.editSheep(sheep);
+		
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 		clientSocket.getSheep(sheep.getFarmId());
 	}
 	

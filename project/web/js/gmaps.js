@@ -89,12 +89,17 @@
 var beaches = [
 ["TRONDHEIM BETCHES", 63.430515, 10.395053, 1]
 ];
-  
-function receiveJSON(data){
-	//var parsedJSON = eval('('+data+')');
-	setMarkers(map, data);
-	
-	document.getElementById('cake').innerHTML = data.parseJSON();
+
+//function that is called from the application for one sheep selected
+function receiveJSONOne(data){
+	setMarkers(map, data);	
+	//Add lines
+	//makeLines(map);
+} 
+
+//function that is called from the application for many sheep selected
+function receiveJSONMany(data){
+	setMarkers(map, data);	
 } 
 
 function setMarkers(map, locations) {
@@ -108,8 +113,8 @@ function setMarkers(map, locations) {
   // Origins, anchor positions and coordinates of the marker
   // increase in the X direction to the right and in
   // the Y direction down.
-  var image = new google.maps.MarkerImage('images/sheep_small.png',
-    // This marker is 20 pixels wide by 32 pixels tall.
+  var image = new google.maps.MarkerImage('images/Sheep_WO_backround.png',
+    // This marker is 23 pixels wide by 2 pixels tall.
     new google.maps.Size(23, 22),
     // The origin for this image is 0,0.
     new google.maps.Point(0,0),
@@ -121,7 +126,7 @@ function setMarkers(map, locations) {
     // coordinate closes the poly by connecting to the first
     // coordinate.
     var shape = {
-      coord: [1, 1, 1, 20, 18, 20, 18 , 1],
+      coord: [1, 1, 1, 23, 23, 22, 23 , 1],
       type: 'poly'
    };
 
@@ -139,12 +144,29 @@ function setMarkers(map, locations) {
         zIndex: 0
       });
       
+      
+      google.maps.event.addListener(marker, 'click', function() {
+    	  var contentString = '<div id="content">'+
+    		'<div id="siteNotice">'+
+    		'</div>'+
+    		'<h1 id="firstHeading" class="firstHeading">' + marker.getTitle '</h1>'+
+    		'<div id="bodyContent">'+
+    		'<p>'+marker.Position.toUrlValue+'</p>'+
+    		'</div>'+
+    		'</div>';
+    	  
+    	  infoWindow.setContent(contentString);
+          infowindow.open(map,marker);
+        });
+      
       markers.push(marker);
     }
     
     setAllMap(map);
-    //makeLines(map);
 }
+
+
+
 /*
 function makeLines(map){
 	//Remove old lines
@@ -177,6 +199,8 @@ var lineSymbol = {
 	path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
 };
 
+
+var infowindow = new google.maps.InfoWindow();
 
 
 // Removes the overlays from the map, but keeps them in the array.

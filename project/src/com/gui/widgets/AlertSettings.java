@@ -55,6 +55,8 @@ public class AlertSettings extends QWidget implements InputComponentHost
         //TODO: add inputcomponents here
     }
     
+    /** Initialize the area for changing map settings
+     */
     private void initMapSettings()
     {
     	this.qgbTOAlert = new QGroupBox(tr("Varsler fra Map"));
@@ -94,7 +96,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
     	//TODO: init all "standalone" widgets here
     }        
     
-    /** Initialize the theme selector
+    /** Initialize the theme selector area
      */
     private void initThemeList()
     {
@@ -128,6 +130,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
     	QVBoxLayout qvblMainLayout 			 = new QVBoxLayout();
     	/** The layout for the theme manager */
     	QVBoxLayout qvbThemeLayout 		 = new QVBoxLayout();
+    	/** The layout for map-settings area */
     	QVBoxLayout qvbMapSettingsLayout = new QVBoxLayout();
     	
         qbvSheepSettingsLayout.addWidget(this.qcbSmsCheckbox);
@@ -160,14 +163,19 @@ public class AlertSettings extends QWidget implements InputComponentHost
         /* - Checkboxes */
         this.qcbSmsCheckbox = new QCheckBox(tr("Send SMS"));
         this.qcbMailCheckbox   = new QCheckBox(tr("Send mail"));
-        this.qcbCallCheckbox   = new QCheckBox(tr("Ring på telefon"));
+        this.qcbCallCheckbox   = new QCheckBox(tr("Ring pï¿½ telefon"));
     }
 
 	@Override
+	/** @see parent of THIS
+	 * @see InputComponentHost
+	 */
 	public void writeChange() 
 	{
+		/* For all input-components... */
 		for(ComponentConnector cc : this.lComponents)
 		{
+			/* Write the change */
 			cc.writeChanges();
 		}	
 	}

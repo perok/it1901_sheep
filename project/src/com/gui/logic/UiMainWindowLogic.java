@@ -1,7 +1,6 @@
 package com.gui.logic;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 
@@ -15,6 +14,7 @@ import com.trolltech.qt.gui.QLabel;
 
 import core.classes.Message;
 import core.classes.Sheep;
+import core.classes.SheepStatus;
 
 import core.classes.SheepJS;
 
@@ -64,6 +64,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 		//Fiks mapWidget her..
 		
 		/* Adding values to ui */
+		//Information tab defaults at open.
+		mw.tabWidget.setCurrentIndex(0);
 
 		//mw.MAPWIDGET.setUrl(new QUrl("http://folk.ntnu.no/perok/it1901"));
 		mw.MAPWIDGET.setUrl(new QUrl("web/index.html"));
@@ -106,7 +108,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 			//SheepListWidget
 		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
 		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");		
-		//MULTI
+		this.slwHandler.multiSheepSelect.connect(this,"multiSheepSelect(ArrayList<Sheep> )");
 		
 		System.out.println("Logic applied");
 		
@@ -215,8 +217,38 @@ public class UiMainWindowLogic extends QSignalEmitter
 	private void newStatusBarMessage(String text){
 			statusbarMessage.setText(text);
 	}
+	
+	
 
 	//OTHER EVENTS
+	
+	/**
+	 * Event triggered when multiple sheeps are selected in the sheep list.
+	 * Used for showing the selected sheeps in the map
+	 * @param sheeps
+	 */
+	private void multiSheepSelect(ArrayList<Sheep> sheeps){
+		JSONArray arr = new JSONArray();
+		
+		//Go through all the sheeps
+		for (Sheep sheep : sheeps){
+			if(sheep.getRecentStatuses() != null){
+				double lat = sheep.getRecentStatuses().get(0).getGpsPosition().getLatitute();
+				double lon = sheep.getRecentStatuses().get(0).getGpsPosition().getLongditude();
+				boolean isAlert = true;
+				
+				//Set right alert prefix
+				if(sheep.getRecentStatuses().get(0) instanceof SheepStatus)
+					isAlert = false;
+				
+				arr.add(new SheepJS(sheep.getId(), sheep.getName(), isAlert, lat, lon));
+			}
+		}
+		
+		if (arr.size() > 0){		
+			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONMany("+ arr +")");
+		}
+	}
 		
 		/**
 		 * Populates the tabWidget
@@ -231,9 +263,6 @@ public class UiMainWindowLogic extends QSignalEmitter
 			arr.add(new SheepJS(sheep.getId(), sheep.getName(), false, msg.getGpsPosition().getLatitute(), msg.getGpsPosition().getLongditude() ));
 		}
 		
-		if (arr.size() > 0){		
-			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSON("+ arr +")");
-		}
 		
 		//TABLEWIDGET	
 		currentSheep = sheep;
@@ -255,10 +284,32 @@ public class UiMainWindowLogic extends QSignalEmitter
 			
 		this.twHandler.updateMessages(sheep);
 	}
-
+	
+	/**
+	 * Method for sending a new sheep to the server
+	 * @param click
+	 */
 	@SuppressWarnings("unused")
 	private void pBSubmit_Add_clicked(boolean click){
-		System.out.println("CLICK");
+		
+		Sheep sheepAdd;
+		
+		if(!mw.lEName.text().equals("") && !mw.lEFarmId.text().equals("") && Integer.parseInt(mw.lEFarmId.text()) != 0){
+			
+			sheepAdd = new Sheep(currentSheep.getId(), mw.lEName.text(), Integer.parseInt(mw.lEFarmId.text()), 
+					Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) + String.valueOf(mw.dEBirthdaye.date().month()) + String.valueOf(mw.dEBirthdaye.date().day())),
+					mw.chbAlive.isChecked(), (int)mw.dSBWeight.value()); //Mï¿½ FIKSES, skal ikke vï¿½re int
+			
+			try{
+				sLogic.addSheep(sheepAdd);
+			}
+			catch(Exception e){
+				System.err.println("Sheep updating went in the toilet");
+				System.err.println(e.getStackTrace());
+			}
+		}
+		else
+			statusbarMessage.setText("Some fields are blank, or not valid input..");
 	
 	}
 	
@@ -284,6 +335,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 			
 	
 	}
+	
 
 	//TABWIDGET	
 	/**
@@ -295,21 +347,19 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 */
 	@SuppressWarnings("unused")
 	private void pbTabInformationUpdate_clicked(boolean click){
-		System.out.println("Sheep updated clicked");
 		Sheep sheepUpdate;
 		//Not empty
 		if(!mw.lEName.text().equals("") && !mw.lEFarmId.text().equals("") && Integer.parseInt(mw.lEFarmId.text()) != 0){
 			sheepUpdate = new Sheep(currentSheep.getId(), mw.lEName.text(), Integer.parseInt(mw.lEFarmId.text()), 
 					Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) + String.valueOf(mw.dEBirthdaye.date().month()) + String.valueOf(mw.dEBirthdaye.date().day())),
-					mw.chbAlive.isChecked(), (int)mw.dSBWeight.value()); //MÅ FIKSES, skal ikke være int
+					mw.chbAlive.isChecked(), (int)mw.dSBWeight.value()); //Mï¿½ FIKSES, skal ikke vï¿½re int
 			
 			try{
-				System.out.println("Sending edited sheep");
 				sLogic.editSheep(sheepUpdate);
 			}
 			catch(Exception e){
-				System.out.println("Sheep updating went in the toilet");
-				e.printStackTrace();
+				System.err.println("Sheep updating went in the toilet");
+				System.err.println(e.getStackTrace());
 			}
 		}
 		else
