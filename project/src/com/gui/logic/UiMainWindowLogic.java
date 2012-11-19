@@ -118,7 +118,7 @@ public class UiMainWindowLogic extends QSignalEmitter
     	SettingsMenu spawn = new SettingsMenu(this.mw.getMother());
     	
     	spawn.show();
-    	spawn.signalSubChildrenEmit.connect(this, "updateSheepList()");
+    	spawn.signalFarmChanged.connect(this, "updateSheepList()");
     }
     
     @SuppressWarnings("unused")

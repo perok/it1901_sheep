@@ -139,7 +139,8 @@ public class ClientSocket  {
 	 * 
 	 * @param user
 	 */
-	public void editUser(User user) {
+	public void editUser(User user) 
+	{
 		sendRequest(new Request(Request.EDITUSER, "editUser", user));
 	}
 
@@ -148,7 +149,7 @@ public class ClientSocket  {
 	 * @param user
 	 */
 	public void editSheep(Sheep sheep) {
-		sendRequest(new Request(Request.EDITSHEEP, "editSheep", sheep));
+		//sendRequest(new Request(Request.EDITSHEEP, "editSheep", sheep));
 	}
 
 	/**Makes a request with the given paramters and sends it to the server.

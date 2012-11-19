@@ -37,7 +37,7 @@ public class SettingsMenu extends QDialog
     private QStackedWidget qswPagesWidget;
     private QPushButton qpbCloseButton;
     
-    public Signal0 signalSubChildrenEmit;
+    public Signal0 signalFarmChanged;
      
     /** Constructor. Initialize
      *
@@ -53,9 +53,8 @@ public class SettingsMenu extends QDialog
 	    initLayout();
 	    initIcons();
 	    
-	    this.signalSubChildrenEmit = new Signal0();
-	    
-	    this.usUserWidget.signalFarmUpdate.connect(this, "throwUpSignals()");
+	    this.signalFarmChanged = new Signal0();
+	    this.usUserWidget.signalFarmUpdate.connect(this, "sigFarmChanged()");
 	    
 	    /* Add listeners */
 	    this.lDynamicComponents.add(this.asAlertWidget);
@@ -65,11 +64,11 @@ public class SettingsMenu extends QDialog
 	    super.setWindowTitle(tr("Innstillinger"));
 	    super.setWindowIcon(new QIcon(CLASS_ICON));
 	}
-    
+        
     @SuppressWarnings("unused")
-    private void throwUpSignals()
+    private void sigFarmChanged()
     {
-    	signalSubChildrenEmit.emit();
+    	this.signalFarmChanged.emit();
     }
     
     protected QObject getParent()
@@ -159,9 +158,9 @@ public class SettingsMenu extends QDialog
     {
 		this.asAlertWidget = new AlertSettings(this);
 		this.usUserWidget = new UserSettings(this);
-        this.qpbCloseButton = new QPushButton(tr("Close"));
     	this.qlwParentcontentsWidget = new QListWidget(this);
     	this.qswPagesWidget = new QStackedWidget(this);
+    	this.qpbCloseButton = new QPushButton(tr("&Close"));
     	
     	this.qlwParentcontentsWidget.setCurrentRow(0);
         this.qlwParentcontentsWidget.setIconSize(new QSize(96, 84));

@@ -3,7 +3,7 @@ package core.classes;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class User implements Serializable{
+public class User  implements Serializable{
 	/**
 	 * 
 	 */
@@ -22,6 +22,7 @@ public class User implements Serializable{
 			ArrayList<Farm> farmlist) {
 		this.id = id;
 		this.name = name;
+		this.password = password;
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.username = username;
@@ -31,6 +32,7 @@ public class User implements Serializable{
 	public User(int id, String username, String name, String password, int mobileNumber, String email) {
 		this.id = id;
 		this.name = name;
+		this.password = password;
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.username = username;
@@ -41,15 +43,14 @@ public class User implements Serializable{
 	{
 		return new User(this.id, "", this.name, "", this.mobileNumber, this.email);
 	}
-	
 	public boolean shallowEquals(User other)
 	{
 		return 
-			(this.name.equals(other.getName()) )
-		&&	(this.mobileNumber == other.getMobileNumber())
-		&&	(this.email.equals(other.getEmail()));
+			 (this.name.equals(other.getName()) )
+	     &&  (this.mobileNumber == other.getMobileNumber())
+	     &&  (this.email.equals(other.getEmail()));
 	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -102,7 +103,6 @@ public class User implements Serializable{
 		for (int i = 0; i < farms.size(); i++) {
 			this.farmlist.add(farms.get(i));
 		}
-		
 	}
 
 	public String getPassword() {

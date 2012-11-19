@@ -1,6 +1,8 @@
 Kravspesifikasjon prosjekt 1: Sau.
 -------------------------------------
 
+Client:
+
 -Vise kart og psosisjon til sau på kartet.
 	-Må kunne ta imot gps-data og vise denne som punkt i kart.
 	-Høyoppløselig.
@@ -41,4 +43,5 @@ GUI
 	-Login/logout.
 	-Område med info om hvem som er logget inn.
 	-Help, about.
-	
+
+Server:

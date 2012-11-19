@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.gui.logic.ServerLogic;
 import com.net.ClientSocket;
+import com.trolltech.qt.QSignalEmitter.Signal0;
 import com.trolltech.qt.core.QRegExp;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QComboBox;
@@ -70,15 +71,7 @@ public class UserSettings extends QWidget implements InputComponentHost
      */
 	private void toggleAlarm()
     {
-    	System.out.println("BEEP");
-    	
-    	// Vi vet ikke om denne virker enda eller ikke. Merk at dersom den virker, sendes det SMS osv osv.
-    	// Derfor burde ikke denne knappen settes opp og spammes.
-    	
-    	//TODO: legg til en "er du sikker på at du vil simulere alarm" popup box...
-    	
-    	ServerLogic.getClientsocket().invokeAlert(com.storage.UserStorage.getUser().getFarmlist().get(
-    			com.storage.UserStorage.getCurrentFarm()));
+    	new AlarmPromptDialog(this).show();
     }
 	
 	private <T> void addConnector
@@ -234,23 +227,16 @@ public class UserSettings extends QWidget implements InputComponentHost
 		
 		for(ComponentConnector cc : this.lComponents)
 		{
-			// We could pass of a new user object anyhoooo
 			cc.writeChanges();
 		}
 		
-		newUser = com.storage.UserStorage.getUser().copyShallowUser();
-		System.out.println(origUser.getName());
-		System.out.println(newUser.getName());
+		newUser = com.storage.UserStorage.getUser();
 		
 		if(origUser.shallowEquals(newUser) == false)
 		{
-			//TODO: pass off new user
-			System.out.println("user was updated!");
+			ServerLogic.getClientsocket().editUser(newUser);
 		}
 	}
 }
-// Add all methods and listen for if they are used..
-// Just report what functions and associated field..
-//	.. hashmap
 
 /* EOF */

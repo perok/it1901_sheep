@@ -39,7 +39,7 @@ else
     die('Invalid url data: ' . mysql_error());
   }
   else if ($len == 1 { //One sheep selected. Get all the the positions for that sheep
-    $query =;
+    $query ="SELECT latitude, longditude FROM sheep_status WHERE sheep_id = PARAMTEREN DIN ORDER BY id ASC";
   }
   else //Some sheeps
   {
