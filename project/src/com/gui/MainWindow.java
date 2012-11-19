@@ -33,12 +33,23 @@ public class MainWindow extends QMainWindow
     private TableWidgetLogic twhandler;
     private UiMainWindowLogic mwLogic;
     
+    
+    
     /** Main.
      * 
      * @param args parameters for program. Not used.
      */
     public static void main(String[] args) 
     {
+    	
+        com.trolltech.qt.Utilities.loadQtLibrary("QtXml"); 
+        com.trolltech.qt.Utilities.loadQtLibrary("QtSql"); 
+        com.trolltech.qt.Utilities.loadQtLibrary("QtSvg");
+    	com.trolltech.qt.Utilities.loadQtLibrary("QtNetwork");
+        com.trolltech.qt.Utilities.loadQtLibrary("QtXmlPatterns");
+
+        com.trolltech.qt.Utilities.loadQtLibrary("QtWebKit");
+
     	/* Initialize qt-framework, set default style */
         QApplication.initialize(args);        
         QApplication.setStyle("Plastique");
