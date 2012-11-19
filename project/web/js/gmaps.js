@@ -182,6 +182,8 @@ var lineSymbol = {
 };
 
 
+var infowindow = new google.maps.InfoWindow();
+
 
 // Removes the overlays from the map, but keeps them in the array.
 function clearOverlays() {
