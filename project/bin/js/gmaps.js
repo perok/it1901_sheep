@@ -22,29 +22,10 @@
   wmsType = new google.maps.ImageMapType(StatKartLayer);
   
   
-  //XML
-  downloadUrl("phpsqlajax_genxml.php", function(data) {
-    var xml = data.responseXML;
-    var markers = xml.documentElement.getElementsByTagName("marker");
-    for (var i = 0; i < markers.length; i++) {
-      var name = markers[i].getAttribute("name");
-      var point = new google.maps.LatLng(
-        parseFloat(markers[i].getAttribute("lat")),
-        parseFloat(markers[i].getAttribute("lng")));
-      var html = "<b>" + name + "</b> <br/>" + address;
-      var icon = customIcons[type] || {};
-      var marker = new google.maps.Marker({
-        map: map,
-        position: point,
-        icon: icon.icon,
-        shadow: icon.shadow
-      });
-      //bindInfoWindow(marker, map, infoWindow, html);
-    }
-  });
+
 
 //  map.overlayMapTypes.insertAt(0, wmsType); 
-  //map.mapTypes.set('statkart', wmsType);
+  map.mapTypes.set('statkart', wmsType);
   //map.setMapTypeId('statkart'); 
   //setMarkers(map, beaches);
 
@@ -53,7 +34,7 @@
 function receiveJSON(data){
 	//var parsedJSON = eval('('+data+')');
 	alert(data);
-	alert(data.name);
+	alert(data[0].name);
 	document.getElementById('cake').innerHTML = data.parseJSON();
 } 
 
@@ -62,7 +43,7 @@ function receiveJSON(data){
   */
   var StatKartLayer = {
     getTileUrl: function (coord, zoom) {
-       /*                 var proj = map.getProjection();
+                        var proj = map.getProjection();
                           var zfactor = Math.pow(2, zoom);
     // get Long Lat coordinates
     var top = proj.fromPointToLatLng(new google.maps.Point(coord.x * 256 / zfactor, coord.y * 256 / zfactor));
@@ -75,7 +56,7 @@ function receiveJSON(data){
     //create the Bounding box string
     var bbox = (top.lng()) + "," + (bot.lat()) + "," + (bot.lng()) + "," + (top.lat());
 
-    */
+    /*
     var lULP = new google.maps.Point(coord.x*256,(coord.y+1)*256);
     var lLRP = new google.maps.Point((coord.x+1)*256,coord.y*256);
 
@@ -94,21 +75,21 @@ function receiveJSON(data){
     }
 
     var urlResult = "&bbox=" + lUL_Longitude + "," + lUL_Latitude + "," + lLR_Longitude + "," + lLR_Latitude;
+    */
     
     //base WMS URL
-    var url = "http://openwms.statkart.no/skwms1/wms.kartdata2?";
+    var url = "http://openwms.statkart.no/skwms1/wms.topo2?";
     url += "&REQUEST=GetMap"; //WMS operation
     url += "&SERVICE=WMS";    //WMS service
     url += "&VERSION=1.1.1";  //WMS version  
-    url += "&LAYERS=" + "Kartdata2_WMS"; //WMS layers
+    url += "&LAYERS=" + "topo2_WMS"; //WMS layers
     url += "&FORMAT=image/png" ; //WMS format
     url += "&BGCOLOR=0xFFFFFF";  
     url += "&TRANSPARENT=FALSE";
     url += "&SRS=EPSG:4326";     //set WGS84 
-    url += urlResult; //"&BBOX=" + bbox;      // set bounding box
+    url += "&BBOX=" + bbox;      // set bounding box
     url += "&WIDTH=256";         //tile size in google
     url += "&HEIGHT=256";
-    console.log(url);
     return url;
 
     },
@@ -120,9 +101,6 @@ function receiveJSON(data){
   minZoom: 0,
   alt: "Statens kartvertk"
 }
-  //Define custom WMS tiled layer
-   
-;
 
 /*
 * MARKERS  
