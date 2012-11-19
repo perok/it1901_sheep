@@ -1,7 +1,11 @@
 package com.gui.logic;
 
+<<<<<<< HEAD
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+=======
+import java.util.ArrayList;
+>>>>>>> a05d446ff69e1a0751ff4a9ce11840d0ce6af0dc
 
 import com.gui.UiMainWindow;
 import com.gui.widgets.SettingsMenu;
@@ -13,7 +17,11 @@ import com.trolltech.qt.gui.QLabel;
 
 import core.classes.Message;
 import core.classes.Sheep;
+<<<<<<< HEAD
 import core.classes.SheepJS;
+=======
+import core.classes.User;
+>>>>>>> a05d446ff69e1a0751ff4a9ce11840d0ce6af0dc
 
 public class UiMainWindowLogic extends QSignalEmitter
 {
@@ -28,9 +36,15 @@ public class UiMainWindowLogic extends QSignalEmitter
 	public Signal0 signalShowAbout;
 	public Signal0 signalShowAboutQt;
 	public Signal0 signalUpdateSheepList;
+	public Signal1<ArrayList<User>> signalUserListRecieved;
 	
 	
 	private Sheep currentSheep;
+	
+	private void sendUserData(ArrayList lUsers)
+	{
+		this.signalUserListRecieved.emit(lUsers);
+	}
 
 	public UiMainWindowLogic(UiMainWindow mw, SheepListWidgetLogic slwHandler, TableWidgetLogic twHandler, ServerLogic sLogic){
 		System.out.println("Applying logic");
@@ -40,10 +54,12 @@ public class UiMainWindowLogic extends QSignalEmitter
 		this.twHandler = twHandler;
 		this.sLogic = sLogic;
 		
+		this.signalUserListRecieved = new Signal1<ArrayList<User>>();		
+		sLogic.signalUserDataRecieved.connect(this, "sendUserData(ArrayList)");
+		
 		/* Setting up user information*/
 		for(int i = 0; i < UserStorage.getUser().getFarmlist().size(); i++)
 			mw.cmbDockFarmId.addItem(UserStorage.getUser().getFarmlist().get(i).getName());
-		
 		
 		/* Setting up extra widgets*/
 		statusbarMessage = new QLabel("Ready");
@@ -51,6 +67,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		//Fiks mapWidget her..
 		
 		/* Adding values to ui */
+<<<<<<< HEAD
 		//mw.MAPWIDGET.setUrl(new QUrl("http://folk.ntnu.no/perok/it1901"));
 		mw.MAPWIDGET.setUrl(new QUrl("web/index.html"));
 		
@@ -58,7 +75,12 @@ public class UiMainWindowLogic extends QSignalEmitter
 	    //rootObject.evaluateJavaScript('receiveJSON("%s")' % json_str)
 	    
 	 
+=======
+		mw.MAPWIDGET.load(new QUrl("http://folk.ntnu.no/perok/it1901"));
+		mw.MAPWIDGET.show();
+>>>>>>> a05d446ff69e1a0751ff4a9ce11840d0ce6af0dc
 		
+		//mw.MAPWIDGET.updatesEnabled(true);
 		/* Setting up signals */
 		signalShowAbout = new Signal0();
 		signalShowAboutQt = new Signal0();
@@ -116,8 +138,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 * @param trigg
 	 */
 	@SuppressWarnings("unused")
-	private void actionAbout_Qt_Jambi_triggerd(boolean trigg){
-		System.out.println("WEREHO");
+	private void actionAbout_Qt_Jambi_triggerd(boolean trigg)
+	{
 		signalShowAboutQt.emit();
 	}
 	    
@@ -131,6 +153,7 @@ public class UiMainWindowLogic extends QSignalEmitter
     	
     	spawn.show();
     	spawn.signalFarmChanged.connect(this, "updateSheepList()");
+    	this.signalUserListRecieved.connect(spawn, "sendData(ArrayList)");
     }
     
     @SuppressWarnings("unused")

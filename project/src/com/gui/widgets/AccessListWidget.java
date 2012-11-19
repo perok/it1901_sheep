@@ -1,5 +1,10 @@
 package com.gui.widgets;
 
+import java.util.ArrayList;
+
+import javax.jws.soap.SOAPBinding.Use;
+
+import com.gui.logic.ServerLogic;
 import com.trolltech.qt.gui.QAbstractItemView;
 import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QHBoxLayout;
@@ -10,6 +15,8 @@ import com.trolltech.qt.gui.QVBoxLayout;
 
 import com.trolltech.qt.gui.QWidget;
 
+import core.classes.User;
+
 public class AccessListWidget extends QWidget
 {
 	private QListWidget qlwUserList,
@@ -18,19 +25,29 @@ public class AccessListWidget extends QWidget
 	private QPushButton qpbBtnAddUsers,
 						qpbBtnRemoveUsers;
 	
-	public AccessListWidget(QWidget parent)
+	public AccessListWidget(UserSettings parent)
 	{		
 		initWidgets();
 		initLayout();
 		initConnectEvents();
 		
-		addUsers();
+		ServerLogic.getClientsocket().listUsers();
 	}
 	
 	private void initConnectEvents()
 	{
 		this.qpbBtnAddUsers.clicked.connect(this, "transferToAdmin()");
 		this.qpbBtnRemoveUsers.clicked.connect(this, "transferFromAdmin()");
+	}
+	
+	public void recieveUserData(ArrayList<User> lUsers)
+	{
+		for(User u : lUsers)
+		{
+			//if(u.getFarmlist()
+			QListWidgetItem cur = new QListWidgetItem(this.qlwUserList);
+			cur.setText(u.getName());
+		}
 	}
 	
 	@SuppressWarnings("unused")
@@ -53,25 +70,6 @@ public class AccessListWidget extends QWidget
 		}
 	}
 	
-	public void addUsers()
-	{
-		for(int iPos = 0; iPos <= 10; iPos++)
-		{
-			String s = "abc" + Integer.toString((int)(Math.random() * 9));
-			
-			QListWidgetItem cur = new QListWidgetItem(qlwUserList);
-			cur.setText(s);
-		}		
-		
-		for(int iPos = 0; iPos <= 3; iPos++)
-		{
-			String s = "abc" + Integer.toString((int)(Math.random() * 9));
-			
-			QListWidgetItem cur = new QListWidgetItem(this.qlwAdminList);
-			cur.setText(s);
-		}
-	}
-	
 	private void initWidgets()
 	{
 		this.qlwUserList = new QListWidget();
@@ -85,6 +83,8 @@ public class AccessListWidget extends QWidget
 		
 	public QHBoxLayout getLayout()
 	{
+		this.qhblMainLayout.setSpacing(10);
+		//this.qhblMainLayout.setStretchF
 		return this.qhblMainLayout;
 	}
 	
@@ -105,14 +105,14 @@ public class AccessListWidget extends QWidget
 		super.setLayout(qhblMainLayout);	
 	}
 
-	public static void main(String[] args)
-	{
-		QApplication.initialize(args);
-		
-		new AccessListWidget(null).show();
-		QApplication.exec();
-		
-	}
+//	public static void main(String[] args)
+//	{
+//		QApplication.initialize(args);
+//		
+//		new AccessListWidget(null).show();
+//		QApplication.exec();
+//		
+//	}
 }
 
 /* EOF */

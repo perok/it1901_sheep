@@ -22,17 +22,24 @@ import core.settings.*;
  * @version 0.1
  */
 public class SheepStatusSim {
-	private static final double map_x_max = 50;
-	private static final double map_x_min = 40;
-	private static final double map_y_max = 70;
-	private static final double map_y_min = 60;
+	// Longditude
+	private static final double map_x_max = 10.22485;
+	private static final double map_x_min = 8.8173;
+	private static final double x_diff = 1.40755;
+	private static final int x_diff_int = 140755;
+	// Latitude
+	private static final double map_y_max = 62.80961;
+	private static final double map_y_min = 62.23547;
+	private static final double y_diff = 0.57414;
+	private static final int y_diff_int = 57414;
 	
 	private static final int DEFAULT_INTERVAL = 60;
-	private int timerInterval;
+	private static final int ALERT_INTERVAL = 1440;
+	private int statusInterval;
 	private DatabaseConnector sq;
 	private Random rand;
 	private Server server;
-	private Timer timer;
+	private Timer statusTimer, alertTimer;
 	
 	private HashMap<String,GPSPosition> lastPositions;
 	private ArrayList<Sheep> livingSheep;
@@ -43,11 +50,18 @@ public class SheepStatusSim {
 	 * 
 	 */
 	public SheepStatusSim(Server server) {
-		timerInterval = DEFAULT_INTERVAL*60000;
+		statusInterval = DEFAULT_INTERVAL*60000;
 		sq = new DatabaseConnector(new Settings());
 		rand = new Random();
 		this.server = server;
-		timer = new Timer(timerInterval, updateStatus);	
+		statusTimer = new Timer(statusInterval, updateStatus);
+		alertTimer = new Timer(ALERT_INTERVAL, updateStatus);
+		String [][] farmInput = sq.listFarms();
+		farms = new String[farmInput.length][2];
+		for (int i = 0; i < farmInput.length; i++) {
+			farms[i][0] = farmInput[i][0];
+			farms[i][1] = farmInput[i][1];
+		}
 		livingSheep = sq.listSheep();
 		farms = sq.listFarms();
 
@@ -59,11 +73,18 @@ public class SheepStatusSim {
 	 * @param interval
 	 */
 	public SheepStatusSim(int interval, Server server) {
-		timerInterval = interval*60000;
+		statusInterval = interval*60000;
 		sq = new DatabaseConnector(new Settings());
 		rand = new Random();
 		this.server = server;
-		timer = new Timer(timerInterval, updateStatus);	
+		statusTimer = new Timer(statusInterval, updateStatus);	
+		alertTimer = new Timer(ALERT_INTERVAL, updateStatus);
+		String [][] farmInput = sq.listFarms();
+		farms = new String[farmInput.length][2];
+		for (int i = 0; i < farmInput.length; i++) {
+			farms[i][0] = farmInput[i][0];
+			farms[i][1] = farmInput[i][1];
+		}
 		livingSheep = sq.listSheep();
 		farms = sq.listFarms();
 	}
@@ -73,7 +94,7 @@ public class SheepStatusSim {
 	 * @return
 	 */
 	public int getTimerInterval() {
-		return timerInterval;
+		return statusInterval;
 	}
 
 	/** Sets the timer interval to specified amount and notifies the server.
@@ -82,17 +103,17 @@ public class SheepStatusSim {
 	 * @param timerInterval
 	 */
 	public void setTimerInterval(int timerInterval) {
-		this.timerInterval = timerInterval;
+		this.statusInterval = timerInterval;
 		server.display("Simulator interval set to " + timerInterval +" minutes");
-		timer = new Timer(timerInterval, updateStatus);
-		timer.start();
+		statusTimer = new Timer(timerInterval, updateStatus);
+		statusTimer.start();
 	}
 
 	/** Starts the timer and keeps it running until the program terminates or stop is called.
 	 * 
 	 */
 	public void start() {
-		timer.start();
+		statusTimer.start();
 		server.display("Simulator started");
 	}
 
@@ -100,7 +121,7 @@ public class SheepStatusSim {
 	 * 
 	 */
 	public void stop() {
-		timer.stop();
+		statusTimer.stop();
 		server.display("Simulator stopped");
 	}
 
@@ -168,10 +189,16 @@ public class SheepStatusSim {
 		for (int i = 0; i < livingSheep.size(); i++) {
 			stats[i][0] = Integer.toString(livingSheep.get(i).getId());
 			stats[i][1] = Long.toString(System.currentTimeMillis()/1000);
-			stats[i][2] = Integer.toString(rand.nextInt(4)+37);
-			stats[i][3] = Integer.toString(rand.nextInt(40)+140);
-			stats[i][4] = Integer.toString(rand.nextInt(400));
-			stats[i][5] = Integer.toString(rand.nextInt(400));
+			stats[i][2] = Integer.toString(rand.nextInt(1)+39);
+			stats[i][3] = Integer.toString(rand.nextInt(30)+60);
+			int intlat = rand.nextInt(y_diff_int);
+			double doublelat = (double) intlat;
+			doublelat /= 100000;
+			stats[i][4] = Double.toString(doublelat);
+			int intlong = rand.nextInt(x_diff_int);
+			double doublelong = (double) intlong;
+			doublelong /= 100000;
+			stats[i][5] = Double.toString(doublelong);
 			stats[i][6] = Integer.toString(livingSheep.get(i).getFarmId());
 		}
 		server.notifier.recieveStatus(stats);
@@ -183,7 +210,12 @@ public class SheepStatusSim {
 	 */
 	ActionListener updateStatus = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {
-			addStatus();
+			if(evt.getSource() == statusTimer){
+				addStatus();
+			}
+			if(evt.getSource() == alertTimer){
+				addAlert(rand.nextInt(farms.length),1);
+			}
 		}
 	};
 

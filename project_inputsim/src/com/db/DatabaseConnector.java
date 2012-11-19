@@ -2,6 +2,7 @@ package com.db;
 
 import core.settings.*;
 import core.classes.*;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -71,13 +72,13 @@ public class DatabaseConnector {
 			String[][] r = processQuery("SELECT id,username,name,password,mobile_number,email FROM user WHERE username = '" + username + "'" + " AND password = '" + password + "';");
 
 			User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5]);
-			String[][] r2 = processQuery("SELECT farm_id FROM access_rights WHERE user_id = " + user.getId() + ";");
+			String[][] r2 = processQuery("SELECT farm_id, admin FROM access_rights WHERE user_id = " + user.getId() + ";");
 			ArrayList<Farm> farms = new ArrayList<Farm>();
 
 			for (int i = 0; i < r2.length; i++) {
 
 				String[][] r3 = processQuery("SELECT name FROM farm WHERE id = " + r2[i][0] + ";");
-				Farm farm = new Farm(Integer.parseInt(r2[i][0]),r3[0][0]);
+				Farm farm = new Farm(Integer.parseInt(r2[i][0]),r3[i][0],getBoolean(r2[i][2]));
 				String [][] r4 = processQuery("SELECT * from sheep WHERE farm_id = " + farm.getId() + ";");
 				for (int j = 0; j < r4.length; j++) {
 					Sheep sheep = new Sheep(Integer.parseInt(r4[j][0]), r4[j][1], Integer.parseInt(r4[j][2]), Integer.parseInt(r4[j][3]), getBoolean(r4[j][4]), Integer.parseInt(r4[j][5]));
@@ -255,8 +256,8 @@ public class DatabaseConnector {
 	 * @param farmId
 	 * @return
 	 */
-	public ArrayList<SheepStatus> getSheepStatus(int farmId) {
-		ArrayList<SheepStatus> list = new ArrayList<SheepStatus>();
+	public ArrayList<Message> getSheepStatus(int farmId) {
+		ArrayList<Message> list = new ArrayList<Message>();
 		String[][] r = processQuery("SELECT * FROM sheep_status WHERE farm_id = " + farmId + ";");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new SheepStatus(Integer.parseInt(r[i][0]),Integer.parseInt(r[i][1]),Integer.parseInt(r[i][2])
@@ -578,17 +579,14 @@ public class DatabaseConnector {
 	 * @return
 	 */
 	public ArrayList<User> listUsersArrayList() {
+		ArrayList<User> users = new ArrayList<User>();
 		try{
 			String[][] r = processQuery("SELECT id,username,name,password,mobile_number,email FROM user WHERE true;");
-			ArrayList<User> users = new ArrayList<User>();
-
-			for (int i = 0; i < r[0].length; i++) {
+			for (int i = 0; i < r.length; i++) {
 				User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5]);
 				users.add(user);
 			}
-
 			return users;
-
 		}
 		catch(NullPointerException e){
 			e.printStackTrace();

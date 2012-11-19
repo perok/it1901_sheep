@@ -13,6 +13,7 @@ import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QListView;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QListWidgetItem;
+import com.trolltech.qt.gui.QMainWindow;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QStackedWidget;
 import com.trolltech.qt.gui.QDialog;
@@ -38,12 +39,13 @@ public class SettingsMenu extends QDialog
     private QPushButton qpbCloseButton;
     
     public Signal0 signalFarmChanged;
+    public Signal1<ArrayList> signalUserListRecieved;
      
     /** Constructor. Initialize
      *
      * @param parent host of this window. Can be set to null as this is popup dialog window.
      */
-    public SettingsMenu(QWidget parent)
+    public SettingsMenu(QMainWindow parent)
 	{
 	    super(parent);
 	    
@@ -54,7 +56,10 @@ public class SettingsMenu extends QDialog
 	    initIcons();
 	    
 	    this.signalFarmChanged = new Signal0();
+	    this.signalUserListRecieved = new Signal1<ArrayList>();
+	    
 	    this.usUserWidget.signalFarmUpdate.connect(this, "sigFarmChanged()");
+	    this.signalUserListRecieved.connect(this.usUserWidget, "processUserData(ArrayList)");
 	    
 	    /* Add listeners */
 	    this.lDynamicComponents.add(this.asAlertWidget);
@@ -64,6 +69,11 @@ public class SettingsMenu extends QDialog
 	    super.setWindowTitle(tr("Innstillinger"));
 	    super.setWindowIcon(new QIcon(CLASS_ICON));
 	}
+    
+    private void sendData(ArrayList lUsers)
+    {
+    	signalUserListRecieved.emit(lUsers);    	
+    }
         
     @SuppressWarnings("unused")
     private void sigFarmChanged()
@@ -71,7 +81,7 @@ public class SettingsMenu extends QDialog
     	this.signalFarmChanged.emit();
     }
     
-    protected QObject getParent()
+    public QObject getParent()
     {
     	return super.parent();
     }
