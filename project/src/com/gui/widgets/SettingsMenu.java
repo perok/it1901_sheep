@@ -59,7 +59,7 @@ public class SettingsMenu extends QDialog
 	    this.signalUserListRecieved = new Signal1<ArrayList>();
 	    
 	    this.usUserWidget.signalFarmUpdate.connect(this, "sigFarmChanged()");
-	    this.signalUserListRecieved.connect(this.asAlertWidget, "processUserData(ArrayList)");
+	    this.signalUserListRecieved.connect(this.usUserWidget, "processUserData(ArrayList)");
 	    
 	    /* Add listeners */
 	    this.lDynamicComponents.add(this.asAlertWidget);

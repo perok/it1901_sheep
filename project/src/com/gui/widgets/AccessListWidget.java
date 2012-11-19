@@ -1,5 +1,9 @@
 package com.gui.widgets;
 
+import java.util.ArrayList;
+
+import javax.jws.soap.SOAPBinding.Use;
+
 import com.gui.logic.ServerLogic;
 import com.trolltech.qt.gui.QAbstractItemView;
 import com.trolltech.qt.gui.QApplication;
@@ -10,6 +14,8 @@ import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QVBoxLayout;
 
 import com.trolltech.qt.gui.QWidget;
+
+import core.classes.User;
 
 public class AccessListWidget extends QWidget
 {
@@ -25,13 +31,23 @@ public class AccessListWidget extends QWidget
 		initLayout();
 		initConnectEvents();
 		
-		addUsers();
+		ServerLogic.getClientsocket().listUsers();
 	}
 	
 	private void initConnectEvents()
 	{
 		this.qpbBtnAddUsers.clicked.connect(this, "transferToAdmin()");
 		this.qpbBtnRemoveUsers.clicked.connect(this, "transferFromAdmin()");
+	}
+	
+	public void recieveUserData(ArrayList<User> lUsers)
+	{
+		for(User u : lUsers)
+		{
+			//if(u.getFarmlist()
+			QListWidgetItem cur = new QListWidgetItem(this.qlwUserList);
+			cur.setText(u.getName());
+		}
 	}
 	
 	@SuppressWarnings("unused")
@@ -51,27 +67,6 @@ public class AccessListWidget extends QWidget
 		{
 			this.qlwAdminList.insertItem(0, qlwi.clone());
 			this.qlwUserList.takeItem(this.qlwUserList.row(qlwi));
-		}
-	}
-	
-	public void addUsers()
-	{
-		ServerLogic.getClientsocket().listUsers();
-		
-		for(int iPos = 0; iPos <= 10; iPos++)
-		{
-			String s = "abc" + Integer.toString((int)(Math.random() * 9));
-			
-			QListWidgetItem cur = new QListWidgetItem(qlwUserList);
-			cur.setText(s);
-		}		
-		
-		for(int iPos = 0; iPos <= 3; iPos++)
-		{
-			String s = "abc" + Integer.toString((int)(Math.random() * 9));
-			
-			QListWidgetItem cur = new QListWidgetItem(this.qlwAdminList);
-			cur.setText(s);
 		}
 	}
 	
