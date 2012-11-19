@@ -37,7 +37,8 @@ public class SettingsMenu extends QDialog
     private QStackedWidget qswPagesWidget;
     private QPushButton qpbCloseButton;
     
-    public Signal0 signalSubChildrenEmit;
+    public Signal0 signalFarmChanged;
+    public Signal0 signalUserChanged;
      
     /** Constructor. Initialize
      *
@@ -53,9 +54,11 @@ public class SettingsMenu extends QDialog
 	    initLayout();
 	    initIcons();
 	    
-	    this.signalSubChildrenEmit = new Signal0();
+	    this.signalFarmChanged = new Signal0();
+	    this.signalUserChanged = new Signal0();
 	    
-	    this.usUserWidget.signalFarmUpdate.connect(this, "throwUpSignals()");
+	    this.usUserWidget.signalFarmUpdate.connect(this, "sigFarmChanged()");
+	    this.usUserWidget.signalUserChanged.connect(this, "notifyUserChanged()");
 	    
 	    /* Add listeners */
 	    this.lDynamicComponents.add(this.asAlertWidget);
@@ -67,9 +70,15 @@ public class SettingsMenu extends QDialog
 	}
     
     @SuppressWarnings("unused")
-    private void throwUpSignals()
+    private void notifyUserChanged()
     {
-    	signalSubChildrenEmit.emit();
+    	this.signalUserChanged.emit();
+    }
+    
+    @SuppressWarnings("unused")
+    private void sigFarmChanged()
+    {
+    	this.signalFarmChanged.emit();
     }
     
     protected QObject getParent()

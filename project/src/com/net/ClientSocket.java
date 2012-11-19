@@ -139,7 +139,9 @@ public class ClientSocket  {
 	 * 
 	 * @param user
 	 */
-	public void editUser(User user) {
+	public void editUser(User user) 
+	{
+		user.setPassword("1337"); // FIXME: ...
 		sendRequest(new Request(Request.EDITUSER, "editUser", user));
 	}
 
