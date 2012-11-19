@@ -55,9 +55,9 @@ public class ServerLogic extends QSignalEmitter{
 				System.out.println("Problem with connecting");
 			else{
 				
-			System.out.println("ClientSocket loggin message sending");
+			System.out.println("ClientSocket login message sending");
 				clientSocket.login(usrName, usrPW);
-				System.out.println("ClientSocket loggin message sent");
+				System.out.println("ClientSocket login message sent");
 			}
 			
 				

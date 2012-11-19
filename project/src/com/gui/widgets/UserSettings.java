@@ -30,7 +30,7 @@ import core.classes.User;
 public class UserSettings extends QWidget implements InputComponentHost
 {
 	public static final String CLASS_ICON = "./icons/farmer.png";
-		
+
 	private QComboBox qcbFarmCombo;
 	private QGroupBox qgbFarmGroup,
 					  qgbUserField,
@@ -106,13 +106,18 @@ public class UserSettings extends QWidget implements InputComponentHost
 		}
 	}
 	
+    
+    @SuppressWarnings("unused")
+	private void processUserData(ArrayList<User> lUsers)
+    {
+    	this.alwAccessList.recieveUserData(lUsers);
+    }
+	
 	@SuppressWarnings("unused")
 	/** Handle for whenever the farm is changed by the user
 	 */
 	private void farmChanged()
 	{
-		// TODO: there needs to be some supplementary functionality to make use of this.
-		
 		com.storage.UserStorage.setCurrentFarm(this.qcbFarmCombo.currentIndex());
 		signalFarmUpdate.emit();
 	}
