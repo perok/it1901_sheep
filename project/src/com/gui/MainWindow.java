@@ -33,6 +33,20 @@ public class MainWindow extends QMainWindow
     private TableWidgetLogic twhandler;
     private UiMainWindowLogic mwLogic;
     
+    /*
+    static {
+        try {
+        	System.out.println("loading");
+        	System.loadLibrary("libeay32.dll");
+        	System.loadLibrary("libs/libssl32.dll");
+        	System.loadLibrary("libs/ssleay32.dll");
+
+        	
+        } catch (UnsatisfiedLinkError e) {
+          System.err.println("Native code library failed to load.\n" + e);
+          System.exit(1);
+        }
+      }*/
     
     
     /** Main.
