@@ -1,5 +1,8 @@
 package com.gui.logic;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import com.gui.UiMainWindow;
 import com.gui.widgets.SettingsMenu;
 import com.storage.UserStorage;
@@ -8,7 +11,9 @@ import com.trolltech.qt.core.QDate;
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.gui.QLabel;
 
+import core.classes.Message;
 import core.classes.Sheep;
+import core.classes.SheepJS;
 
 public class UiMainWindowLogic extends QSignalEmitter
 {
@@ -46,7 +51,13 @@ public class UiMainWindowLogic extends QSignalEmitter
 		//Fiks mapWidget her..
 		
 		/* Adding values to ui */
-		mw.MAPWIDGET.setUrl(new QUrl("http://folk.ntnu.no/perok/it1901"));
+		//mw.MAPWIDGET.setUrl(new QUrl("http://folk.ntnu.no/perok/it1901"));
+		mw.MAPWIDGET.setUrl(new QUrl("web/index.html"));
+		
+	    //json_str = json.dumps(data).replace('"', '\\"')
+	    //rootObject.evaluateJavaScript('receiveJSON("%s")' % json_str)
+	    
+	 
 		
 		/* Setting up signals */
 		signalShowAbout = new Signal0();
@@ -82,6 +93,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 			//SheepListWidget
 		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
 		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");		
+		//MULTI
 		
 		System.out.println("Logic applied");
 		
@@ -163,6 +175,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	
 	@SuppressWarnings("unused")
 	private void actionUndo_toggled(boolean trigg){
+
 		System.out.println(trigg);
 	}
 	
@@ -197,6 +210,21 @@ public class UiMainWindowLogic extends QSignalEmitter
 		 */
 	@SuppressWarnings("unused")
 	private void populateTableWidget(Sheep sheep){
+		
+		
+		//MAP
+		
+		JSONArray arr = new JSONArray();
+		for (Message msg : sheep.getRecentStatuses()){
+			arr.add(new SheepJS(sheep.getId(), sheep.getName(), false, msg.getGpsPosition().getLatitute(), msg.getGpsPosition().getLongditude() ));
+		}
+		
+		System.out.println(arr.toJSONString());
+		
+		mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSON("+ arr +")");
+		
+		//TABLEWIDGET
+		
 		currentSheep = sheep;
 		
 		//Sheep id, Sheep name, farmId
