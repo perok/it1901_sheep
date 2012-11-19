@@ -144,11 +144,29 @@ function setMarkers(map, locations) {
         zIndex: 0
       });
       
+      
+      google.maps.event.addListener(marker, 'click', function() {
+    	  var contentString = '<div id="content">'+
+    		'<div id="siteNotice">'+
+    		'</div>'+
+    		'<h1 id="firstHeading" class="firstHeading">' + marker.getTitle '</h1>'+
+    		'<div id="bodyContent">'+
+    		'<p>'+marker.Position.toUrlValue+'</p>'+
+    		'</div>'+
+    		'</div>';
+    	  
+    	  infoWindow.setContent(contentString);
+          infowindow.open(map,marker);
+        });
+      
       markers.push(marker);
     }
     
     setAllMap(map);
 }
+
+
+
 /*
 function makeLines(map){
 	//Remove old lines

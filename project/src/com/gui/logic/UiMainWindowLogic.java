@@ -64,6 +64,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 		//Fiks mapWidget her..
 		
 		/* Adding values to ui */
+		//Information tab defaults at open.
+		mw.tabWidget.setCurrentIndex(0);
 
 		//mw.MAPWIDGET.setUrl(new QUrl("http://folk.ntnu.no/perok/it1901"));
 		mw.MAPWIDGET.setUrl(new QUrl("web/index.html"));
