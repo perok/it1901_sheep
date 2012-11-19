@@ -47,7 +47,6 @@ public class SettingsMenu extends QDialog
     public SettingsMenu(QWidget parent)
 	{
 	    super(parent);
-	    System.out.println("Password: " + com.storage.UserStorage.getUser().getPassword());
 	    
 	    /* Initialize */
 	    initWidgets();
