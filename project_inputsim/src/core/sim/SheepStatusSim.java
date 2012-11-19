@@ -190,7 +190,7 @@ public class SheepStatusSim {
 				addStatus();
 			}
 			if(evt.getSource() == alertTimer){
-				addAlert();
+//				addAlert();
 			}
 		}
 	};
