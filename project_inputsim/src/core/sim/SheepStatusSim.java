@@ -193,9 +193,12 @@ public class SheepStatusSim {
 			stats[i][3] = Integer.toString(rand.nextInt(30)+60);
 			int intlat = rand.nextInt(y_diff_int);
 			double doublelat = (double) intlat;
-			doublelat /= 1000;
-			stats[i][4] = Double.toString(rand.nextDouble());
-			stats[i][5] = Double.toString(rand.nextInt(400));
+			doublelat /= 100000;
+			stats[i][4] = Double.toString(doublelat);
+			int intlong = rand.nextInt(x_diff_int);
+			double doublelong = (double) intlong;
+			doublelong /= 100000;
+			stats[i][5] = Double.toString(doublelong);
 			stats[i][6] = Integer.toString(livingSheep.get(i).getFarmId());
 		}
 		server.notifier.recieveStatus(stats);

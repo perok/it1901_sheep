@@ -15,11 +15,19 @@ public class Farm implements Serializable {
 	private int id;
 	private String name;
 	private ArrayList<Sheep> sheepList;
+	private boolean isAdmin;
 	
 	public Farm(int id, String name) {
 		this.setId(id);
 		this.setName(name);
 		sheepList = new ArrayList<Sheep>();
+	}
+	
+	public Farm(int id, String name, boolean isAdmin) {
+		this.setId(id);
+		this.setName(name);
+		sheepList = new ArrayList<Sheep>();
+		this.isAdmin = isAdmin;
 	}
 	
 	public int getId() {
@@ -46,5 +54,14 @@ public class Farm implements Serializable {
 	public ArrayList<Sheep> getSheepList(){
 		return sheepList;
 	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	
 	
 }

@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /*Ser at ikke alt her er likt som i diagrammet.
- * Er fullt villig til å forandre på ting såklart, men vil gjerne snakke om det først.*/
+ * Er fult villig til Œ forandre pŒ ting sŒklart, men vil gjerne snakke om det f¿rst.*/
 
-public class Farm implements Serializable 
-{	
+public class Farm implements Serializable {
+	
 	/**
 	 * 
 	 */
@@ -15,11 +15,19 @@ public class Farm implements Serializable
 	private int id;
 	private String name;
 	private ArrayList<Sheep> sheepList;
+	private boolean isAdmin;
 	
 	public Farm(int id, String name) {
 		this.setId(id);
 		this.setName(name);
 		sheepList = new ArrayList<Sheep>();
+	}
+	
+	public Farm(int id, String name, boolean isAdmin) {
+		this.setId(id);
+		this.setName(name);
+		sheepList = new ArrayList<Sheep>();
+		this.isAdmin = isAdmin;
 	}
 	
 	public int getId() {
@@ -46,5 +54,14 @@ public class Farm implements Serializable
 	public ArrayList<Sheep> getSheepList(){
 		return sheepList;
 	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	
 	
 }
