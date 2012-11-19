@@ -73,7 +73,7 @@ public class ServerLogic extends QSignalEmitter{
 		System.out.println("Recieved response: "+ response.getType());
 		
 		/*
-		 * Må ha ett system der de ulike viewsa som kaller etter informasjon
+		 * Mï¿½ ha ett system der de ulike viewsa som kaller etter informasjon
 		 * fra serveren blir registrert slikt at de kan sendes dit
 		 */
 		
@@ -95,7 +95,6 @@ public class ServerLogic extends QSignalEmitter{
 		/* Boolean */
 		else if(responseType == 2)
 		{
-			System.out.println("response 2");
 			this.signalUserDataRecieved.emit(response.getContent());
 		}
 		
