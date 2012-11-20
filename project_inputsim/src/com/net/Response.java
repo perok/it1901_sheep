@@ -73,6 +73,10 @@ public class Response implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public String getInitialRequest() {
+		return initialRequest;
+	}
 
 	public String toString() {
 		if(this.type == Response.LIST) {
