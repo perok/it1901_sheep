@@ -1,5 +1,10 @@
 package com.storage;
 
+/**
+ * 
+ * @author perok
+ *
+ */
 public enum MessageType{
 	SheepStatus(0),
 	SheepAlert(1);
