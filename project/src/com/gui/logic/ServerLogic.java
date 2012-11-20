@@ -16,7 +16,8 @@ public class ServerLogic extends QSignalEmitter{
     private Object objectAskingForResponse = null;
 
     public Signal0 loggedIn;
-    public Signal1<ArrayList<User>> signalUserDataRecieved ;
+    public Signal1<ArrayList<User>> signalUserDataRecieved;
+    public Signal2<ArrayList<Sheep>, Integer> signalNewSheeps;
 
     /**
      * Constructs the object
@@ -25,6 +26,8 @@ public class ServerLogic extends QSignalEmitter{
 	{
 		loggedIn = new Signal0();
 		this.signalUserDataRecieved = new Signal1<ArrayList<User>>();
+		this.signalNewSheeps = new Signal2<ArrayList<Sheep>, Integer>();
+
 	}
 	
 	/**
@@ -87,6 +90,9 @@ public class ServerLogic extends QSignalEmitter{
 				//Content is of a User response
 				if(response.getContent().get(0) instanceof User)
 					this.signalUserDataRecieved.emit(response.getContent());
+				if(response.getContent().get(0) instanceof Sheep){
+					
+				}
 			}
 			
 			//A object has called for a list

@@ -62,8 +62,11 @@ public class Request implements Serializable {
 		return parameters;
 	}
 
-	public void setparameters(HashMap parameters) {
-		this.parameters = parameters;
+	public void setparameters(HashMap<String, String> _parameters) {
+		parameters = new HashMap<String, String>();
+		for( String key : _parameters.keySet()){
+			parameters.put(key, _parameters.get(key));
+		}
 	}
 
 	public void addparameter(String name, String value) {

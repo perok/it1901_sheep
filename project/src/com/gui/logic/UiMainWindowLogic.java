@@ -60,8 +60,10 @@ public class UiMainWindowLogic extends QSignalEmitter
 		this.twHandler = twHandler;
 		this.sLogic = sLogic;
 		
+		/* ServerLogic signals*/
 		this.signalUserListRecieved = new Signal1<ArrayList<User>>();		
 		sLogic.signalUserDataRecieved.connect(this, "sendUserData(ArrayList)");
+		sLogic.signalNewSheeps.connect(this, "sLogic_signalNewSheeps(ArrayList, int)");
 		
 		/* Setting up user information*/
 		if(UserStorage.getUser() != null)
@@ -77,15 +79,13 @@ public class UiMainWindowLogic extends QSignalEmitter
 		//Information tab defaults at open.
 		mw.tabWidget.setCurrentIndex(0);
 		mw.tabWidget.setContentsMargins(0, 0, 0, 0);
-
-		//mw.MAPWIDGET.setUrl(new QUrl("http://folk.ntnu.no/perok/it1901"));
 		mw.MAPWIDGET.setUrl(new QUrl("web/index.html"));
-		//mw.MAPWIDGET.
 		
 		/* Setting up signals */
 		signalShowAbout = new Signal0();
 		signalShowAboutQt = new Signal0();
 		signalUpdateSheepList = new Signal0();
+		
 			//MainWinow
 				//MENU
 		mw.actionInformation_Window.toggled.connect(this, "actionInformation_Window_toggled(boolean)");
@@ -121,6 +121,13 @@ public class UiMainWindowLogic extends QSignalEmitter
 		
 		slwHandler.refreshSheepList();
 	}
+	
+	/* SERVERLOGIC*/
+	private void sLogic_signalNewSheeps(ArrayList<Sheep> sheeps, int farmID){
+		
+		
+	}
+	
 	
 	/* ACTIONS */
 	

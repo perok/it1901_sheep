@@ -11,23 +11,23 @@ public class Response implements Serializable {
 	private int type;
 	private boolean success;
 	private User user;
-	private ArrayList content;
+	private ArrayList<Object> content;
 	
 	public Response(int type, boolean success) {
 		this.type = type;
 		this.success = success;
 	}
 	
-	public Response(int type, ArrayList content) {
-		this.content = new ArrayList<>();
+	public Response(int type, ArrayList<Object> content) {
+		this.content = new ArrayList<Object>();
 		this.type = type;
 		for (int i = 0; i < content.size(); i++) {
 			this.content.add(content.get(i));
 		}
 	}
 	
-	public Response(int type, boolean success, ArrayList content) {
-		this.content = new ArrayList<>();
+	public Response(int type, boolean success, ArrayList<Object> content) {
+		this.content = new ArrayList<Object>();
 		this.type = type;
 		this.success = success;
 		for (int i = 0; i < content.size(); i++) {
@@ -52,11 +52,11 @@ public class Response implements Serializable {
 		this.success = success;
 	}
 
-	public ArrayList getContent() {
+	public ArrayList<Object> getContent() {
 		return content;
 	}
 
-	public void setContent(ArrayList content) {
+	public void setContent(ArrayList<Object> content) {
 		for (int i = 0; i < content.size(); i++) {
 			this.content.add(content.get(i));
 		}
