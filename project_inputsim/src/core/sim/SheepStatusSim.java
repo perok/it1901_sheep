@@ -149,11 +149,11 @@ public class SheepStatusSim {
 			int intlat = rand.nextInt(y_diff_int);
 			double doublelat = (double) intlat;
 			doublelat /= 10000;
-			alerts[i][4] = Double.toString(doublelat);
+			alerts[i][4] = Double.toString(doublelat+map_y_min);
 			int intlong = rand.nextInt(x_diff_int);
 			double doublelong = (double) intlong;
 			doublelong /= 10000;
-			alerts[i][5] = Double.toString(doublelong);
+			alerts[i][5] = Double.toString(doublelong+map_x_min);
 			alerts[i][6] = Integer.toString(farmId);
 			server.notifier.recieveAlert(new SheepAlert(Integer.parseInt(alerts[i][0]), Integer.parseInt(alerts[i][1]), 
 					Float.parseFloat(alerts[i][2]), Integer.parseInt(alerts[i][3]), new GPSPosition(Double.parseDouble(alerts[i][4]), 
@@ -177,11 +177,11 @@ public class SheepStatusSim {
 			int intlat = rand.nextInt(y_diff_int);
 			double doublelat = (double) intlat;
 			doublelat /= 10000;
-			alerts[i][4] = Double.toString(doublelat);
+			alerts[i][4] = Double.toString(doublelat+map_y_min);
 			int intlong = rand.nextInt(x_diff_int);
 			double doublelong = (double) intlong;
 			doublelong /= 10000;
-			alerts[i][5] = Double.toString(doublelong);
+			alerts[i][5] = Double.toString(doublelong+map_x_min);
 			alerts[i][6] = Integer.toString(livingSheep.get(i).getFarmId());
 			server.notifier.recieveAlert(new SheepAlert(Integer.parseInt(alerts[i][0]), Integer.parseInt(alerts[i][1]), 
 					Float.parseFloat(alerts[i][2]), Integer.parseInt(alerts[i][3]), new GPSPosition(Double.parseDouble(alerts[i][4]), 
@@ -206,11 +206,11 @@ public class SheepStatusSim {
 			int intlat = rand.nextInt(y_diff_int);
 			double doublelat = (double) intlat;
 			doublelat /= 10000;
-			stats[i][4] = Double.toString(doublelat);
+			stats[i][4] = Double.toString(doublelat+map_y_min);
 			int intlong = rand.nextInt(x_diff_int);
 			double doublelong = (double) intlong;
 			doublelong /= 10000;
-			stats[i][5] = Double.toString(doublelong);
+			stats[i][5] = Double.toString(doublelong+map_x_min);
 			stats[i][6] = Integer.toString(livingSheep.get(i).getFarmId());
 		}
 		server.notifier.recieveStatus(stats);
