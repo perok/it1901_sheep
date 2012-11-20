@@ -31,5 +31,4 @@ public class GPSPosition implements Serializable {
 	public void setLongditude(double longditude) {
 		this.longditude = longditude;
 	}
-
 }

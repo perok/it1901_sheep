@@ -72,7 +72,7 @@ public class DatabaseConnector {
 			String[][] r = processQuery("SELECT id,username,name,password,mobile_number,email FROM user WHERE username = '" + username + "'" + " AND password = '" + password + "';");
 
 			User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5]);
-			String[][] r2 = processQuery("SELECT farm_id, admin FROM access_rights WHERE user_id = " + user.getId() + ";");
+			String[][] r2 = processQuery("SELECT farm_id,admin FROM access_rights WHERE user_id = " + user.getId() + ";");
 			ArrayList<Farm> farms = new ArrayList<Farm>();
 
 			for (int i = 0; i < r2.length; i++) {

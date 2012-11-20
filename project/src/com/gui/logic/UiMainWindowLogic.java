@@ -53,7 +53,6 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 * @param sLogic ServerLogic.
 	 */
 	public UiMainWindowLogic(UiMainWindow mw, SheepListWidgetLogic slwHandler, TableWidgetLogic twHandler, ServerLogic sLogic){
-		System.out.println("Applying logic");
 		/* Storing referances */
 		this.mw = mw;
 		this.slwHandler = slwHandler;
@@ -117,8 +116,6 @@ public class UiMainWindowLogic extends QSignalEmitter
 		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
 		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");		
 		this.slwHandler.multiSheepSelect.connect(this,"multiSheepSelect(ArrayList)");
-		
-		System.out.println("Logic applied");
 		
 		slwHandler.refreshSheepList();
 	}
