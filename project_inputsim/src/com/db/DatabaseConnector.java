@@ -605,15 +605,16 @@ public class DatabaseConnector {
 		try{
 			String[][] r = processQuery("SELECT id,username,name,password,mobile_number,email FROM user WHERE true;");
 			for (int i = 0; i < r.length; i++) {
-				User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5]);
+				User user = new User(Integer.parseInt(r[i][0]), r[i][1], r[i][2], r[i][3], Integer.parseInt(r[i][4]), r[i][5]);
 				ArrayList<Farm> farms = new ArrayList<Farm>();
 				String[][] r2 = processQuery("SELECT farm_id, admin FROM access_rights WHERE user_id = " + user.getId() + ";");
 
-				for (int j = 0; i < r2.length; j++) {
-
+				for (int j = 0; j < r2.length; j++) {
 					String[][] r3 = processQuery("SELECT name FROM farm WHERE id = " + r2[j][0] + ";");
 					Farm farm = new Farm(Integer.parseInt(r2[j][0]),r3[0][0],getBoolean(r2[j][1]));
+					farms.add(farm);
 				}
+				user.addFarms(farms);
 				users.add(user);
 			}
 			return users;
@@ -623,6 +624,7 @@ public class DatabaseConnector {
 			return null;
 		}
 		catch(ArrayIndexOutOfBoundsException e){
+			e.printStackTrace();
 			return null;
 		}	
 	}
