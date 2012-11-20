@@ -109,7 +109,7 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
         
     } // setupUi
 
-    void retranslateUi(QMainWindow MainWindow)
+    void retranslateUi(@SuppressWarnings("unused") QMainWindow MainWindow)
     {
         label.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Username", null));
         label_2.setText(com.trolltech.qt.core.QCoreApplication.translate("MainWindow", "Password", null));

@@ -107,15 +107,15 @@ public class ClientSocket  {
 		try { 
 			if(sInput != null) sInput.close();
 		}
-		catch(Exception e) {}
+		catch(Exception e) { /** Ignore errors */}
 		try {
 			if(sOutput != null) sOutput.close();
 		}
-		catch(Exception e) {} 
+		catch(Exception e) {/** Ignore errors */} 
 		try{
 			if(socket != null) socket.close();
 		}
-		catch(Exception e) {} 
+		catch(Exception e) {/** Ignore errors */} 
 
 		if(caller != null)
 			caller.connectionFailed();
@@ -272,7 +272,7 @@ public class ClientSocket  {
 						caller.connectionFailed();
 					break;
 				}
-				catch(ClassNotFoundException e2) {
+				catch(ClassNotFoundException e2) {/** Ignore errors */
 				}
 			}
 		}

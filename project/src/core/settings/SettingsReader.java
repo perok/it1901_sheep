@@ -12,6 +12,7 @@ public class SettingsReader {
 		String[] input = new String[2];
 		int i = 0;
 		try {
+			@SuppressWarnings("resource")
 			Scanner scanner = new Scanner(new FileInputStream(settingsFile));
 			try {
 				while (scanner.hasNextLine()){

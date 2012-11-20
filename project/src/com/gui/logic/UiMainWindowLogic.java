@@ -203,6 +203,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 */
 	@SuppressWarnings("unused")
 	private void actionUndo_toggled(boolean trigg){
+		/** TODO: add undo-action here */
 	}
 
 	/**
@@ -324,7 +325,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 * Method for sending a new sheep to the server
 	 * @param click
 	 */
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused", "boxing" })
 	private void pBSubmit_Add_clicked(boolean click){
 		
 		Sheep sheepAdd;
@@ -380,7 +381,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 * 
 	 * @param click
 	 */
-	@SuppressWarnings("unused")
+	@SuppressWarnings({"unused", "boxing"})
 	private void pbTabInformationUpdate_clicked(boolean click){
 		Sheep sheepUpdate;
 		//Not empty

@@ -107,7 +107,7 @@ public class SettingsMenu extends QDialog
      * @param current the widget we wish to focus
      * @param previous deprecated.
      */
-	protected void changePage(QListWidgetItem current, QListWidgetItem previous)
+	protected void changePage(QListWidgetItem current, @SuppressWarnings("unused") QListWidgetItem previous)
     {
         this.qswPagesWidget.setCurrentIndex(this.qlwParentcontentsWidget.row(current));
     }

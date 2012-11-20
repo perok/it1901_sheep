@@ -32,7 +32,7 @@ public class AccessListWidget extends QWidget
 	 *
 	 * @param parent
 	 */
-	public AccessListWidget(UserSettings parent)
+	public AccessListWidget(@SuppressWarnings("unused") UserSettings parent)
 	{		
 		initWidgets();
 		initLayout();
@@ -47,7 +47,7 @@ public class AccessListWidget extends QWidget
 	 */
 	private void initConnectEvents()
 	{
-		this.qpbBtnAddUsers.clicked.connect(this, "transferToAdmin()");
+		this.qpbBtnAddUsers.clicked.connect(this, "transferToAdmin()");	
 		this.qpbBtnRemoveUsers.clicked.connect(this, "transferFromAdmin()");
 	}
 	
