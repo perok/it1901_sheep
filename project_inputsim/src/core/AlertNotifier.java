@@ -83,7 +83,12 @@ public class AlertNotifier implements Runnable{
 	 */
 	public void recieveStatus(String[][] status, ArrayList<Message> statuses) {
 		db.insertSheepStatus(status);
-		server.notifyClient(db.getUsernames(), statuses);
+		String[][] list = db.listUsers();
+		String[] res = new String[list.length];
+		for (int i = 0; i < list.length; i++) {
+			res[i] = list[i][1];
+		}
+		server.notifyClient(res, statuses);
 	}
 
 }
