@@ -23,7 +23,8 @@
   wmsType = new google.maps.ImageMapType(StatKartLayer);
  
   map.mapTypes.set('statkart', wmsType);
-
+  
+  //makeLines(map);
 }
   
 
@@ -79,14 +80,14 @@
      */
 
 var beaches = [
-["TRONDHEIM BETCHES", 63.430515, 10.395053, 1]
+	['TRONDHEI', 63.430515, 10.395053, 1]
 ];
 
 //function that is called from the application for one sheep selected
 function receiveJSONOne(data){
 	setMarkers(map, data);	
 	//Add lines
-	//makeLines(map);
+	makeLines(map);
 } 
 
 //function that is called from the application for many sheep selected
@@ -100,14 +101,13 @@ function receiveJSONMany(data){
 // Origins, anchor positions and coordinates of the marker
 // increase in the X direction to the right and in
 // the Y direction down.
-
 var sheepOk = new google.maps.MarkerImage('images/Sheep_WO_backround.png',
 	// This marker is 23 pixels wide by 2 pixels tall.
 	new google.maps.Size(23, 22),
 	// The origin for this image is 0,0.
 	new google.maps.Point(0,0),
 	// The anchor for this image is the base of the flagpole at 0,32.
-	new google.maps.Point(0, 32));
+	new google.maps.Point(0, 22));
 
 	// Shapes define the clickable region of the icon.
 	// The type defines an HTML &lt;area&gt; element 'poly' which
@@ -117,19 +117,21 @@ var sheepOk = new google.maps.MarkerImage('images/Sheep_WO_backround.png',
 var sheepDead = new google.maps.MarkerImage('images/dead_sheep.png',
 	new google.maps.Size(23, 22),
 	new google.maps.Point(0,0),
-	new google.maps.Point(0, 32));
+	new google.maps.Point(0, 22));
 
 var sheepWarn = new google.maps.MarkerImage('images/warning_sheep.png',
 		new google.maps.Size(23, 22),
 		new google.maps.Point(0,0),
-		new google.maps.Point(0, 32));
+		new google.maps.Point(0, 22));
 
 var shape = {
 		  coord: [1, 1, 1, 23, 23, 22, 23 , 1],
 		  type: 'poly'
 		   };
 
-var infowindow = new google.maps.InfoWindow({});
+
+var infowindow = new google.maps.InfoWindow({content:'hey'});
+
 
 
 function setMarkers(map, locations) {
@@ -137,13 +139,15 @@ function setMarkers(map, locations) {
   // Add markers to the map
     for (var i = 0; i < locations.length; i++) {    	
     	
+    	var image;
+    	
     	if(locations[i].isAlive == 'false')
     		image = sheepDead;
     	else if(locations[i].isAlert == 'true')
     		image = sheepWarn;
     	else
     		image = sheepOk;
-    
+    	
 		var myLatLng = new google.maps.LatLng(locations[i].lat, locations[i].lon);
 		var marker = new google.maps.Marker({
 			position: myLatLng,
@@ -155,56 +159,63 @@ function setMarkers(map, locations) {
 			zIndex: 0
 		});
 		
-		var contentString = '<div id="content">'+
-		'<div id="siteNotice">'+
-		'</div>'+
-		'<h1 id="firstHeading" class="firstHeading">' + locations[i].name.getTitle + '</h1>'+
-		'<div id="bodyContent">'+
-		'<p>'+ locations[i].lat +' - '+ locations[i].lon +'</p>'+
-		'</div>'+
-		'</div>';
-      
-		google.maps.event.addListener(marker, 'click', function() {
-	  
-			infoWindow.setContent(contentString);
-			infowindow.open(map,marker);
-		});
-  
+		
+		// Creating a closure to retain the correct data, notice how I pass the current data in the loop into the closure (marker, data)
+		(function(marker) {
+			var contentString = '<div id="content">'+
+			'<div id="siteNotice">'+
+			'</div>'+
+			'<h1 id="firstHeading" class="firstHeading">' + marker.getTitle() + '</h1>'+
+			'<div id="bodyContent">'+
+			'<p>'+ marker.getPosition().toUrlValue() +'</p>'+
+			'</div>'+
+			'</div>';
+			// Attaching a click event to the current marker
+			google.maps.event.addListener(marker, "click", function(e) {
+				infowindow.setContent(contentString);
+				infowindow.open(map, marker);
+			});
+
+
+		})(marker);
+		
 		markers.push(marker);
+    }
+
+    setAllMap(map);
 }
 
-setAllMap(map);
-}
 
 
 
-/*
 function makeLines(map){
 	//Remove old lines
 	for ( var i = 0; i < lines.length; i++) {
 		lines[i].setMap(null);
 	}
+	lines = [];
+	
 	//make new lines
-	//for ( var i = 0; i < (markers.length - 1); i++) {
+	for ( var i = 0; i < (markers.length - 1); i++) {
+		var datline = [markers[i].getPosition(), markers[i+1].getPosition()];
 		var line = new google.maps.Polyline({
-			//var datline = [markers[i].getPosition(), markers[i+1].getPosition()];
-			path: lineCoordinates,
+			path: datline,
 			icons: [{
 				icon: lineSymbol,
 				offset: '100%'
 			}],
 			map: map
 			});
-		}
-	
+		
 		lines.push(line);
-	//}
-}*/
+	}
+	
+}
 
-/*var lineCoordinates = [
+var lineCoordinates = [
                        new google.maps.LatLng(22.291, 153.027),
                        new google.maps.LatLng(18.291, 153.027)
-                     ];*/
+                     ];
 
 var lineSymbol = {
 	path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
@@ -228,6 +239,14 @@ function setAllMap(map) {
 
 // Deletes all markers in the array by removing references to them.
 function deleteOverlays() {
-  clearOverlays();
-  markers = [];
+	
+	//Remove old lines
+	for ( var i = 0; i < lines.length; i++) {
+		lines[i].setMap(null);
+	}
+	lines = [];
+	
+	//Delete markers
+	clearOverlays();
+	markers = [];
 }

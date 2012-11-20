@@ -6,6 +6,8 @@ import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
 
 import java.util.ArrayList;
+
+import core.classes.Farm;
 import core.classes.Sheep;
 import core.classes.User;
 
@@ -16,6 +18,7 @@ public class ServerLogic extends QSignalEmitter{
     private Object objectAskingForResponse = null;
 
     public Signal0 loggedIn;
+    public Signal0 signalFarmListCreated;
     public Signal1<ArrayList<User>> signalUserDataRecieved;
     public Signal2<ArrayList<Sheep>, Integer> signalNewSheeps;
 
@@ -25,6 +28,7 @@ public class ServerLogic extends QSignalEmitter{
 	public ServerLogic()
 	{
 		loggedIn = new Signal0();
+		signalFarmListCreated = new Signal0();
 		this.signalUserDataRecieved = new Signal1<ArrayList<User>>();
 		this.signalNewSheeps = new Signal2<ArrayList<Sheep>, Integer>();
 
@@ -101,6 +105,17 @@ public class ServerLogic extends QSignalEmitter{
 						newSheeps.add((Sheep)o);
 					}
 					this.signalNewSheeps.emit(newSheeps, newSheeps.get(0).getFarmId());
+				}
+				if(response.getContent().get(0) instanceof Farm)
+				{
+					ArrayList<Farm> lFarms = new ArrayList<Farm>();
+					for(Object o : response.getContent())
+					{
+						lFarms.add((Farm)o);
+					}
+					
+					com.storage.UserStorage.setFarmList(lFarms);
+					this.signalFarmListCreated.emit();
 				}
 			}
 			

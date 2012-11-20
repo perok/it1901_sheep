@@ -170,6 +170,7 @@ public class UiMainWindowLogic extends QSignalEmitter
     	spawn.show();
     	spawn.signalFarmChanged.connect(this, "updateSheepList()");
     	this.signalUserListRecieved.connect(spawn, "sendData(ArrayList)");
+    	sLogic.signalFarmListCreated.connect(spawn, "notifyChildren()");
     }
     
     @SuppressWarnings("unused")

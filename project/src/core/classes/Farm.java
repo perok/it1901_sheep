@@ -34,6 +34,11 @@ public class Farm implements Serializable {
 		return id;
 	}
 	
+	public boolean isEqual(Farm other)
+	{
+		return other.getId() == getId();
+	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
