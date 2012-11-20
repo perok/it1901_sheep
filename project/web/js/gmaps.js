@@ -82,6 +82,11 @@ function receiveJSONMany(data){
 	setMarkers(map, data);	
 } 
 
+//Delete all overlays
+function receiveJSONRemove(){
+	deleteOverlays();
+} 
+
 //Marker sizes are expressed as a Size of X,Y
 // where the origin of the image (0,0) is located
 // in the top left of the image.
