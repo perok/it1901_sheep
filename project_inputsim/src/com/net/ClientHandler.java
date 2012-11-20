@@ -91,39 +91,39 @@ public class ClientHandler implements Runnable {
 	public Response HandleRequest(Request request) {
 		switch(request.getMessage()){
 		case("getSheep"):
-			return new Response(Response.LIST,db.getSheep(Integer.parseInt(request.getparameter("farmId"))));
+			return new Response(Response.LIST,db.getSheep(Integer.parseInt(request.getparameter("farmId"))),request.getMessage());
 
 		case("getSheepStatus"):
-			return new Response(Response.LIST,db.getSheepStatus(Integer.parseInt(request.getparameter("farmId"))));
+			return new Response(Response.LIST,db.getSheepStatus(Integer.parseInt(request.getparameter("farmId"))),request.getMessage());
 
 		case("getSheepAlert"):
-			return new Response(Response.LIST,db.getSheepAlert(Integer.parseInt(request.getparameter("farmId"))));
+			return new Response(Response.LIST,db.getSheepAlert(Integer.parseInt(request.getparameter("farmId"))),request.getMessage());
 
 		case("deleteAccessRights"):
-			return new Response(Response.BOOLEAN,db.removeAccessRights(Integer.parseInt(request.getparameter("userId")), Integer.parseInt(request.getparameter("farmId"))));
+			return new Response(Response.BOOLEAN,db.removeAccessRights(Integer.parseInt(request.getparameter("userId")), Integer.parseInt(request.getparameter("farmId"))),request.getMessage());
 
 		case("addAccessRights"):
-			return new Response(Response.BOOLEAN,db.addAccessRights(Integer.parseInt(request.getparameter("userId")), Integer.parseInt(request.getparameter("farmId"))));
+			return new Response(Response.BOOLEAN,db.addAccessRights(Integer.parseInt(request.getparameter("userId")), Integer.parseInt(request.getparameter("farmId"))),request.getMessage());
 
 		case("removeSheep"):
-			return new Response(Response.BOOLEAN,db.removeSheep(Integer.parseInt(request.getparameter("sheepId"))));
+			return new Response(Response.BOOLEAN,db.removeSheep(Integer.parseInt(request.getparameter("sheepId"))),request.getMessage());
 
 		case("login"):
 			Response lol = new Response(Response.USER,db.loginQuery(request.getparameter("username"), request.getparameter("password")));
 		return lol;
 		case("addSheep"):
-			return new Response(Response.BOOLEAN,db.insertSheep(request.getSheep()));
+			return new Response(Response.BOOLEAN,db.insertSheep(request.getSheep()),request.getMessage());
 		case("editSheep"):
-			return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()));
+			return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()),request.getMessage());
 
 		case("editUser"):
-			return new Response(Response.BOOLEAN,db.editUser(request.getUser().getId(), request.getUser()));
+			return new Response(Response.BOOLEAN,db.editUser(request.getUser().getId(), request.getUser()),request.getMessage());
 
 		case("invokeAlert"):
-			return new Response(Response.BOOLEAN,server.simulator.addAlert(Integer.parseInt(request.getparameter("farmId")), 1));
+			return new Response(Response.BOOLEAN,server.simulator.addAlert(Integer.parseInt(request.getparameter("farmId")), 1),request.getMessage());
 		
 		case("listUsersArrayList"):
-			return new Response(Response.LIST,db.listUsersArrayList());
+			return new Response(Response.LIST,db.listUsersArrayList(),request.getMessage());
 		}
 		
 		
