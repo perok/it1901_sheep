@@ -88,8 +88,13 @@ public class ServerLogic extends QSignalEmitter{
 					&& response.getContent().isEmpty() == false) 
 			{
 				//Content is of a User response
-				if(response.getContent().get(0) instanceof User)
-					this.signalUserDataRecieved.emit(response.getContent());
+				if(response.getContent().get(0) instanceof User){
+					ArrayList<User> newUsers = new ArrayList<User>();
+					for(Object o : response.getContent()){
+						newUsers.add((User)o);
+					}
+					this.signalUserDataRecieved.emit(newUsers);
+				}
 				if(response.getContent().get(0) instanceof Sheep){
 					ArrayList<Sheep> newSheeps = new ArrayList<Sheep>();
 					for(Object o : response.getContent()){
@@ -132,6 +137,7 @@ public class ServerLogic extends QSignalEmitter{
 				
 				loggedIn.emit();
 			}
+		//TODO: Alarm response!
 		
 		System.out.println("Response handled");				
 	}
