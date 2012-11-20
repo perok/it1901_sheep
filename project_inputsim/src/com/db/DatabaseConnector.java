@@ -616,7 +616,6 @@ public class DatabaseConnector {
 			return null;
 		}
 		catch(ArrayIndexOutOfBoundsException e){
-			System.out.println("Unauthorized login attempt detected");
 			return null;
 		}	
 	}
