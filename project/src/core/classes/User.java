@@ -40,6 +40,19 @@ public class User  implements Serializable{
 		this.username = username;
 		this.farmlist = new ArrayList<Farm>();
 	}
+	
+	public User copyShallowUser()
+	{
+		return new User(this.id, "", this.name, "", this.mobileNumber, this.email);
+	}
+	
+	public boolean shallowEquals(User other)
+	{
+		return
+			(this.name.equals(other.getName()) )
+			&&  (this.mobileNumber == other.getMobileNumber())
+			&&  (this.email.equals(other.getEmail()));
+	}
 
 	public int getId() {
 		return id;
