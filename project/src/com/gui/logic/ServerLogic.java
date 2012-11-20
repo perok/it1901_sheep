@@ -134,10 +134,9 @@ public class ServerLogic extends QSignalEmitter{
 		/* Boolean */
 		else if(responseType == 2)
 		{
-			System.out.println("Reponse receieved for edit : " + response.getInitialRequest() + "cake : " + response.getInitialRequestId());
 			if(response.getInitialRequest().equals("editSheep") || response.getInitialRequest().equals("addSheep")){ //TODO:deleteSheep fjern lokalt!
 				clientSocket.getSheep(response.getInitialRequestId());
-				System.out.println("it went ok");
+				System.out.println("An action on the server was accepted");
 			}
 		}
 		

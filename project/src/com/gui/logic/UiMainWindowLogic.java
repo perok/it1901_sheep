@@ -370,28 +370,15 @@ public class UiMainWindowLogic extends QSignalEmitter
 	private void pBSubmit_Add_clicked(boolean click){
 		
 		Sheep sheepAdd;
-		System.out.println("UiMainWindowLOgc pbsumbit-Add TRYING");
 		
-		System.out.println(currentSheep.getId()); //TODO: SÅKLART IKKJE ID:: CONTRUCTOR FOR DETTE OG HÅNDTERING
-		System.out.println(mw.lEName.text());
-		System.out.println(Integer.parseInt(mw.lEFarmId.text()));
-		System.out.println(Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) 
-				+ String.valueOf(mw.dEBirthdaye.date().month()) 
-				+ String.valueOf(mw.dEBirthdaye.date().day())));
-		System.out.println(mw.chbAlive.isChecked());
-		System.out.println((int)mw.dSBWeight.value());
-		
-		
-		
-		System.out.println(!mw.lEName.text().equals("") + " " + !mw.lEFarmId.text().equals("") + " " + Integer.parseInt(mw.lEFarmId.text()));
-		if(!mw.lEName.text().equals("") && !mw.lEFarmId.text().equals("") && Integer.parseInt(mw.lEFarmId.text()) != 0){
+		if(!mw.lEName_Add_2.text().equals("") && !mw.lEFar_Add.text().equals("") && Integer.parseInt(mw.lEFar_Add.text()) != 0){
 			
-			sheepAdd = new Sheep(mw.lEName.text(), Integer.parseInt(mw.lEFarmId.text()), 
-					Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) 
-							+ String.valueOf(mw.dEBirthdaye.date().month()) 
-							+ String.valueOf(mw.dEBirthdaye.date().day())),
-					mw.chbAlive.isChecked(), 
-					(int)mw.dSBWeight.value()); //Mï¿½ FIKSES, skal ikke vï¿½re int
+			sheepAdd = new Sheep(mw.lEName_Add_2.text(), Integer.parseInt(mw.lEFar_Add.text()), 
+					Integer.valueOf(String.valueOf(mw.dEBirthdate_Add.date().year()) 
+							+ String.valueOf(mw.dEBirthdate_Add.date().month()) 
+							+ String.valueOf(mw.dEBirthdate_Add.date().day())),
+					mw.cBAlive_Add.isChecked(), 
+					(int)mw.dSBWeight_Add_2.value()); //Mï¿½ FIKSES, skal ikke vï¿½re int
 			
 			try{
 				System.out.println("UiMainWindowLOgc pbsumbit-Add Adding ShEPPS");
