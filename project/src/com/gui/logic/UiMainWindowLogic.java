@@ -43,6 +43,13 @@ public class UiMainWindowLogic extends QSignalEmitter
 		this.signalUserListRecieved.emit(lUsers);
 	}
 
+	/**
+	 * Initialize the logic for the UiMainWindow.
+	 * @param mw MainWindow. The main class.
+	 * @param slwHandler SheepListWidgetHandler.
+	 * @param twHandler TableWidgetLogic.
+	 * @param sLogic ServerLogic.
+	 */
 	public UiMainWindowLogic(UiMainWindow mw, SheepListWidgetLogic slwHandler, TableWidgetLogic twHandler, ServerLogic sLogic){
 		System.out.println("Applying logic");
 		/* Storing referances */
@@ -188,31 +195,50 @@ public class UiMainWindowLogic extends QSignalEmitter
 		sLogic.closeConnection();
 		System.exit(0);
 	}
-	
+
+	/**
+	 * Method that is called when actionUndo is toggled
+	 * @param trigg
+	 */
 	@SuppressWarnings("unused")
 	private void actionUndo_toggled(boolean trigg){
-
-		System.out.println(trigg);
 	}
-	
+
+	/**
+	 * Method called when the combo box in the SheepListWidget's index is changed.
+	 * @param index Index changed too.
+	 */
 	@SuppressWarnings("unused")
 	private void cmbDockFarmId_currentIndexChanged(int index){
 		UserStorage.setCurrentFarm(index);
 		slwHandler.refreshSheepList();
 	}
-	
+
+	/**
+	 * Method called when the combo box in the Message tab in the TableWidget is changed.
+	 * @param index Index changed too.
+	 */
 	@SuppressWarnings("unused")
 	private void cmbTabMessages_currentIndexChanged(int index){
 			UserStorage.setCurrentMessageType(index);
 			this.twHandler.updateMessages(currentSheep);
 		}
 
+	/**
+	 * Method called when the search line edit box's text is changed.
+	 * Starts searching through the SheepListWidget's sheeps.
+	 * @param text Current text
+	 */
 	@SuppressWarnings("unused")
 	private void lineEdit_textChanged(String text){
 		slwHandler.searchSheeps(text);
 	}
 	
 		//STATUSBAR
+	/**
+	 * Method called when some object wants to update some given text to the status bar.
+	 * @param text Text to show.
+	 */
 	@SuppressWarnings("unused")
 	private void newStatusBarMessage(String text){
 			statusbarMessage.setText(text);
@@ -371,6 +397,10 @@ public class UiMainWindowLogic extends QSignalEmitter
 	//OTHER EVENTS
 	
 	//DockWidget
+	/**
+	 * Method called when the ascend descend chechbox has been checked/unchecked.
+	 * @param toggled The new toggle status.
+	 */
 	@SuppressWarnings("unused")
 	private void rbAscDesc_toggled(boolean toggled){
 		slwHandler.changeSortOrder();
