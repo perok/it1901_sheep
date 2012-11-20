@@ -36,6 +36,8 @@ public class User  implements Serializable{
 		this.password = password;
 		this.mobileNumber = mobileNumber;
 		this.email = email;
+		this.farmlist = new ArrayList<Farm>();
+		
 		for (int i = 0; i < farmlist.size(); i++) {
 			this.farmlist.add(farmlist.get(i));
 		}

@@ -145,7 +145,7 @@ public class ClientSocket  {
 	
 	/** Makes a request with the given parameter and sends it to the server.
 	 * 
-	 * @param farm
+	 * @param sheep
 	 */
 	public void addSheep(Sheep sheep) {
 		HashMap<String, String> params = new HashMap<String, String>();

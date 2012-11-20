@@ -6,8 +6,9 @@ package com.storage;
  *
  */
 public class Constants {
-	public  static final int INIT_SCREEN_WIDTH      = 900; 
-	public  static final int INIT_SCREEN_HEIGHT 	= 800;
+	/** Preferred default window size-properties */
+	public  static final int INIT_SCREEN_WIDTH      = 900, 
+							 INIT_SCREEN_HEIGHT 	= 800;
 	
 	public static final int sheepStatus = 0;
 	public static final int sheepAlert = 1;
@@ -19,10 +20,12 @@ public class Constants {
 	 */
 	public final static int QtSheepDataRole = 32;
 	
-	public static final String title = "SSA® (Sheep Surveilance Application)";
+	/** The title of this application */
+	public static final String title = "SSAï¿½ (Sheep Surveilance Application)";
 	
-	public static final String about = "The Greatest and Only SSA® (Sheep Surveilance Application).\n\n" 
-    		+ "Created by: \n\tAnders Sildnes \n\tLars erik Grasdal \n\tTor Økland Barstad"
-    		+ "\n\tSvenn Kvelstad \n\tPer Øyvind Kanestrøm";
+	/** About-message shown in our about-window */
+	public static final String about = "The Greatest and Only SSAï¿½ (Sheep Surveilance Application).\n\n" 
+    		+ "Created by: \n\tAnders Sildnes \n\tLars erik Grasdal \n\tTor ï¿½kland Barstad"
+    		+ "\n\tSvenn Kvelstad \n\tPer ï¿½yvind Kanestrï¿½m";
 	
 }
