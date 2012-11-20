@@ -386,7 +386,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		System.out.println(!mw.lEName.text().equals("") + " " + !mw.lEFarmId.text().equals("") + " " + Integer.parseInt(mw.lEFarmId.text()));
 		if(!mw.lEName.text().equals("") && !mw.lEFarmId.text().equals("") && Integer.parseInt(mw.lEFarmId.text()) != 0){
 			
-			sheepAdd = new Sheep(currentSheep.getId(), mw.lEName.text(), Integer.parseInt(mw.lEFarmId.text()), 
+			sheepAdd = new Sheep(mw.lEName.text(), Integer.parseInt(mw.lEFarmId.text()), 
 					Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) 
 							+ String.valueOf(mw.dEBirthdaye.date().month()) 
 							+ String.valueOf(mw.dEBirthdaye.date().day())),
