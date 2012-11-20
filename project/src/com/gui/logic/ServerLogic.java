@@ -82,7 +82,7 @@ public class ServerLogic extends QSignalEmitter{
 		{			
 			//There is content
 			if(response.getContent() != null 
-					&& response.getContent().isEmpty() == false 
+					&& response.getContent().isEmpty() == false) 
 			{
 				//Content is of a User response
 				if(response.getContent().get(0) instanceof User)
@@ -103,14 +103,9 @@ public class ServerLogic extends QSignalEmitter{
 		/* Boolean */
 		else if(responseType == 2)
 		{
-			//TODO: skal ikke h�ndteres slik. SKal bli h�ndtert av serverlogic
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			//response.calltype == "editSheep" eller addSheep eller deleteSheep
+				//clientSocket.getSheep(sheep.getFarmId());
 			
-			clientSocket.getSheep(sheep.getFarmId());
 		}
 		
 		/* User */
