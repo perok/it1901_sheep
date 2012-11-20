@@ -137,7 +137,7 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
      * @param password
      * @return
      */
-    private boolean isPassWordAndUsernName(String username, String password){
+    private static boolean isPassWordAndUsernName(String username, String password){
     	if(username.length() == 0 || password.length() == 0)
     		return false;
     	return true;

@@ -8,12 +8,9 @@ import com.trolltech.qt.gui.QCheckBox;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QListWidgetItem;
-import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QStyleFactory;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
-
-import core.classes.User;
 
 /** A widget that show settings for sheep alerts
  * 
