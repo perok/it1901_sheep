@@ -1,9 +1,14 @@
 package com.gui.widgets;
 
+
+// TODO: the chain of signals for recieving users is long and not intelligent.
+//		 There should be ONE signal, and then a chain down using direct calls to methods.
+
 import java.util.ArrayList;
 import com.gui.logic.ServerLogic;
 import com.trolltech.qt.gui.QAbstractItemView;
 import com.trolltech.qt.gui.QHBoxLayout;
+import com.trolltech.qt.gui.QLabel;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QListWidgetItem;
 import com.trolltech.qt.gui.QPushButton;
@@ -22,34 +27,100 @@ import core.classes.User;
  */
 public class AccessListWidget extends QWidget
 {
-	private QListWidget qlwUserList,
+	private QListWidget qlwNonadminList,
 						qlwAdminList;
 	private QHBoxLayout qhblMainLayout;
+	private QLabel qlNonadmin,
+				   qlAdmin;
 	private QPushButton qpbBtnAddUsers,
 						qpbBtnRemoveUsers;
+	private ArrayList<User> lUsers;
+	private ArrayList<Farm>	lFarms;
+	
+	public void farmListRecieved()
+	{
+		this.lFarms = com.storage.UserStorage.getFarmList();
+		
+		inititate();
+	}
 	
 	/** Constructor. Initialize..
 	 *
 	 * @param parent
 	 */
 	public AccessListWidget(UserSettings parent)
-	{		
+	{
+		super(parent);
+		
 		initWidgets();
 		initLayout();
 		initConnectEvents();
 		
+		this.lUsers = new ArrayList<User>();
+		this.lFarms = new ArrayList<Farm>();
+		
 		/* After this line is done, a signal sends info back to THIS */
 		ServerLogic.getClientsocket().listUsers();
+		// TODO: request farmlist here
 	}
 	
 	/** Set up event-triggers
-	 * 
 	 */
 	private void initConnectEvents()
 	{
 		this.qpbBtnAddUsers.clicked.connect(this, "transferToAdmin()");	
 		this.qpbBtnRemoveUsers.clicked.connect(this, "transferFromAdmin()");
+		
+		((UserSettings)super.parent()).signalFarmUpdate.connect(this, "updateUserLists()");
 	}
+	
+	private boolean isAdmin(User uUser)
+	{
+		Farm fCurrentFarm = com.storage.UserStorage.getFarmList().get( ((UserSettings)super.parent()).getFarmIndex());
+		
+		/* For each farm user is admin of... */ 
+		for(Farm f : uUser.getFarmlist()) 
+		{
+			/* ...check if that farm is the one currently selected */
+			if(f.isEqual(fCurrentFarm) == true) 
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+		
+	private void updateUserLists()
+	{		
+		/* For each user */
+		for(User u : this.lUsers)
+		{
+			QListWidgetItem qlwiCur = new QListWidgetItem();
+			qlwiCur.setText(u.getName());
+			
+			if(isAdmin(u) == true) { this.qlwAdminList.addItem(qlwiCur); }
+			else				   { this.qlwNonadminList .addItem(qlwiCur);  }
+			
+			/* Should not be possible to edit permissions for the current user */
+			if(u.getName().equals(com.storage.UserStorage.getUser().getName()) == true) 
+			{
+				qlwiCur.blockSignals(true); 
+			}
+		}		
+	}
+	
+	private void inititate()
+	{
+		if(this.lFarms != null 
+		&& this.lFarms.isEmpty() == false
+		&& this.lUsers != null
+		&& this.lUsers.isEmpty() == false)
+		{
+			updateUserLists();
+		}
+	}
+	
 	
 	/** Recive a list of users, and update the widget displaying the users
 	 * 
@@ -57,36 +128,21 @@ public class AccessListWidget extends QWidget
 	 */
 	public void recieveUserData(ArrayList<User> lUsers)
 	{
-		/* There's no point doing anything with no users */
-		if(lUsers.isEmpty() == true) { return; }
-
-		int iFarm = com.storage.UserStorage.getCurrentFarm();
-		String sCurrentUserName = com.storage.UserStorage.getUser().getName();		
-		ArrayList<Farm> lFarm = com.storage.UserStorage.getUser().getFarmlist();
-		Farm fCurrentFarm = lFarm.get(iFarm);
-		
-		/* For each user */
-		for(User u : lUsers)
-		{
-			//if(u.getName().equals(sCurrentUserName)) { continue; }
-			System.out.println(u.getFarmlist());
-			
-			/* Make an item and insert it into the list */
-			QListWidgetItem cur = new QListWidgetItem(this.qlwUserList);
-			cur.setText(u.getName());
-		}
+		this.lUsers = lUsers;
+		inititate();
 	}
 	
 	@SuppressWarnings("unused")
-	/** For every selected non-admin user, escalate priviliges to admin.
+	/** For every selected non-admin user, escalate privileges to admin.
 	 */
 	private void transferFromAdmin()
 	{
 		/* For each selected item in Admin-list */
 		for(QListWidgetItem qlwi : this.qlwAdminList.selectedItems())
 		{
+			if(qlwi.text().equals(com.storage.UserStorage.getUser().getName()) == true) { continue; }
 			/* Remove (graphically) and insert in non-admin-list */
-			this.qlwUserList.insertItem(0, qlwi.clone());
+			this.qlwNonadminList.insertItem(0, qlwi.clone());
 			this.qlwAdminList.takeItem(this.qlwAdminList.row(qlwi));
 		}
 	}
@@ -97,11 +153,11 @@ public class AccessListWidget extends QWidget
 	private void transferToAdmin()
 	{
 		/* For each selected item in non-admin list */
-		for(QListWidgetItem qlwi : this.qlwUserList.selectedItems())
+		for(QListWidgetItem qlwi : this.qlwNonadminList.selectedItems())
 		{
 			/* Remove (graphically) and insert in admin-list */
 			this.qlwAdminList.insertItem(0, qlwi.clone());
-			this.qlwUserList.takeItem(this.qlwUserList.row(qlwi));
+			this.qlwNonadminList.takeItem(this.qlwNonadminList.row(qlwi));
 		}
 	}
 	
@@ -109,12 +165,14 @@ public class AccessListWidget extends QWidget
 	 */
 	private void initWidgets()
 	{
-		this.qlwUserList = new QListWidget();
+		this.qlwNonadminList = new QListWidget();
 		this.qlwAdminList = new QListWidget();
 		this.qpbBtnAddUsers = new QPushButton(tr("=>"));
 		this.qpbBtnRemoveUsers = new QPushButton(tr("<="));
+		this.qlAdmin = new QLabel(tr("Non-administrators"));
+		this.qlNonadmin = new QLabel(tr("Administrators"));
 		
-		this.qlwUserList.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection);
+		this.qlwNonadminList.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection);
 		this.qlwAdminList.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection);
 	}
 		
@@ -125,7 +183,6 @@ public class AccessListWidget extends QWidget
 	 */
 	public QHBoxLayout getLayout()
 	{
-		//this.qhblMainLayout.setSpacing(10);
 		return this.qhblMainLayout;
 	}
 	
@@ -133,29 +190,28 @@ public class AccessListWidget extends QWidget
 	 */
 	private void initLayout()
 	{
-		qhblMainLayout = new QHBoxLayout();
+		this.qhblMainLayout = new QHBoxLayout();
+		QVBoxLayout qvblNonAdminLay = new QVBoxLayout();
+		QVBoxLayout qvblAdminLay = new QVBoxLayout();
 		QVBoxLayout qvblButtonLayout = new QVBoxLayout();
+		
+		qvblAdminLay.addWidget(this.qlAdmin);
+		qvblAdminLay.addWidget(this.qlwAdminList);
+		
+		qvblNonAdminLay.addWidget(this.qlNonadmin);
+		qvblNonAdminLay.addWidget(this.qlwNonadminList);
 		
 		qvblButtonLayout.addWidget(this.qpbBtnAddUsers);
 		qvblButtonLayout.addWidget(this.qpbBtnRemoveUsers);
 		
-		qhblMainLayout.addWidget(this.qlwUserList);
-		qhblMainLayout.addLayout(qvblButtonLayout);
-		qhblMainLayout.addWidget(this.qlwAdminList);
+		this.qhblMainLayout.addLayout(qvblAdminLay);
+		this.qhblMainLayout.addLayout(qvblButtonLayout);
+		this.qhblMainLayout.addLayout(qvblNonAdminLay);
 		
-		qhblMainLayout.setWidgetSpacing(10);
+		this.qhblMainLayout.setWidgetSpacing(10);
 		
 		super.setLayout(qhblMainLayout);	
 	}
-
-//	public static void main(String[] args)
-//	{
-//		QApplication.initialize(args);
-//		
-//		new AccessListWidget(null).show();
-//		QApplication.exec();
-//		
-//	}
 }
 
 /* EOF */
