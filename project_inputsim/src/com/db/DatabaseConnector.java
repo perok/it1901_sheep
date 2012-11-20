@@ -84,15 +84,15 @@ public class DatabaseConnector {
 					Sheep sheep = new Sheep(Integer.parseInt(r4[j][0]), r4[j][1], Integer.parseInt(r4[j][2]), Integer.parseInt(r4[j][3]), getBoolean(r4[j][4]), Integer.parseInt(r4[j][5]));
 					String [][] r5 = processQuery("SELECT * from sheep_status WHERE sheep_id = " + sheep.getId() + " LIMIT 5;");
 					for (int k = 0; k < r5.length; k++) {
-//						System.out.println("=======");
-//						System.out.println(Integer.parseInt(r5[k][0]));
-//						System.out.println(Integer.parseInt(r5[k][1]));
-//						System.out.println(Integer.parseInt(r5[k][2]));
-//						System.out.println(Float.parseFloat(r5[k][3])); 
-//						System.out.println(Integer.parseInt(r5[k][4]));
-//						System.out.println(Double.parseDouble(r5[k][5]));
-//						System.out.println(Double.parseDouble(r5[k][6]));
-//						System.out.println(Integer.parseInt(r5[k][7]));
+						//						System.out.println("=======");
+						//						System.out.println(Integer.parseInt(r5[k][0]));
+						//						System.out.println(Integer.parseInt(r5[k][1]));
+						//						System.out.println(Integer.parseInt(r5[k][2]));
+						//						System.out.println(Float.parseFloat(r5[k][3])); 
+						//						System.out.println(Integer.parseInt(r5[k][4]));
+						//						System.out.println(Double.parseDouble(r5[k][5]));
+						//						System.out.println(Double.parseDouble(r5[k][6]));
+						//						System.out.println(Integer.parseInt(r5[k][7]));
 						sheep.addSheepStatus(new SheepStatus(Integer.parseInt(r5[k][0]),
 								Integer.parseInt(r5[k][1]),
 								Integer.parseInt(r5[k][2]),
@@ -132,12 +132,16 @@ public class DatabaseConnector {
 		for (int i = 0; i < r.length; i++) {
 			Sheep sheep = new Sheep(Integer.parseInt(r[i][0]),r[i][1],Integer.parseInt(r[i][2]),Integer.parseInt(r[i][3]),
 					Boolean.parseBoolean(r[i][4]),Integer.parseInt(r[i][5]));
-			String [][] r5 = processQuery("SELECT * from sheep_status WHERE sheep_id = " + sheep.getId() + " LIMIT 10;");
+			String [][] r5 = processQuery("SELECT * from sheep_status WHERE sheep_id = " + sheep.getId() + " LIMIT 5;");
 			for (int k = 0; k < r5.length; k++) {
-				for (int k2 = 0; k2 < r5[k].length; k2++) {
-					sheep.addSheepStatus(new SheepStatus(Integer.parseInt(r5[k][k2]),Integer.parseInt(r5[k][k2]),Integer.parseInt(r5[k][k2]),
-							Float.parseFloat(r5[k][k2]), Integer.parseInt(r5[k][k2]),new GPSPosition(Double.parseDouble(r5[k][k2]), Double.parseDouble(r5[k][k2])),Integer.parseInt(r5[k][k2])));
-				}
+				sheep.addSheepStatus(new SheepStatus(Integer.parseInt(r5[k][0]),
+						Integer.parseInt(r5[k][1]),
+						Integer.parseInt(r5[k][2]),
+						Float.parseFloat(r5[k][3]), 
+						Integer.parseInt(r5[k][4]),
+						new GPSPosition(Double.parseDouble(r5[k][5]), 
+								Double.parseDouble(r5[k][6])),Integer.parseInt(r5[k][7])));
+
 			}
 			list.add(sheep);
 		}
@@ -647,7 +651,7 @@ public class DatabaseConnector {
 		String[][] results = processQuery("SELECT name,id FROM farm WHERE true;");
 		return results;
 	}
-	
+
 	/** Returns an ArrayList with id and name of all farms in database.
 	 * 
 	 * @return
