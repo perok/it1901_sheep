@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.gui.logic.ServerLogic;
 import com.storage.UserStorage;
+import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 import com.trolltech.qt.core.QRegExp;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QComboBox;
@@ -18,6 +19,7 @@ import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QValidator;
 import com.trolltech.qt.gui.QWidget;
 
+import core.classes.Farm;
 import core.classes.User;
 
 /** Show the settings for the user.
@@ -53,6 +55,8 @@ public class UserSettings extends QWidget implements InputComponentHost
     {
         super(parent);
         
+        this.signalFarmUpdate = new Signal0();
+        
         initAccessRights();
         initGaardSettings();
         initConnectEvents();
@@ -60,7 +64,6 @@ public class UserSettings extends QWidget implements InputComponentHost
         initLayout();
         
         this.lComponents = new ArrayList<ComponentConnector>();
-        this.signalFarmUpdate = new Signal0();
 
         addConnector(this.qleUsername, "text", com.storage.UserStorage.class, "setUserName", String.class);
         addConnector(this.qleEmail, "text", com.storage.UserStorage.class, "setUserMail", String.class);
@@ -75,6 +78,10 @@ public class UserSettings extends QWidget implements InputComponentHost
 		this.qgbAccessGroup = new QGroupBox(tr("Endre brukerrettigheter"));			
 	}
 	
+	public void notifyChild()
+	{
+		this.alwAccessList.farmListRecieved();
+	}
     
     @SuppressWarnings("unused")
     /** Function used to call for an alarm
@@ -113,25 +120,24 @@ public class UserSettings extends QWidget implements InputComponentHost
         	System.out.println("error: " + e.getMessage());
 		}
 	}
-	
-    
+	    
     @SuppressWarnings("unused")
     /** When given data about the users, send it off to our child widget that processes the info.
      * 
      * @param lUsers arraylist holding a list of User objects
      */
 	private void processUserData(ArrayList<User> lUsers)
-    {
+    {    	    	
     	this.alwAccessList.recieveUserData(lUsers);
     }
-	
+    
 	@SuppressWarnings("unused")
 	/** Handle for whenever the farm is changed by the user
 	 */
 	private void farmChanged()
 	{
 		com.storage.UserStorage.setCurrentFarm(this.qcbFarmCombo.currentIndex());
-		signalFarmUpdate.emit(); /* Notify about farm-change */
+		this.signalFarmUpdate.emit(); /* Notify about farm-change */
 	}
 	
 	/** Initialize event-driven actions
@@ -142,6 +148,11 @@ public class UserSettings extends QWidget implements InputComponentHost
 		this.qpbBtnAlarm.clicked.connect(this, "toggleAlarm()");
 	}
 	
+	public int getFarmIndex()
+	{
+		return this.qcbFarmCombo.currentIndex();
+	}
+		
 	/** Initialize the groupbox for farm settings.
 	 */
 	private void initGaardSettings()

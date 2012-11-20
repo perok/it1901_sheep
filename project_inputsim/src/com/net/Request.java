@@ -14,6 +14,7 @@ public class Request implements Serializable {
 	private User user;
 	private Sheep sheep;
 	private HashMap<String,String> parameters;
+	private int intialRequestId;
 
 	public Request(int type, String message) {
 		this.type = type;
@@ -36,6 +37,16 @@ public class Request implements Serializable {
 				sheep.isAlive(), sheep.getWeight());
 		System.out.println(sheep.getName());
 	}
+	
+	public Request(int type, String message, Sheep sheep,int id) {
+		System.out.println("Constructor called");
+		this.type = type;
+		this.message = message;
+		this.intialRequestId = id;
+		this.sheep = new Sheep(sheep.getId(), sheep.getName(), sheep.getFarmId(), sheep.getDateOfBirth(),
+				sheep.isAlive(), sheep.getWeight());
+		System.out.println(sheep.getName());
+	}
 
 	public Request(int type, String message, HashMap<String, String> _parameters) {
 		this.type = type;
@@ -45,7 +56,7 @@ public class Request implements Serializable {
 			parameters.put(key, _parameters.get(key));
 		}
 	}
-
+	
 	public Request(int type) {
 		this.type = type;
 		parameters = new HashMap<String, String>();
@@ -91,6 +102,10 @@ public class Request implements Serializable {
 
 	public void setSheep(Sheep sheep) {
 		this.sheep = sheep;
+	}
+	
+	public int getIntialRequestId() {
+		return intialRequestId;
 	}
 
 }

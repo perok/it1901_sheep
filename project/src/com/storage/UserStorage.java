@@ -1,5 +1,8 @@
 package com.storage;
 
+import core.classes.Farm;
+import java.util.ArrayList;
+
 import core.classes.User;
 
 /** Class to hold userdata and make it easily availible
@@ -12,6 +15,7 @@ public class UserStorage {
 	private static int currentFarm;
 	private static int currentMessageType;
 	private static User user;
+	private static ArrayList<Farm> lFarms;
 	
 	/** Constructor. Initialize..
 	 * 
@@ -77,6 +81,18 @@ public class UserStorage {
 	 */
 	public static int getCurrentFarm() {
 		return currentFarm;
+	}
+	
+	public static ArrayList<Farm> getFarmList()
+	{
+		if(lFarms == null) { throw new RuntimeException("Farmlist has not been initialized"); }
+		
+		return null;
+	}
+			
+	public static void setFarmList(ArrayList<Farm> _lFarms)
+	{
+		lFarms = lFarms;
 	}
 
 	/** Set the current farm in use (for the GUI, primarily

@@ -170,6 +170,7 @@ public class UiMainWindowLogic extends QSignalEmitter
     	spawn.show();
     	spawn.signalFarmChanged.connect(this, "updateSheepList()");
     	this.signalUserListRecieved.connect(spawn, "sendData(ArrayList)");
+    	sLogic.signalFarmListCreated.connect(spawn, "notifyChildren()");
     }
     
     @SuppressWarnings("unused")
@@ -273,9 +274,6 @@ public class UiMainWindowLogic extends QSignalEmitter
 	@SuppressWarnings({ "unused", "unchecked" })
 	private void sheepsShowOnMap(ArrayList<Sheep> sheeps){
 		
-		if(sheeps.size() <= 1)
-			return;
-		
 		JSONArray arr = new JSONArray();
 		System.out.println("Sheep selected: " + sheeps.size());
 		//Go through all the sheeps
@@ -307,6 +305,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		 */
 	@SuppressWarnings({ "unused", "unchecked" })
 	private void populateTableWidget(Sheep sheep){
+		
 		mw.tabWidget.setCurrentIndex(0);
 		
 		//MAP
@@ -355,14 +354,31 @@ public class UiMainWindowLogic extends QSignalEmitter
 	private void pBSubmit_Add_clicked(boolean click){
 		
 		Sheep sheepAdd;
+		System.out.println("UiMainWindowLOgc pbsumbit-Add TRYING");
 		
+		System.out.println(currentSheep.getId()); //TODO: SÅKLART IKKJE ID:: CONTRUCTOR FOR DETTE OG HÅNDTERING
+		System.out.println(mw.lEName.text());
+		System.out.println(Integer.parseInt(mw.lEFarmId.text()));
+		System.out.println(Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) 
+				+ String.valueOf(mw.dEBirthdaye.date().month()) 
+				+ String.valueOf(mw.dEBirthdaye.date().day())));
+		System.out.println(mw.chbAlive.isChecked());
+		System.out.println((int)mw.dSBWeight.value());
+		
+		
+		
+		System.out.println(!mw.lEName.text().equals("") + " " + !mw.lEFarmId.text().equals("") + " " + Integer.parseInt(mw.lEFarmId.text()));
 		if(!mw.lEName.text().equals("") && !mw.lEFarmId.text().equals("") && Integer.parseInt(mw.lEFarmId.text()) != 0){
 			
 			sheepAdd = new Sheep(currentSheep.getId(), mw.lEName.text(), Integer.parseInt(mw.lEFarmId.text()), 
-					Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) + String.valueOf(mw.dEBirthdaye.date().month()) + String.valueOf(mw.dEBirthdaye.date().day())),
-					mw.chbAlive.isChecked(), (int)mw.dSBWeight.value()); //Mï¿½ FIKSES, skal ikke vï¿½re int
+					Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) 
+							+ String.valueOf(mw.dEBirthdaye.date().month()) 
+							+ String.valueOf(mw.dEBirthdaye.date().day())),
+					mw.chbAlive.isChecked(), 
+					(int)mw.dSBWeight.value()); //Mï¿½ FIKSES, skal ikke vï¿½re int
 			
 			try{
+				System.out.println("UiMainWindowLOgc pbsumbit-Add Adding ShEPPS");
 				sLogic.addSheep(sheepAdd);
 			}
 			catch(Exception e){
@@ -392,7 +408,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 			else
 				mw.chbAlive.setChecked(false);
 			
-			statusbarMessage.setText("Information reset done");
+			statusbarMessage.setText("Information reset done.");
 		}
 			
 	
@@ -409,12 +425,20 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 */
 	@SuppressWarnings({"unused", "boxing"})
 	private void pbTabInformationUpdate_clicked(boolean click){
+		if(currentSheep == null){
+			statusbarMessage.setText("Select a sheep to update.");
+			return;
+		}
+		
 		Sheep sheepUpdate;
 		//Not empty
 		if(!mw.lEName.text().equals("") && !mw.lEFarmId.text().equals("") && Integer.parseInt(mw.lEFarmId.text()) != 0){
 			sheepUpdate = new Sheep(currentSheep.getId(), mw.lEName.text(), Integer.parseInt(mw.lEFarmId.text()), 
-					Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) + String.valueOf(mw.dEBirthdaye.date().month()) + String.valueOf(mw.dEBirthdaye.date().day())),
-					mw.chbAlive.isChecked(), (int)mw.dSBWeight.value()); //Mï¿½ FIKSES, skal ikke vï¿½re int
+					Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) 
+							+ String.valueOf(mw.dEBirthdaye.date().month()) 
+							+ String.valueOf(mw.dEBirthdaye.date().day())),
+					mw.chbAlive.isChecked(), 
+					(int)mw.dSBWeight.value()); //Mï¿½ FIKSES, skal ikke vï¿½re int
 			
 			try{
 				sLogic.editSheep(sheepUpdate);

@@ -66,6 +66,12 @@ public class SettingsMenu extends QDialog
 	    super.setWindowIcon(new QIcon(CLASS_ICON));
 	}
     
+    
+    private void notifyChildren()
+    {
+    	this.usUserWidget.notifyChild();
+    }
+    
     /** Initialize the signals of THIS
      */
     private void initSignals()

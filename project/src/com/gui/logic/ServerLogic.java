@@ -6,6 +6,8 @@ import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
 
 import java.util.ArrayList;
+
+import core.classes.Farm;
 import core.classes.Sheep;
 import core.classes.User;
 
@@ -16,6 +18,7 @@ public class ServerLogic extends QSignalEmitter{
     private Object objectAskingForResponse = null;
 
     public Signal0 loggedIn;
+    public Signal0 signalFarmListCreated;
     public Signal1<ArrayList<User>> signalUserDataRecieved;
     public Signal2<ArrayList<Sheep>, Integer> signalNewSheeps;
 
@@ -25,6 +28,7 @@ public class ServerLogic extends QSignalEmitter{
 	public ServerLogic()
 	{
 		loggedIn = new Signal0();
+		signalFarmListCreated = new Signal0();
 		this.signalUserDataRecieved = new Signal1<ArrayList<User>>();
 		this.signalNewSheeps = new Signal2<ArrayList<Sheep>, Integer>();
 
@@ -96,11 +100,23 @@ public class ServerLogic extends QSignalEmitter{
 					this.signalUserDataRecieved.emit(newUsers);
 				}
 				if(response.getContent().get(0) instanceof Sheep){
+					System.out.println("recieved new SHEEPS");
 					ArrayList<Sheep> newSheeps = new ArrayList<Sheep>();
 					for(Object o : response.getContent()){
 						newSheeps.add((Sheep)o);
 					}
 					this.signalNewSheeps.emit(newSheeps, newSheeps.get(0).getFarmId());
+				}
+				if(response.getContent().get(0) instanceof Farm)
+				{
+					ArrayList<Farm> lFarms = new ArrayList<Farm>();
+					for(Object o : response.getContent())
+					{
+						lFarms.add((Farm)o);
+					}
+					
+					UserStorage.setFarmList(lFarms);
+					this.signalFarmListCreated.emit();
 				}
 			}
 			
@@ -118,8 +134,12 @@ public class ServerLogic extends QSignalEmitter{
 		/* Boolean */
 		else if(responseType == 2)
 		{
-			//response.calltype == "editSheep" eller addSheep eller deleteSheep
-				//clientSocket.getSheep(sheep.getFarmId());
+			System.out.println("Reponse receieved for edit : " + response.getInitialRequest());
+			if(response.getInitialRequest().equals("editSheep") || response.getInitialRequest().equals("addSheep")){ //TODO:deleteSheep fjern lokalt!
+				clientSocket.getSheep(response.getInitialRequestId());
+				System.out.println("it went ok");
+
+			}
 			
 		}
 		
@@ -139,7 +159,7 @@ public class ServerLogic extends QSignalEmitter{
 			}
 		//TODO: Alarm response!
 		
-		System.out.println("Response handled");				
+		System.out.println("||Response handled||");				
 	}
 	
 	/**

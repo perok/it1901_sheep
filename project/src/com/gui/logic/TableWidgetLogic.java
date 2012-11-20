@@ -44,7 +44,7 @@ public class TableWidgetLogic {
 		/* Rezise rows and columns to needed size */
 		widget.resizeRowsToContents();
 		widget.resizeColumnsToContents();
-		
+
 		/* Stretch the vertical headers last element */
 		//table.verticalHeader().setStretchLastSection(true);
 		widget.horizontalHeader().setStretchLastSection(true); 
@@ -58,7 +58,6 @@ public class TableWidgetLogic {
 	 * @param selectedSheep Sheep that shall show it's data
 	 */
 	public void updateMessages(Sheep selectedSheep){
-		System.out.println("TABLE with SHEEP: " + selectedSheep.getName() + "  " + selectedSheep.getRecentStatuses().size());
 		ArrayList<Message> messages = new ArrayList<Message>();
 		
 		//Not null
@@ -78,7 +77,6 @@ public class TableWidgetLogic {
 					
 			}
 			
-			System.out.println("SIZE: " + messages.size());
 			addSheep(selectedSheep, messages);
 		}
 	}
@@ -89,29 +87,21 @@ public class TableWidgetLogic {
 	 * @param messages
 	 */
 	protected void addSheep(Sheep sheep, ArrayList<Message> messages){ // Alerts
-		
-		//Hva med å ha ovenfor felt for; 
-		
-		//Og fyllle inn
-		
 		widget.setRowCount(messages.size());
 		
 		if(messages != null){
 			int y = 0;
-		
 			for(Message message : messages){
-				if(message instanceof SheepStatus)
-					System.out.println("SHEEPSTAUS");
-				else
-					System.out.println("ALARM");
+				//if(message instanceof SheepStatus) TODO: Only show sheeps for requested type or is it handled elsewhere?
 				
 				int i = 0;
 				QTableWidgetItem item = new QTableWidgetItem();
+				
 				item.disableGarbageCollection();
 				item.setData(Constants.QtSheepDataRole, sheep);
 				item.setData(Qt.ItemDataRole.DisplayRole, message.getId());
+				//item.setFlags(Qt.ItemFlag.ItemIsSelectable);
 				widget.setItem(y, i, item);
-				System.out.println(y + "  " + i + "  " + item.data(Qt.ItemDataRole.DisplayRole));
 				i++;
 				
 				item = new QTableWidgetItem();
@@ -119,8 +109,6 @@ public class TableWidgetLogic {
 				item.setData(Qt.ItemDataRole.DisplayRole, message.getTimestamp());
 				item.setData(Constants.QtSheepDataRole, sheep);
 				widget.setItem(y, i, item);
-				System.out.println(y + "  " + i + "  " + item.data(Qt.ItemDataRole.DisplayRole));
-
 				i++;
 				
 				item = new QTableWidgetItem();
@@ -128,7 +116,6 @@ public class TableWidgetLogic {
 				item.setData(Constants.QtSheepDataRole, sheep);
 				item.disableGarbageCollection();
 				widget.setItem(y, i, item);
-				System.out.println(y + "  " + i + "  " + item.data(Qt.ItemDataRole.DisplayRole));
 
 				i++;
 				
@@ -136,12 +123,12 @@ public class TableWidgetLogic {
 				item.disableGarbageCollection();
 				item.setData(Constants.QtSheepDataRole, sheep);
 				widget.setItem(y, i, item);
-				System.out.println(y + "  " + i + "  " + item.data(Qt.ItemDataRole.DisplayRole));
 
 				y++;
 			}
 		}
 		
+		widget.sortByColumn(1, Qt.SortOrder.DescendingOrder);
 		widget.resizeRowsToContents();
 		widget.resizeColumnsToContents();		
 	}
