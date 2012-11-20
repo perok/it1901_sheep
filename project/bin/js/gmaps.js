@@ -102,53 +102,91 @@ function receiveJSONMany(data){
 	setMarkers(map, data);	
 } 
 
+//Marker sizes are expressed as a Size of X,Y
+// where the origin of the image (0,0) is located
+// in the top left of the image.
+// Origins, anchor positions and coordinates of the marker
+// increase in the X direction to the right and in
+// the Y direction down.
+var sheepOk = new google.maps.MarkerImage('images/Sheep_WO_backround.png',
+	// This marker is 23 pixels wide by 2 pixels tall.
+	new google.maps.Size(23, 22),
+	// The origin for this image is 0,0.
+	new google.maps.Point(0,0),
+	// The anchor for this image is the base of the flagpole at 0,32.
+	new google.maps.Point(0, 32));
+
+	// Shapes define the clickable region of the icon.
+	// The type defines an HTML &lt;area&gt; element 'poly' which
+	// traces out a polygon as a series of X,Y points. The final
+	// coordinate closes the poly by connecting to the first
+	// coordinate.
+var sheepDead = new google.maps.MarkerImage('images/dead_sheep.png',
+	new google.maps.Size(23, 22),
+	new google.maps.Point(0,0),
+	new google.maps.Point(0, 32));
+
+var sheepWarn = new google.maps.MarkerImage('images/warning_sheep.png',
+		new google.maps.Size(23, 22),
+		new google.maps.Point(0,0),
+		new google.maps.Point(0, 32));
+
+var shape = {
+  coord: [1, 1, 1, 23, 23, 22, 23 , 1],
+  type: 'poly'
+   };
+
+
 function setMarkers(map, locations) {
 	deleteOverlays();
   // Add markers to the map
 
-  // Marker sizes are expressed as a Size of X,Y
-  // where the origin of the image (0,0) is located
-  // in the top left of the image.
-
-  // Origins, anchor positions and coordinates of the marker
-  // increase in the X direction to the right and in
-  // the Y direction down.
-  var image = new google.maps.MarkerImage('images/Sheep_WO_backround.png',
-    // This marker is 23 pixels wide by 2 pixels tall.
-    new google.maps.Size(23, 22),
-    // The origin for this image is 0,0.
-    new google.maps.Point(0,0),
-    // The anchor for this image is the base of the flagpole at 0,32.
-    new google.maps.Point(0, 32));
-    // Shapes define the clickable region of the icon.
-    // The type defines an HTML &lt;area&gt; element 'poly' which
-    // traces out a polygon as a series of X,Y points. The final
-    // coordinate closes the poly by connecting to the first
-    // coordinate.
-    var shape = {
-      coord: [1, 1, 1, 23, 23, 22, 23 , 1],
-      type: 'poly'
-   };
-
     for (var i = 0; i < locations.length; i++) {
-    	alert(locations[i].lat + "  " + locations[i].lon);
+    	//alert(locations[i].lat + "  " + locations[i].lon);
     	
-      var myLatLng = new google.maps.LatLng(locations[i].lat, locations[i].lon);
-      var marker = new google.maps.Marker({
-        position: myLatLng,
-        map: map,
-        icon: image,
-        shape: shape,
-        animation: google.maps.Animation.DROP,
-        title: locations[i].name,
-        zIndex: 0
-      });
-      
-      markers.push(marker);
-    }
+    	var image;
+    	
+    	if(locations[i].isAlive == 'false')
+    		image = sheepDead;
+    	else if(locations[i].isAlert == 'true')
+    		image = sheepWarn;
+    	else
+    		image = sheepOk;
     
-    setAllMap(map);
+		var myLatLng = new google.maps.LatLng(locations[i].lat, locations[i].lon);
+		var marker = new google.maps.Marker({
+			position: myLatLng,
+			map: map,
+			icon: sheepOk,
+			shape: shape,
+			animation: google.maps.Animation.DROP,
+			title: locations[i].name,
+			zIndex: 0
+		});
+      
+      
+		google.maps.event.addListener(marker, 'click', function() {
+			var contentString = '<div id="content">'+
+				'<div id="siteNotice">'+
+				'</div>'+
+				'<h1 id="firstHeading" class="firstHeading">' + marker.getTitle '</h1>'+
+				'<div id="bodyContent">'+
+				'<p>'+marker.Position.toUrlValue+'</p>'+
+				'</div>'+
+				'</div>';
+	  
+			infoWindow.setContent(contentString);
+			infowindow.open(map,marker);
+		});
+  
+		markers.push(marker);
 }
+
+setAllMap(map);
+}
+
+
+
 /*
 function makeLines(map){
 	//Remove old lines
@@ -181,6 +219,8 @@ var lineSymbol = {
 	path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
 };
 
+
+var infowindow = new google.maps.InfoWindow();
 
 
 // Removes the overlays from the map, but keeps them in the array.

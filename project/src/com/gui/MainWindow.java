@@ -55,7 +55,7 @@ public class MainWindow extends QMainWindow
     	/* Initialize qt-framework, set default style */
         QApplication.initialize(args);        
         QApplication.setStyle("Plastique"); /* Default preferred style */
-        
+       
         MainWindow mainWindow = new MainWindow(null);
         mainWindow.show();
     	
@@ -75,11 +75,13 @@ public class MainWindow extends QMainWindow
         
         this.setWindowIcon(new QIcon(new QPixmap(WINDOW_ICON)));
         this.setWindowTitle(Constants.title);
-        
-        /* Spawn the graphical login-window */
-        new UiLoginWindowLogic(this.uiLoginWindow, this.serverLogic);
+
         /* Application starts with a login-window. The GUI gets initialized with this line */
         this.uiLoginWindow.setupUi(this, Constants.INIT_SCREEN_WIDTH, Constants.INIT_SCREEN_WIDTH);
+        
+        /* Give the logic window some logic login-window */
+        new UiLoginWindowLogic(this.uiLoginWindow, this.serverLogic);
+
     }
     
 	/**

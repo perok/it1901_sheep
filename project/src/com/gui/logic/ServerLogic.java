@@ -43,7 +43,7 @@ public class ServerLogic extends QSignalEmitter{
 	 * @param usrPW
 	 */
 	public void tryLogIn(String usrName, String usrPW){
-		//loggedIn.emit();
+		System.out.println("Hello");
 		
 		System.out.println("Trying to log in with user: " + usrName);
 		//For testing only
