@@ -91,7 +91,11 @@ public class ServerLogic extends QSignalEmitter{
 				if(response.getContent().get(0) instanceof User)
 					this.signalUserDataRecieved.emit(response.getContent());
 				if(response.getContent().get(0) instanceof Sheep){
-					
+					ArrayList<Sheep> newSheeps = new ArrayList<Sheep>();
+					for(Object o : response.getContent()){
+						newSheeps.add((Sheep)o);
+					}
+					this.signalNewSheeps.emit(newSheeps, newSheeps.get(0).getFarmId());
 				}
 			}
 			
