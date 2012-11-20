@@ -114,7 +114,7 @@ public class ServerLogic extends QSignalEmitter{
 						lFarms.add((Farm)o);
 					}
 					
-					com.storage.UserStorage.setFarmList(lFarms);
+					UserStorage.setFarmList(lFarms);
 					this.signalFarmListCreated.emit();
 				}
 			}
@@ -133,7 +133,7 @@ public class ServerLogic extends QSignalEmitter{
 		/* Boolean */
 		else if(responseType == 2)
 		{
-			//response.calltype == "editSheep" eller addSheep eller deleteSheep
+			//response. == "editSheep" eller addSheep eller deleteSheep
 				//clientSocket.getSheep(sheep.getFarmId());
 			
 		}

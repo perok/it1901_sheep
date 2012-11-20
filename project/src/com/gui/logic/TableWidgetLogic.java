@@ -103,9 +103,7 @@ public class TableWidgetLogic {
 				item.disableGarbageCollection();
 				item.setData(Constants.QtSheepDataRole, sheep);
 				item.setData(Qt.ItemDataRole.DisplayRole, message.getId());
-
-				item.setFlags(Qt.ItemFlag.ItemIsSelectable);
-
+				//item.setFlags(Qt.ItemFlag.ItemIsSelectable);
 				widget.setItem(y, i, item);
 				i++;
 				
@@ -113,14 +111,12 @@ public class TableWidgetLogic {
 				item.disableGarbageCollection();
 				item.setData(Qt.ItemDataRole.DisplayRole, message.getTimestamp());
 				item.setData(Constants.QtSheepDataRole, sheep);
-				item.setFlags(Qt.ItemFlag.ItemIsSelectable);
 				widget.setItem(y, i, item);
 				i++;
 				
 				item = new QTableWidgetItem();
 				item.setData(Qt.ItemDataRole.DisplayRole, message.getTemperature());
 				item.setData(Constants.QtSheepDataRole, sheep);
-				item.setFlags(Qt.ItemFlag.ItemIsSelectable);
 				item.disableGarbageCollection();
 				widget.setItem(y, i, item);
 
@@ -129,7 +125,6 @@ public class TableWidgetLogic {
 				item = new QTableWidgetItem(message.getGpsPosition().getLatitute() + " - " + message.getGpsPosition().getLongditude());
 				item.disableGarbageCollection();
 				item.setData(Constants.QtSheepDataRole, sheep);
-				item.setFlags(Qt.ItemFlag.ItemIsSelectable);
 				widget.setItem(y, i, item);
 
 				y++;
