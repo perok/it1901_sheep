@@ -72,13 +72,13 @@ public class DatabaseConnector {
 			String[][] r = processQuery("SELECT id,username,name,password,mobile_number,email FROM user WHERE username = '" + username + "'" + " AND password = '" + password + "';");
 
 			User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5]);
-			String[][] r2 = processQuery("SELECT farm_id, admin FROM access_rights WHERE user_id = " + user.getId() + ";");
+			String[][] r2 = processQuery("SELECT farm_id,admin FROM access_rights WHERE user_id = " + user.getId() + ";");
 			ArrayList<Farm> farms = new ArrayList<Farm>();
 
 			for (int i = 0; i < r2.length; i++) {
 
 				String[][] r3 = processQuery("SELECT name FROM farm WHERE id = " + r2[i][0] + ";");
-				Farm farm = new Farm(Integer.parseInt(r2[i][0]),r3[i][0],getBoolean(r2[i][2]));
+				Farm farm = new Farm(Integer.parseInt(r2[i][0]),r3[0][0],getBoolean(r2[i][1]));
 				String [][] r4 = processQuery("SELECT * from sheep WHERE farm_id = " + farm.getId() + ";");
 				for (int j = 0; j < r4.length; j++) {
 					Sheep sheep = new Sheep(Integer.parseInt(r4[j][0]), r4[j][1], Integer.parseInt(r4[j][2]), Integer.parseInt(r4[j][3]), getBoolean(r4[j][4]), Integer.parseInt(r4[j][5]));
