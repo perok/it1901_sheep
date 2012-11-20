@@ -76,6 +76,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 	 */
 	public void appendEvent(String str) {
 		event.append(str);
+		event.setCaretPosition(event.getDocument().getLength());
 	}
 
 	/**Action listener for the buttons

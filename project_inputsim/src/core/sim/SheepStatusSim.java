@@ -208,12 +208,12 @@ public class SheepStatusSim {
 			stats[i][3] = Integer.toString(rand.nextInt(30)+60);
 			int intlat = rand.nextInt(y_diff_int);
 			double doublelat = (double) intlat;
-			doublelat /= 10000;
-			stats[i][4] = Double.toString(doublelat+map_y_min);
+			doublelat /= 100000;
+			stats[i][5] = Double.toString(doublelat+map_y_min);
 			int intlong = rand.nextInt(x_diff_int);
 			double doublelong = (double) intlong;
-			doublelong /= 10000;
-			stats[i][5] = Double.toString(doublelong+map_x_min);
+			doublelong /= 100000;
+			stats[i][4] = Double.toString(doublelong+map_x_min);
 			stats[i][6] = Integer.toString(livingSheep.get(i).getFarmId());
 			statuses.add(new SheepStatus(Integer.parseInt(stats[i][0]),Integer.parseInt(stats[i][1])
 			, Float.parseFloat(stats[i][2]),Integer.parseInt(stats[i][3])
