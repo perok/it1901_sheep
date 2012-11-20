@@ -23,9 +23,6 @@
 
   map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
   wmsType = new google.maps.ImageMapType(StatKartLayer);
-  
-  
-
 
 //  map.overlayMapTypes.insertAt(0, wmsType); 
   map.mapTypes.set('statkart', wmsType);
@@ -108,6 +105,7 @@ function receiveJSONMany(data){
 // Origins, anchor positions and coordinates of the marker
 // increase in the X direction to the right and in
 // the Y direction down.
+/*
 var sheepOk = new google.maps.MarkerImage('images/Sheep_WO_backround.png',
 	// This marker is 23 pixels wide by 2 pixels tall.
 	new google.maps.Size(23, 22),
@@ -130,11 +128,8 @@ var sheepWarn = new google.maps.MarkerImage('images/warning_sheep.png',
 		new google.maps.Size(23, 22),
 		new google.maps.Point(0,0),
 		new google.maps.Point(0, 32));
+*/
 
-var shape = {
-  coord: [1, 1, 1, 23, 23, 22, 23 , 1],
-  type: 'poly'
-   };
 
 
 function setMarkers(map, locations) {
@@ -144,14 +139,30 @@ function setMarkers(map, locations) {
     for (var i = 0; i < locations.length; i++) {
     	//alert(locations[i].lat + "  " + locations[i].lon);
     	
-    	var image;
-    	
+    	var image = new google.maps.MarkerImage('images/Sheep_WO_backround.png',
+    			// This marker is 23 pixels wide by 2 pixels tall.
+    			new google.maps.Size(23, 22),
+    			// The origin for this image is 0,0.
+    			new google.maps.Point(0,0),
+    			// The anchor for this image is the base of the flagpole at 0,32.
+    			new google.maps.Point(0, 32));
+
+    			// Shapes define the clickable region of the icon.
+    			// The type defines an HTML &lt;area&gt; element 'poly' which
+    			// traces out a polygon as a series of X,Y points. The final
+    			// coordinate closes the poly by connecting to the first
+    			// coordinate.
+    	var shape = {
+    			  coord: [1, 1, 1, 23, 23, 22, 23 , 1],
+    			  type: 'poly'
+    			   };
+    	/*
     	if(locations[i].isAlive == 'false')
     		image = sheepDead;
     	else if(locations[i].isAlert == 'true')
     		image = sheepWarn;
     	else
-    		image = sheepOk;
+    		image = sheepOk;*/
     
 		var myLatLng = new google.maps.LatLng(locations[i].lat, locations[i].lon);
 		var marker = new google.maps.Marker({
@@ -164,7 +175,7 @@ function setMarkers(map, locations) {
 			zIndex: 0
 		});
       
-      
+      /*
 		google.maps.event.addListener(marker, 'click', function() {
 			var contentString = '<div id="content">'+
 				'<div id="siteNotice">'+
@@ -177,7 +188,7 @@ function setMarkers(map, locations) {
 	  
 			infoWindow.setContent(contentString);
 			infowindow.open(map,marker);
-		});
+		});*/
   
 		markers.push(marker);
 }
@@ -210,17 +221,17 @@ function makeLines(map){
 	//}
 }*/
 
-var lineCoordinates = [
+/*var lineCoordinates = [
                        new google.maps.LatLng(22.291, 153.027),
                        new google.maps.LatLng(18.291, 153.027)
-                     ];
+                     ];*/
 
 var lineSymbol = {
 	path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
 };
 
 
-var infowindow = new google.maps.InfoWindow();
+//var infowindow = new google.maps.InfoWindow();
 
 
 // Removes the overlays from the map, but keeps them in the array.

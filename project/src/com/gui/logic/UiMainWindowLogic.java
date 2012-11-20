@@ -80,6 +80,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 
 		//mw.MAPWIDGET.setUrl(new QUrl("http://folk.ntnu.no/perok/it1901"));
 		mw.MAPWIDGET.setUrl(new QUrl("web/index.html"));
+		//mw.MAPWIDGET.
 		
 		/* Setting up signals */
 		signalShowAbout = new Signal0();
@@ -163,20 +164,20 @@ public class UiMainWindowLogic extends QSignalEmitter
     	this.mw.cmbDockFarmId.setCurrentIndex(UserStorage.getCurrentFarm());
     }
 	
-	//NOT WORKING 
+	//NOT WORKING FIXME:
 	@SuppressWarnings("unused")
 	private void actionInformation_Window_toggled(boolean toggle){
-		mw.tableWidget.setVisible(toggle);
+		//mw.tableWidget.setVisible(toggle);
 		
 		if(toggle){
-			mw.tableWidget.show();
+			mw.tableWidget.hide();
 			//mw.tableWidget.update();
 			//mw.splitter.update();
 			//mw.splitter.updateGeometry();
 			//mw.splitter.c
 		}
 		else
-			mw.tabWidget.close();
+			mw.tabWidget.show();
 		
 		System.out.println(toggle);
 	}
