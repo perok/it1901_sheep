@@ -475,7 +475,7 @@ public class DatabaseConnector {
 		try {
 			Statement s = conn.createStatement();
 			s.executeUpdate("INSERT INTO sheep (name,farm_id,date_of_birth,alive,weight" +
-					") VALUES (" + "'"+sheep.getId()+"'," + ""+sheep.getFarmId()+"," +
+					") VALUES (" + "'"+sheep.getName()+"'," + ""+sheep.getFarmId()+"," +
 					""+sheep.getDateOfBirth()+"," + ""+sheep.isAlive()+"," + ""+sheep.getWeight()+");");
 			return true;
 		} catch (SQLException e) {
