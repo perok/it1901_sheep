@@ -8,23 +8,23 @@
 
   //Function that is started when onload is fired
   function initialize() {
-   var mapOptions = {
-    zoom: 10,
-    center: trondheimLoc,
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    streetViewControl: false,
-    mapTypeControlOptions: {
-      mapTypeIds: ['statkart', google.maps.MapTypeId.ROADMAP],
-      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-    } 
-  };
+        	  
+	var mapOptions = {
+		zoom: 10,
+		center: trondheimLoc,
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		streetViewControl: false,
+		disableDefaultUI: true,
+		mapTypeControlOptions: {
+			mapTypeIds: ['statkart', google.maps.MapTypeId.ROADMAP],
+			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+		} 
+	};
 
-  map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-  wmsType = new google.maps.ImageMapType(StatKartLayer);
- 
-  map.mapTypes.set('statkart', wmsType);
-  
-  //makeLines(map);
+	map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+	wmsType = new google.maps.ImageMapType(StatKartLayer);
+	 
+	map.mapTypes.set('statkart', wmsType);
 }
   
 
@@ -119,7 +119,9 @@ var shape = {
 var infowindow = new google.maps.InfoWindow({content:'hey'});
 
 var lineSymbol = {
-		path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+		path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+		strokeWeight: 2,
+		strokeOpacity: 0.8
 	};
 
 //Add markers
