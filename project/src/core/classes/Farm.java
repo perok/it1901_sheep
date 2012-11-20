@@ -54,6 +54,10 @@ public class Farm implements Serializable {
 	public ArrayList<Sheep> getSheepList(){
 		return sheepList;
 	}
+	
+	public void setSheepList(ArrayList<Sheep> sheeps){
+		sheepList = sheeps;
+	}
 
 	public boolean isAdmin() {
 		return isAdmin;

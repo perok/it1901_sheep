@@ -28,6 +28,7 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	
 	private QIcon sheepOkPicture;
 	private QIcon sheepDeadPicture;
+	private QIcon mapIcon;
 	
 	protected Signal1<Sheep> sheepSelected;
 	
@@ -46,6 +47,7 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	{
 		sheepOkPicture = new QIcon("res/Sheep_WO_backround.png");
 		sheepDeadPicture = new QIcon("res/dead_sheep.png");
+		mapIcon = new QIcon("treasure-map-icon.png");
 		
 		sheepSelected = new Signal1<Sheep>();
 		statusBarMessage = new Signal1<String>();
@@ -72,7 +74,7 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 		
 		actionContextShowOnMap = new QAction("Show in map", qlWidget);
 		actionContextShowOnMap.triggered.connect(this, "actionContextShowOnMap_triggered(boolean)");
-		actionContextShowOnMap.setIcon(sheepOkPicture);
+		actionContextShowOnMap.setIcon(mapIcon);
 		sheepsShowOnMap = new Signal1<ArrayList<Sheep>>();
 		
 		qlWidget.addAction(actionContextDelete);
@@ -102,6 +104,9 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	 */
 	public void refreshSheepList()
 	{
+		int currentROw = qlWidget.currentRow();
+		
+		
 		if(UserStorage.getUser() == null)
 			return;
 		
@@ -131,7 +136,8 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 			qlWidget.addItem(item);
 			currentItems.add(item);
 		}
-		
+		//Scrolls to the last row that was current TODO: Does it work?
+		qlWidget.setCurrentRow(currentROw);
 		statusBarMessage.emit("done");
 	}
 	
