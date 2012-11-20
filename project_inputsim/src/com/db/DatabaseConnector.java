@@ -638,6 +638,19 @@ public class DatabaseConnector {
 		String[][] results = processQuery("SELECT name,id FROM farm WHERE true;");
 		return results;
 	}
+	
+	/** Returns an ArrayList with id and name of all farms in database.
+	 * 
+	 * @return
+	 */
+	public ArrayList<Farm> listFarmsAsArray() {
+		String[][] results = processQuery("SELECT name,id FROM farm WHERE true;");
+		ArrayList<Farm> list = new ArrayList<>();
+		for (int i = 0; i < results.length; i++) {
+			list.add(new Farm(Integer.parseInt(results[i][0]),results[i][1]));
+		}
+		return list;
+	}
 
 	/** Returns a list of all living sheep. Used by simulator
 	 * 

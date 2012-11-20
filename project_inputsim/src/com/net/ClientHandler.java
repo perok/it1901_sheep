@@ -39,7 +39,7 @@ public class ClientHandler implements Runnable {
 		this.server = server;
 		db = new DatabaseConnector(this.settings);
 	}
-	
+
 	/** Returns the username of connected client.
 	 * 
 	 * @return
@@ -133,14 +133,17 @@ public class ClientHandler implements Runnable {
 
 		case("invokeAlert"):
 			return new Response(Response.BOOLEAN,server.simulator.addAlert(Integer.parseInt(request.getparameter("farmId")), 1),request.getMessage());
-		
+
 		case("listUsersArrayList"):
 			return new Response(Response.LIST,db.listUsersArrayList(),request.getMessage());
+
+		case("listFarms"):
+			return new Response(Response.LIST,db.listFarmsAsArray(),request.getMessage());
 		}
 
 		return null;
 	}
-	
+
 	public void sendUpdate(ArrayList<Message> messages) {
 		try {
 			sOutput.writeObject(new Response(Response.LIST,messages,"updatedMessages"));
