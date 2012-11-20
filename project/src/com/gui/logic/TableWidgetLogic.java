@@ -92,10 +92,7 @@ public class TableWidgetLogic {
 		if(messages != null){
 			int y = 0;
 			for(Message message : messages){
-				if(message instanceof SheepStatus)
-					System.out.println("SHEEPSTAUS");
-				else
-					System.out.println("ALARM");
+				//if(message instanceof SheepStatus) TODO: Only show sheeps for requested type or is it handled elsewhere?
 				
 				int i = 0;
 				QTableWidgetItem item = new QTableWidgetItem();

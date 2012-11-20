@@ -100,6 +100,7 @@ public class ServerLogic extends QSignalEmitter{
 					this.signalUserDataRecieved.emit(newUsers);
 				}
 				if(response.getContent().get(0) instanceof Sheep){
+					System.out.println("recieved new SHEEPS");
 					ArrayList<Sheep> newSheeps = new ArrayList<Sheep>();
 					for(Object o : response.getContent()){
 						newSheeps.add((Sheep)o);
@@ -133,8 +134,12 @@ public class ServerLogic extends QSignalEmitter{
 		/* Boolean */
 		else if(responseType == 2)
 		{
-			//response. == "editSheep" eller addSheep eller deleteSheep
-				//clientSocket.getSheep(sheep.getFarmId());
+			System.out.println("Reponse receieved for edit : " + response.getInitialRequest());
+			if(response.getInitialRequest().equals("editSheep") || response.getInitialRequest().equals("addSheep")){ //TODO:deleteSheep fjern lokalt!
+				clientSocket.getSheep(response.getInitialRequestId());
+				System.out.println("it went ok");
+
+			}
 			
 		}
 		
@@ -154,7 +159,7 @@ public class ServerLogic extends QSignalEmitter{
 			}
 		//TODO: Alarm response!
 		
-		System.out.println("Response handled");				
+		System.out.println("||Response handled||");				
 	}
 	
 	/**
