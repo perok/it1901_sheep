@@ -43,12 +43,12 @@ public class MainWindow extends QMainWindow
      */
     public static void main(String[] args) 
     {
-//    	
-//        com.trolltech.qt.Utilities.loadQtLibrary("QtXml"); 
-//        com.trolltech.qt.Utilities.loadQtLibrary("QtSql"); 
-//        com.trolltech.qt.Utilities.loadQtLibrary("QtSvg");
-//    	com.trolltech.qt.Utilities.loadQtLibrary("QtNetwork");
-//        com.trolltech.qt.Utilities.loadQtLibrary("QtXmlPatterns");
+    	
+        com.trolltech.qt.Utilities.loadQtLibrary("QtXml"); 
+        com.trolltech.qt.Utilities.loadQtLibrary("QtSql"); 
+        com.trolltech.qt.Utilities.loadQtLibrary("QtSvg");
+    	com.trolltech.qt.Utilities.loadQtLibrary("QtNetwork");
+        com.trolltech.qt.Utilities.loadQtLibrary("QtXmlPatterns");
 //
         //com.trolltech.qt.Utilities.loadQtLibrary("QtWebKit");
 
@@ -91,13 +91,16 @@ public class MainWindow extends QMainWindow
 	 */
 	public void setupUi_MainWindow()
 	{
+		/* DO NOT CHANGE ORDER, YES I'AM LOOKING AT YOU! */
 		this.uiLoginWindow = null; /* Make sure the login-widget doesn't occupy window space */
 		this.uiMainWindow = new UiMainWindow();
+		
+		this.uiMainWindow.setupUi(this, super.size().width(), super.size().height());
+		
 		this.twhandler = new TableWidgetLogic(uiMainWindow.tableWidget);
 		this.slwHandler = new SheepListWidgetLogic(uiMainWindow.listWidget);		
 		this.mwLogic = new UiMainWindowLogic(uiMainWindow, slwHandler, twhandler, serverLogic);
 		
-		this.uiMainWindow.setupUi(this, super.size().width(), super.size().height());
         
 		/* Setup user-triggered events */
 		this.mwLogic.signalShowAbout.connect(this, "about()");
