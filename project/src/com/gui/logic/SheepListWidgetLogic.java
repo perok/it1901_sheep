@@ -104,6 +104,9 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	 */
 	public void refreshSheepList()
 	{
+		int currentROw = qlWidget.currentRow();
+		
+		
 		if(UserStorage.getUser() == null)
 			return;
 		
@@ -133,7 +136,8 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 			qlWidget.addItem(item);
 			currentItems.add(item);
 		}
-		
+		//Scrolls to the last row that was current TODO: Does it work?
+		qlWidget.setCurrentRow(currentROw);
 		statusBarMessage.emit("done");
 	}
 	
