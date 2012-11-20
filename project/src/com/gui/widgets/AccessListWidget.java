@@ -2,7 +2,6 @@ package com.gui.widgets;
 
 import java.util.ArrayList;
 import com.gui.logic.ServerLogic;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 import com.trolltech.qt.gui.QAbstractItemView;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QListWidget;

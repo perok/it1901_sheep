@@ -39,7 +39,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	
 	private Sheep currentSheep;
 	
-	private void sendUserData(ArrayList lUsers)
+	private void sendUserData(ArrayList<User> lUsers)
 	{
 		this.signalUserListRecieved.emit(lUsers);
 	}
@@ -182,7 +182,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		System.out.println(toggle);
 	}
 	
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused", "static-method" })
 	private void actionMap_toggled(boolean trigg){
 		System.out.println(trigg);
 	}
@@ -254,6 +254,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 * Used for showing the selected sheeps in the map
 	 * @param sheeps
 	 */
+	@SuppressWarnings("unused")
 	private void multiSheepSelect(ArrayList<Sheep> sheeps){
 		JSONArray arr = new JSONArray();
 		

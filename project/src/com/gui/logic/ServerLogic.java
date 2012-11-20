@@ -3,7 +3,6 @@ package com.gui.logic;
 import com.net.Response;
 import com.net.ClientSocket;
 import com.storage.UserStorage;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 import com.trolltech.qt.QSignalEmitter;
 
 import java.util.ArrayList;

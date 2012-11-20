@@ -5,12 +5,10 @@ import java.io.*;
 import java.util.*;
 
 import com.gui.logic.ServerLogic;
-import com.storage.UserStorage;
 
 import core.classes.Farm;
 import core.classes.Sheep;
 import core.classes.User;
-import core.settings.Settings;
 
 /** Connects the system to a server via sockets. Also handles sending
  * of requests to the server.
