@@ -11,14 +11,25 @@ public class Message implements Serializable{
 	private int sheepId;
 	private int timestamp;
 	private float temperature;
+	private int heartRate;
 	private GPSPosition gpsPosition;
 	private int farmId;
 	
-	public Message(int id, int sheepId, int timestamp, float temperature, GPSPosition gpsPosition, int farmId) {
+	public Message(int id, int sheepId, int timestamp, float temperature,int heartRate ,GPSPosition gpsPosition, int farmId) {
 		this.setId(id);
 		this.setSheep(sheepId);
 		this.setTimestamp(timestamp);
 		this.setTemperature(temperature);
+		this.heartRate = heartRate;
+		this.setGpsPosition(gpsPosition);
+		this.setFarmId(farmId);
+	}
+	
+	public Message(int sheepId, int timestamp, float temperature,int heartRate ,GPSPosition gpsPosition, int farmId) {
+		this.setSheep(sheepId);
+		this.setTimestamp(timestamp);
+		this.setTemperature(temperature);
+		this.heartRate = heartRate;
 		this.setGpsPosition(gpsPosition);
 		this.setFarmId(farmId);
 	}
@@ -53,6 +64,14 @@ public class Message implements Serializable{
 
 	public void setTemperature(float temperature) {
 		this.temperature = temperature;
+	}
+	
+	public int getHeartRate() {
+		return heartRate;
+	}
+
+	public void setHeartRate(int heartRate) {
+		this.heartRate = heartRate;
 	}
 
 	public GPSPosition getGpsPosition() {

@@ -20,6 +20,11 @@ public class TableWidgetLogic {
 	
 	private QTableWidget widget;
 	
+	/**
+	 * Initializes the logic for the given QTableWidget
+	 * 
+	 * @param widget The QTableWidget that shall be handled by this class
+	 */
 	public TableWidgetLogic(QTableWidget widget){
 		this.widget = widget;
 
@@ -39,7 +44,11 @@ public class TableWidgetLogic {
 		//table.verticalHeader().setStretchLastSection(true);
 		widget.horizontalHeader().setStretchLastSection(true);        
 	}
-	
+
+	/**
+	 * Updated the table with the information from the given sheep.
+	 * @param selectedSheep Sheep that shall show it's data
+	 */
 	public void updateMessages(Sheep selectedSheep){
 		System.out.println("TABLE with SHEEP: " + selectedSheep.getName() + "  " + selectedSheep.getRecentStatuses().size());
 		ArrayList<Message> messages = new ArrayList<Message>();

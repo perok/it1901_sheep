@@ -5,12 +5,11 @@ import java.io.*;
 import java.util.*;
 
 import com.gui.logic.ServerLogic;
-import com.storage.UserStorage;
 
 import core.classes.Farm;
 import core.classes.Sheep;
 import core.classes.User;
-import core.settings.Settings;
+
 
 /** Connects the system to a server via sockets. Also handles sending
  * of requests to the server.
@@ -108,15 +107,15 @@ public class ClientSocket  {
 		try { 
 			if(sInput != null) sInput.close();
 		}
-		catch(Exception e) {}
+		catch(Exception e) { /** Ignore errors */}
 		try {
 			if(sOutput != null) sOutput.close();
 		}
-		catch(Exception e) {} 
+		catch(Exception e) {/** Ignore errors */} 
 		try{
 			if(socket != null) socket.close();
 		}
-		catch(Exception e) {} 
+		catch(Exception e) {/** Ignore errors */} 
 
 		if(caller != null)
 			caller.connectionFailed();
@@ -135,7 +134,7 @@ public class ClientSocket  {
 		sendRequest(new Request(Request.REQUEST, "login" ,params));
 	}
 
-	/**Makes a request with the given parameter and sends it to the server.
+	/** Makes a request with the given parameter and sends it to the server.
 	 * 
 	 * @param user
 	 */
@@ -143,13 +142,23 @@ public class ClientSocket  {
 	{
 		sendRequest(new Request(Request.EDITUSER, "editUser", user));
 	}
+	
+	/** Makes a request with the given parameter and sends it to the server.
+	 * 
+	 * @param sheep
+	 */
+	public void addSheep(Sheep sheep) {
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("farmId", Integer.toString(sheep.getFarmId()));
+		sendRequest(new Request(Request.REQUEST, "addSheep", sheep));
+	}
 
 	/**Makes a request with the given paramter and sends it to the server.
 	 * 
 	 * @param user
 	 */
 	public void editSheep(Sheep sheep) {
-		//sendRequest(new Request(Request.EDITSHEEP, "editSheep", sheep));
+		sendRequest(new Request(Request.EDITSHEEP, "editSheep", sheep));
 	}
 
 	/**Makes a request with the given paramters and sends it to the server.
@@ -241,6 +250,7 @@ public class ClientSocket  {
 	public void listUsers() {
 		sendRequest(new Request(Request.REQUEST, "listUsersArrayList"));
 	}
+	
 
 	/**Internal class(thread) that listens for input from the server. The object "caller"
 	 * must have a method to handle the response it is given. When started the thread constantly
@@ -248,7 +258,8 @@ public class ClientSocket  {
 	 * 
 	 * @author Lars Erik
 	 */
-	class ListenFromServer extends Thread {
+	private class ListenFromServer extends Thread {
+		protected ListenFromServer() {}
 		public void run() {
 			while(true) {
 				try {
@@ -261,7 +272,7 @@ public class ClientSocket  {
 						caller.connectionFailed();
 					break;
 				}
-				catch(ClassNotFoundException e2) {
+				catch(ClassNotFoundException e2) {/** Ignore errors */
 				}
 			}
 		}

@@ -3,7 +3,6 @@ package com.gui.logic;
 import com.net.Response;
 import com.net.ClientSocket;
 import com.storage.UserStorage;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 import com.trolltech.qt.QSignalEmitter;
 
 import java.util.ArrayList;
@@ -28,6 +27,10 @@ public class ServerLogic extends QSignalEmitter{
 		this.signalUserDataRecieved = new Signal1<ArrayList<User>>();
 	}
 	
+	/**
+	 * Get clientsocket
+	 * @return ClientSocket
+	 */
 	public static ClientSocket getClientsocket()
 	{
 		return clientSocket;
@@ -40,27 +43,20 @@ public class ServerLogic extends QSignalEmitter{
 	 * @param usrPW
 	 */
 	public void tryLogIn(String usrName, String usrPW){
-		//loggedIn.emit();
+		System.out.println("Hello");
 		
 		System.out.println("Trying to log in with user: " + usrName);
-		//For testing only
-		//loggedIn.emit();
+		loggedIn.emit();
+		
 		if(clientSocket == null )
 			clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
 		
-		System.out.println("ClientSocket ready");
 		try{
-			System.out.println("ClientSocket starting");
 			if(!clientSocket.start())
-				System.out.println("Problem with connecting");
+				System.err.println("Problem with connecting");
 			else{
-				
-			System.out.println("ClientSocket loggin message sending");
 				clientSocket.login(usrName, usrPW);
-				System.out.println("ClientSocket loggin message sent");
 			}
-			
-				
 		}
 		catch (Exception e){
 			e.printStackTrace();
@@ -68,19 +64,32 @@ public class ServerLogic extends QSignalEmitter{
 
 	}
 	
-	public void handleResponse(Response response){
-		System.out.println("Response incoming");
+	/**
+	 * Method called by clientsocket when it recieved a response from the server
+	 * 
+	 * @param response
+	 */
+	public void handleResponse(Response response)
+	{
 		System.out.println("Recieved response: "+ response.getType());
 		
 		/*
-		 * Må ha ett system der de ulike viewsa som kaller etter informasjon
+		 * Mï¿½ ha ett system der de ulike viewsa som kaller etter informasjon
 		 * fra serveren blir registrert slikt at de kan sendes dit
 		 */
 		
 		int responseType = response.getType();
 		
 		/* List */
-		if(responseType == 1) {
+		if(responseType == 1) 
+		{			
+			if(response.getContent() != null 
+			&& response.getContent().isEmpty() == false 
+			&& response.getContent().get(0) instanceof User)
+			{
+				this.signalUserDataRecieved.emit(response.getContent());
+			}
+			
 			//A object has called for a list
 			if (objectAskingForResponse != null){
 				//Sheeplist asking for information
@@ -95,8 +104,7 @@ public class ServerLogic extends QSignalEmitter{
 		/* Boolean */
 		else if(responseType == 2)
 		{
-			System.out.println("response 2");
-			this.signalUserDataRecieved.emit(response.getContent());
+			/** Not handled */
 		}
 		
 		/* User */
@@ -105,13 +113,7 @@ public class ServerLogic extends QSignalEmitter{
 				/*Koble seg til loggininterface og gi beskjed der */
 				System.out.println("Loggin failed, try again");
 			else{
-				System.out.println("Logged in with user: " + response.getUser().getName()
-						+ "\nNumber of farms: " + response.getUser().getFarmlist().size());
-				
-				for(int i = 0; i < response.getUser().getFarmlist().size(); i++){
-					System.out.println("=== Farm: " + response.getUser().getFarmlist().get(i).getId() + " ==");
-					System.out.println("\tNumber of sheep: " + response.getUser().getFarmlist().get(i).getSheepList().size());
-				}
+				System.out.println("Logged in with user: " + response.getUser().getName());
 				
 				new UserStorage(response.getUser());
 				UserStorage.setCurrentFarm(0);
@@ -123,32 +125,50 @@ public class ServerLogic extends QSignalEmitter{
 		System.out.println("Response handled");				
 	}
 	
-	public void closeConnection(){
+	/**
+	 * Close the connection to the server
+	 */
+	public static void closeConnection(){
 		if(clientSocket != null)
 			clientSocket.disconnect();
 	}
 	
-	public void connectionFailed(){
-		System.out.println("Connection error");
+	/**
+	 * Method called from clientsocket when it has had a connection failure
+	 */
+	public static void connectionFailed(){
+		System.err.println("Connection error");
 	}
 	
+	/**
+	 * Method called from clientsocket when it needs to give a message to the program
+	 * @param message
+	 */
 	public void handleMessage(String message){
 		System.out.println("Message from server: " + message);
 	}
 	
+	/**
+	 * TODO: IMPLEMENT
+	 */
+	public void addSheep(Sheep sheep){
+		//clientSocket.
+	}
+	
+	/**
+	 * Method for sending a sheep that has been edited to the server
+	 * @param sheep Reference to the sheep that has been edited.
+	 */
 	public void editSheep(Sheep sheep){
 		clientSocket.editSheep(sheep);
+		
+		//TODO: skal ikke hï¿½ndteres slik. SKal bli hï¿½ndtert av serverlogic
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 		clientSocket.getSheep(sheep.getFarmId());
-	}
-	
-	protected void requestSheeps(Object o){
-		if(objectAskingForResponse == null)
-			objectAskingForResponse = o;
-		//SendRequest
 	}
 }

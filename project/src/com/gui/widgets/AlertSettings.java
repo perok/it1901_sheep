@@ -8,7 +8,6 @@ import com.trolltech.qt.gui.QCheckBox;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QListWidgetItem;
-import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QStyleFactory;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QWidget;
@@ -24,12 +23,15 @@ public class AlertSettings extends QWidget implements InputComponentHost
 	
 	private List<ComponentConnector> lComponents = new ArrayList<ComponentConnector>();
 	
-	private QGroupBox qgbPackageGroup;	
-	private QGroupBox qgbUpdateGroup;
-	private QCheckBox qcbSmsCheckbox;
-	private QCheckBox qcbMailCheckbox;
-	private QCheckBox qcbCallCheckbox;
-	private QListWidget qlwPackageList;	
+	private QGroupBox qgbStyleGroup,	
+					  qgbUpdateGroup,
+					  qgbTOAlert;
+	private QCheckBox qcbSmsCheckbox,
+					  qcbMailCheckbox,
+					  qcbCallCheckbox;
+	private QCheckBox qcbMapSetting1;
+	private QListWidget qlwQtStyleList;
+	
 	
 	/** Constructor. Initialize..
 	 * 
@@ -42,29 +44,29 @@ public class AlertSettings extends QWidget implements InputComponentHost
 
         initCheckBox(); 
         initThemeList();
+        initMapSettings();
         initWidgets();  
         initConnectEvents();
         initLayout();
         
         //TODO: add inputcomponents here
-        //parent.parent().
     }
     
-    @SuppressWarnings("unused")
-	private void processUserData(ArrayList lUsers)
+    /** Initialize the area for changing map settings
+     */
+    private void initMapSettings()
     {
-    	
+    	this.qgbTOAlert = new QGroupBox(tr("Varsler fra Map"));
+        this.qcbMapSetting1 = new QCheckBox(tr("Setting 1"));
     }
     
     @SuppressWarnings("unused")
     /** When the user asks for it, change the theme.
      * The new theme is the current item in the selection box
      */
-    // ... Should this really be the handle to change the current theme?
-    // ... Perhaps a call to super.parent().parent()..... Errh
     private void updateTheme()
     {
-    	String sSelectedText = this.qlwPackageList.currentItem().text();
+    	String sSelectedText = this.qlwQtStyleList.currentItem().text();
     	
     	try
     	{
@@ -75,11 +77,12 @@ public class AlertSettings extends QWidget implements InputComponentHost
     		System.out.println("Attempt to set new theme failed");
     	}
     }
+    
     /** Initialize event-driven actions
      */
     private void initConnectEvents()
     {
-    	this.qlwPackageList.currentItemChanged.connect(this, "updateTheme()");
+    	this.qlwQtStyleList.currentItemChanged.connect(this, "updateTheme()");
     	
     }
         
@@ -90,26 +93,26 @@ public class AlertSettings extends QWidget implements InputComponentHost
     	//TODO: init all "standalone" widgets here
     }        
     
-    /** Initialize the theme selector
+    /** Initialize the theme selector area
      */
     private void initThemeList()
     {
     	String sCurrentStyle = QApplication.style().objectName();
-    	this.qgbPackageGroup = new QGroupBox(tr("Applikasjons-stil"));
-    	this.qlwPackageList = new QListWidget();
+    	this.qgbStyleGroup = new QGroupBox(tr("Applikasjons-stil"));
+    	this.qlwQtStyleList = new QListWidget();
     	
     	/* For each of passed arguments */
     	for(String s : QStyleFactory.keys())
     	{
     		/* Add an item to the box, and set the text given by arg */
-    		QListWidgetItem cur = new QListWidgetItem(this.qlwPackageList);
+    		QListWidgetItem cur = new QListWidgetItem(this.qlwQtStyleList);
     		cur.setText(s);
     		
     		/* If one of the string matches the current theme, 
     		 * set it to the currently selected item */
     		if(s.toLowerCase().equalsIgnoreCase(sCurrentStyle))
     		{
-    			this.qlwPackageList.setCurrentItem(cur);
+    			this.qlwQtStyleList.setCurrentItem(cur);
     		}
     	}
     }
@@ -121,24 +124,30 @@ public class AlertSettings extends QWidget implements InputComponentHost
     	/** The layout for sheep alerts */
     	QVBoxLayout qbvSheepSettingsLayout   = new QVBoxLayout();
     	/** The main layout, holding all sub-layouts to THIS */
-    	QVBoxLayout qvbMainLayout 			 = new QVBoxLayout();
+    	QVBoxLayout qvblMainLayout 			 = new QVBoxLayout();
     	/** The layout for the theme manager */
-    	QVBoxLayout qvbThemeLayout 		 = new QVBoxLayout();        	
+    	QVBoxLayout qvbThemeLayout 		 = new QVBoxLayout();
+    	/** The layout for map-settings area */
+    	QVBoxLayout qvbMapSettingsLayout = new QVBoxLayout();
     	
-        qbvSheepSettingsLayout.addWidget(qcbSmsCheckbox);
-        qbvSheepSettingsLayout.addWidget(qcbMailCheckbox);
-        qbvSheepSettingsLayout.addWidget(qcbCallCheckbox);
+        qbvSheepSettingsLayout.addWidget(this.qcbSmsCheckbox);
+        qbvSheepSettingsLayout.addWidget(this.qcbMailCheckbox);
+        qbvSheepSettingsLayout.addWidget(this.qcbCallCheckbox);
         
-        qvbThemeLayout.addWidget(qlwPackageList);
+        qvbMapSettingsLayout.addWidget(this.qcbMapSetting1);        
+        
+        qvbThemeLayout.addWidget(this.qlwQtStyleList);
 
-        qvbMainLayout.addWidget(qgbUpdateGroup);
-        qvbMainLayout.addWidget(qgbPackageGroup);
-        qvbMainLayout.addSpacing(12);
-        qvbMainLayout.addStretch(1);
+        qvblMainLayout.addWidget(this.qgbUpdateGroup);
+        qvblMainLayout.addWidget(this.qgbStyleGroup);
+        qvblMainLayout.addWidget(this.qgbTOAlert);
+        qvblMainLayout.addSpacing(12);
+        qvblMainLayout.addStretch(1);
         
         this.qgbUpdateGroup .setLayout(qbvSheepSettingsLayout);
-        this.qgbPackageGroup.setLayout(qvbThemeLayout);
-        super			    .setLayout(qvbMainLayout);
+        this.qgbStyleGroup.setLayout(qvbThemeLayout);
+        this.qgbTOAlert		.setLayout(qvbMapSettingsLayout);
+        super			    .setLayout(qvblMainLayout);
     }
     
     /** Initialize checkboxes-widgets to be used in THIS
@@ -151,14 +160,19 @@ public class AlertSettings extends QWidget implements InputComponentHost
         /* - Checkboxes */
         this.qcbSmsCheckbox = new QCheckBox(tr("Send SMS"));
         this.qcbMailCheckbox   = new QCheckBox(tr("Send mail"));
-        this.qcbCallCheckbox   = new QCheckBox(tr("Ring på telefon"));        	
+        this.qcbCallCheckbox   = new QCheckBox(tr("Ring pï¿½ telefon"));
     }
 
 	@Override
+	/** @see parent of THIS
+	 * @see InputComponentHost
+	 */
 	public void writeChange() 
 	{
+		/* For all input-components... */
 		for(ComponentConnector cc : this.lComponents)
 		{
+			/* Write the change */
 			cc.writeChanges();
 		}	
 	}

@@ -13,9 +13,12 @@ public class SheepStatus extends Message  implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public SheepStatus(int parseInt, int parseInt2, int parseInt3,
-			float parseFloat, GPSPosition gpsPosition, int parseInt4) {
-		super(parseInt, parseInt2, parseInt3, parseFloat, gpsPosition, parseInt4);
+	public SheepStatus(int id, int sheepId, int timestamp, float temperature, int heartRate ,GPSPosition gpsPosition, int farmId) {
+		super(id, sheepId, timestamp, temperature, heartRate, gpsPosition, farmId);
+	}
+	
+	public SheepStatus(int sheepId, int timestamp, float temperature, int heartRate ,GPSPosition gpsPosition, int farmId) {
+		super(sheepId, timestamp, temperature, heartRate, gpsPosition, farmId);
 	}
 
 }
