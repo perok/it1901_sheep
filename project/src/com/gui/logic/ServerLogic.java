@@ -137,6 +137,7 @@ public class ServerLogic extends QSignalEmitter{
 				
 				loggedIn.emit();
 			}
+		//TODO: Alarm response!
 		
 		System.out.println("Response handled");				
 	}

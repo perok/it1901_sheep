@@ -130,7 +130,10 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 */
 	private void sLogic_signalNewSheeps(ArrayList<Sheep> sheeps, int farmID){
 		UserStorage.getUser().getFarmlist().get(farmID).setSheepList(sheeps);
-		slwHandler.refreshSheepList();
+		//TODO: Does this work?
+		//Only refresh sheeplist if the changed sheeps are in the row
+		if(UserStorage.getCurrentFarm() == farmID)
+			slwHandler.refreshSheepList();
 		
 	}
 	

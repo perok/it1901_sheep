@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.storage.Constants;
+import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.core.Qt;
+import com.trolltech.qt.core.Global.QtMsgType;
 import com.trolltech.qt.gui.QTableWidget;
 import com.trolltech.qt.gui.QTableWidgetItem;
 
@@ -33,6 +35,9 @@ public class TableWidgetLogic {
 		widget.setColumnCount(list.length);
 		widget.setHorizontalHeaderLabels(Arrays.asList(list));
 		
+		widget.horizontalHeader().setClickable(true);
+		widget.setSortingEnabled(true);
+		
 		/* We don't need the vertical header */
 		widget.verticalHeader().setVisible(false);
 		
@@ -42,7 +47,10 @@ public class TableWidgetLogic {
 		
 		/* Stretch the vertical headers last element */
 		//table.verticalHeader().setStretchLastSection(true);
-		widget.horizontalHeader().setStretchLastSection(true);        
+		widget.horizontalHeader().setStretchLastSection(true); 
+		
+		/* Signals */
+		widget.horizontalHeader().clicked.connect(this, "horizontalHeader_clicked(QModelIndex)");
 	}
 
 	/**
@@ -98,24 +106,27 @@ public class TableWidgetLogic {
 					System.out.println("ALARM");
 				
 				int i = 0;
-				QTableWidgetItem item = new QTableWidgetItem(message.getId());
+				QTableWidgetItem item = new QTableWidgetItem();
 				item.disableGarbageCollection();
 				item.setData(Constants.QtSheepDataRole, sheep);
+				item.setData(Qt.ItemDataRole.DisplayRole, message.getId());
 				widget.setItem(y, i, item);
 				System.out.println(y + "  " + i + "  " + item.data(Qt.ItemDataRole.DisplayRole));
 				i++;
 				
-				item = new QTableWidgetItem(message.getTimestamp());
+				item = new QTableWidgetItem();
 				item.disableGarbageCollection();
+				item.setData(Qt.ItemDataRole.DisplayRole, message.getTimestamp());
 				item.setData(Constants.QtSheepDataRole, sheep);
 				widget.setItem(y, i, item);
 				System.out.println(y + "  " + i + "  " + item.data(Qt.ItemDataRole.DisplayRole));
 
 				i++;
 				
-				item = new QTableWidgetItem(String.valueOf(message.getTemperature()));
-				item.disableGarbageCollection();
+				item = new QTableWidgetItem();
+				item.setData(Qt.ItemDataRole.DisplayRole, message.getTemperature());
 				item.setData(Constants.QtSheepDataRole, sheep);
+				item.disableGarbageCollection();
 				widget.setItem(y, i, item);
 				System.out.println(y + "  " + i + "  " + item.data(Qt.ItemDataRole.DisplayRole));
 
@@ -133,5 +144,25 @@ public class TableWidgetLogic {
 		
 		widget.resizeRowsToContents();
 		widget.resizeColumnsToContents();		
+	}
+	
+	/* SIGNAL EVENTS*/
+	/**
+	 * Click event for the horizontal order.
+	 * Changes the sortorder.
+	 * @param x
+	 */
+	private void horizontalHeader_clicked(QModelIndex x){
+		//The curretn column has a sort order
+		if(widget.horizontalHeader().sortIndicatorSection() == x.column()){
+			if(widget.horizontalHeader().sortIndicatorOrder() == Qt.SortOrder.AscendingOrder){
+				widget.sortByColumn(x.column(), Qt.SortOrder.DescendingOrder);
+			}
+			else
+				widget.sortByColumn(x.column(), Qt.SortOrder.AscendingOrder);
+		}
+		else //Default sorting order is ascending
+			widget.sortByColumn(x.column(), Qt.SortOrder.AscendingOrder);
+
 	}
 }
