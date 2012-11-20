@@ -23,6 +23,8 @@
   wmsType = new google.maps.ImageMapType(StatKartLayer);
  
   map.mapTypes.set('statkart', wmsType);
+  
+  //makeLines(map);
 }
   
 
@@ -85,7 +87,8 @@ var beaches = [
 function receiveJSONOne(data){
 	setMarkers(map, data);	
 	//Add lines
-	//makeLines(map);
+	makeLines(map);
+	alert('lol');
 } 
 
 //function that is called from the application for many sheep selected
@@ -186,33 +189,35 @@ function setMarkers(map, locations) {
 
 
 
-/*
+
 function makeLines(map){
 	//Remove old lines
 	for ( var i = 0; i < lines.length; i++) {
 		lines[i].setMap(null);
 	}
+	lines = [];
+	
 	//make new lines
-	//for ( var i = 0; i < (markers.length - 1); i++) {
+	for ( var i = 0; i < (markers.length - 1); i++) {
+		var datline = [markers[i].getPosition(), markers[i+1].getPosition()];
 		var line = new google.maps.Polyline({
-			//var datline = [markers[i].getPosition(), markers[i+1].getPosition()];
-			path: lineCoordinates,
+			path: datline,
 			icons: [{
 				icon: lineSymbol,
 				offset: '100%'
 			}],
 			map: map
 			});
-		}
-	
+		
 		lines.push(line);
-	//}
-}*/
+	}
+	
+}
 
-/*var lineCoordinates = [
+var lineCoordinates = [
                        new google.maps.LatLng(22.291, 153.027),
                        new google.maps.LatLng(18.291, 153.027)
-                     ];*/
+                     ];
 
 var lineSymbol = {
 	path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
@@ -236,6 +241,14 @@ function setAllMap(map) {
 
 // Deletes all markers in the array by removing references to them.
 function deleteOverlays() {
-  clearOverlays();
-  markers = [];
+	
+	//Remove old lines
+	for ( var i = 0; i < lines.length; i++) {
+		lines[i].setMap(null);
+	}
+	lines = [];
+	
+	//Delete markers
+	clearOverlays();
+	markers = [];
 }
