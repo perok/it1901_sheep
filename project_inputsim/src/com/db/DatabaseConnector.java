@@ -653,7 +653,7 @@ public class DatabaseConnector {
 	 * @return
 	 */
 	public ArrayList<Farm> listFarmsAsArray() {
-		String[][] results = processQuery("SELECT name,id FROM farm WHERE true;");
+		String[][] results = processQuery("SELECT id,name FROM farm WHERE true;");
 		ArrayList<Farm> list = new ArrayList<>();
 		for (int i = 0; i < results.length; i++) {
 			list.add(new Farm(Integer.parseInt(results[i][0]),results[i][1]));
