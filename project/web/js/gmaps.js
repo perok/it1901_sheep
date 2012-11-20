@@ -70,19 +70,6 @@
   alt: "Statens kartvertk"
 }
 
-/*
-* MARKERS  
-*/
-    /**
-     * Data for the markers consisting of a name, a LatLng and a zIndex for
-     * the order in which these markers should display on top of each
-     * other.
-     */
-
-var beaches = [
-	['TRONDHEI', 63.430515, 10.395053, 1]
-];
-
 //function that is called from the application for one sheep selected
 function receiveJSONOne(data){
 	setMarkers(map, data);	
@@ -129,11 +116,13 @@ var shape = {
 		  type: 'poly'
 		   };
 
-
 var infowindow = new google.maps.InfoWindow({content:'hey'});
 
+var lineSymbol = {
+		path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+	};
 
-
+//Add markers
 function setMarkers(map, locations) {
 	deleteOverlays();
   // Add markers to the map
@@ -185,9 +174,7 @@ function setMarkers(map, locations) {
     setAllMap(map);
 }
 
-
-
-
+// Make lines
 function makeLines(map){
 	//Remove old lines
 	for ( var i = 0; i < lines.length; i++) {
@@ -211,19 +198,6 @@ function makeLines(map){
 	}
 	
 }
-
-var lineCoordinates = [
-                       new google.maps.LatLng(22.291, 153.027),
-                       new google.maps.LatLng(18.291, 153.027)
-                     ];
-
-var lineSymbol = {
-	path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-};
-
-
-//var infowindow = new google.maps.InfoWindow();
-
 
 // Removes the overlays from the map, but keeps them in the array.
 function clearOverlays() {
