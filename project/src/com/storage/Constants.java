@@ -23,6 +23,6 @@ public class Constants {
 	
 	public static final String about = "The Greatest and Only SSA® (Sheep Surveilance Application).\n\n" 
     		+ "Created by: \n\tAnders Sildnes \n\tLars erik Grasdal \n\tTor Økland Barstad"
-    		+ "\n\tSvenn K \n\tPer Øyvind Kanestrøm";
+    		+ "\n\tSvenn Kvelstad \n\tPer Øyvind Kanestrøm";
 	
 }

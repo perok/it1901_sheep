@@ -380,11 +380,11 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
         cBAlive_Add.setObjectName("cBAlive_Add");
         
         //TAB2
-        formLayout_2.addRow(label_11, lEName_Add_2);
-        formLayout_2.addRow(label_12, dEBirthdate_Add);
-        formLayout_2.addRow(label_13, dSBWeight_Add_2);
-        formLayout_2.addRow(label_14, lEFar_Add);
-        formLayout_2.addRow(label_15, cBAlive_Add);
+        formLayout_5.addRow(label_11, lEName_Add_2);
+        formLayout_5.addRow(label_12, dEBirthdate_Add);
+        formLayout_5.addRow(label_13, dSBWeight_Add_2);
+        formLayout_5.addRow(label_14, lEFar_Add);
+        formLayout_5.addRow(label_15, cBAlive_Add);
 
 
         gridLayout_11.addLayout(formLayout_5, 0, 0, 1, 1);

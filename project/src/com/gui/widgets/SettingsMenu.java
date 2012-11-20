@@ -3,7 +3,6 @@ package com.gui.widgets;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.gui.UiMainWindow;
 import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.core.QSize;
 import com.trolltech.qt.core.Qt.AlignmentFlag;
@@ -18,7 +17,8 @@ import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QStackedWidget;
 import com.trolltech.qt.gui.QDialog;
 import com.trolltech.qt.gui.QVBoxLayout;
-import com.trolltech.qt.gui.QWidget;
+
+import core.classes.User;
 
 /** Dialog for settings. Used as a host for widgets 
  * that display setting-options for the user.
@@ -40,7 +40,7 @@ public class SettingsMenu extends QDialog
     private QPushButton qpbCloseButton;
     
     public Signal0 signalFarmChanged;
-    public Signal1<ArrayList> signalUserListRecieved;
+    public Signal1<ArrayList<User>> signalUserListRecieved;
      
     /** Constructor. Initialize
      *
@@ -51,11 +51,11 @@ public class SettingsMenu extends QDialog
 	    super(parent);
 	    
 	    /* Initialize */
-	    initWidgets();
+	    initWidgets();	    
+	    initSignals();
 	    initConnectEvents();
 	    initLayout();
 	    initIcons();
-	    initSignals();
 	    	    	    
 	    /* Add listeners */
 	    this.lDynamicComponents.add(this.asAlertWidget);
@@ -71,14 +71,15 @@ public class SettingsMenu extends QDialog
     private void initSignals()
     {
     	this.signalFarmChanged 		= new Signal0();
-	    this.signalUserListRecieved = new Signal1<ArrayList>();
+	    this.signalUserListRecieved = new Signal1<ArrayList<User>>();
     }
     
     /** Transmit data containing users
      * 
      * @param lUsers list containing all users to the system
      */
-    private void sendData(ArrayList lUsers)
+    @SuppressWarnings("unused")
+	private void sendData(ArrayList<User> lUsers)
     {
     	signalUserListRecieved.emit(lUsers);    	
     }

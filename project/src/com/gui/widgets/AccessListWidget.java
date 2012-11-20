@@ -2,7 +2,6 @@ package com.gui.widgets;
 
 import java.util.ArrayList;
 import com.gui.logic.ServerLogic;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 import com.trolltech.qt.gui.QAbstractItemView;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QListWidget;
@@ -39,7 +38,7 @@ public class AccessListWidget extends QWidget
 		initLayout();
 		initConnectEvents();
 		
-		/* When this line is done, a signal sends info back to THIS */
+		/* After this line is done, a signal sends info back to THIS */
 		ServerLogic.getClientsocket().listUsers();
 	}
 	
@@ -48,7 +47,7 @@ public class AccessListWidget extends QWidget
 	 */
 	private void initConnectEvents()
 	{
-		this.qpbBtnAddUsers.clicked.connect(this, "transferToAdmin()");
+		this.qpbBtnAddUsers.clicked.connect(this, "transferToAdmin()");	
 		this.qpbBtnRemoveUsers.clicked.connect(this, "transferFromAdmin()");
 	}
 	
@@ -83,8 +82,10 @@ public class AccessListWidget extends QWidget
 	 */
 	private void transferFromAdmin()
 	{
+		/* For each selected item in Admin-list */
 		for(QListWidgetItem qlwi : this.qlwAdminList.selectedItems())
 		{
+			/* Remove (graphically) and insert in non-admin-list */
 			this.qlwUserList.insertItem(0, qlwi.clone());
 			this.qlwAdminList.takeItem(this.qlwAdminList.row(qlwi));
 		}
@@ -95,8 +96,10 @@ public class AccessListWidget extends QWidget
 	 */
 	private void transferToAdmin()
 	{
+		/* For each selected item in non-admin list */
 		for(QListWidgetItem qlwi : this.qlwUserList.selectedItems())
 		{
+			/* Remove (graphically) and insert in admin-list */
 			this.qlwAdminList.insertItem(0, qlwi.clone());
 			this.qlwUserList.takeItem(this.qlwUserList.row(qlwi));
 		}

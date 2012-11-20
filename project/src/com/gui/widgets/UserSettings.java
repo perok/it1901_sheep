@@ -4,19 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gui.logic.ServerLogic;
-
-import com.trolltech.qt.core.QRect;
+import com.storage.UserStorage;
 import com.trolltech.qt.core.QRegExp;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QComboBox;
 import com.trolltech.qt.gui.QGroupBox;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
-import com.trolltech.qt.gui.QLayout.SizeConstraint;
 import com.trolltech.qt.gui.QLineEdit;
 import com.trolltech.qt.gui.QPushButton;
 import com.trolltech.qt.gui.QRegExpValidator;
-import com.trolltech.qt.gui.QSizePolicy;
 import com.trolltech.qt.gui.QVBoxLayout;
 import com.trolltech.qt.gui.QValidator;
 import com.trolltech.qt.gui.QWidget;
@@ -164,7 +161,7 @@ public class UserSettings extends QWidget implements InputComponentHost
 	/** Initialize fields for use with user input
 	 */
 	private void initUserInput()
-	{
+	{		
 		final int LABEL_WIDTH = 59;
 		this.qgbUserField = new QGroupBox(tr("Brukerdata"));
 		this.qleUsername 	= new QLineEdit();
@@ -173,6 +170,10 @@ public class UserSettings extends QWidget implements InputComponentHost
 		this.qlUsername    = new QLabel(tr("Fornavn:"));
 		this.qlUserEmail = new QLabel(tr("Epost:"));
 		this.qlUserPhone = new QLabel(tr("Telefon"));
+		
+		if(UserStorage.getUser() == null)
+			return;
+		
 		QRegExp qreNameInput = new QRegExp("^[A-Za-z\\ ]+$"); /* Letters and space only */
 		QRegExp qrePhoneInput = new QRegExp("^[0-9]+$"); /* Numbers only */
 		QRegExp qreMailInput = new QRegExp( /* Valid email-addresses only, */
@@ -282,7 +283,7 @@ public class UserSettings extends QWidget implements InputComponentHost
 	 * 
 	 * @param oldUser user-data before edits
 	 */
-	private void updateUser(User oldUser)
+	private static void updateUser(User oldUser)
 	{
 		User newUser = com.storage.UserStorage.getUser();
 		

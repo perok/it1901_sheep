@@ -26,6 +26,7 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	SortOrder sortOrder = SortOrder.AscendingOrder;
 	
 	private QIcon sheepOkPicture;
+	private QIcon sheepDeadPicture;
 	
 	protected Signal1<Sheep> sheepSelected;
 	
@@ -39,6 +40,7 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	public SheepListWidgetLogic(QListWidget qlWidget)//QTreeView qtvModView)
 	{
 		sheepOkPicture = new QIcon("res/Sheep_WO_backround.png");
+		sheepDeadPicture = new QIcon("res/dead_sheep.png");
 		
 		sheepSelected = new Signal1<Sheep>();
 		multiSheepSelect = new Signal1<ArrayList<Sheep>>();
@@ -99,9 +101,15 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 			multiSheepSelect.emit(sheepSelected);
 	}
 	
-	/** debug and test purposes - add sheep */
+	/**
+	 *	Refreshes the sheep list in the widget.
+	 *	Call when sheep data is updated.  
+	 */
 	public void refreshSheepList()
 	{
+		if(UserStorage.getUser() == null)
+			return;
+		
 		statusBarMessage.emit("Populating Sheeps");
 		currentItems = new ArrayList<QListWidgetItem>();
 		
@@ -119,6 +127,8 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 			
 			if(sheep.isAlive())
 				item.setIcon(sheepOkPicture);
+			else
+				item.setIcon(sheepDeadPicture);
 			
 			//Qt should handle GC now. 
 			item.disableGarbageCollection();
@@ -159,32 +169,4 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 		
 		qlWidget.sortItems(sortOrder);
 	}
-	
-	/*
-	 *  !! DEPRECATED !! 
-	 */
-	
-	/** A class that acts a way to filter and sort data passed between a model and a view
-	 */
-//	private class SortSheep extends QSortFilterProxyModel
-//	{
-//		/** Compare one table entry to the next
-//		 * 
-//		 * @param qmiLeft first entry in the list, or "left-most-entry" relative to param right
-//		 * @param qmiRight second entry in the list, or "rigt-most-entry" relative to param left
-//		 * @usage used autonomously via super-methods from QSortFilterProxyModel
-//		 * @return true if left string is greater than rightstring
-//		 */
-//		@Override
-//		protected boolean lessThan(QModelIndex qmiLeft, QModelIndex qmiRight)
-//		{
-//		   Object leftData  = sourceModel().data(qmiLeft);
-//	       Object rightData = sourceModel().data(qmiRight);
-//           String sLeftString = leftData.toString();
-//           String sRightString = rightData.toString();
-//
-//           return sLeftString.compareTo(sRightString) < 0;
-//		}
-//	}
-//	
 }

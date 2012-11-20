@@ -4,12 +4,15 @@ import com.gui.UiLoginWindow;
 
 public class UiLoginWindowLogic {
 	private ServerLogic sLogic;
-	//private UiLoginWindow lWindow;
 	
+	/**
+	 * Initializes the logic for the given UiLoginWindow
+	 * @param lWindow The UiLoginWindow that this class shall handle.
+	 * @param sLogic The ServerLogic class that shall be informed on inlogin tries.
+	 */
 	public UiLoginWindowLogic(UiLoginWindow lWindow, ServerLogic sLogic){
 		this.sLogic = sLogic;
-		//this.lWindow = lWindow;
 		
-    	lWindow.tryLogin.connect(this.sLogic, "tryLogIn(String, String)");
+    	lWindow.signalTryLogin.connect(this.sLogic, "tryLogIn(String, String)");
 	}
 }
