@@ -28,6 +28,10 @@ public class ServerLogic extends QSignalEmitter{
 		this.signalUserDataRecieved = new Signal1<ArrayList<User>>();
 	}
 	
+	/**
+	 * Get clientsocket
+	 * @return ClientSocket
+	 */
 	public static ClientSocket getClientsocket()
 	{
 		return clientSocket;
@@ -68,9 +72,13 @@ public class ServerLogic extends QSignalEmitter{
 
 	}
 	
+	/**
+	 * Method called by clientsocket when it recieved a response from the server
+	 * 
+	 * @param response
+	 */
 	public void handleResponse(Response response)
 	{
-		System.out.println("Response incoming");
 		System.out.println("Recieved response: "+ response.getType());
 		
 		/*
@@ -130,15 +138,25 @@ public class ServerLogic extends QSignalEmitter{
 		System.out.println("Response handled");				
 	}
 	
+	/**
+	 * Close the connection to the server
+	 */
 	public void closeConnection(){
 		if(clientSocket != null)
 			clientSocket.disconnect();
 	}
 	
+	/**
+	 * Method called from clientsocket when it has had a connection failure
+	 */
 	public void connectionFailed(){
 		System.out.println("Connection error");
 	}
 	
+	/**
+	 * Method called from clientsocket when it needs to give a message to the program
+	 * @param message
+	 */
 	public void handleMessage(String message){
 		System.out.println("Message from server: " + message);
 	}
@@ -150,6 +168,10 @@ public class ServerLogic extends QSignalEmitter{
 		//clientSocket.
 	}
 	
+	/**
+	 * Method for sending a sheep that has been edited to the server
+	 * @param sheep Reference to the sheep that has been edited.
+	 */
 	public void editSheep(Sheep sheep){
 		clientSocket.editSheep(sheep);
 		
@@ -160,11 +182,5 @@ public class ServerLogic extends QSignalEmitter{
 		}
 		
 		clientSocket.getSheep(sheep.getFarmId());
-	}
-	
-	protected void requestSheeps(Object o){
-		if(objectAskingForResponse == null)
-			objectAskingForResponse = o;
-		//SendRequest
 	}
 }
