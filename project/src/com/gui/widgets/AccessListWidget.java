@@ -36,14 +36,7 @@ public class AccessListWidget extends QWidget
 						qpbBtnRemoveUsers;
 	private ArrayList<User> lUsers;
 	private ArrayList<Farm>	lFarms;
-	
-	public void farmListRecieved()
-	{
-		this.lFarms = com.storage.UserStorage.getFarmList();
 		
-		inititate();
-	}
-	
 	/** Constructor. Initialize..
 	 *
 	 * @param parent
@@ -61,7 +54,15 @@ public class AccessListWidget extends QWidget
 		
 		/* After this line is done, a signal sends info back to THIS */
 		ServerLogic.getClientsocket().listUsers();
-		// TODO: request farmlist here
+		ServerLogic.getClientsocket().listFarms();
+	}
+	
+	public void farmListRecieved()
+	{
+		System.out.println("farm-data recieved");
+		this.lFarms = com.storage.UserStorage.getFarmList();
+		
+		setupUserList();
 	}
 	
 	/** Set up event-triggers
@@ -110,7 +111,7 @@ public class AccessListWidget extends QWidget
 		}		
 	}
 	
-	private void inititate()
+	private void setupUserList()
 	{
 		if(this.lFarms != null 
 		&& this.lFarms.isEmpty() == false
@@ -128,8 +129,9 @@ public class AccessListWidget extends QWidget
 	 */
 	public void recieveUserData(ArrayList<User> lUsers)
 	{
+		System.out.println("user data recieved");
 		this.lUsers = lUsers;
-		inititate();
+		setupUserList();
 	}
 	
 	@SuppressWarnings("unused")
