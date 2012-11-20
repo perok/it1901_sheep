@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gui.logic.ServerLogic;
+import com.storage.UserStorage;
 import com.trolltech.qt.core.QRegExp;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QComboBox;
@@ -160,7 +161,7 @@ public class UserSettings extends QWidget implements InputComponentHost
 	/** Initialize fields for use with user input
 	 */
 	private void initUserInput()
-	{
+	{		
 		final int LABEL_WIDTH = 59;
 		this.qgbUserField = new QGroupBox(tr("Brukerdata"));
 		this.qleUsername 	= new QLineEdit();
@@ -169,6 +170,10 @@ public class UserSettings extends QWidget implements InputComponentHost
 		this.qlUsername    = new QLabel(tr("Fornavn:"));
 		this.qlUserEmail = new QLabel(tr("Epost:"));
 		this.qlUserPhone = new QLabel(tr("Telefon"));
+		
+		if(UserStorage.getUser() == null)
+			return;
+		
 		QRegExp qreNameInput = new QRegExp("^[A-Za-z\\ ]+$"); /* Letters and space only */
 		QRegExp qrePhoneInput = new QRegExp("^[0-9]+$"); /* Numbers only */
 		QRegExp qreMailInput = new QRegExp( /* Valid email-addresses only, */

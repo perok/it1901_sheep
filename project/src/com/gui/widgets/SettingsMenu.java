@@ -51,11 +51,11 @@ public class SettingsMenu extends QDialog
 	    super(parent);
 	    
 	    /* Initialize */
-	    initWidgets();
+	    initWidgets();	    
+	    initSignals();
 	    initConnectEvents();
 	    initLayout();
 	    initIcons();
-	    initSignals();
 	    	    	    
 	    /* Add listeners */
 	    this.lDynamicComponents.add(this.asAlertWidget);

@@ -300,7 +300,6 @@ public class UiMainWindowLogic extends QSignalEmitter
 			arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, msg.getGpsPosition().getLatitute(), msg.getGpsPosition().getLongditude() ));
 		}
 		
-		
 		//TABLEWIDGET	
 		currentSheep = sheep;
 		
@@ -308,7 +307,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		mw.lblTabMessages.setText("Sheep#: " + sheep.getId() + "\tFarm#: " + sheep.getFarmId() + "\tName: " + sheep.getName());
 		
 		mw.lEName.setText(sheep.getName());
-		mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//sheep.getDateOfBirth(), m, d))
+		mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//TODO:sheep.getDateOfBirth(), m, d))
 		mw.dSBWeight.setValue((double)sheep.getWeight());
 		mw.lEFarmId.setText(String.valueOf(sheep.getFarmId()));
 		if(sheep.isAlive())
