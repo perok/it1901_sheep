@@ -23,7 +23,6 @@
   wmsType = new google.maps.ImageMapType(StatKartLayer);
  
   map.mapTypes.set('statkart', wmsType);
-
 }
   
 
@@ -79,7 +78,7 @@
      */
 
 var beaches = [
-["TRONDHEIM BETCHES", 63.430515, 10.395053, 1]
+	['TRONDHEI', 63.430515, 10.395053, 1]
 ];
 
 //function that is called from the application for one sheep selected
@@ -129,7 +128,9 @@ var shape = {
 		  type: 'poly'
 		   };
 
-var infowindow = new google.maps.InfoWindow({});
+
+var infowindow = new google.maps.InfoWindow({content:'hey'});
+
 
 
 function setMarkers(map, locations) {
@@ -137,13 +138,15 @@ function setMarkers(map, locations) {
   // Add markers to the map
     for (var i = 0; i < locations.length; i++) {    	
     	
+    	var image;
+    	
     	if(locations[i].isAlive == 'false')
     		image = sheepDead;
     	else if(locations[i].isAlert == 'true')
     		image = sheepWarn;
     	else
     		image = sheepOk;
-    
+    	
 		var myLatLng = new google.maps.LatLng(locations[i].lat, locations[i].lon);
 		var marker = new google.maps.Marker({
 			position: myLatLng,
@@ -155,25 +158,30 @@ function setMarkers(map, locations) {
 			zIndex: 0
 		});
 		
-		var contentString = '<div id="content">'+
-		'<div id="siteNotice">'+
-		'</div>'+
-		'<h1 id="firstHeading" class="firstHeading">' + locations[i].name.getTitle + '</h1>'+
-		'<div id="bodyContent">'+
-		'<p>'+ locations[i].lat +' - '+ locations[i].lon +'</p>'+
-		'</div>'+
-		'</div>';
-      
-		google.maps.event.addListener(marker, 'click', function() {
-	  
-			infoWindow.setContent(contentString);
-			infowindow.open(map,marker);
-		});
-  
-		markers.push(marker);
-}
+		
+		// Creating a closure to retain the correct data, notice how I pass the current data in the loop into the closure (marker, data)
+		(function(marker) {
+			var contentString = '<div id="content">'+
+			'<div id="siteNotice">'+
+			'</div>'+
+			'<h1 id="firstHeading" class="firstHeading">' + marker.getTitle() + '</h1>'+
+			'<div id="bodyContent">'+
+			'<p>'+ marker.getPosition().toUrlValue() +'</p>'+
+			'</div>'+
+			'</div>';
+			// Attaching a click event to the current marker
+			google.maps.event.addListener(marker, "click", function(e) {
+				infowindow.setContent(contentString);
+				infowindow.open(map, marker);
+			});
 
-setAllMap(map);
+
+		})(marker);
+		
+		markers.push(marker);
+    }
+
+    setAllMap(map);
 }
 
 
