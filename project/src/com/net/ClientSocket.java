@@ -150,7 +150,7 @@ public class ClientSocket  {
 	public void addSheep(Sheep sheep) {
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("farmId", Integer.toString(sheep.getFarmId()));
-		sendRequest(new Request(Request.REQUEST, "addSheep", sheep));
+		sendRequest(new Request(Request.REQUEST, "addSheep", sheep,sheep.getFarmId()));
 	}
 
 	/**Makes a request with the given paramter and sends it to the server.
@@ -158,7 +158,7 @@ public class ClientSocket  {
 	 * @param user
 	 */
 	public void editSheep(Sheep sheep) {
-		sendRequest(new Request(Request.EDITSHEEP, "editSheep", sheep));
+		sendRequest(new Request(Request.EDITSHEEP, "editSheep", sheep,sheep.getFarmId()));
 	}
 
 	/**Makes a request with the given paramters and sends it to the server.
