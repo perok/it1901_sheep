@@ -10,6 +10,7 @@ import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.core.Qt.MatchFlags;
 import com.trolltech.qt.core.Qt.SortOrder;
 import com.trolltech.qt.gui.QAbstractItemView.SelectionMode;
+import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QListWidget;
 import com.trolltech.qt.gui.QListWidgetItem;
@@ -17,22 +18,27 @@ import com.trolltech.qt.gui.QListWidgetItem;
 import core.classes.Sheep;
 
 public class SheepListWidgetLogic extends QSignalEmitter{	
-	private QListWidget qlWidget;
+	public QListWidget qlWidget;
 	
 	//Stores a reference the current sheeps in the view.
-	ArrayList<QListWidgetItem> currentItems;
+	private ArrayList<QListWidgetItem> currentItems;
 	
 	//FIXME: sorting is done with strings and thus, numbered sheeps does'nt get sorted correctly
-	SortOrder sortOrder = SortOrder.AscendingOrder;
+	private SortOrder sortOrder = SortOrder.AscendingOrder;
 	
 	private QIcon sheepOkPicture;
 	private QIcon sheepDeadPicture;
+	private QIcon mapIcon;
 	
 	protected Signal1<Sheep> sheepSelected;
 	
-	protected Signal1<ArrayList<Sheep>> multiSheepSelect;
-	
 	protected Signal1<String> statusBarMessage;
+	
+	protected QAction actionContextDelete;
+	protected QAction actionContextShowOnMap;
+	
+	protected Signal1<ArrayList<Sheep>> sheepsDelete;
+	protected Signal1<ArrayList<Sheep>> sheepsShowOnMap;
 	
 	
 	/** Constructor. Initialize..
@@ -41,9 +47,9 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	{
 		sheepOkPicture = new QIcon("res/Sheep_WO_backround.png");
 		sheepDeadPicture = new QIcon("res/dead_sheep.png");
+		mapIcon = new QIcon("treasure-map-icon.png");
 		
 		sheepSelected = new Signal1<Sheep>();
-		multiSheepSelect = new Signal1<ArrayList<Sheep>>();
 		statusBarMessage = new Signal1<String>();
 		
 		//this.ssProxyModel = new SortSheep();
@@ -51,6 +57,7 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 		this.qlWidget = qlWidget;
 		qlWidget.setSortingEnabled(true);
 		qlWidget.sortItems(sortOrder);
+		
 
 		//Select multiple items
 		this.qlWidget.setSelectionMode(SelectionMode.ExtendedSelection);
@@ -59,17 +66,24 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 		
 		//doubleclick event
 		this.qlWidget.itemDoubleClicked.connect(this, "onSheepDoubleClicked(QListWidgetItem)");
-		this.qlWidget.itemSelectionChanged.connect(this, "itemSelectionChanged()");
 		
+		actionContextDelete = new QAction("delete", qlWidget);
+		actionContextDelete.triggered.connect(this, "contextDelete_triggered(boolean)");
+		actionContextDelete.setIcon(sheepDeadPicture);
+		sheepsDelete = new Signal1<ArrayList<Sheep>>();
 		
-		//this.qsimModel = createSheepModel(this);
-		//this.qtvModelView = qtvModView;
-		//this.ssProxyModel.setSourceModel(this.qsimModel);
-		//this.ssProxyModel.setDynamicSortFilter(true);
+		actionContextShowOnMap = new QAction("Show in map", qlWidget);
+		actionContextShowOnMap.triggered.connect(this, "actionContextShowOnMap_triggered(boolean)");
+		actionContextShowOnMap.setIcon(mapIcon);
+		sheepsShowOnMap = new Signal1<ArrayList<Sheep>>();
 		
-		//this.qtvModelView.setModel(this.ssProxyModel);
-		//this.qtvModelView.setSortingEnabled(true);
-		//this.qlWidget.setModel(this.ssProxyModel);
+		qlWidget.addAction(actionContextDelete);
+		qlWidget.addAction(actionContextShowOnMap);
+
+		
+		qlWidget.setContextMenuPolicy(Qt.ContextMenuPolicy.ActionsContextMenu);
+		
+
 	}
 	
 	/**
@@ -82,23 +96,6 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 			Sheep dClicked = (Sheep)item.data(Constants.QtSheepDataRole);
 			sheepSelected.emit(dClicked);
 		}
-	}
-	
-	/**
-	 * Event fired when sheep(s) are selected
-	 */
-	public void itemSelectionChanged(){
-		ArrayList<Sheep> sheepSelected = new ArrayList<Sheep>();
-		
-		for(QListWidgetItem item : currentItems){
-			if (item.isSelected()){
-				sheepSelected.add((Sheep)item.data(Constants.QtSheepDataRole));
-			}
-		}
-		
-		//Only fire event when more than one sheep is selected
-		if(sheepSelected.size() != 1)
-			multiSheepSelect.emit(sheepSelected);
 	}
 	
 	/**
@@ -168,5 +165,38 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 			sortOrder = SortOrder.AscendingOrder;
 		
 		qlWidget.sortItems(sortOrder);
+	}
+	
+	/**
+	 * Action for rightclick on sheep(s)
+	 * @param vool
+	 */
+	public void contextDelete_triggered(boolean vool){
+		ArrayList<Sheep> sheepSelected = new ArrayList<Sheep>();
+		
+		for(QListWidgetItem item : currentItems){
+			if (item.isSelected()){
+				sheepSelected.add((Sheep)item.data(Constants.QtSheepDataRole));
+			}
+		}
+		
+		sheepsDelete.emit(sheepSelected);
+	}
+	
+	/**
+	 * Action for rightclick show on map
+	 * @param bool
+	 */
+	public void actionContextShowOnMap_triggered(boolean bool){
+		ArrayList<Sheep> sheepSelected = new ArrayList<Sheep>();
+		
+		for(QListWidgetItem item : currentItems){
+			if (item.isSelected()){
+				sheepSelected.add((Sheep)item.data(Constants.QtSheepDataRole));
+			}
+		}
+		
+		//Only fire event when more than one sheep is selected
+		sheepsShowOnMap.emit(sheepSelected);
 	}
 }

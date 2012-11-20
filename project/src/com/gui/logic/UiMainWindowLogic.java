@@ -10,8 +10,9 @@ import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.core.QDate;
 import com.trolltech.qt.core.QUrl;
+import com.trolltech.qt.core.Qt;
+import com.trolltech.qt.gui.QAction;
 import com.trolltech.qt.gui.QLabel;
-import com.trolltech.qt.gui.QTabWidget.TabPosition;
 
 import core.classes.Message;
 import core.classes.Sheep;
@@ -53,15 +54,16 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 * @param sLogic ServerLogic.
 	 */
 	public UiMainWindowLogic(UiMainWindow mw, SheepListWidgetLogic slwHandler, TableWidgetLogic twHandler, ServerLogic sLogic){
-		System.out.println("Applying logic");
 		/* Storing referances */
 		this.mw = mw;
 		this.slwHandler = slwHandler;
 		this.twHandler = twHandler;
 		this.sLogic = sLogic;
 		
+		/* ServerLogic signals*/
 		this.signalUserListRecieved = new Signal1<ArrayList<User>>();		
 		sLogic.signalUserDataRecieved.connect(this, "sendUserData(ArrayList)");
+		sLogic.signalNewSheeps.connect(this, "sLogic_signalNewSheeps(ArrayList, int)");
 		
 		/* Setting up user information*/
 		if(UserStorage.getUser() != null)
@@ -77,15 +79,13 @@ public class UiMainWindowLogic extends QSignalEmitter
 		//Information tab defaults at open.
 		mw.tabWidget.setCurrentIndex(0);
 		mw.tabWidget.setContentsMargins(0, 0, 0, 0);
-
-		//mw.MAPWIDGET.setUrl(new QUrl("http://folk.ntnu.no/perok/it1901"));
 		mw.MAPWIDGET.setUrl(new QUrl("web/index.html"));
-		//mw.MAPWIDGET.
 		
 		/* Setting up signals */
 		signalShowAbout = new Signal0();
 		signalShowAboutQt = new Signal0();
 		signalUpdateSheepList = new Signal0();
+		
 			//MainWinow
 				//MENU
 		mw.actionInformation_Window.toggled.connect(this, "actionInformation_Window_toggled(boolean)");
@@ -116,12 +116,24 @@ public class UiMainWindowLogic extends QSignalEmitter
 			//SheepListWidget
 		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
 		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");		
-		this.slwHandler.multiSheepSelect.connect(this,"multiSheepSelect(ArrayList)");
-		
-		System.out.println("Logic applied");
+		this.slwHandler.sheepsShowOnMap.connect(this,"sheepsShowOnMap(ArrayList)");
+
 		
 		slwHandler.refreshSheepList();
 	}
+	
+	/* SERVERLOGIC*/
+	/**
+	 * Updates the UserStorage with the new sheeps and refreshes the list.
+	 * @param sheeps
+	 * @param farmID
+	 */
+	private void sLogic_signalNewSheeps(ArrayList<Sheep> sheeps, int farmID){
+		UserStorage.getUser().getFarmlist().get(farmID).setSheepList(sheeps);
+		slwHandler.refreshSheepList();
+		
+	}
+	
 	
 	/* ACTIONS */
 	
@@ -256,9 +268,13 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 * @param sheeps
 	 */
 	@SuppressWarnings({ "unused", "unchecked" })
-	private void multiSheepSelect(ArrayList<Sheep> sheeps){
-		JSONArray arr = new JSONArray();
+	private void sheepsShowOnMap(ArrayList<Sheep> sheeps){
 		
+		if(sheeps.size() <= 1)
+			return;
+		
+		JSONArray arr = new JSONArray();
+		System.out.println("Sheep selected: " + sheeps.size());
 		//Go through all the sheeps
 		for (Sheep sheep : sheeps){
 			if(sheep.getRecentStatuses() != null){
@@ -276,7 +292,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 			}
 		}
 		
-		if (arr.size() > 0){		
+		if (arr.size() > 0){	
+			System.out.println("Sending amount: " + arr.size());
 			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONMany("+ arr +")");
 		}
 	}
@@ -299,6 +316,11 @@ public class UiMainWindowLogic extends QSignalEmitter
 				isAlert = true;
 			
 			arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, msg.getGpsPosition().getLatitute(), msg.getGpsPosition().getLongditude() ));
+		}
+		
+		if (arr.size() > 0){	
+			System.out.println("Sending amount: " + arr.size());
+			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONOne("+ arr +")");
 		}
 		
 		//TABLEWIDGET	
@@ -421,6 +443,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 			mw.rbAscDesc.setText("Descending");
 	
 	}
+
+	
 }
 
 /* EOF */

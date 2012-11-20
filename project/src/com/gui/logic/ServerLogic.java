@@ -16,7 +16,8 @@ public class ServerLogic extends QSignalEmitter{
     private Object objectAskingForResponse = null;
 
     public Signal0 loggedIn;
-    public Signal1<ArrayList<User>> signalUserDataRecieved ;
+    public Signal1<ArrayList<User>> signalUserDataRecieved;
+    public Signal2<ArrayList<Sheep>, Integer> signalNewSheeps;
 
     /**
      * Constructs the object
@@ -25,6 +26,8 @@ public class ServerLogic extends QSignalEmitter{
 	{
 		loggedIn = new Signal0();
 		this.signalUserDataRecieved = new Signal1<ArrayList<User>>();
+		this.signalNewSheeps = new Signal2<ArrayList<Sheep>, Integer>();
+
 	}
 	
 	/**
@@ -43,10 +46,7 @@ public class ServerLogic extends QSignalEmitter{
 	 * @param usrPW
 	 */
 	public void tryLogIn(String usrName, String usrPW){
-		System.out.println("Hello");
-		
 		System.out.println("Trying to log in with user: " + usrName);
-		loggedIn.emit();
 		
 		if(clientSocket == null )
 			clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
@@ -83,11 +83,20 @@ public class ServerLogic extends QSignalEmitter{
 		/* List */
 		if(responseType == 1) 
 		{			
+			//There is content
 			if(response.getContent() != null 
-			&& response.getContent().isEmpty() == false 
-			&& response.getContent().get(0) instanceof User)
+					&& response.getContent().isEmpty() == false) 
 			{
-				this.signalUserDataRecieved.emit(response.getContent());
+				//Content is of a User response
+				if(response.getContent().get(0) instanceof User)
+					this.signalUserDataRecieved.emit(response.getContent());
+				if(response.getContent().get(0) instanceof Sheep){
+					ArrayList<Sheep> newSheeps = new ArrayList<Sheep>();
+					for(Object o : response.getContent()){
+						newSheeps.add((Sheep)o);
+					}
+					this.signalNewSheeps.emit(newSheeps, newSheeps.get(0).getFarmId());
+				}
 			}
 			
 			//A object has called for a list
@@ -104,7 +113,9 @@ public class ServerLogic extends QSignalEmitter{
 		/* Boolean */
 		else if(responseType == 2)
 		{
-			/** Not handled */
+			//response.calltype == "editSheep" eller addSheep eller deleteSheep
+				//clientSocket.getSheep(sheep.getFarmId());
+			
 		}
 		
 		/* User */
@@ -161,14 +172,5 @@ public class ServerLogic extends QSignalEmitter{
 	 */
 	public void editSheep(Sheep sheep){
 		clientSocket.editSheep(sheep);
-		
-		//TODO: skal ikke h�ndteres slik. SKal bli h�ndtert av serverlogic
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		clientSocket.getSheep(sheep.getFarmId());
 	}
 }

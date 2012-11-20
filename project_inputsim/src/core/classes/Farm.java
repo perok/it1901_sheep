@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /*Ser at ikke alt her er likt som i diagrammet.
- * Er fult villig til Œ forandre pŒ ting sŒklart, men vil gjerne snakke om det f¿rst.*/
+ * Er fult villig til ï¿½ forandre pï¿½ ting sï¿½klart, men vil gjerne snakke om det fï¿½rst.*/
 
 public class Farm implements Serializable {
 	
@@ -54,6 +54,10 @@ public class Farm implements Serializable {
 	public ArrayList<Sheep> getSheepList(){
 		return sheepList;
 	}
+	
+	public void setSheepList(ArrayList<Sheep> sheeps){
+		sheepList = sheeps;
+	}
 
 	public boolean isAdmin() {
 		return isAdmin;
@@ -65,3 +69,5 @@ public class Farm implements Serializable {
 	
 	
 }
+
+/* EOF */

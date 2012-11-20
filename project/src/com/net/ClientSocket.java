@@ -259,7 +259,6 @@ public class ClientSocket  {
 	 * @author Lars Erik
 	 */
 	private class ListenFromServer extends Thread {
-		protected ListenFromServer() {}
 		public void run() {
 			while(true) {
 				try {

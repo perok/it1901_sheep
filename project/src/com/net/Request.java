@@ -13,12 +13,12 @@ public class Request implements Serializable {
 	private String message;
 	private User user;
 	private Sheep sheep;
-	private HashMap<Object, Object> parameters;
+	private HashMap<String,String> parameters;
 
 	public Request(int type, String message) {
 		this.type = type;
 		this.message = message;
-		parameters = new HashMap<Object, Object>();
+		parameters = new HashMap<String,String>();
 	}
 
 	public Request(int type, String message, User user) {
@@ -29,7 +29,7 @@ public class Request implements Serializable {
 	}
 
 	public Request(int type, String message, Sheep sheep) {
-		System.out.println("Sheep constructor called");
+		System.out.println("Constructor called");
 		this.type = type;
 		this.message = message;
 		this.sheep = new Sheep(sheep.getId(), sheep.getName(), sheep.getFarmId(), sheep.getDateOfBirth(),
@@ -37,19 +37,18 @@ public class Request implements Serializable {
 		System.out.println(sheep.getName());
 	}
 
-//	public Request(int type, String message, HashMap<Object, Object> _parameters) {
-	public Request(int type, String message, HashMap<?, ?> _parameters) {
+	public Request(int type, String message, HashMap<String, String> _parameters) {
 		this.type = type;
 		this.message = message;
-		parameters = new HashMap<Object, Object>();
-		for(Object key : _parameters.keySet()){
+		parameters = new HashMap<String, String>();
+		for( String key : _parameters.keySet()){
 			parameters.put(key, _parameters.get(key));
 		}
 	}
 
 	public Request(int type) {
 		this.type = type;
-		parameters = new HashMap<Object, Object>();
+		parameters = new HashMap<String, String>();
 	}
 
 	int getType() {
@@ -59,12 +58,15 @@ public class Request implements Serializable {
 		return message;
 	} 
 
-	public HashMap<Object, Object> getparameters() {
+	public HashMap getparameters() {
 		return parameters;
 	}
 
-	public void setparameters(HashMap<Object, Object> parameters) {
-		this.parameters = parameters;
+	public void setparameters(HashMap<String, String> _parameters) {
+		parameters = new HashMap<String, String>();
+		for( String key : _parameters.keySet()){
+			parameters.put(key, _parameters.get(key));
+		}
 	}
 
 	public void addparameter(String name, String value) {

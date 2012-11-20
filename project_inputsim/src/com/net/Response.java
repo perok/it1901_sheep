@@ -11,8 +11,12 @@ public class Response implements Serializable {
 	private int type;
 	private boolean success;
 	private User user;
+<<<<<<< HEAD
 	private ArrayList content;
 	private String initialRequest;
+=======
+	private ArrayList<Object> content;
+>>>>>>> aa793f5809c63b634f94738fab578961afcd2eb4
 	
 	public Response(int type, boolean success, String req) {
 		this.type = type;
@@ -20,8 +24,13 @@ public class Response implements Serializable {
 		this.initialRequest = req;
 	}
 	
+<<<<<<< HEAD
 	public Response(int type, ArrayList content, String req) {
 		this.content = new ArrayList<>();
+=======
+	public Response(int type, ArrayList<Object> content) {
+		this.content = new ArrayList<Object>();
+>>>>>>> aa793f5809c63b634f94738fab578961afcd2eb4
 		this.type = type;
 		for (int i = 0; i < content.size(); i++) {
 			this.content.add(content.get(i));
@@ -29,8 +38,8 @@ public class Response implements Serializable {
 		this.initialRequest = req;
 	}
 	
-	public Response(int type, boolean success, ArrayList content) {
-		this.content = new ArrayList<>();
+	public Response(int type, boolean success, ArrayList<Object> content) {
+		this.content = new ArrayList<Object>();
 		this.type = type;
 		this.success = success;
 		for (int i = 0; i < content.size(); i++) {
@@ -55,11 +64,11 @@ public class Response implements Serializable {
 		this.success = success;
 	}
 
-	public ArrayList getContent() {
+	public ArrayList<Object> getContent() {
 		return content;
 	}
 
-	public void setContent(ArrayList content) {
+	public void setContent(ArrayList<Object> content) {
 		for (int i = 0; i < content.size(); i++) {
 			this.content.add(content.get(i));
 		}
