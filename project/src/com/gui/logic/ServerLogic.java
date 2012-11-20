@@ -184,10 +184,11 @@ public class ServerLogic extends QSignalEmitter{
 	}
 	
 	/**
-	 * TODO: IMPLEMENT
+	 * Add the sheep to the server
+	 * @param sheep Sheep without ID.
 	 */
 	public void addSheep(Sheep sheep){
-		//clientSocket.
+		clientSocket.addSheep(sheep);
 	}
 	
 	/**
@@ -195,6 +196,14 @@ public class ServerLogic extends QSignalEmitter{
 	 * @param sheep Reference to the sheep that has been edited.
 	 */
 	public void editSheep(Sheep sheep){
+		clientSocket.editSheep(sheep);
+	}
+	
+	/**
+	 * TODO: implement
+	 * @param sheep
+	 */
+	public void deleteSheep(Sheep sheep){
 		clientSocket.editSheep(sheep);
 	}
 }
