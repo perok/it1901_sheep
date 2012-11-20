@@ -687,7 +687,7 @@ public class DatabaseConnector {
 
 	public String[] getUsernames(int farmId) {
 		String[][] preres1 = processQuery("SELECT user_id FROM access_rights WHERE farm_id=" + farmId + " AND admin=1;");
-		String[][] preres2= processQuery("SELECT username from user WHERE user_id=" + preres1[0][0] + ";");
+		String[][] preres2= processQuery("SELECT username from user WHERE id=" + preres1[0][0] + ";");
 		String[] res = new String[preres2.length];
 		for (int i = 0; i < res.length; i++) {
 			res[i] = preres2[0][i];
