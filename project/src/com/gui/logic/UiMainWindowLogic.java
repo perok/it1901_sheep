@@ -11,6 +11,7 @@ import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.core.QDate;
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.gui.QLabel;
+import com.trolltech.qt.gui.QTabWidget.TabPosition;
 
 import core.classes.Message;
 import core.classes.Sheep;
@@ -63,8 +64,9 @@ public class UiMainWindowLogic extends QSignalEmitter
 		sLogic.signalUserDataRecieved.connect(this, "sendUserData(ArrayList)");
 		
 		/* Setting up user information*/
-		for(int i = 0; i < UserStorage.getUser().getFarmlist().size(); i++)
-			mw.cmbDockFarmId.addItem(UserStorage.getUser().getFarmlist().get(i).getName());
+		if(UserStorage.getUser() != null)
+			for(int i = 0; i < UserStorage.getUser().getFarmlist().size(); i++)
+				mw.cmbDockFarmId.addItem(UserStorage.getUser().getFarmlist().get(i).getName());
 		
 		/* Setting up extra widgets*/
 		statusbarMessage = new QLabel("Ready");
@@ -74,14 +76,11 @@ public class UiMainWindowLogic extends QSignalEmitter
 		/* Adding values to ui */
 		//Information tab defaults at open.
 		mw.tabWidget.setCurrentIndex(0);
+		mw.tabWidget.setContentsMargins(0, 0, 0, 0);
 
 		//mw.MAPWIDGET.setUrl(new QUrl("http://folk.ntnu.no/perok/it1901"));
 		mw.MAPWIDGET.setUrl(new QUrl("web/index.html"));
 		
-	    //json_str = json.dumps(data).replace('"', '\\"')
-	    //rootObject.evaluateJavaScript('receiveJSON("%s")' % json_str)
-
-		//mw.MAPWIDGET.updatesEnabled(true);
 		/* Setting up signals */
 		signalShowAbout = new Signal0();
 		signalShowAboutQt = new Signal0();
@@ -116,7 +115,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 			//SheepListWidget
 		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
 		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");		
-		this.slwHandler.multiSheepSelect.connect(this,"multiSheepSelect(ArrayList<Sheep> )");
+		this.slwHandler.multiSheepSelect.connect(this,"multiSheepSelect(ArrayList)");
 		
 		System.out.println("Logic applied");
 		
@@ -287,6 +286,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 		 */
 	@SuppressWarnings({ "unused", "unchecked" })
 	private void populateTableWidget(Sheep sheep){
+		mw.tabWidget.setCurrentIndex(0);
+		
 		//MAP
 		JSONArray arr = new JSONArray();
 		

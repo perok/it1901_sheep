@@ -107,6 +107,9 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	 */
 	public void refreshSheepList()
 	{
+		if(UserStorage.getUser() == null)
+			return;
+		
 		statusBarMessage.emit("Populating Sheeps");
 		currentItems = new ArrayList<QListWidgetItem>();
 		
