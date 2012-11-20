@@ -5,6 +5,7 @@ import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import core.AlertNotifier;
+import core.classes.Message;
 import core.settings.Settings;
 import core.sim.SheepStatusSim;
 
@@ -42,7 +43,6 @@ public class Server {
 		this.port = port;
 		sdf = new SimpleDateFormat("HH:mm:ss");
 		al = new ArrayList<ClientHandler>();
-		notifier = new AlertNotifier(settings);
 		simulator = new SheepStatusSim(10, this);
 	}
 
@@ -51,14 +51,12 @@ public class Server {
 		try 
 		{
 			ServerSocket serverSocket = new ServerSocket(port);
-			notifier = new AlertNotifier(settings);
+			notifier = new AlertNotifier(settings,this);
 			new Thread(notifier).start();
+			display("Server waiting for Clients on port " + port + ".");
 
 			while(keepGoing) 
 			{
-
-
-				display("Server waiting for Clients on port " + port + ".");
 
 				Socket socket = serverSocket.accept();				
 				if(!keepGoing)
@@ -88,7 +86,7 @@ public class Server {
 			display(msg);
 		}
 	}       
-	
+
 	/**Gui-method to stop the server
 	 * 
 	 */
@@ -103,7 +101,7 @@ public class Server {
 			// nothing I can really do
 		}
 	}
-	
+
 	/**
 	 * Display an event to the GUI
 	 */
@@ -112,4 +110,15 @@ public class Server {
 		sg.appendEvent(time + "\n");
 	}
 
+	public void notifyClient(String[] usernames,ArrayList<Message> messages) {
+		for (int i = 0; i < al.size(); i++) {
+			for (int j = 0; j < usernames.length; j++) {
+				if(al.get(i).getUsername().equals(usernames[j])) {
+					al.get(i).sendUpdate(messages);
+				}
+			}
+		}
+
 	}
+
+}

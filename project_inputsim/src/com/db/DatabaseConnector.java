@@ -84,15 +84,14 @@ public class DatabaseConnector {
 					Sheep sheep = new Sheep(Integer.parseInt(r4[j][0]), r4[j][1], Integer.parseInt(r4[j][2]), Integer.parseInt(r4[j][3]), getBoolean(r4[j][4]), Integer.parseInt(r4[j][5]));
 					String [][] r5 = processQuery("SELECT * from sheep_status WHERE sheep_id = " + sheep.getId() + " LIMIT 10;");
 					for (int k = 0; k < r5.length; k++) {
-						for (int k2 = 0; k2 < r5[k].length; k2++) {
-							sheep.addSheepStatus(new SheepStatus(Integer.parseInt(r5[k][k2]),
-									Integer.parseInt(r5[k][k2]),
-									Integer.parseInt(r5[k][k2]),
-									Float.parseFloat(r5[k][k2]), 
-									Integer.parseInt(r5[k][k2]),
-									new GPSPosition(Double.parseDouble(r5[k][k2]), 
-											Double.parseDouble(r5[k][k2])),Integer.parseInt(r5[k][k2])));
-						}
+						sheep.addSheepStatus(new SheepStatus(Integer.parseInt(r5[k][0]),
+								Integer.parseInt(r5[k][1]),
+								Integer.parseInt(r5[k][2]),
+								Float.parseFloat(r5[k][3]), 
+								Integer.parseInt(r5[k][4]),
+								new GPSPosition(Double.parseDouble(r5[k][5]), 
+										Double.parseDouble(r5[k][6])),Integer.parseInt(r5[k][7])));
+
 					}
 					farm.addSheep(sheep);
 				}
@@ -607,6 +606,14 @@ public class DatabaseConnector {
 			String[][] r = processQuery("SELECT id,username,name,password,mobile_number,email FROM user WHERE true;");
 			for (int i = 0; i < r.length; i++) {
 				User user = new User(Integer.parseInt(r[0][0]), r[0][1], r[0][2], r[0][3], Integer.parseInt(r[0][4]), r[0][5]);
+				ArrayList<Farm> farms = new ArrayList<Farm>();
+				String[][] r2 = processQuery("SELECT farm_id, admin FROM access_rights WHERE user_id = " + user.getId() + ";");
+
+				for (int j = 0; i < r2.length; j++) {
+
+					String[][] r3 = processQuery("SELECT name FROM farm WHERE id = " + r2[j][0] + ";");
+					Farm farm = new Farm(Integer.parseInt(r2[j][0]),r3[0][0],getBoolean(r2[j][1]));
+				}
 				users.add(user);
 			}
 			return users;
@@ -650,6 +657,16 @@ public class DatabaseConnector {
 		return new GPSPosition(Double.parseDouble(results[0][0]), Double.parseDouble(results[0][0]));
 	}
 
+	public String[] getUsernames(int farmId) {
+		String[][] preres1 = processQuery("SELECT user_id FROM access_rights WHERE farm_id=" + farmId + " AND admin=1;");
+		String[][] preres2= processQuery("SELECT username from user WHERE user_id=" + preres1[0][0] + ";");
+		String[] res = new String[preres2.length];
+		for (int i = 0; i < res.length; i++) {
+			res[i] = preres2[0][i];
+		}
+		return res;
+	}
+
 	/** A method for processing SELECT queries easier. Returns a String[][] instead of using result sets given 
 	 * from the sql query. 
 	 * 
@@ -685,5 +702,7 @@ public class DatabaseConnector {
 		}
 		return null;
 	}
+
+
 
 }

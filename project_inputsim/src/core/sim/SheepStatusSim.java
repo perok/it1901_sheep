@@ -10,8 +10,10 @@ import com.db.*;
 import com.net.Server;
 
 import core.classes.GPSPosition;
+import core.classes.Message;
 import core.classes.Sheep;
 import core.classes.SheepAlert;
+import core.classes.SheepStatus;
 import core.settings.*;
 
 
@@ -197,7 +199,8 @@ public class SheepStatusSim {
 	 */
 	private void addStatus() {
 		String[][] stats = new String[livingSheep.size()][7];
-
+		ArrayList<Message> statuses = new ArrayList<Message>();
+		
 		for (int i = 0; i < livingSheep.size(); i++) {
 			stats[i][0] = Integer.toString(livingSheep.get(i).getId());
 			stats[i][1] = Long.toString(System.currentTimeMillis()/1000);
@@ -212,8 +215,11 @@ public class SheepStatusSim {
 			doublelong /= 10000;
 			stats[i][5] = Double.toString(intlong);
 			stats[i][6] = Integer.toString(livingSheep.get(i).getFarmId());
+			statuses.add(new SheepStatus(Integer.parseInt(stats[i][0]),Integer.parseInt(stats[i][1])
+			,Integer.parseInt(stats[i][2]), Float.parseFloat(stats[i][3]),Integer.parseInt(stats[i][4])
+			, new GPSPosition(Double.parseDouble(stats[i][5]),Double.parseDouble(stats[i][5])),Integer.parseInt(stats[i][7])));
 		}
-		server.notifier.recieveStatus(stats);
+		server.notifier.recieveStatus(stats,statuses);
 	}
 
 	/**Action listener class that listens for the timer interval.

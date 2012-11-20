@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+
 import com.db.DatabaseConnector;
+
+import core.classes.Message;
 import core.settings.Settings;
 
 /** Thread to handle connections from Client Socket.
@@ -35,6 +39,14 @@ public class ClientHandler implements Runnable {
 		this.server = server;
 		db = new DatabaseConnector(this.settings);
 	}
+	
+	/** Returns the username of connected client.
+	 * 
+	 * @return
+	 */
+	public String getUsername() {
+		return username;
+	}
 
 	/** Starts the thread to allow communication with client.
 	 * 
@@ -51,7 +63,7 @@ public class ClientHandler implements Runnable {
 
 				switch(req.getType()) {
 				case Request.LOGOUT:
-					server.sg.appendEvent(username + " disconnected with a LOGOUT message.");
+					server.display(username + " disconnected with a LOGOUT message.");
 					keepGoing = false;
 					kill();
 					break;
@@ -125,11 +137,18 @@ public class ClientHandler implements Runnable {
 		case("listUsersArrayList"):
 			return new Response(Response.LIST,db.listUsersArrayList(),request.getMessage());
 		}
-		
-		
-
 
 		return null;
+	}
+	
+	public void sendUpdate(ArrayList<Message> messages) {
+		try {
+			sOutput.writeObject(new Response(Response.LIST,messages,"updatedMessages"));
+			sOutput.flush();
+		} catch (IOException e) {
+			server.display("Error sending updates messages");
+			e.printStackTrace();
+		}
 	}
 
 }
