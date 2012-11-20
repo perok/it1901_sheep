@@ -240,8 +240,8 @@ public class DatabaseConnector {
 
 		try{
 			Statement s = conn.createStatement();
-			s.executeUpdate("UPDATE user SET name = '" + user.getName() + "', password = '" + user.getPassword() + "', phone_number = " + user.getMobileNumber() + ", "+
-					"mobile_number = " + user.getMobileNumber() + ", email = '" + user.getEmail() + "' WHERE id = " + userId + ";");
+			s.executeUpdate("UPDATE user SET name = '" + user.getName() + "', password = '" + user.getPassword() + "',mobile_number = " 
+			+ user.getMobileNumber() + ", email = '" + user.getEmail() + "' WHERE id = " + userId + ";");
 		}
 		catch(Exception e){
 			return false;
