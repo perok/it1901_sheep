@@ -251,6 +251,13 @@ public class ClientSocket  {
 		sendRequest(new Request(Request.REQUEST, "listUsersArrayList"));
 	}
 	
+	/** Makes a request for all the users in an ArrayList and sends it to the server.
+	 * 
+	 */
+	public void listFarms() {
+		sendRequest(new Request(Request.REQUEST, "listFarms"));
+	}
+	
 
 	/**Internal class(thread) that listens for input from the server. The object "caller"
 	 * must have a method to handle the response it is given. When started the thread constantly

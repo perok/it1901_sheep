@@ -76,6 +76,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 	 */
 	public void appendEvent(String str) {
 		event.append(str);
+		event.setCaretPosition(event.getDocument().getLength());
 	}
 
 	/**Action listener for the buttons
@@ -158,7 +159,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 		// Alert invoker
 		case("alert"):
 			switch(decoded[1]){
-			case("help"):
+			case("help"): 
 				appendEvent(HelpPrinter.printAlertHelp());
 			break;
 			}
@@ -213,7 +214,6 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 
 		// Database
 		case("db"):
-			System.out.println("db");
 		switch(decoded[1]){
 		case("help"):
 			appendEvent(HelpPrinter.printDbHelp());
@@ -221,21 +221,21 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 
 		case("ls"):
 			if(decoded[2].equalsIgnoreCase("users")) {
+				appendEvent("--List of users-- \n");
 				appendEvent(populator.listUsers());
-				System.out.println("ListUsers");
 			}
 			else if(decoded[2].equalsIgnoreCase("farms")) {
+				appendEvent("--List of farms-- \n");
 				appendEvent(populator.listFarms());
-				System.out.println("Listfarms");
 			}
 		break;
 
 		case("access"):
 			if(decoded[2].equalsIgnoreCase("add")) {
-				populator.addAccessRights(Integer.parseInt(decoded[2]), Integer.parseInt(decoded[3]));
+				populator.addAccessRights(Integer.parseInt(decoded[3]), Integer.parseInt(decoded[4]));
 			}
 			else if(decoded[2].equalsIgnoreCase("delete")) {
-				populator.removeAccessRights(Integer.parseInt(decoded[2]), Integer.parseInt(decoded[3]));
+				populator.removeAccessRights(Integer.parseInt(decoded[3]), Integer.parseInt(decoded[4]));
 			}
 
 		break;

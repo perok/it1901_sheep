@@ -41,6 +41,7 @@ public final class HelpPrinter {
 		String help = new String("Following command are available for pop: \n");
 		help += "pop add sheep x y - Adds x number of sheep to farm with id y \n";
 		help += "pop sheep alive x y - Sets sheep with id x to status y(0/1)";
+		help += "pop add user a b c d e f - Adds a user with username a, name b, password c, phonenumber d, email e";
 		return help;
 	}
 	

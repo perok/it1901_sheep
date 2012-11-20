@@ -1,8 +1,10 @@
 package core;
 
 import java.util.ArrayList;
+
 import com.db.DatabaseConnector;
 import com.net.MailNotifier;
+import com.net.Server;
 import com.skype.PhoneNotifier;
 import core.classes.*;
 import core.settings.Settings;
@@ -18,14 +20,15 @@ public class AlertNotifier implements Runnable{
 	private PhoneNotifier skype;
 	private MailNotifier mail;
 	private Settings settings;
+	private Server server;
 
 	/** Constructor. Adds notifiers with settings paramter.
 	 * 
 	 * @param settings
 	 */
-	public AlertNotifier(Settings settings) {
+	public AlertNotifier(Settings settings,Server server) {
 		this.settings = settings;
-		
+		this.server = server;
 	}
 
 	/** Polls database for unotified alerts.
@@ -69,14 +72,23 @@ public class AlertNotifier implements Runnable{
 		notifyEmail(sheepAlert);
 		db.insertSheepAlert(sheepAlert);
 		db.alertNotified(sheepAlert.getId());
+		ArrayList<Message> list = new ArrayList<Message>();
+		list.add(sheepAlert);
+		server.notifyClient(db.getUsernames(sheepAlert.getFarmId()), list);
 	}
 	
 	/** Inserts SheepStatus into the db.
 	 * 
 	 * @param status
 	 */
-	public void recieveStatus(String[][] status) {
+	public void recieveStatus(String[][] status, ArrayList<Message> statuses) {
 		db.insertSheepStatus(status);
+		String[][] list = db.listUsers();
+		String[] res = new String[list.length];
+		for (int i = 0; i < list.length; i++) {
+			res[i] = list[i][1];
+		}
+		server.notifyClient(res, statuses);
 	}
 
 }
