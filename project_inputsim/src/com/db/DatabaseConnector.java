@@ -240,8 +240,8 @@ public class DatabaseConnector {
 
 		try{
 			Statement s = conn.createStatement();
-			s.executeUpdate("UPDATE user SET name = '" + user.getName() + "', password = '" + user.getPassword() + "', phone_number = " + user.getMobileNumber() + ", "+
-					"mobile_number = " + user.getMobileNumber() + ", email = '" + user.getEmail() + "' WHERE id = " + userId + ";");
+			s.executeUpdate("UPDATE user SET name = '" + user.getName() + "', password = '" + user.getPassword() + "',mobile_number = " 
+			+ user.getMobileNumber() + ", email = '" + user.getEmail() + "' WHERE id = " + userId + ";");
 		}
 		catch(Exception e){
 			return false;
@@ -475,7 +475,7 @@ public class DatabaseConnector {
 		try {
 			Statement s = conn.createStatement();
 			s.executeUpdate("INSERT INTO sheep (name,farm_id,date_of_birth,alive,weight" +
-					") VALUES (" + "'"+sheep.getId()+"'," + ""+sheep.getFarmId()+"," +
+					") VALUES (" + "'"+sheep.getName()+"'," + ""+sheep.getFarmId()+"," +
 					""+sheep.getDateOfBirth()+"," + ""+sheep.isAlive()+"," + ""+sheep.getWeight()+");");
 			return true;
 		} catch (SQLException e) {
@@ -687,7 +687,7 @@ public class DatabaseConnector {
 
 	public String[] getUsernames(int farmId) {
 		String[][] preres1 = processQuery("SELECT user_id FROM access_rights WHERE farm_id=" + farmId + " AND admin=1;");
-		String[][] preres2= processQuery("SELECT username from user WHERE user_id=" + preres1[0][0] + ";");
+		String[][] preres2= processQuery("SELECT username from user WHERE id=" + preres1[0][0] + ";");
 		String[] res = new String[preres2.length];
 		for (int i = 0; i < res.length; i++) {
 			res[i] = preres2[0][i];
