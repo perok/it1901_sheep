@@ -10,6 +10,7 @@ import core.classes.Farm;
 import core.classes.Sheep;
 import core.classes.User;
 
+
 /** Connects the system to a server via sockets. Also handles sending
  * of requests to the server.
  */
@@ -106,15 +107,15 @@ public class ClientSocket  {
 		try { 
 			if(sInput != null) sInput.close();
 		}
-		catch(Exception e) {}
+		catch(Exception e) { /** Ignore errors */}
 		try {
 			if(sOutput != null) sOutput.close();
 		}
-		catch(Exception e) {} 
+		catch(Exception e) {/** Ignore errors */} 
 		try{
 			if(socket != null) socket.close();
 		}
-		catch(Exception e) {} 
+		catch(Exception e) {/** Ignore errors */} 
 
 		if(caller != null)
 			caller.connectionFailed();
@@ -249,6 +250,7 @@ public class ClientSocket  {
 	public void listUsers() {
 		sendRequest(new Request(Request.REQUEST, "listUsersArrayList"));
 	}
+	
 
 	/**Internal class(thread) that listens for input from the server. The object "caller"
 	 * must have a method to handle the response it is given. When started the thread constantly
@@ -256,7 +258,8 @@ public class ClientSocket  {
 	 * 
 	 * @author Lars Erik
 	 */
-	class ListenFromServer extends Thread {
+	private class ListenFromServer extends Thread {
+		protected ListenFromServer() {}
 		public void run() {
 			while(true) {
 				try {
@@ -269,7 +272,7 @@ public class ClientSocket  {
 						caller.connectionFailed();
 					break;
 				}
-				catch(ClassNotFoundException e2) {
+				catch(ClassNotFoundException e2) {/** Ignore errors */
 				}
 			}
 		}

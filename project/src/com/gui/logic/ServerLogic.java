@@ -103,7 +103,8 @@ public class ServerLogic extends QSignalEmitter{
 		}
 		/* Boolean */
 		else if(responseType == 2)
-		{	
+		{
+			/** Not handled */
 		}
 		
 		/* User */
@@ -127,7 +128,7 @@ public class ServerLogic extends QSignalEmitter{
 	/**
 	 * Close the connection to the server
 	 */
-	public void closeConnection(){
+	public static void closeConnection(){
 		if(clientSocket != null)
 			clientSocket.disconnect();
 	}
@@ -135,7 +136,7 @@ public class ServerLogic extends QSignalEmitter{
 	/**
 	 * Method called from clientsocket when it has had a connection failure
 	 */
-	public void connectionFailed(){
+	public static void connectionFailed(){
 		System.err.println("Connection error");
 	}
 	
@@ -161,7 +162,7 @@ public class ServerLogic extends QSignalEmitter{
 	public void editSheep(Sheep sheep){
 		clientSocket.editSheep(sheep);
 		
-		//TODO: skal ikke håndteres slik. SKal bli håndtert av serverlogic
+		//TODO: skal ikke hï¿½ndteres slik. SKal bli hï¿½ndtert av serverlogic
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {

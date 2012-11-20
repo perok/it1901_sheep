@@ -15,7 +15,6 @@ import com.trolltech.qt.gui.QLabel;
 import core.classes.Message;
 import core.classes.Sheep;
 import core.classes.SheepAlert;
-import core.classes.SheepStatus;
 
 import core.classes.SheepJS;
 
@@ -39,6 +38,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	
 	private Sheep currentSheep;
 	
+	@SuppressWarnings("unused")
 	private void sendUserData(ArrayList<User> lUsers)
 	{
 		this.signalUserListRecieved.emit(lUsers);
@@ -203,6 +203,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 */
 	@SuppressWarnings("unused")
 	private void actionUndo_toggled(boolean trigg){
+		/** TODO: add undo-action here */
 	}
 
 	/**
@@ -254,7 +255,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 * Used for showing the selected sheeps in the map
 	 * @param sheeps
 	 */
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused", "unchecked" })
 	private void multiSheepSelect(ArrayList<Sheep> sheeps){
 		JSONArray arr = new JSONArray();
 		
@@ -269,7 +270,9 @@ public class UiMainWindowLogic extends QSignalEmitter
 				if((Message)sheep.getRecentStatuses().get(0) instanceof SheepAlert)
 					isAlert = true;
 				
+				//arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, lat, lon));
 				arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, lat, lon));
+				
 			}
 		}
 		
@@ -282,7 +285,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		 * Populates the tabWidget
 		 * @param sheep
 		 */
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused", "unchecked" })
 	private void populateTableWidget(Sheep sheep){
 		//MAP
 		JSONArray arr = new JSONArray();
@@ -322,7 +325,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 * Method for sending a new sheep to the server
 	 * @param click
 	 */
-	@SuppressWarnings("unused")
+	@SuppressWarnings({ "unused", "boxing" })
 	private void pBSubmit_Add_clicked(boolean click){
 		
 		Sheep sheepAdd;
@@ -378,7 +381,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 * 
 	 * @param click
 	 */
-	@SuppressWarnings("unused")
+	@SuppressWarnings({"unused", "boxing"})
 	private void pbTabInformationUpdate_clicked(boolean click){
 		Sheep sheepUpdate;
 		//Not empty

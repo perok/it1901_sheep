@@ -13,9 +13,6 @@ public class UserStorage {
 	private static int currentMessageType;
 	private static User user;
 	
-	private static int msgType = 0;
-	
-	
 	/** Constructor. Initialize..
 	 * 
 	 * @param user_ User-object this class should hold.
