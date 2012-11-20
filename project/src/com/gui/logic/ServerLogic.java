@@ -46,8 +46,7 @@ public class ServerLogic extends QSignalEmitter{
 		System.out.println("Hello");
 		
 		System.out.println("Trying to log in with user: " + usrName);
-		//For testing only
-		//loggedIn.emit();
+
 		if(clientSocket == null )
 			clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
 		

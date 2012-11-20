@@ -82,6 +82,7 @@ public class MainWindow extends QMainWindow
         /* Give the logic window some logic login-window */
         new UiLoginWindowLogic(this.uiLoginWindow, this.serverLogic);
 
+        this.serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");
     }
     
 	/**
@@ -101,7 +102,6 @@ public class MainWindow extends QMainWindow
 		/* Setup user-triggered events */
 		this.mwLogic.signalShowAbout.connect(this, "about()");
 		this.mwLogic.signalShowAboutQt.connect(this, "aboutQt()");
-        this.serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");
   	}
     
     /*
