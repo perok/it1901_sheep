@@ -23,7 +23,6 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	//Stores a reference the current sheeps in the view.
 	private ArrayList<QListWidgetItem> currentItems;
 	
-	//FIXME: sorting is done with strings and thus, numbered sheeps does'nt get sorted correctly
 	private SortOrder sortOrder = SortOrder.AscendingOrder;
 	
 	private QIcon sheepOkPicture;
@@ -47,7 +46,7 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	{
 		sheepOkPicture = new QIcon("res/Sheep_WO_backround.png");
 		sheepDeadPicture = new QIcon("res/dead_sheep.png");
-		mapIcon = new QIcon("treasure-map-icon.png");
+		mapIcon = new QIcon("res/treasure-map-icon.png");
 		
 		sheepSelected = new Signal1<Sheep>();
 		statusBarMessage = new Signal1<String>();
