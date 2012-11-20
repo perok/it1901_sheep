@@ -123,8 +123,14 @@ public class UiMainWindowLogic extends QSignalEmitter
 	}
 	
 	/* SERVERLOGIC*/
+	/**
+	 * Updates the UserStorage with the new sheeps and refreshes the list.
+	 * @param sheeps
+	 * @param farmID
+	 */
 	private void sLogic_signalNewSheeps(ArrayList<Sheep> sheeps, int farmID){
-		
+		UserStorage.getUser().getFarmlist().get(farmID).setSheepList(sheeps);
+		slwHandler.refreshSheepList();
 		
 	}
 	
