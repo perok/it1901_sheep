@@ -21,11 +21,11 @@ public class Constants {
 	public final static int QtSheepDataRole = 32;
 	
 	/** The title of this application */
-	public static final String title = "SSAï¿½ (Sheep Surveilance Application)";
+	public static final String title = "SSA© (Sheep Surveilance Application)";
 	
 	/** About-message shown in our about-window */
-	public static final String about = "The Greatest and Only SSAï¿½ (Sheep Surveilance Application).\n\n" 
-    		+ "Created by: \n\tAnders Sildnes \n\tLars erik Grasdal \n\tTor ï¿½kland Barstad"
-    		+ "\n\tSvenn Kvelstad \n\tPer ï¿½yvind Kanestrï¿½m";
+	public static final String about = "The Greatest and Only SSA© (Sheep Surveilance Application).\n\n" 
+    		+ "Created by: \n\tAnders Sildnes \n\tLars erik Grasdal \n\tTor Økland Barstad"
+    		+ "\n\tSvenn Kvelstad \n\tPer Øyvind Kanestrøm";
 	
 }
