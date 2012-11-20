@@ -88,7 +88,6 @@ function receiveJSONOne(data){
 	setMarkers(map, data);	
 	//Add lines
 	makeLines(map);
-	alert('lol');
 } 
 
 //function that is called from the application for many sheep selected
@@ -102,14 +101,13 @@ function receiveJSONMany(data){
 // Origins, anchor positions and coordinates of the marker
 // increase in the X direction to the right and in
 // the Y direction down.
-
 var sheepOk = new google.maps.MarkerImage('images/Sheep_WO_backround.png',
 	// This marker is 23 pixels wide by 2 pixels tall.
 	new google.maps.Size(23, 22),
 	// The origin for this image is 0,0.
 	new google.maps.Point(0,0),
 	// The anchor for this image is the base of the flagpole at 0,32.
-	new google.maps.Point(0, 32));
+	new google.maps.Point(0, 22));
 
 	// Shapes define the clickable region of the icon.
 	// The type defines an HTML &lt;area&gt; element 'poly' which
@@ -119,12 +117,12 @@ var sheepOk = new google.maps.MarkerImage('images/Sheep_WO_backround.png',
 var sheepDead = new google.maps.MarkerImage('images/dead_sheep.png',
 	new google.maps.Size(23, 22),
 	new google.maps.Point(0,0),
-	new google.maps.Point(0, 32));
+	new google.maps.Point(0, 22));
 
 var sheepWarn = new google.maps.MarkerImage('images/warning_sheep.png',
 		new google.maps.Size(23, 22),
 		new google.maps.Point(0,0),
-		new google.maps.Point(0, 32));
+		new google.maps.Point(0, 22));
 
 var shape = {
 		  coord: [1, 1, 1, 23, 23, 22, 23 , 1],
