@@ -32,7 +32,7 @@ public class AccessListWidget extends QWidget
 	 *
 	 * @param parent
 	 */
-	public AccessListWidget(@SuppressWarnings("unused") UserSettings parent)
+	public AccessListWidget(UserSettings parent)
 	{		
 		initWidgets();
 		initLayout();

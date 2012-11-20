@@ -151,7 +151,7 @@ public class ServerLogic extends QSignalEmitter{
 	/**
 	 * TODO: IMPLEMENT
 	 */
-	public void addSheep(@SuppressWarnings("unused") Sheep sheep){
+	public void addSheep(Sheep sheep){
 		//clientSocket.
 	}
 	
