@@ -78,7 +78,8 @@ public class SettingsMenu extends QDialog
      * 
      * @param lUsers list containing all users to the system
      */
-    private void sendData(ArrayList<User> lUsers)
+    @SuppressWarnings("unused")
+	private void sendData(ArrayList<User> lUsers)
     {
     	signalUserListRecieved.emit(lUsers);    	
     }

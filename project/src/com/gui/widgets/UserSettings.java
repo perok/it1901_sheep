@@ -278,7 +278,7 @@ public class UserSettings extends QWidget implements InputComponentHost
 	 * 
 	 * @param oldUser user-data before edits
 	 */
-	private void updateUser(User oldUser)
+	private static void updateUser(User oldUser)
 	{
 		User newUser = com.storage.UserStorage.getUser();
 		
