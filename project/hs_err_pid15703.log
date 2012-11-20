@@ -1,0 +1,43 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f14feb47e38, pid=15703, tid=139726982346496
+#
+# JRE version: 7.0_09-b30
+# Java VM: OpenJDK 64-Bit Server VM (23.2-b09 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libqtjambi.so+0x1ae38]  qtjambi_from_thread(JNIEnv_*, QThread*)+0x28
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please include
+# instructions on how to reproduce the bug and visit:
+#   https://bugs.launchpad.net/ubuntu/+source/openjdk-7/
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f14b4002800):  JavaThread "Thread-1" [_thread_in_native, id=15751, stack(0x00007f14b915f000,0x00007f14b9260000)]
+
+siginfo:si_signo=SIGSEGV: si_errno=0, si_code=1 (SEGV_MAPERR), si_addr=0x0000000000000000
+
+Registers:
+RAX=0x0000000000000000, RBX=0x0000000000000000, RCX=0x000000000000e5e9, RDX=0x00007f1510487060
+RSP=0x00007f14b925e950, RBP=0x00007f14b925e9d8, RSI=0x00007f1510410e30, RDI=0x00007f14b40029d8
+R8 =0x00007f150c9e3400, R9 =0x00000000b9d13390, R10=0x00007f150c9f5d85, R11=0x00007f15165e60b0
+R12=0x0000000000000000, R13=0x00000000b9d13478, R14=0x00007f14b925ea08, R15=0x00007f14b4002800
+RIP=0x00007f14feb47e38, EFLAGS=0x0000000000010206, CSGSFS=0x0000000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x00007f14b925e950)
+0x00007f14b925e950:   00007f14b925ebc0 00007f1510410e30
+0x00007f14b925e960:   0000000000000000 00007f14fe8a8434
+0x00007f14b925e970:   00000000b9d13478 00007f150c9f5db1
+0x00007f14b925e980:   00007f14d00bb100 00007f14b925e9b0
+0x00007f14b925e990:   00007f14d00d8268 00007f14b925e998
+0x00007f14b925e9a0:   0000000000000000 00007f14b925ea08
+0x00007f14b925e9b0:   00000000b9d1da60 0000000000000000
+0x00007f14b925e9c0:   00000000b9d13478 0000000000000000
+0x00007f14b925e9d0:   00007f14b925e9f8

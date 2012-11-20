@@ -41,11 +41,6 @@ public class SettingsMenu extends QDialog
     
     public Signal0 signalFarmChanged;
     public Signal1<ArrayList<User>> signalUserListRecieved;
-    
-    private void notifyChildren()
-    {
-    	this.usUserWidget.notifyChild();
-    }
      
     /** Constructor. Initialize
      *
@@ -70,6 +65,12 @@ public class SettingsMenu extends QDialog
 	    super.setWindowTitle(tr("Innstillinger"));
 	    super.setWindowIcon(new QIcon(CLASS_ICON));
 	}
+    
+    
+    private void notifyChildren()
+    {
+    	this.usUserWidget.notifyChild();
+    }
     
     /** Initialize the signals of THIS
      */
