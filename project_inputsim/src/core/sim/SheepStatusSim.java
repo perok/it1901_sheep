@@ -35,7 +35,7 @@ public class SheepStatusSim {
 	private static final double y_diff = 0.57414;
 	private static final int y_diff_int = 57414;
 	
-	private static final int DEFAULT_INTERVAL = 60;
+	private static final int DEFAULT_INTERVAL = 1440;
 	private static final int ALERT_INTERVAL = 1440;
 	private int statusInterval;
 	private DatabaseConnector sq;
@@ -107,6 +107,7 @@ public class SheepStatusSim {
 	public void setTimerInterval(int timerInterval) {
 		this.statusInterval = timerInterval;
 		server.display("Simulator interval set to " + timerInterval +" minutes");
+		statusTimer.stop();
 		statusTimer = new Timer(timerInterval, updateStatus);
 		statusTimer.start();
 	}
@@ -116,7 +117,7 @@ public class SheepStatusSim {
 	 */
 	public void start() {
 		statusTimer.start();
-		server.display("Simulator started");
+		server.display("Simulator started. Interval: " + statusInterval);
 	}
 
 	/** Stops the timer.
@@ -146,16 +147,16 @@ public class SheepStatusSim {
 		for (int i = 0; i < amount; i++) {
 			alerts[i][0] = Integer.toString(thisFarm.get(rand.nextInt(thisFarm.size())).getId());
 			alerts[i][1] = Long.toString(System.currentTimeMillis()/1000);
-			alerts[i][2] = Integer.toString(rand.nextInt(1)+39);
-			alerts[i][3] = Integer.toString(rand.nextInt(30)+60);
+			alerts[i][2] = Integer.toString(rand.nextInt(2)+39);
+			alerts[i][3] = Integer.toString(rand.nextInt(30)+75);
 			int intlat = rand.nextInt(y_diff_int);
 			double doublelat = (double) intlat;
-			doublelat /= 10000;
-			alerts[i][4] = Double.toString(intlat);
+			doublelat /= 100000;
+			alerts[i][5] = Double.toString(doublelat+map_y_min);
 			int intlong = rand.nextInt(x_diff_int);
 			double doublelong = (double) intlong;
-			doublelong /= 10000;
-			alerts[i][5] = Double.toString(intlong);
+			doublelong /= 100000;
+			alerts[i][4] = Double.toString(doublelong+map_x_min);
 			alerts[i][6] = Integer.toString(farmId);
 			server.notifier.recieveAlert(new SheepAlert(Integer.parseInt(alerts[i][0]), Integer.parseInt(alerts[i][1]), 
 					Float.parseFloat(alerts[i][2]), Integer.parseInt(alerts[i][3]), new GPSPosition(Double.parseDouble(alerts[i][4]), 
@@ -167,28 +168,31 @@ public class SheepStatusSim {
 	/** Adds alert for a random farm via database constructor.
 	 * 
 	 * @param amount
+	 * @deprecated
 	 */
 	public boolean addAlert(int amount) {
 		String[][] alerts = new String[amount][7];
+		ArrayList<Message> alertList = new ArrayList<>();
 
-		for (int i = 0; i < amount; i++) {
+		for (int i = 0; i < livingSheep.size(); i++) {
 			alerts[i][0] = Integer.toString(livingSheep.get(i).getId());
 			alerts[i][1] = Long.toString(System.currentTimeMillis()/1000);
 			alerts[i][2] = Integer.toString(rand.nextInt(1)+39);
 			alerts[i][3] = Integer.toString(rand.nextInt(30)+60);
 			int intlat = rand.nextInt(y_diff_int);
 			double doublelat = (double) intlat;
-			doublelat /= 10000;
-			alerts[i][4] = Double.toString(intlat);
+			doublelat /= 100000;
+			alerts[i][5] = Double.toString(doublelat+map_y_min);
 			int intlong = rand.nextInt(x_diff_int);
 			double doublelong = (double) intlong;
-			doublelong /= 10000;
-			alerts[i][5] = Double.toString(intlong);
+			doublelong /= 100000;
+			alerts[i][4] = Double.toString(doublelong+map_x_min);
 			alerts[i][6] = Integer.toString(livingSheep.get(i).getFarmId());
-			server.notifier.recieveAlert(new SheepAlert(Integer.parseInt(alerts[i][0]), Integer.parseInt(alerts[i][1]), 
-					Float.parseFloat(alerts[i][2]), Integer.parseInt(alerts[i][3]), new GPSPosition(Double.parseDouble(alerts[i][4]), 
-							Double.parseDouble(alerts[i][5])), Integer.parseInt(alerts[i][6])));
+			alertList.add(new SheepAlert(Integer.parseInt(alerts[i][0]),Integer.parseInt(alerts[i][1])
+			, Float.parseFloat(alerts[i][2]),Integer.parseInt(alerts[i][3])
+			, new GPSPosition(Double.parseDouble(alerts[i][4]),Double.parseDouble(alerts[i][5])),Integer.parseInt(alerts[i][6])));
 		}
+		
 		return true;
 	}
 
@@ -232,7 +236,7 @@ public class SheepStatusSim {
 				addStatus();
 			}
 			if(evt.getSource() == alertTimer){
-				addAlert(rand.nextInt(farms.length),1);
+				addAlert(rand.nextInt(farms.length)+1,1);
 			}
 		}
 	};
