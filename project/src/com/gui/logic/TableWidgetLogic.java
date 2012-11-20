@@ -50,7 +50,6 @@ public class TableWidgetLogic {
 		widget.horizontalHeader().setStretchLastSection(true); 
 		
 		/* Signals */
-		widget.cellClicked.connect(this, "cellClicked(int, int)");
 		widget.horizontalHeader().clicked.connect(this, "horizontalHeader_clicked(QModelIndex)");
 	}
 
@@ -107,24 +106,27 @@ public class TableWidgetLogic {
 					System.out.println("ALARM");
 				
 				int i = 0;
-				QTableWidgetItem item = new QTableWidgetItem(message.getId());
+				QTableWidgetItem item = new QTableWidgetItem();
 				item.disableGarbageCollection();
 				item.setData(Constants.QtSheepDataRole, sheep);
+				item.setData(Qt.ItemDataRole.DisplayRole, message.getId());
 				widget.setItem(y, i, item);
 				System.out.println(y + "  " + i + "  " + item.data(Qt.ItemDataRole.DisplayRole));
 				i++;
 				
-				item = new QTableWidgetItem(message.getTimestamp());
+				item = new QTableWidgetItem();
 				item.disableGarbageCollection();
+				item.setData(Qt.ItemDataRole.DisplayRole, message.getTimestamp());
 				item.setData(Constants.QtSheepDataRole, sheep);
 				widget.setItem(y, i, item);
 				System.out.println(y + "  " + i + "  " + item.data(Qt.ItemDataRole.DisplayRole));
 
 				i++;
 				
-				item = new QTableWidgetItem(String.valueOf(message.getTemperature()));
-				item.disableGarbageCollection();
+				item = new QTableWidgetItem();
+				item.setData(Qt.ItemDataRole.DisplayRole, message.getTemperature());
 				item.setData(Constants.QtSheepDataRole, sheep);
+				item.disableGarbageCollection();
 				widget.setItem(y, i, item);
 				System.out.println(y + "  " + i + "  " + item.data(Qt.ItemDataRole.DisplayRole));
 
