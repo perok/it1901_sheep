@@ -209,15 +209,15 @@ public class SheepStatusSim {
 			int intlat = rand.nextInt(y_diff_int);
 			double doublelat = (double) intlat;
 			doublelat /= 10000;
-			stats[i][4] = Double.toString(intlat);
+			stats[i][4] = Double.toString(doublelat+map_y_min);
 			int intlong = rand.nextInt(x_diff_int);
 			double doublelong = (double) intlong;
 			doublelong /= 10000;
-			stats[i][5] = Double.toString(intlong);
+			stats[i][5] = Double.toString(doublelong+map_x_min);
 			stats[i][6] = Integer.toString(livingSheep.get(i).getFarmId());
 			statuses.add(new SheepStatus(Integer.parseInt(stats[i][0]),Integer.parseInt(stats[i][1])
-			,Integer.parseInt(stats[i][2]), Float.parseFloat(stats[i][3]),Integer.parseInt(stats[i][4])
-			, new GPSPosition(Double.parseDouble(stats[i][5]),Double.parseDouble(stats[i][5])),Integer.parseInt(stats[i][7])));
+			, Float.parseFloat(stats[i][2]),Integer.parseInt(stats[i][3])
+			, new GPSPosition(Double.parseDouble(stats[i][4]),Double.parseDouble(stats[i][5])),Integer.parseInt(stats[i][6])));
 		}
 		server.notifier.recieveStatus(stats,statuses);
 	}
