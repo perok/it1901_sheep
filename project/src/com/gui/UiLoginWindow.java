@@ -12,6 +12,9 @@ import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
 
+/** The graphical interface for the login-window 
+ * 
+ */
 public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QUiForm<QMainWindow>
 {
     public QWidget centralwidget;
@@ -27,9 +30,8 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
     public QSpacerItem verticalSpacer;
     public QSpacerItem verticalSpacer_2;
     
-
     /* Signals */
-    public Signal2<String, String> tryLogin = new Signal2<String, String>();
+    public Signal2<String, String> signalTryLogin = new Signal2<String, String>();
 
     public UiLoginWindow() { 
     	super(); 
@@ -37,7 +39,7 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
 
     public void setupUi(QMainWindow MainWindow, int width, int height)
     {
-    	tryLogin = new Signal2<String, String>();
+    	signalTryLogin = new Signal2<String, String>();
     	
         MainWindow.setObjectName("MainWindow");
         
@@ -119,7 +121,7 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
      */
     public void loginCheck(){
     	if(isPassWordAndUsernName(txtEditUsername.text(), txtEditPassword.text())){
-    		tryLogin.emit(txtEditUsername.text(), txtEditPassword.text());
+    		signalTryLogin.emit(txtEditUsername.text(), txtEditPassword.text());
     	}
     	else{
     		System.out.println("Input correct shiet mafacka");

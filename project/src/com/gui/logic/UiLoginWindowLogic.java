@@ -14,6 +14,6 @@ public class UiLoginWindowLogic {
 		this.sLogic = sLogic;
 		//this.lWindow = lWindow;
 		
-    	lWindow.tryLogin.connect(this.sLogic, "tryLogIn(String, String)");
+    	lWindow.signalTryLogin.connect(this.sLogic, "tryLogIn(String, String)");
 	}
 }
