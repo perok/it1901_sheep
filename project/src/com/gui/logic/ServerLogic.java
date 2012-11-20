@@ -80,11 +80,13 @@ public class ServerLogic extends QSignalEmitter{
 		/* List */
 		if(responseType == 1) 
 		{			
+			//There is content
 			if(response.getContent() != null 
-			&& response.getContent().isEmpty() == false 
-			&& response.getContent().get(0) instanceof User)
+					&& response.getContent().isEmpty() == false 
 			{
-				this.signalUserDataRecieved.emit(response.getContent());
+				//Content is of a User response
+				if(response.getContent().get(0) instanceof User)
+					this.signalUserDataRecieved.emit(response.getContent());
 			}
 			
 			//A object has called for a list
@@ -101,7 +103,14 @@ public class ServerLogic extends QSignalEmitter{
 		/* Boolean */
 		else if(responseType == 2)
 		{
-			/** Not handled */
+			//TODO: skal ikke h�ndteres slik. SKal bli h�ndtert av serverlogic
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			clientSocket.getSheep(sheep.getFarmId());
 		}
 		
 		/* User */
@@ -158,14 +167,5 @@ public class ServerLogic extends QSignalEmitter{
 	 */
 	public void editSheep(Sheep sheep){
 		clientSocket.editSheep(sheep);
-		
-		//TODO: skal ikke h�ndteres slik. SKal bli h�ndtert av serverlogic
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		clientSocket.getSheep(sheep.getFarmId());
 	}
 }

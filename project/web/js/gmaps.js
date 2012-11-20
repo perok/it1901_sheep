@@ -89,6 +89,7 @@ var beaches = [
 
 //function that is called from the application for one sheep selected
 function receiveJSONOne(data){
+	alert("data one");
 	setMarkers(map, data);	
 	//Add lines
 	//makeLines(map);
@@ -96,6 +97,8 @@ function receiveJSONOne(data){
 
 //function that is called from the application for many sheep selected
 function receiveJSONMany(data){
+	alert("data many");
+
 	setMarkers(map, data);	
 } 
 
@@ -135,7 +138,7 @@ var sheepWarn = new google.maps.MarkerImage('images/warning_sheep.png',
 function setMarkers(map, locations) {
 	deleteOverlays();
   // Add markers to the map
-
+	alert(locations.length);
     for (var i = 0; i < locations.length; i++) {
     	//alert(locations[i].lat + "  " + locations[i].lon);
     	
