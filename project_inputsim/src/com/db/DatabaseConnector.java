@@ -82,8 +82,17 @@ public class DatabaseConnector {
 				String [][] r4 = processQuery("SELECT * from sheep WHERE farm_id = " + farm.getId() + ";");
 				for (int j = 0; j < r4.length; j++) {
 					Sheep sheep = new Sheep(Integer.parseInt(r4[j][0]), r4[j][1], Integer.parseInt(r4[j][2]), Integer.parseInt(r4[j][3]), getBoolean(r4[j][4]), Integer.parseInt(r4[j][5]));
-					String [][] r5 = processQuery("SELECT * from sheep_status WHERE sheep_id = " + sheep.getId() + " LIMIT 10;");
+					String [][] r5 = processQuery("SELECT * from sheep_status WHERE sheep_id = " + sheep.getId() + " LIMIT 5;");
 					for (int k = 0; k < r5.length; k++) {
+						System.out.println("=======");
+						System.out.println(Integer.parseInt(r5[k][0]));
+						System.out.println(Integer.parseInt(r5[k][1]));
+						System.out.println(Integer.parseInt(r5[k][2]));
+						System.out.println(Float.parseFloat(r5[k][3])); 
+						System.out.println(Integer.parseInt(r5[k][4]));
+						System.out.println(Double.parseDouble(r5[k][5]));
+						System.out.println(Double.parseDouble(r5[k][6]));
+						System.out.println(Integer.parseInt(r5[k][7]));
 						sheep.addSheepStatus(new SheepStatus(Integer.parseInt(r5[k][0]),
 								Integer.parseInt(r5[k][1]),
 								Integer.parseInt(r5[k][2]),
