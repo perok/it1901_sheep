@@ -39,7 +39,7 @@ public class AccessListWidget extends QWidget
 		initLayout();
 		initConnectEvents();
 		
-		/* When this line is done, a signal sends info back to THIS */
+		/* After this line is done, a signal sends info back to THIS */
 		ServerLogic.getClientsocket().listUsers();
 	}
 	
@@ -58,6 +58,7 @@ public class AccessListWidget extends QWidget
 	 */
 	public void recieveUserData(ArrayList<User> lUsers)
 	{
+		/* There's no point doing anything with no users */
 		if(lUsers.isEmpty() == true) { return; }
 
 		int iFarm = com.storage.UserStorage.getCurrentFarm();
@@ -65,11 +66,13 @@ public class AccessListWidget extends QWidget
 		ArrayList<Farm> lFarm = com.storage.UserStorage.getUser().getFarmlist();
 		Farm fCurrentFarm = lFarm.get(iFarm);
 		
+		/* For each user */
 		for(User u : lUsers)
 		{
 			//if(u.getName().equals(sCurrentUserName)) { continue; }
 			System.out.println(u.getFarmlist());
 			
+			/* Make an item and insert it into the list */
 			QListWidgetItem cur = new QListWidgetItem(this.qlwUserList);
 			cur.setText(u.getName());
 		}
@@ -80,8 +83,10 @@ public class AccessListWidget extends QWidget
 	 */
 	private void transferFromAdmin()
 	{
+		/* For each selected item in Admin-list */
 		for(QListWidgetItem qlwi : this.qlwAdminList.selectedItems())
 		{
+			/* Remove (graphically) and insert in non-admin-list */
 			this.qlwUserList.insertItem(0, qlwi.clone());
 			this.qlwAdminList.takeItem(this.qlwAdminList.row(qlwi));
 		}
@@ -92,8 +97,10 @@ public class AccessListWidget extends QWidget
 	 */
 	private void transferToAdmin()
 	{
+		/* For each selected item in non-admin list */
 		for(QListWidgetItem qlwi : this.qlwUserList.selectedItems())
 		{
+			/* Remove (graphically) and insert in admin-list */
 			this.qlwAdminList.insertItem(0, qlwi.clone());
 			this.qlwUserList.takeItem(this.qlwUserList.row(qlwi));
 		}
@@ -114,15 +121,17 @@ public class AccessListWidget extends QWidget
 		
 	/** Return the layout used to display this widgets
 	 * 
-	 * @see 
+	 * @see AlertSettings.initLayout()
 	 * @return the layout used to display this widget.
 	 */
 	public QHBoxLayout getLayout()
 	{
-		this.qhblMainLayout.setSpacing(10);
+		//this.qhblMainLayout.setSpacing(10);
 		return this.qhblMainLayout;
 	}
 	
+	/** Initialize the main layout of THIS
+	 */
 	private void initLayout()
 	{
 		qhblMainLayout = new QHBoxLayout();
