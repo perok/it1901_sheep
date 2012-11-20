@@ -12,8 +12,10 @@ import com.trolltech.qt.core.QDate;
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QAction;
+import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QLabel;
 
+import core.classes.Farm;
 import core.classes.Message;
 import core.classes.Sheep;
 import core.classes.SheepAlert;
@@ -129,11 +131,25 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 * @param farmID
 	 */
 	private void sLogic_signalNewSheeps(ArrayList<Sheep> sheeps, int farmID){
-		UserStorage.getUser().getFarmlist().get(farmID).setSheepList(sheeps);
-		//TODO: Does this work?
-		//Only refresh sheeplist if the changed sheeps are in the row
-		if(UserStorage.getCurrentFarm() == farmID)
-			slwHandler.refreshSheepList();
+		for(Farm farm : UserStorage.getUser().getFarmlist()){
+			if(farm.getId() == farmID){
+				farm.setSheepList(sheeps);
+				
+				//TODO: DOES NOT WORK. CurrentFarm needs to be fixed..
+				//Only refresh sheeplist if the changed sheeps are in the row
+				//if(UserStorage.getCurrentFarm() == farmID)
+				QApplication.invokeLater(new Runnable() {
+				    @Override
+				    public void run() {
+				    	slwHandler.refreshSheepList();
+				    }
+				});
+				
+				break;
+			}
+		}
+		
+		
 		
 	}
 	

@@ -103,13 +103,14 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	 */
 	public void refreshSheepList()
 	{
-		int currentROw = qlWidget.currentRow();
+		//TODO: not working
+		//int currentROw = qlWidget.currentRow();
 		
 		
 		if(UserStorage.getUser() == null)
 			return;
 		
-		statusBarMessage.emit("Populating Sheeps");
+		//statusBarMessage.emit("Populating Sheeps");
 		currentItems = new ArrayList<QListWidgetItem>();
 		
 		//Empty list
@@ -123,7 +124,7 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 			QListWidgetItem item = new QListWidgetItem();
 			item.setData(Constants.QtSheepDataRole, sheep);
 			item.setData(Qt.ItemDataRole.DisplayRole, sheep.getName());
-			
+
 			if(sheep.isAlive())
 				item.setIcon(sheepOkPicture);
 			else
@@ -136,7 +137,7 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 			currentItems.add(item);
 		}
 		//Scrolls to the last row that was current TODO: Does it work?
-		qlWidget.setCurrentRow(currentROw);
+		//qlWidget.setCurrentRow(currentROw);
 		statusBarMessage.emit("done");
 	}
 	
