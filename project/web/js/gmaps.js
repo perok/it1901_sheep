@@ -142,40 +142,47 @@ function setMarkers(map, locations) {
   // Add markers to the map
 
     for (var i = 0; i < locations.length; i++) {
-    	alert(locations[i].lat + "  " + locations[i].lon);
-    
-    	//IF CHOOSE IMAGE
+    	//alert(locations[i].lat + "  " + locations[i].lon);
     	
-	  var myLatLng = new google.maps.LatLng(locations[i].lat, locations[i].lon);
-	  var marker = new google.maps.Marker({
-	    position: myLatLng,
-	    map: map,
-	    icon: sheepOk,
-	    shape: shape,
-	    animation: google.maps.Animation.DROP,
-	    title: locations[i].name,
-	    zIndex: 0
-	  });
-      
-      
-      google.maps.event.addListener(marker, 'click', function() {
-    	  var contentString = '<div id="content">'+
-    		'<div id="siteNotice">'+
-    		'</div>'+
-    		'<h1 id="firstHeading" class="firstHeading">' + marker.getTitle '</h1>'+
-    		'<div id="bodyContent">'+
-    		'<p>'+marker.Position.toUrlValue+'</p>'+
-    		'</div>'+
-    		'</div>';
-    	  
-    	  infoWindow.setContent(contentString);
-          infowindow.open(map,marker);
-        });
-      
-      markers.push(marker);
-    }
+    	var image;
+    	
+    	if(locations[i].isAlive == 'false')
+    		image = sheepDead;
+    	else if(locations[i].isAlert == 'true')
+    		image = sheepWarn;
+    	else
+    		image = sheepOk;
     
-    setAllMap(map);
+		var myLatLng = new google.maps.LatLng(locations[i].lat, locations[i].lon);
+		var marker = new google.maps.Marker({
+			position: myLatLng,
+			map: map,
+			icon: sheepOk,
+			shape: shape,
+			animation: google.maps.Animation.DROP,
+			title: locations[i].name,
+			zIndex: 0
+		});
+      
+      
+		google.maps.event.addListener(marker, 'click', function() {
+			var contentString = '<div id="content">'+
+				'<div id="siteNotice">'+
+				'</div>'+
+				'<h1 id="firstHeading" class="firstHeading">' + marker.getTitle '</h1>'+
+				'<div id="bodyContent">'+
+				'<p>'+marker.Position.toUrlValue+'</p>'+
+				'</div>'+
+				'</div>';
+	  
+			infoWindow.setContent(contentString);
+			infowindow.open(map,marker);
+		});
+  
+		markers.push(marker);
+}
+
+setAllMap(map);
 }
 
 
