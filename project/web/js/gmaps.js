@@ -14,7 +14,6 @@
 		center: trondheimLoc,
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 		streetViewControl: false,
-		disableDefaultUI: true,
 		mapTypeControlOptions: {
 			mapTypeIds: ['statkart', google.maps.MapTypeId.ROADMAP],
 			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
@@ -25,6 +24,21 @@
 	wmsType = new google.maps.ImageMapType(StatKartLayer);
 	 
 	map.mapTypes.set('statkart', wmsType);
+	
+
+	  alert("hey")
+	  if(navigator.geolocation) {
+		  alert("cake")
+          navigator.geolocation.getCurrentPosition(function(position) {
+              alert("yo");
+            var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            map.setCenter(pos);
+          });
+	  }else{
+		  alert("Fuck")
+	  }
+  
+  //makeLines(map);
 }
   
 
@@ -82,6 +96,11 @@ function receiveJSONMany(data){
 	setMarkers(map, data);	
 } 
 
+//Delete all overlays
+function receiveJSONRemove(){
+	deleteOverlays();
+} 
+
 //Marker sizes are expressed as a Size of X,Y
 // where the origin of the image (0,0) is located
 // in the top left of the image.
@@ -119,9 +138,9 @@ var shape = {
 var infowindow = new google.maps.InfoWindow({content:'hey'});
 
 var lineSymbol = {
-		path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-		strokeWeight: 2,
-		strokeOpacity: 0.8
+		path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+		//strokeWeight: 3,
+		//strokeOpacity: 0.7
 	};
 
 //Add markers

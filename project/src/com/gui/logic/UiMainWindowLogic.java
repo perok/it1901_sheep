@@ -313,6 +313,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 			System.out.println("Sending amount: " + arr.size());
 			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONMany("+ arr +")");
 		}
+		else
+			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONRemove()");
 	}
 		
 		/**
@@ -340,6 +342,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 			System.out.println("Sending amount: " + arr.size());
 			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONOne("+ arr +")");
 		}
+		else
+			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONRemove()");
 		
 		//TABLEWIDGET	
 		currentSheep = sheep;
