@@ -11,19 +11,23 @@ public class Response implements Serializable {
 	private int type;
 	private boolean success;
 	private User user;
+	private String initialRequest;
 	private ArrayList<Object> content;
 	
-	public Response(int type, boolean success) {
+	public Response(int type, boolean success, String req) {
 		this.type = type;
 		this.success = success;
+		this.initialRequest = req;
 	}
 	
-	public Response(int type, ArrayList<Object> content) {
+	
+	public Response(int type, ArrayList<Object> content,String req) {
 		this.content = new ArrayList<Object>();
 		this.type = type;
 		for (int i = 0; i < content.size(); i++) {
 			this.content.add(content.get(i));
 		}
+		this.initialRequest = req;
 	}
 	
 	public Response(int type, boolean success, ArrayList<Object> content) {
