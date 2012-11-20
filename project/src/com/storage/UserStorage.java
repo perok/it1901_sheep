@@ -107,7 +107,7 @@ public class UserStorage {
 	 */
 	public static void setCurrentMessageType(int currentMessageType) {
 		UserStorage.currentMessageType = currentMessageType;
-	}	
+	}
 }
 
 /* EOF */
