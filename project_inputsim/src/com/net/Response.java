@@ -21,8 +21,8 @@ public class Response implements Serializable {
 	}
 	
 	
-	public Response(int type, ArrayList<Object> content,String req) {
-		this.content = new ArrayList<Object>();
+	public Response(int type, ArrayList<?> content,String req) {
+		this.content = new ArrayList<>();
 		this.type = type;
 		for (int i = 0; i < content.size(); i++) {
 			this.content.add(content.get(i));
@@ -30,8 +30,8 @@ public class Response implements Serializable {
 		this.initialRequest = req;
 	}
 	
-	public Response(int type, boolean success, ArrayList<Object> content) {
-		this.content = new ArrayList<Object>();
+	public Response(int type, boolean success, ArrayList<?> content) {
+		this.content = new ArrayList<>();
 		this.type = type;
 		this.success = success;
 		for (int i = 0; i < content.size(); i++) {
@@ -60,7 +60,7 @@ public class Response implements Serializable {
 		return content;
 	}
 
-	public void setContent(ArrayList<Object> content) {
+	public void setContent(ArrayList<?> content) {
 		for (int i = 0; i < content.size(); i++) {
 			this.content.add(content.get(i));
 		}

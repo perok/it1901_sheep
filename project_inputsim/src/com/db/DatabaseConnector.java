@@ -126,8 +126,8 @@ public class DatabaseConnector {
 	 * @param farmId
 	 * @return
 	 */
-	public ArrayList<Object> getSheep(int farmId) {
-		ArrayList<Object> list = new ArrayList<Object>();
+	public ArrayList<Sheep> getSheep(int farmId) {
+		ArrayList<Sheep> list = new ArrayList<Sheep>();
 		String[][] r = processQuery("SELECT * FROM sheep WHERE farm_id = " + farmId + "");
 		for (int i = 0; i < r.length; i++) {
 			Sheep sheep = new Sheep(Integer.parseInt(r[i][0]),r[i][1],Integer.parseInt(r[i][2]),Integer.parseInt(r[i][3]),
@@ -269,8 +269,8 @@ public class DatabaseConnector {
 	 * @param farmId
 	 * @return
 	 */
-	public ArrayList<Object> getSheepStatus(int farmId) {
-		ArrayList<Object> list = new ArrayList<Object>();
+	public ArrayList<Message> getSheepStatus(int farmId) {
+		ArrayList<Message> list = new ArrayList<Message>();
 		String[][] r = processQuery("SELECT * FROM sheep_status WHERE farm_id = " + farmId + ";");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new SheepStatus(Integer.parseInt(r[i][0]),Integer.parseInt(r[i][1]),Integer.parseInt(r[i][2])
@@ -666,8 +666,8 @@ public class DatabaseConnector {
 	 * @param farmId
 	 * @return
 	 */
-	public ArrayList<Object> listSheep() {
-		ArrayList<Object> list = new ArrayList<Object>();
+	public ArrayList<Sheep> listSheep() {
+		ArrayList<Sheep> list = new ArrayList<Sheep>();
 		String[][] r = processQuery("SELECT * FROM sheep WHERE alive = 1;");
 		for (int i = 0; i < r.length; i++) {
 			list.add(new Sheep(Integer.parseInt(r[i][0]),r[i][1],Integer.parseInt(r[i][2]),Integer.parseInt(r[i][3]),
