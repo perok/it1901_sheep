@@ -6,14 +6,16 @@ import org.json.simple.JSONObject;
 public class SheepJS implements JSONAware{
 	private int id;
 	private String name;
+	private boolean isAlive;
 	private boolean isAlert;
 	private double lat;
 	private double lon;
 	
 	
-	public SheepJS(int id, String name, boolean isAlert, double lat, double lon){
+	public SheepJS(int id, String name, boolean isAlive, boolean isAlert, double lat, double lon){
 	        this.id = id;
 	        this.name = name;
+	        this.isAlive = isAlive;
 	        this.isAlert = isAlert;
 	        this.lat = lat;
 	        this.lon = lon;
@@ -32,6 +34,11 @@ public class SheepJS implements JSONAware{
 	        sb.append(JSONObject.escape("ID"));
 	        sb.append(":");
 	        sb.append(id);
+	        sb.append(",");
+	        
+	        sb.append(JSONObject.escape("isAlive"));
+	        sb.append(":");
+	        sb.append(isAlive);
 	        sb.append(",");
 	        
 	        sb.append(JSONObject.escape("isAlert"));

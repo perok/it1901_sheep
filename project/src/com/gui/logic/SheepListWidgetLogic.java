@@ -26,6 +26,7 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	SortOrder sortOrder = SortOrder.AscendingOrder;
 	
 	private QIcon sheepOkPicture;
+	private QIcon sheepDeadPicture;
 	
 	protected Signal1<Sheep> sheepSelected;
 	
@@ -39,6 +40,7 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	public SheepListWidgetLogic(QListWidget qlWidget)//QTreeView qtvModView)
 	{
 		sheepOkPicture = new QIcon("res/Sheep_WO_backround.png");
+		sheepDeadPicture = new QIcon("res/dead_sheep.png");
 		
 		sheepSelected = new Signal1<Sheep>();
 		multiSheepSelect = new Signal1<ArrayList<Sheep>>();
@@ -122,6 +124,8 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 			
 			if(sheep.isAlive())
 				item.setIcon(sheepOkPicture);
+			else
+				item.setIcon(sheepDeadPicture);
 			
 			//Qt should handle GC now. 
 			item.disableGarbageCollection();

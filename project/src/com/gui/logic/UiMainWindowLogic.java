@@ -14,6 +14,7 @@ import com.trolltech.qt.gui.QLabel;
 
 import core.classes.Message;
 import core.classes.Sheep;
+import core.classes.SheepAlert;
 import core.classes.SheepStatus;
 
 import core.classes.SheepJS;
@@ -261,13 +262,13 @@ public class UiMainWindowLogic extends QSignalEmitter
 			if(sheep.getRecentStatuses() != null){
 				double lat = sheep.getRecentStatuses().get(0).getGpsPosition().getLatitute();
 				double lon = sheep.getRecentStatuses().get(0).getGpsPosition().getLongditude();
-				boolean isAlert = true;
+				boolean isAlert = false;
 				
 				//Set right alert prefix
-				if(sheep.getRecentStatuses().get(0) instanceof SheepStatus)
-					isAlert = false;
+				if((Message)sheep.getRecentStatuses().get(0) instanceof SheepAlert)
+					isAlert = true;
 				
-				arr.add(new SheepJS(sheep.getId(), sheep.getName(), isAlert, lat, lon));
+				arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, lat, lon));
 			}
 		}
 		
@@ -286,7 +287,12 @@ public class UiMainWindowLogic extends QSignalEmitter
 		JSONArray arr = new JSONArray();
 		
 		for (Message msg : sheep.getRecentStatuses()){
-			arr.add(new SheepJS(sheep.getId(), sheep.getName(), false, msg.getGpsPosition().getLatitute(), msg.getGpsPosition().getLongditude() ));
+			boolean isAlert = false;
+			
+			if(msg instanceof SheepAlert)
+				isAlert = true;
+			
+			arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, msg.getGpsPosition().getLatitute(), msg.getGpsPosition().getLongditude() ));
 		}
 		
 		
