@@ -11,27 +11,30 @@ public class Response implements Serializable {
 	private int type;
 	private boolean success;
 	private User user;
-	private ArrayList<User> content;
+	private ArrayList content;
+	private String initialRequest;
 	
-	public Response(int type, boolean success) {
+	public Response(int type, boolean success, String req) {
 		this.type = type;
 		this.success = success;
+		this.initialRequest = req;
 	}
 	
-	public Response(int type, ArrayList<Object> content) {
+	public Response(int type, ArrayList content, String req) {
 		this.content = new ArrayList<>();
 		this.type = type;
 		for (int i = 0; i < content.size(); i++) {
-			this.content.add((User)content.get(i));
+			this.content.add(content.get(i));
 		}
+		this.initialRequest = req;
 	}
 	
-	public Response(int type, boolean success, ArrayList<Object> content) {
+	public Response(int type, boolean success, ArrayList content) {
 		this.content = new ArrayList<>();
 		this.type = type;
 		this.success = success;
 		for (int i = 0; i < content.size(); i++) {
-			this.content.add((User)content.get(i));
+			this.content.add(content.get(i));
 		}
 	}
 	
@@ -52,13 +55,13 @@ public class Response implements Serializable {
 		this.success = success;
 	}
 
-	public ArrayList<User> getContent() {
+	public ArrayList getContent() {
 		return content;
 	}
 
-	public void setContent(ArrayList<User> content) {
+	public void setContent(ArrayList content) {
 		for (int i = 0; i < content.size(); i++) {
-			this.content.add((User)content.get(i));
+			this.content.add(content.get(i));
 		}
 	}
 	
