@@ -51,19 +51,12 @@ public class ServerLogic extends QSignalEmitter{
 		if(clientSocket == null )
 			clientSocket = new ClientSocket("kord.dyndns.org", 1500, usrName, this);
 		
-		System.out.println("ClientSocket ready");
 		try{
-			System.out.println("ClientSocket starting");
 			if(!clientSocket.start())
-				System.out.println("Problem with connecting");
+				System.err.println("Problem with connecting");
 			else{
-				
-			System.out.println("ClientSocket login message sending");
 				clientSocket.login(usrName, usrPW);
-				System.out.println("ClientSocket login message sent");
 			}
-			
-				
 		}
 		catch (Exception e){
 			e.printStackTrace();
@@ -119,13 +112,7 @@ public class ServerLogic extends QSignalEmitter{
 				/*Koble seg til loggininterface og gi beskjed der */
 				System.out.println("Loggin failed, try again");
 			else{
-				System.out.println("Logged in with user: " + response.getUser().getName()
-						+ "\nNumber of farms: " + response.getUser().getFarmlist().size());
-				
-				for(int i = 0; i < response.getUser().getFarmlist().size(); i++){
-					System.out.println("=== Farm: " + response.getUser().getFarmlist().get(i).getId() + " ==");
-					System.out.println("\tNumber of sheep: " + response.getUser().getFarmlist().get(i).getSheepList().size());
-				}
+				System.out.println("Logged in with user: " + response.getUser().getName());
 				
 				new UserStorage(response.getUser());
 				UserStorage.setCurrentFarm(0);
@@ -149,7 +136,7 @@ public class ServerLogic extends QSignalEmitter{
 	 * Method called from clientsocket when it has had a connection failure
 	 */
 	public void connectionFailed(){
-		System.out.println("Connection error");
+		System.err.println("Connection error");
 	}
 	
 	/**
@@ -174,6 +161,7 @@ public class ServerLogic extends QSignalEmitter{
 	public void editSheep(Sheep sheep){
 		clientSocket.editSheep(sheep);
 		
+		//TODO: skal ikke håndteres slik. SKal bli håndtert av serverlogic
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
