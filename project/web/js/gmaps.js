@@ -185,8 +185,21 @@ function setMarkers(map, locations) {
 		
 		markers.push(marker);
     }
-
+    
     setAllMap(map);
+    AutoCenter();
+}
+
+function AutoCenter() {
+	   
+	//  Create a new viewpoint bound
+	var bounds = new google.maps.LatLngBounds();
+
+	for(var i = 0; i < markers.length; i++){
+		bounds.extend(markers[i].position);
+	}
+	
+	map.fitBounds(bounds);
 }
 
 // Make lines

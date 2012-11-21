@@ -283,7 +283,10 @@ public class UiMainWindowLogic extends QSignalEmitter
 	
 
 	//OTHER EVENTS
-	
+	/**
+	 * Delete sheeps from server and client.
+	 * @param sheeps
+	 */
 	private void sheepsDelete(ArrayList<Sheep> sheeps){
 		int currentFarm = UserStorage.getCurrentFarm();
 		for(Sheep sheep : sheeps){

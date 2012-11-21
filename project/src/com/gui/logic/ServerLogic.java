@@ -119,16 +119,6 @@ public class ServerLogic extends QSignalEmitter{
 					this.signalFarmListCreated.emit();
 				}
 			}
-			
-			//A object has called for a list
-			if (objectAskingForResponse != null){
-				//Sheeplist asking for information
-				//if( objectAskingForResponse instanceof SheepListWidget){
-					//objectAskingForResponse.giveResponse(response);
-					
-					//objectAskingForResponse = null;
-				//}
-			}
 			System.out.println("response 1");
 		}
 		/* Boolean */
