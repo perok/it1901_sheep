@@ -25,7 +25,7 @@ public class Constants {
 	
 	/** About-message shown in our about-window */
 	public static final String about = "The Greatest and Only SSA© (Sheep Surveilance Application).\n\n" 
-    		+ "Created by: \n\tJørgen Rugelsjøen Wikdahl \n\tAnders Sildnes \n\tLars erik Grasdal \n\tTor Økland Barstad"
+    		+ "Created by: \n\tJørgen Rugelsjøen Wikdahl \n\tAnders Sildnes \n\tLars-Erik Græsdal Knutrud \n\tTor Økland Barstad"
     		+ "\n\tSvenn Kvelstad \n\tPer Øyvind Kanestrøm";
 	
 }
