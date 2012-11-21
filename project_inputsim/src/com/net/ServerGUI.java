@@ -192,7 +192,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 
 			case("add"):
 				if(decoded[2].equalsIgnoreCase("sheep")) {
-					populator.addSheep(Integer.parseInt(decoded[3]), Integer.parseInt(decoded[3]));
+					populator.addSheep(Integer.parseInt(decoded[3]), Integer.parseInt(decoded[4]));
 				}
 			break;
 			
