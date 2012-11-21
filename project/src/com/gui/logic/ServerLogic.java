@@ -4,7 +4,6 @@ import com.net.Response;
 import com.net.ClientSocket;
 import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
-import com.trolltech.qt.QSignalEmitter.Signal0;
 
 import java.util.ArrayList;
 
@@ -13,15 +12,10 @@ import core.classes.Sheep;
 import core.classes.User;
 
 /**Logic for sheep server
- * 
- * @author Svenn
- *
  */
-
 public class ServerLogic extends QSignalEmitter{
 	
     private static ClientSocket clientSocket;
-    private Object objectAskingForResponse = null;
 
     public Signal0 loggedIn;
     public Signal0 logInFailed;
