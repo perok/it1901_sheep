@@ -1,6 +1,9 @@
 package core.sim;
+import java.util.ArrayList;
 import java.util.Random; 
 import com.db.*;
+
+import core.classes.Sheep;
 import core.settings.*;
 
 
@@ -93,7 +96,7 @@ public class DatabasePopulator {
 		for (int i = 0; i < numberOfSheep; i++) {
 			sheep[i][0] = "Betty " + Integer.toString(i); 
 			sheep[i][1] = Integer.toString(farmId);
-			sheep[i][2] = Integer.toString(rand.nextInt(36000)+1389080800); 
+			sheep[i][2] = Integer.toString(rand.nextInt(31556926)+1276075800); 
 			sheep[i][3] = Integer.toString(1); 
 			sheep[i][4] = Integer.toString(rand.nextInt(20)+15); 
 		}
@@ -115,7 +118,7 @@ public class DatabasePopulator {
 				sheep[i][0] = Integer.toString(i+1); 
 				sheep[i][1] = "Betty " + Integer.toString(i); 
 				sheep[i][2] = Integer.toString(rand.nextInt(numberOfFarms) + 1);
-				sheep[i][3] = Integer.toString(rand.nextInt(36000)+1389080800); 
+				sheep[i][3] = Integer.toString(rand.nextInt(31556926)+1276075800); 
 				sheep[i][4] = Integer.toString(1); 
 				sheep[i][5] = Integer.toString(rand.nextInt(20)+15); 
 			}
@@ -176,6 +179,19 @@ public class DatabasePopulator {
 		String res = new String();
 		for (int i = 0; i < farms.length; i++) {
 			res += "Name: " + farms[i][0]+", Id: " + farms[i][1] + "\n";
+		}
+		return res;
+	}
+	
+	/** Returns a string of all users in database with id and name.
+	 * 
+	 * @return
+	 */
+	public String listSheep() {
+		ArrayList<Sheep> sheep = sc.listSheep();
+		String res = new String();
+		for (int i = 0; i < sheep.size(); i++) {
+			res += "Name:" + sheep.get(i).getName()+", Id:" + sheep.get(i).getId() +", Farm:" + sheep.get(i).getFarmId() + "\n";
 		}
 		return res;
 	}

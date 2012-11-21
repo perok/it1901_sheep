@@ -88,7 +88,7 @@ public class AlertNotifier implements Runnable{
 		for (int i = 0; i < list.length; i++) {
 			res[i] = list[i][1];
 		}
-		server.notifyClient(res, statuses);
+//		server.notifyClient(res, statuses);
 	}
 
 }
