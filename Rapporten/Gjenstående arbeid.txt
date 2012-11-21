@@ -8,4 +8,4 @@ Vedlegg:
 			burndown chart, 
 			møtereferat
 		Kildekode
-	
+		Kjørbar utgave av programmet.

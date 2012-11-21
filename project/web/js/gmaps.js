@@ -154,7 +154,7 @@ function setMarkers(map, locations) {
 			shape: shape,
 			animation: google.maps.Animation.DROP,
 			title: locations[i].name,
-			zIndex: 1
+			zIndex: 2
 		});
 		
 		var type;
@@ -217,7 +217,8 @@ function makeLines(map){
 			path: datline,
 			icons: [{
 				icon: lineSymbol,
-				offset: '100%'
+				offset: '100%',
+				zIndex: 1
 			}],
 			map: map
 			});

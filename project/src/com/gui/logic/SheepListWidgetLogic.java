@@ -50,9 +50,9 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	 */
 	public SheepListWidgetLogic(QListWidget qlWidget)//QTreeView qtvModView)
 	{
-		sheepOkPicture = new QIcon("res/Sheep_WO_backround.png");
-		sheepDeadPicture = new QIcon("res/dead_sheep.png");
-		mapIcon = new QIcon("res/treasure-map-icon.png");
+		sheepOkPicture = new QIcon("classpath:res/Sheep_WO_backround.png");
+		sheepDeadPicture = new QIcon("classpath:res/dead_sheep.png");
+		mapIcon = new QIcon("classpath:res/treasure-map-icon.png");
 		
 		sheepSelected = new Signal1<Sheep>();
 		statusBarMessage = new Signal1<String>();
