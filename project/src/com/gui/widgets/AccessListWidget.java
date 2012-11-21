@@ -156,7 +156,7 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 		/* For each selected item in Admin-list */
 		for(QListWidgetItem qlwi : this.qlwAdminList.selectedItems())
 		{
-			if(qlwi.text().equals(com.storage.UserStorage.getUser().getName()) == true) { continue; }
+			//if(qlwi.text().equals(com.storage.UserStorage.getUser().getName()) == true) { continue; }
 			/* Remove (graphically) and insert in non-admin-list */
 			this.qlwNonadminList.insertItem(0, qlwi.clone());
 			this.qlwAdminList.takeItem(this.qlwAdminList.row(qlwi));
@@ -171,7 +171,7 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 		/* For each selected item in non-admin list */
 		for(QListWidgetItem qlwi : this.qlwNonadminList.selectedItems())
 		{
-			if(qlwi.text().equals(com.storage.UserStorage.getUser().getName()) == true) { continue; }
+			//if(qlwi.text().equals(com.storage.UserStorage.getUser().getName()) == true) { continue; }
 			/* Remove (graphically) and insert in admin-list */
 			this.qlwAdminList.insertItem(0, qlwi.clone());
 			this.qlwNonadminList.takeItem(this.qlwNonadminList.row(qlwi));
