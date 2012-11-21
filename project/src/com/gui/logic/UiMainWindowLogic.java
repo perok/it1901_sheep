@@ -10,6 +10,7 @@ import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.core.QDate;
 import com.trolltech.qt.core.QDateTime;
+import com.trolltech.qt.core.QFile;
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QAction;
