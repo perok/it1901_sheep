@@ -30,22 +30,18 @@ public class Request implements Serializable {
 	}
 
 	public Request(int type, String message, Sheep sheep) {
-		System.out.println("Constructor called");
 		this.type = type;
 		this.message = message;
 		this.sheep = new Sheep(sheep.getId(), sheep.getName(), sheep.getFarmId(), sheep.getDateOfBirth(),
 				sheep.isAlive(), sheep.getWeight());
-		System.out.println(sheep.getName());
 	}
 	
 	public Request(int type, String message, Sheep sheep,int id) {
-		System.out.println("Constructor called");
 		this.type = type;
 		this.message = message;
 		this.intialRequestId = id;
 		this.sheep = new Sheep(sheep.getId(), sheep.getName(), sheep.getFarmId(), sheep.getDateOfBirth(),
 				sheep.isAlive(), sheep.getWeight());
-		System.out.println(sheep.getName());
 	}
 
 	public Request(int type, String message, HashMap<String, String> _parameters) {

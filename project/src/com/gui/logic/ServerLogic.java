@@ -134,13 +134,10 @@ public class ServerLogic extends QSignalEmitter{
 		/* Boolean */
 		else if(responseType == 2)
 		{
-			System.out.println("Reponse receieved for edit : " + response.getInitialRequest());
 			if(response.getInitialRequest().equals("editSheep") || response.getInitialRequest().equals("addSheep")){ //TODO:deleteSheep fjern lokalt!
 				clientSocket.getSheep(response.getInitialRequestId());
-				System.out.println("it went ok");
-
+				System.out.println("An action on the server was accepted");
 			}
-			
 		}
 		
 		/* User */
@@ -186,10 +183,11 @@ public class ServerLogic extends QSignalEmitter{
 	}
 	
 	/**
-	 * TODO: IMPLEMENT
+	 * Add the sheep to the server
+	 * @param sheep Sheep without ID.
 	 */
 	public void addSheep(Sheep sheep){
-		//clientSocket.
+		clientSocket.addSheep(sheep);
 	}
 	
 	/**
@@ -197,6 +195,14 @@ public class ServerLogic extends QSignalEmitter{
 	 * @param sheep Reference to the sheep that has been edited.
 	 */
 	public void editSheep(Sheep sheep){
+		clientSocket.editSheep(sheep);
+	}
+	
+	/**
+	 * TODO: implement
+	 * @param sheep
+	 */
+	public void deleteSheep(Sheep sheep){
 		clientSocket.editSheep(sheep);
 	}
 }

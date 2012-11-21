@@ -131,7 +131,7 @@ public class DatabaseConnector {
 		String[][] r = processQuery("SELECT * FROM sheep WHERE farm_id = " + farmId + "");
 		for (int i = 0; i < r.length; i++) {
 			Sheep sheep = new Sheep(Integer.parseInt(r[i][0]),r[i][1],Integer.parseInt(r[i][2]),Integer.parseInt(r[i][3]),
-					Boolean.parseBoolean(r[i][4]),Integer.parseInt(r[i][5]));
+					getBoolean(r[i][4]),Integer.parseInt(r[i][5]));
 			String [][] r5 = processQuery("SELECT * from sheep_status WHERE sheep_id = " + sheep.getId() + " LIMIT 5;");
 			for (int k = 0; k < r5.length; k++) {
 				sheep.addSheepStatus(new SheepStatus(Integer.parseInt(r5[k][0]),
@@ -240,8 +240,8 @@ public class DatabaseConnector {
 
 		try{
 			Statement s = conn.createStatement();
-			s.executeUpdate("UPDATE user SET name = '" + user.getName() + "', password = '" + user.getPassword() + "', phone_number = " + user.getMobileNumber() + ", "+
-					"mobile_number = " + user.getMobileNumber() + ", email = '" + user.getEmail() + "' WHERE id = " + userId + ";");
+			s.executeUpdate("UPDATE user SET name = '" + user.getName() + "', password = '" + user.getPassword() + "',mobile_number = " 
+			+ user.getMobileNumber() + ", email = '" + user.getEmail() + "' WHERE id = " + userId + ";");
 		}
 		catch(Exception e){
 			return false;
@@ -475,7 +475,7 @@ public class DatabaseConnector {
 		try {
 			Statement s = conn.createStatement();
 			s.executeUpdate("INSERT INTO sheep (name,farm_id,date_of_birth,alive,weight" +
-					") VALUES (" + "'"+sheep.getId()+"'," + ""+sheep.getFarmId()+"," +
+					") VALUES (" + "'"+sheep.getName()+"'," + ""+sheep.getFarmId()+"," +
 					""+sheep.getDateOfBirth()+"," + ""+sheep.isAlive()+"," + ""+sheep.getWeight()+");");
 			return true;
 		} catch (SQLException e) {
@@ -687,7 +687,7 @@ public class DatabaseConnector {
 
 	public String[] getUsernames(int farmId) {
 		String[][] preres1 = processQuery("SELECT user_id FROM access_rights WHERE farm_id=" + farmId + " AND admin=1;");
-		String[][] preres2= processQuery("SELECT username from user WHERE user_id=" + preres1[0][0] + ";");
+		String[][] preres2= processQuery("SELECT username from user WHERE id=" + preres1[0][0] + ";");
 		String[] res = new String[preres2.length];
 		for (int i = 0; i < res.length; i++) {
 			res[i] = preres2[0][i];

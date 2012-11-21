@@ -12,8 +12,10 @@ import com.trolltech.qt.core.QDate;
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QAction;
+import com.trolltech.qt.gui.QApplication;
 import com.trolltech.qt.gui.QLabel;
 
+import core.classes.Farm;
 import core.classes.Message;
 import core.classes.Sheep;
 import core.classes.SheepAlert;
@@ -129,11 +131,25 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 * @param farmID
 	 */
 	private void sLogic_signalNewSheeps(ArrayList<Sheep> sheeps, int farmID){
-		UserStorage.getUser().getFarmlist().get(farmID).setSheepList(sheeps);
-		//TODO: Does this work?
-		//Only refresh sheeplist if the changed sheeps are in the row
-		if(UserStorage.getCurrentFarm() == farmID)
-			slwHandler.refreshSheepList();
+		for(Farm farm : UserStorage.getUser().getFarmlist()){
+			if(farm.getId() == farmID){
+				farm.setSheepList(sheeps);
+				
+				//TODO: DOES NOT WORK. CurrentFarm needs to be fixed..
+				//Only refresh sheeplist if the changed sheeps are in the row
+				//if(UserStorage.getCurrentFarm() == farmID)
+				QApplication.invokeLater(new Runnable() {
+				    @Override
+				    public void run() {
+				    	slwHandler.refreshSheepList();
+				    }
+				});
+				
+				break;
+			}
+		}
+		
+		
 		
 	}
 	
@@ -297,6 +313,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 			System.out.println("Sending amount: " + arr.size());
 			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONMany("+ arr +")");
 		}
+		else
+			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONRemove()");
 	}
 		
 		/**
@@ -324,6 +342,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 			System.out.println("Sending amount: " + arr.size());
 			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONOne("+ arr +")");
 		}
+		else
+			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONRemove()");
 		
 		//TABLEWIDGET	
 		currentSheep = sheep;
@@ -354,28 +374,15 @@ public class UiMainWindowLogic extends QSignalEmitter
 	private void pBSubmit_Add_clicked(boolean click){
 		
 		Sheep sheepAdd;
-		System.out.println("UiMainWindowLOgc pbsumbit-Add TRYING");
 		
-		System.out.println(currentSheep.getId()); //TODO: SÅKLART IKKJE ID:: CONTRUCTOR FOR DETTE OG HÅNDTERING
-		System.out.println(mw.lEName.text());
-		System.out.println(Integer.parseInt(mw.lEFarmId.text()));
-		System.out.println(Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) 
-				+ String.valueOf(mw.dEBirthdaye.date().month()) 
-				+ String.valueOf(mw.dEBirthdaye.date().day())));
-		System.out.println(mw.chbAlive.isChecked());
-		System.out.println((int)mw.dSBWeight.value());
-		
-		
-		
-		System.out.println(!mw.lEName.text().equals("") + " " + !mw.lEFarmId.text().equals("") + " " + Integer.parseInt(mw.lEFarmId.text()));
-		if(!mw.lEName.text().equals("") && !mw.lEFarmId.text().equals("") && Integer.parseInt(mw.lEFarmId.text()) != 0){
+		if(!mw.lEName_Add_2.text().equals("") && !mw.lEFar_Add.text().equals("") && Integer.parseInt(mw.lEFar_Add.text()) != 0){
 			
-			sheepAdd = new Sheep(currentSheep.getId(), mw.lEName.text(), Integer.parseInt(mw.lEFarmId.text()), 
-					Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) 
-							+ String.valueOf(mw.dEBirthdaye.date().month()) 
-							+ String.valueOf(mw.dEBirthdaye.date().day())),
-					mw.chbAlive.isChecked(), 
-					(int)mw.dSBWeight.value()); //Mï¿½ FIKSES, skal ikke vï¿½re int
+			sheepAdd = new Sheep(mw.lEName_Add_2.text(), Integer.parseInt(mw.lEFar_Add.text()), 
+					Integer.valueOf(String.valueOf(mw.dEBirthdate_Add.date().year()) 
+							+ String.valueOf(mw.dEBirthdate_Add.date().month()) 
+							+ String.valueOf(mw.dEBirthdate_Add.date().day())),
+					mw.cBAlive_Add.isChecked(), 
+					(int)mw.dSBWeight_Add_2.value()); //Mï¿½ FIKSES, skal ikke vï¿½re int
 			
 			try{
 				System.out.println("UiMainWindowLOgc pbsumbit-Add Adding ShEPPS");

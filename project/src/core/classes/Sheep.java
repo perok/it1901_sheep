@@ -39,6 +39,16 @@ public class Sheep implements Serializable{
 		this.weight = weight;
 		recentStatuses = new ArrayList<SheepStatus>();
 	}
+	
+	public Sheep (String name, int farmId, int dateOfBirth, boolean alive, int weight) {
+		this.name = name;
+		this.farmId = farmId;
+		this.dateOfBirth = dateOfBirth;
+		this.alive = alive;
+		this.weight = weight;
+		recentStatuses = new ArrayList<SheepStatus>();
+	}
+	
 	public int getId() {
 		return id;
 	}
