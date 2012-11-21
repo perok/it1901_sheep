@@ -1,0 +1,11 @@
+Dette mangler i rapporten.
+
+Vedlegg:
+	Klassediagram (må oppdateres)
+	DIA-diagram.
+	Brukermanual
+	Sprint-oversikt, 
+		burndown chart, 
+		møtereferat
+	Kildekode
+	
