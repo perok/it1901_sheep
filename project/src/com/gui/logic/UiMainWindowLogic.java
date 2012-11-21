@@ -487,8 +487,6 @@ public class UiMainWindowLogic extends QSignalEmitter
 			mw.rbAscDesc.setText("Descending");
 	
 	}
-
-	
 }
 
 /* EOF */

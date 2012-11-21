@@ -83,7 +83,7 @@ public class MainWindow extends QMainWindow
         new UiLoginWindowLogic(this.uiLoginWindow, this.serverLogic);
 
         this.serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");
-        this.serverLogic.logInFailed.connect(this, "logInFailed()");
+        //this.serverLogic.logInFailed.connect(this, "logInFailed()");
     }
     
 	/**
@@ -92,7 +92,7 @@ public class MainWindow extends QMainWindow
 	 */
 	public void setupUi_MainWindow()
 	{
-		this.serverLogic.logInFailed.disconnect();
+		//this.serverLogic.logInFailed.disconnect();
 		/* DO NOT CHANGE ORDER, YES I'AM LOOKING AT YOU! */
 		this.uiLoginWindow = null; /* Make sure the login-widget doesn't occupy window space */
 		this.uiMainWindow = new UiMainWindow();
@@ -165,7 +165,7 @@ public class MainWindow extends QMainWindow
 		}
 		else if(uiMainWindow != null){
 			if (event.key() == Qt.Key.Key_F5.value()){
-				serverLogic.refreshData();
+				//serverLogic.refreshData();
 			}
 		}
     	else /* If the login-window is NOT the active widget */
