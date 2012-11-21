@@ -134,14 +134,12 @@ var lineSymbol = {
 function setMarkers(map, locations) {
 	deleteOverlays();
   // Add markers to the map
-	var deadShowed = false;
     for (var i = 0; i < locations.length; i++) {    	
     	
     	var image;
     	
-    	if(!deadShowed && !locations[i].isAlive){
+    	if((locations.length-1) == i && !locations[i].isAlive){
     		image = sheepDead;
-    		deadShowed = true;
     	}
     	else if(locations[i].isAlert)
     		image = sheepWarn;
@@ -166,7 +164,6 @@ function setMarkers(map, locations) {
 			type = 'message';
 		
 		var date = locations[i].date;
-		
 		// Creating a closure to retain the correct data, notice how I pass the current data in the loop into the closure (marker, data)
 		(function(marker, type, date) {
 			var contentString = '<div id="content">'+
