@@ -46,6 +46,9 @@ public class Server {
 		simulator = new SheepStatusSim(10, this);
 	}
 
+	/** Starts the server
+	 * 
+	 */
 	public void start() {
 		keepGoing = true;
 		try 
@@ -110,6 +113,11 @@ public class Server {
 		sg.appendEvent(time + "\n");
 	}
 
+	/** Notifies client of usernames and messages
+	 * 
+	 * @param usernames
+	 * @param messages
+	 */
 	public void notifyClient(String[] usernames,ArrayList<Message> messages) {
 		if(usernames != null) {
 			for (int i = 0; i < al.size(); i++) {

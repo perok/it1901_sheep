@@ -42,32 +42,60 @@ public class PhoneNotifier {
 	public PhoneNotifier() {
 		
 	}
-
+	
+	/**Returns username
+	 * 
+	 * @return
+	 */
 	public String getUsername() {
 		return username;
 	}
 
+	/**Sets username
+	 * 
+	 * @param username
+	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
+	/**Returns password
+	 * 
+	 * @return
+	 */
 	public String getPassword() {
 		return password;
 	}
 
+	/** Sets password
+	 * 
+	 * @param password
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+	/**Returns a String array with numbers
+	 * 
+	 * @return
+	 */
 	public String[] getNumbers() {
 		return numbers;
 	}
 
+	/**Sets numbers
+	 * 
+	 * @param numbers
+	 */
 	public void setNumbers(String[] numbers) {
 		
 		this.numbers = numbers;
 	}
 	
+	/**Sets number with Norwegian country code.
+	 * 
+	 * @param number
+	 */
 	public void setNumber(String number) {
 		this.numbers[0] = "+47" + number;
 		System.out.println(this.numbers[0]);
