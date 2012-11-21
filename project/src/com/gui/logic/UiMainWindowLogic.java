@@ -313,8 +313,6 @@ public class UiMainWindowLogic extends QSignalEmitter
 			System.out.println("Sending amount: " + arr.size());
 			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONMany("+ arr +")");
 		}
-		else
-			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONRemove()");
 	}
 		
 		/**
@@ -352,7 +350,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		mw.lblTabMessages.setText("Sheep#: " + sheep.getId() + "\tFarm#: " + sheep.getFarmId() + "\tName: " + sheep.getName());
 		
 		mw.lEName.setText(sheep.getName());
-		mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//TODO:sheep.getDateOfBirth(), m, d))
+		mw.dEBirthdaye.dateTime().addMSecs(sheep.getDateOfBirth());
 		mw.dSBWeight.setValue((double)sheep.getWeight());
 		mw.lEFarmId.setText(String.valueOf(sheep.getFarmId()));
 		if(sheep.isAlive())
@@ -365,7 +363,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 			
 		this.twHandler.updateMessages(sheep);
 	}
-	
+	//mw.dEBirthdaye.dateTime().addMSecs(sheep.getDateOfBirth());
 	/**
 	 * Method for sending a new sheep to the server
 	 * @param click
@@ -383,7 +381,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 							+ String.valueOf(mw.dEBirthdate_Add.date().day())),
 					mw.cBAlive_Add.isChecked(), 
 					(int)mw.dSBWeight_Add_2.value()); //M� FIKSES, skal ikke v�re int
-			
+				//mw.dEBirthdate_Add.date().toString(Qt.DateFormat.)
 			try{
 				System.out.println("UiMainWindowLOgc pbsumbit-Add Adding ShEPPS");
 				sLogic.addSheep(sheepAdd);
