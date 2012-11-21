@@ -10,15 +10,17 @@ public class SheepJS implements JSONAware{
 	private boolean isAlert;
 	private double lat;
 	private double lon;
+	private String date;
 	
 	
-	public SheepJS(int id, String name, boolean isAlive, boolean isAlert, double lat, double lon){
+	public SheepJS(int id, String name, boolean isAlive, boolean isAlert, double lat, double lon, String date){
 	        this.id = id;
 	        this.name = name;
 	        this.isAlive = isAlive;
 	        this.isAlert = isAlert;
 	        this.lat = lat;
 	        this.lon = lon;
+	        this.date = date;
 	}
 	
 	public String toJSONString(){
@@ -54,6 +56,11 @@ public class SheepJS implements JSONAware{
 	        sb.append(JSONObject.escape("lon"));
 	        sb.append(":");
 	        sb.append(lon);
+	        sb.append(",");
+	        
+	        sb.append(JSONObject.escape("date"));
+	        sb.append(":");
+	        sb.append("\"" + JSONObject.escape(date) + "\"");
 	        
 	        sb.append("}");
 	        

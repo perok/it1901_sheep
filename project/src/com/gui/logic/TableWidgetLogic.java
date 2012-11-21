@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.storage.Constants;
+import com.trolltech.qt.core.QDateTime;
 import com.trolltech.qt.core.QModelIndex;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.core.Global.QtMsgType;
@@ -104,9 +105,12 @@ public class TableWidgetLogic {
 				widget.setItem(y, i, item);
 				i++;
 				
+				QDateTime d = new QDateTime();
+				d.setTime_t(message.getTimestamp());
+				
 				item = new QTableWidgetItem();
 				item.disableGarbageCollection();
-				item.setData(Qt.ItemDataRole.DisplayRole, message.getTimestamp());
+				item.setData(Qt.ItemDataRole.DisplayRole, d.toString());
 				item.setData(Constants.QtSheepDataRole, sheep);
 				widget.setItem(y, i, item);
 				i++;
