@@ -1,0 +1,16 @@
+//DB url
+localhost
+//DB name
+it1901
+//DB user
+it1901
+//DB password
+lillelam1337
+//Skype user
+sheepshield
+//Skype password
+lillelam1337
+//Google account
+sheepshield12@gmail.com
+//Google password
+lillelam1337

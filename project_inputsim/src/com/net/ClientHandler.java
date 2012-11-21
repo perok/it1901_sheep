@@ -144,6 +144,10 @@ public class ClientHandler implements Runnable {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param messages
+	 */
 	public void sendUpdate(ArrayList<Message> messages) {
 		try {
 			sOutput.writeObject(new Response(Response.LIST,messages,"updatedMessages"));

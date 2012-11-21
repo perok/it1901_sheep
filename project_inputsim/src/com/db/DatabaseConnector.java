@@ -679,11 +679,21 @@ public class DatabaseConnector {
 		return list;
 	}
 
+	/** Returns last position of a sheep
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public GPSPosition getLastPosition(int id) {
 		String[][] results = processQuery("SELECT latitude, longditude FROM sheep_status WHERE sheep_id = " + id + " ORDER BY timestamp DESC LIMIT 1;");
 		return new GPSPosition(Double.parseDouble(results[0][0]), Double.parseDouble(results[0][0]));
 	}
 
+	/** 
+	 * 
+	 * @param farmId
+	 * @return
+	 */
 	public String[] getUsernames(int farmId) {
 		String[][] preres1 = processQuery("SELECT user_id FROM access_rights WHERE farm_id=" + farmId + " AND admin=1;");
 		String[][] preres2= processQuery("SELECT username from user WHERE id=" + preres1[0][0] + ";");

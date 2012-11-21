@@ -4,9 +4,19 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**Class for reading system settings
+ *
+ * 
+ * @author Svenn
+ *
+ */
 public class SettingsReader {
 	private String settingsFile = "resources/settings.txt";
 	
+	/**Reads settingf from settings file
+	 * 
+	 * @return
+	 */
 	public String[] readSettings() {
 
 		String[] input = new String[8];
