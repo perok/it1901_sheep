@@ -57,7 +57,7 @@ public class AlarmPromptDialog extends QDialog
 	{
 		this.qpbBtnCancel = new QPushButton(tr("&Avbryt"));
 		this.qpbBtnOk = new QPushButton(tr("&Ok"));
-		this.qlPrompt = new QLabel(tr("Du vil nï¿½ sette av en alarm, og alle registrerte administratorer vil bli tilsendt varsler"));
+		this.qlPrompt = new QLabel(tr("Du vil nå sette av en alarm, og alle registrerte administratorer vil bli tilsendt varsler"));
 	}
 	
 	/** Initialize the layouts used in THIS
