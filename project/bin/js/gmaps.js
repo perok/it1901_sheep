@@ -75,6 +75,7 @@ function receiveJSONOne(data){
 	setMarkers(map, data);	
 	//Add lines
 	makeLines(map);
+	
 } 
 
 //function that is called from the application for many sheep selected
@@ -158,25 +159,32 @@ function setMarkers(map, locations) {
 			zIndex: 0
 		});
 		
+		var type;
+		if(locations[i].isAlert)
+			type = 'alert';
+		else
+			type = 'message';
+		
+		var date = locations[i].date;
 		
 		// Creating a closure to retain the correct data, notice how I pass the current data in the loop into the closure (marker, data)
-		(function(marker) {
+		(function(marker, type, date) {
 			var contentString = '<div id="content">'+
-			'<div id="siteNotice">'+
-			'</div>'+
-			'<h1 id="firstHeading" class="firstHeading">' + marker.getTitle() + '</h1>'+
-			'<div id="bodyContent">'+
-			'<p>'+ marker.getPosition().toUrlValue() +'</p>'+
-			'</div>'+
-			'</div>';
+				'<div id="siteNotice">'+
+				'</div>'+
+				'<h1 id="firstHeading" class="firstHeading">' + marker.getTitle() + '</h1>'+
+				'<div id="bodyContent">'+
+				'<p> This ' + type + ' was shipped: ' + date +'</p>'+
+				'<p> Position: '+ marker.getPosition().toUrlValue() + '</p>'+
+				'</div>'+
+				'</div>';
+			
 			// Attaching a click event to the current marker
 			google.maps.event.addListener(marker, "click", function(e) {
 				infowindow.setContent(contentString);
 				infowindow.open(map, marker);
 			});
-
-
-		})(marker);
+		})(marker, type, date);
 		
 		markers.push(marker);
     }
