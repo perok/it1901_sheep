@@ -1,0 +1,308 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x650362bf, pid=1628, tid=7224
+#
+# JRE version: 7.0_07-b10
+# Java VM: Java HotSpot(TM) Client VM (23.3-b01 mixed mode, sharing windows-x86 )
+# Problematic frame:
+# C  [QtGui4.dll+0x362bf]  QGridLayout::~QGridLayout+0xfef
+#
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0022b000):  JavaThread "main" [_thread_in_native, id=7224, stack(0x00950000,0x009a0000)]
+
+siginfo: ExceptionCode=0xc0000005, reading address 0x0a1bf95d
+
+Registers:
+EAX=0x05519918, EBX=0x0a1bf95d, ECX=0x00000005, EDX=0x00000005
+ESP=0x0099d9ac, EBP=0x00000078, ESI=0x04e02cc8, EDI=0x054ec0c0
+EIP=0x650362bf, EFLAGS=0x00010206
+
+Top of Stack: (sp=0x0099d9ac)
+0x0099d9ac:   981d4996 0099f6a0 04e02cc8 04e02cc8
+0x0099d9bc:   ffffffff 00000005 01000001 0007ffff
+0x0099d9cc:   0007ffff 054ec0c0 054ec0c0 00000014
+0x0099d9dc:   00000000 00000014 00000028 054ec0c0
+0x0099d9ec:   054ec0c0 054ec0c0 01000600 00000000
+0x0099d9fc:   054ebec0 00000000 00000000 00000000
+0x0099da0c:   00001400 02002600 00000200 2b2a0600
+0x0099da1c:   00000000 02000000 00002000 01000600 
+
+Instructions: (pc=0x650362bf)
+0x6503629f:   89 44 24 14 0f 8e b6 01 00 00 8d a4 24 00 00 00
+0x650362af:   00 50 8d 8e a4 00 00 00 ff 15 90 e4 56 65 8b 18
+0x650362bf:   8b 0b 8b 11 8b 52 08 8d 44 24 2c 50 ff d2 8b 8c
+0x650362cf:   24 5c 04 00 00 8b 44 24 2c 89 04 29 8b 84 24 5c 
+
+
+Register to memory mapping:
+
+EAX=0x05519918 is an unknown value
+EBX=0x0a1bf95d is an unknown value
+ECX=0x00000005 is an unknown value
+EDX=0x00000005 is an unknown value
+ESP=0x0099d9ac is pointing into the stack for thread: 0x0022b000
+EBP=0x00000078 is an unknown value
+ESI=0x04e02cc8 is an unknown value
+EDI=0x054ec0c0 is an unknown value
+
+
+Stack: [0x00950000,0x009a0000],  sp=0x0099d9ac,  free space=310k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [QtGui4.dll+0x362bf]  QGridLayout::~QGridLayout+0xfef
+
+[error occurred during error reporting (printing native stack), id 0xc0000005]
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  com.trolltech.qt.gui.QWidget.__qt_show(J)V+0
+j  com.trolltech.qt.gui.QWidget.show()V+51
+j  com.gui.MainWindow.main([Ljava/lang/String;)V+45
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x04be6800 JavaThread "Thread-0" daemon [_thread_blocked, id=9052, stack(0x04a10000,0x04a60000)]
+  0x02357400 JavaThread "Service Thread" daemon [_thread_blocked, id=8208, stack(0x00a00000,0x00a50000)]
+  0x0233d000 JavaThread "C1 CompilerThread0" daemon [_thread_blocked, id=816, stack(0x04990000,0x049e0000)]
+  0x0233bc00 JavaThread "Attach Listener" daemon [_thread_blocked, id=6804, stack(0x048f0000,0x04940000)]
+  0x0233a800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=8168, stack(0x047b0000,0x04800000)]
+  0x02323800 JavaThread "Finalizer" daemon [_thread_blocked, id=3352, stack(0x046e0000,0x04730000)]
+  0x02322000 JavaThread "Reference Handler" daemon [_thread_blocked, id=4276, stack(0x04610000,0x04660000)]
+=>0x0022b000 JavaThread "main" [_thread_in_native, id=7224, stack(0x00950000,0x009a0000)]
+
+Other Threads:
+  0x02320800 VMThread [stack: 0x04540000,0x04590000] [id=6980]
+  0x0236a800 WatcherThread [stack: 0x04b00000,0x04b50000] [id=8996]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap
+ def new generation   total 4928K, used 635K [0x23f10000, 0x24460000, 0x29460000)
+  eden space 4416K,   2% used [0x23f10000, 0x23f2ed48, 0x24360000)
+  from space 512K,  99% used [0x24360000, 0x243dfff8, 0x243e0000)
+  to   space 512K,   0% used [0x243e0000, 0x243e0000, 0x24460000)
+ tenured generation   total 10944K, used 1649K [0x29460000, 0x29f10000, 0x33f10000)
+   the space 10944K,  15% used [0x29460000, 0x295fc4a8, 0x295fc600, 0x29f10000)
+ compacting perm gen  total 12288K, used 2933K [0x33f10000, 0x34b10000, 0x37f10000)
+   the space 12288K,  23% used [0x33f10000, 0x341ed600, 0x341ed600, 0x34b10000)
+    ro space 10240K,  42% used [0x37f10000, 0x3834f150, 0x3834f200, 0x38910000)
+    rw space 12288K,  54% used [0x38910000, 0x38f8fad8, 0x38f8fc00, 0x39510000)
+
+Card table byte_map: [0x04430000,0x044e0000] byte_map_base: 0x04310780
+
+Polling page: 0x00140000
+
+Code Cache  [0x023b0000, 0x02470000, 0x043b0000)
+ total_blobs=264 nmethods=101 adapters=98 free_code_cache=32009Kb largest_free_block=32777472
+
+Compilation events (10 events):
+Event: 1.078 Thread 0x0233d000   96             com.trolltech.qt.internal.QtJambiInternal::findSignals (83 bytes)
+Event: 1.079 Thread 0x0233d000 nmethod 96 0x0246be88 code [0x0246c010, 0x0246c31c]
+Event: 1.079 Thread 0x0233d000   97             java.lang.ref.Reference::get (5 bytes)
+Event: 1.079 Thread 0x0233d000 nmethod 97 0x0246c8c8 code [0x0246c9c0, 0x0246ca40]
+Event: 1.079 Thread 0x0233d000   98             java.util.concurrent.ConcurrentHashMap$Segment::rehash (262 bytes)
+Event: 1.086 Thread 0x0233d000 nmethod 98 0x0246ca88 code [0x0246cbc0, 0x0246d0e0]
+Event: 1.086 Thread 0x0233d000   99             java.net.URL::getPath (5 bytes)
+Event: 1.086 Thread 0x0233d000 nmethod 99 0x0246d788 code [0x0246d880, 0x0246d900]
+Event: 1.086 Thread 0x0233d000  100             java.net.URL::getAuthority (5 bytes)
+Event: 1.086 Thread 0x0233d000 nmethod 100 0x0246d948 code [0x0246da40, 0x0246dac0]
+
+GC Heap History (4 events):
+Event: 0.859 GC heap before
+{Heap before GC invocations=0 (full 0):
+ def new generation   total 4928K, used 4416K [0x23f10000, 0x24460000, 0x29460000)
+  eden space 4416K, 100% used [0x23f10000, 0x24360000, 0x24360000)
+  from space 512K,   0% used [0x24360000, 0x24360000, 0x243e0000)
+  to   space 512K,   0% used [0x243e0000, 0x243e0000, 0x24460000)
+ tenured generation   total 10944K, used 0K [0x29460000, 0x29f10000, 0x33f10000)
+   the space 10944K,   0% used [0x29460000, 0x29460000, 0x29460200, 0x29f10000)
+ compacting perm gen  total 12288K, used 1637K [0x33f10000, 0x34b10000, 0x37f10000)
+   the space 12288K,  13% used [0x33f10000, 0x340a9540, 0x340a9600, 0x34b10000)
+    ro space 10240K,  42% used [0x37f10000, 0x3834f150, 0x3834f200, 0x38910000)
+    rw space 12288K,  54% used [0x38910000, 0x38f8fad8, 0x38f8fc00, 0x39510000)
+Event: 0.865 GC heap after
+Heap after GC invocations=1 (full 0):
+ def new generation   total 4928K, used 512K [0x23f10000, 0x24460000, 0x29460000)
+  eden space 4416K,   0% used [0x23f10000, 0x23f10000, 0x24360000)
+  from space 512K, 100% used [0x243e0000, 0x24460000, 0x24460000)
+  to   space 512K,   0% used [0x24360000, 0x24360000, 0x243e0000)
+ tenured generation   total 10944K, used 594K [0x29460000, 0x29f10000, 0x33f10000)
+   the space 10944K,   5% used [0x29460000, 0x294f4a50, 0x294f4c00, 0x29f10000)
+ compacting perm gen  total 12288K, used 1637K [0x33f10000, 0x34b10000, 0x37f10000)
+   the space 12288K,  13% used [0x33f10000, 0x340a9540, 0x340a9600, 0x34b10000)
+    ro space 10240K,  42% used [0x37f10000, 0x3834f150, 0x3834f200, 0x38910000)
+    rw space 12288K,  54% used [0x38910000, 0x38f8fad8, 0x38f8fc00, 0x39510000)
+}
+Event: 1.079 GC heap before
+{Heap before GC invocations=1 (full 0):
+ def new generation   total 4928K, used 4928K [0x23f10000, 0x24460000, 0x29460000)
+  eden space 4416K, 100% used [0x23f10000, 0x24360000, 0x24360000)
+  from space 512K, 100% used [0x243e0000, 0x24460000, 0x24460000)
+  to   space 512K,   0% used [0x24360000, 0x24360000, 0x243e0000)
+ tenured generation   total 10944K, used 594K [0x29460000, 0x29f10000, 0x33f10000)
+   the space 10944K,   5% used [0x29460000, 0x294f4a50, 0x294f4c00, 0x29f10000)
+ compacting perm gen  total 12288K, used 2915K [0x33f10000, 0x34b10000, 0x37f10000)
+   the space 12288K,  23% used [0x33f10000, 0x341e8d58, 0x341e8e00, 0x34b10000)
+    ro space 10240K,  42% used [0x37f10000, 0x3834f150, 0x3834f200, 0x38910000)
+    rw space 12288K,  54% used [0x38910000, 0x38f8fad8, 0x38f8fc00, 0x39510000)
+Event: 1.085 GC heap after
+Heap after GC invocations=2 (full 0):
+ def new generation   total 4928K, used 511K [0x23f10000, 0x24460000, 0x29460000)
+  eden space 4416K,   0% used [0x23f10000, 0x23f10000, 0x24360000)
+  from space 512K,  99% used [0x24360000, 0x243dfff8, 0x243e0000)
+  to   space 512K,   0% used [0x243e0000, 0x243e0000, 0x24460000)
+ tenured generation   total 10944K, used 1649K [0x29460000, 0x29f10000, 0x33f10000)
+   the space 10944K,  15% used [0x29460000, 0x295fc4a8, 0x295fc600, 0x29f10000)
+ compacting perm gen  total 12288K, used 2915K [0x33f10000, 0x34b10000, 0x37f10000)
+   the space 12288K,  23% used [0x33f10000, 0x341e8d58, 0x341e8e00, 0x34b10000)
+    ro space 10240K,  42% used [0x37f10000, 0x3834f150, 0x3834f200, 0x38910000)
+    rw space 12288K,  54% used [0x38910000, 0x38f8fad8, 0x38f8fc00, 0x39510000)
+}
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (10 events):
+Event: 1.066 Thread 0x0022b000 Threw 0x242f8d78 at C:\jdk7u1_32P\jdk7u7\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 1.067 Thread 0x0022b000 Threw 0x242fc758 at C:\jdk7u1_32P\jdk7u7\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 1.069 Thread 0x0022b000 Threw 0x24300168 at C:\jdk7u1_32P\jdk7u7\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 1.073 Thread 0x0022b000 Threw 0x2432f028 at C:\jdk7u1_32P\jdk7u7\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 1.075 Thread 0x0022b000 Threw 0x24336e70 at C:\jdk7u1_32P\jdk7u7\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 1.079 Thread 0x0022b000 Threw 0x2435f5b0 at C:\jdk7u1_32P\jdk7u7\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 1.086 Thread 0x0022b000 Threw 0x23f112d0 at C:\jdk7u1_32P\jdk7u7\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 1.086 Thread 0x02323800 Threw 0x23f23d70 at C:\jdk7u1_32P\jdk7u7\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 1.087 Thread 0x0022b000 Threw 0x23f14f30 at C:\jdk7u1_32P\jdk7u7\hotspot\src\share\vm\prims\jvm.cpp:1166
+Event: 1.087 Thread 0x0022b000 Threw 0x23f182c0 at C:\jdk7u1_32P\jdk7u7\hotspot\src\share\vm\prims\jvm.cpp:1166
+
+Events (10 events):
+Event: 1.079 Executing VM operation: GenCollectForAllocation
+Event: 1.085 Executing VM operation: GenCollectForAllocation done
+Event: 1.086 loading class 0x04cb13b0
+Event: 1.086 loading class 0x04cb13b0 done
+Event: 1.086 loading class 0x04c62128
+Event: 1.086 loading class 0x04c62128 done
+Event: 1.086 loading class 0x04cb1450
+Event: 1.086 loading class 0x04cb1450 done
+Event: 1.087 loading class 0x04cb14a0
+Event: 1.087 loading class 0x04cb14a0 done
+
+
+Dynamic libraries:
+0x00a50000 - 0x00a7f000 	C:\Program Files (x86)\Java\jre7\bin\javaw.exe
+0x77420000 - 0x775a0000 	C:\Windows\SysWOW64\ntdll.dll
+0x75b60000 - 0x75c70000 	C:\Windows\syswow64\kernel32.dll
+0x75b10000 - 0x75b57000 	C:\Windows\syswow64\KERNELBASE.dll
+0x76220000 - 0x762c0000 	C:\Windows\syswow64\ADVAPI32.dll
+0x762c0000 - 0x7636c000 	C:\Windows\syswow64\msvcrt.dll
+0x75ec0000 - 0x75ed9000 	C:\Windows\SysWOW64\sechost.dll
+0x76820000 - 0x76910000 	C:\Windows\syswow64\RPCRT4.dll
+0x74b00000 - 0x74b60000 	C:\Windows\syswow64\SspiCli.dll
+0x74af0000 - 0x74afc000 	C:\Windows\syswow64\CRYPTBASE.dll
+0x75d20000 - 0x75e20000 	C:\Windows\syswow64\USER32.dll
+0x74b90000 - 0x74c20000 	C:\Windows\syswow64\GDI32.dll
+0x75ce0000 - 0x75cea000 	C:\Windows\syswow64\LPK.dll
+0x76180000 - 0x7621d000 	C:\Windows\syswow64\USP10.dll
+0x72370000 - 0x7250e000 	C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.17514_none_41e6975e2bd6f2b2\COMCTL32.dll
+0x75c70000 - 0x75cc7000 	C:\Windows\syswow64\SHLWAPI.dll
+0x71fd0000 - 0x7201c000 	C:\Windows\system32\apphelp.dll
+0x64050000 - 0x64268000 	C:\Windows\AppPatch\AcGenral.DLL
+0x71910000 - 0x71990000 	C:\Windows\system32\UxTheme.dll
+0x73060000 - 0x73092000 	C:\Windows\system32\WINMM.dll
+0x71f90000 - 0x71f9f000 	C:\Windows\system32\samcli.dll
+0x75fe0000 - 0x7613c000 	C:\Windows\syswow64\ole32.dll
+0x74cb0000 - 0x74d3f000 	C:\Windows\syswow64\OLEAUT32.dll
+0x709c0000 - 0x709d4000 	C:\Windows\system32\MSACM32.dll
+0x73210000 - 0x73219000 	C:\Windows\system32\VERSION.dll
+0x74ec0000 - 0x75b0a000 	C:\Windows\syswow64\SHELL32.dll
+0x74780000 - 0x74783000 	C:\Windows\system32\sfc.dll
+0x74770000 - 0x7477d000 	C:\Windows\system32\sfc_os.DLL
+0x72da0000 - 0x72db7000 	C:\Windows\system32\USERENV.dll
+0x72e00000 - 0x72e0b000 	C:\Windows\system32\profapi.dll
+0x71080000 - 0x71093000 	C:\Windows\system32\dwmapi.dll
+0x76440000 - 0x765dd000 	C:\Windows\syswow64\SETUPAPI.dll
+0x75e30000 - 0x75e57000 	C:\Windows\syswow64\CFGMGR32.dll
+0x75f40000 - 0x75f52000 	C:\Windows\syswow64\DEVOBJ.dll
+0x76700000 - 0x76811000 	C:\Windows\syswow64\urlmon.dll
+0x76910000 - 0x76ac8000 	C:\Windows\syswow64\iertutil.dll
+0x765e0000 - 0x766fb000 	C:\Windows\syswow64\WININET.dll
+0x773f0000 - 0x773f3000 	C:\Windows\syswow64\Normaliz.dll
+0x71f70000 - 0x71f82000 	C:\Windows\system32\MPR.dll
+0x75e60000 - 0x75ec0000 	C:\Windows\system32\IMM32.DLL
+0x76370000 - 0x7643c000 	C:\Windows\syswow64\MSCTF.dll
+0x643d0000 - 0x6448e000 	C:\Program Files (x86)\Java\jre7\bin\msvcr100.dll
+0x58be0000 - 0x58f2c000 	C:\Program Files (x86)\Java\jre7\bin\client\jvm.dll
+0x730d0000 - 0x730d7000 	C:\Windows\system32\WSOCK32.dll
+0x76140000 - 0x76175000 	C:\Windows\syswow64\WS2_32.dll
+0x74e60000 - 0x74e66000 	C:\Windows\syswow64\NSI.dll
+0x75e20000 - 0x75e25000 	C:\Windows\syswow64\PSAPI.DLL
+0x74510000 - 0x7451c000 	C:\Program Files (x86)\Java\jre7\bin\verify.dll
+0x6eed0000 - 0x6eef0000 	C:\Program Files (x86)\Java\jre7\bin\java.dll
+0x6e510000 - 0x6e523000 	C:\Program Files (x86)\Java\jre7\bin\zip.dll
+0x67000000 - 0x67225000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\bin\QtCore4.dll
+0x732d0000 - 0x73357000 	C:\Windows\WinSxS\x86_microsoft.vc80.crt_1fc8b3b9a1e18e3b_8.0.50727.6195_none_d09154e044272b9a\MSVCP80.dll
+0x73230000 - 0x732cb000 	C:\Windows\WinSxS\x86_microsoft.vc80.crt_1fc8b3b9a1e18e3b_8.0.50727.6195_none_d09154e044272b9a\MSVCR80.dll
+0x10000000 - 0x10034000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\bin\qtjambi.dll
+0x04800000 - 0x048e6000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\bin\com_trolltech_qt_core.dll
+0x65000000 - 0x657fd000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\bin\QtGui4.dll
+0x75f60000 - 0x75fdb000 	C:\Windows\syswow64\comdlg32.dll
+0x71240000 - 0x71291000 	C:\Windows\system32\WINSPOOL.DRV
+0x04f60000 - 0x05490000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\bin\com_trolltech_qt_gui.dll
+0x61000000 - 0x61059000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\bin\QtXml4.dll
+0x62000000 - 0x62032000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\bin\QtSql4.dll
+0x66000000 - 0x66048000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\bin\QtSvg4.dll
+0x05690000 - 0x05782000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\bin\QtNetwork4.dll
+0x05790000 - 0x05a79000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\bin\QtXmlPatterns4.dll
+0x74c20000 - 0x74ca3000 	C:\Windows\syswow64\CLBCatQ.DLL
+0x64270000 - 0x643cd000 	C:\Program Files (x86)\Common Files\Microsoft Shared\Ink\InkObj.dll
+0x70010000 - 0x70024000 	C:\Windows\system32\ATL.DLL
+0x71780000 - 0x71910000 	C:\Windows\WinSxS\x86_microsoft.windows.gdiplus_6595b64144ccf1df_1.1.7601.17825_none_72d273598668a06b\gdiplus.dll
+0x711a0000 - 0x711b6000 	C:\Windows\system32\CRYPTSP.dll
+0x70f70000 - 0x70fab000 	C:\Windows\system32\rsaenh.dll
+0x70f60000 - 0x70f6e000 	C:\Windows\system32\RpcRtRemote.dll
+0x74600000 - 0x7460d000 	C:\Program Files (x86)\Common Files\Microsoft Shared\Ink\tpcps.dll
+0x04680000 - 0x0468a000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\plugins\imageformats\qgif4.dll
+0x04780000 - 0x047a1000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\plugins\imageformats\qjpeg4.dll
+0x04e50000 - 0x04e89000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\plugins\imageformats\qmng4.dll
+0x049f0000 - 0x049f8000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\plugins\imageformats\qsvg4.dll
+0x04eb0000 - 0x04ef7000 	C:\Users\Eier\AppData\Local\Temp\QtJambi_Eier_x86_4.6.3_msvc2005-20100709-1245\plugins\imageformats\qtiff4.dll
+0x6fd80000 - 0x6fe6b000 	C:\Windows\system32\dbghelp.dll
+
+VM Arguments:
+jvm_args: -Djava.library.path=libs" -Dfile.encoding=Cp1252 
+java_command: com.gui.MainWindow
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+CLASSPATH=.;C:\Program Files (x86)\Java\jre6\lib\ext\QTJava.zip
+PATH=C:/Program Files (x86)/Java/jre7/bin/client;C:/Program Files (x86)/Java/jre7/bin;C:/Program Files (x86)/Java/jre7/lib/i386;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\EgisTec MyWinLocker\x86;C:\Program Files (x86)\EgisTec MyWinLocker\x64;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Python27\;C:\Users\Eier\it_1901\it1901_sheep\project\libs\qt-jambi-qtjambi-community-awtbridge-master\win32-msvc2005\;C:\Users\Eier\Documents\GitHub\it1901_sheep\project\libsC:\Users\Eier\Documents\GitHub\it1901_sheep\project\libs;C:\Users\Eier\Desktop\eclipse;
+USERNAME=Eier
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=AMD64 Family 16 Model 5 Stepping 3, AuthenticAMD
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 , 64 bit Build 7601 Service Pack 1
+
+CPU:total 4 (4 cores per cpu, 1 threads per core) family 16 model 5 stepping 3, cmov, cx8, fxsr, mmx, sse, sse2, sse3, popcnt, mmxext, 3dnowpref, lzcnt, sse4a, tsc, tscinvbit, tscinv
+
+Memory: 4k page, physical 6027504k(1249804k free), swap 12053156k(5917192k free)
+
+vm_info: Java HotSpot(TM) Client VM (23.3-b01) for windows-x86 JRE (1.7.0_07-b10), built on Aug 28 2012 19:49:22 by "java_re" with unknown MS VC++:1600
+
+time: Wed Nov 21 04:03:34 2012
+elapsed time: 1 seconds
+
