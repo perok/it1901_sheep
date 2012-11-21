@@ -104,6 +104,11 @@ public class ClientSocket  {
 	 * 
 	 */
 	public void disconnect() {
+		try {
+			sOutput.writeObject(new Request(Request.LOGOUT));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		try { 
 			if(sInput != null) sInput.close();
 		}
