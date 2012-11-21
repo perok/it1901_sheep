@@ -23,7 +23,6 @@ public class Server {
 	public ServerGUI sg;
 	public AlertNotifier notifier;
 	public SheepStatusSim simulator;
-	private ArrayList<Thread> threads;
 
 	/**Constructor without GUI.
 	 * 
@@ -44,7 +43,6 @@ public class Server {
 		this.port = port;
 		sdf = new SimpleDateFormat("HH:mm:ss");
 		al = new ArrayList<ClientHandler>();
-		threads = new ArrayList<Thread>();
 		simulator = new SheepStatusSim(10, this);
 	}
 
@@ -68,10 +66,7 @@ public class Server {
 					break;
 				ClientHandler t = new ClientHandler(socket,this,settings);
 				al.add(t); 
-				Thread thread = new Thread(t);
-				thread.start();
-				thread.setName(t.getUsername());
-				threads.add(thread);
+				new Thread(t).start();
 			}
 			try {
 				serverSocket.close();
@@ -132,13 +127,6 @@ public class Server {
 					}
 				}
 			}
-		}
-	}
-
-	public void shutdown(ClientHandler clientHandler) {
-		for (int i = 0; i < threads.size(); i++) {
-			if(threads.get(i).getName().equals(clientHandler.getUsername()))
-				threads.get(i).stop();
 		}
 	}
 
