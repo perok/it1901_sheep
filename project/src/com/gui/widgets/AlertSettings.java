@@ -34,7 +34,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
 	/** Constructor. Initialize..
 	 * 
 	 * @param parent host of THIS
-	 * @param lThemes a list of strings with the currently availible themes
+	 * @param lThemes a list of strings with the currently available themes
 	 */
     public AlertSettings(SettingsMenu parent) 
     {
@@ -123,7 +123,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
         
         qvbThemeLayout.addWidget(this.qlwQtStyleList);
 
-        qvblMainLayout.addWidget(this.qgbUpdateGroup);
+        //qvblMainLayout.addWidget(this.qgbUpdateGroup);
         qvblMainLayout.addWidget(this.qgbStyleGroup);
         qvblMainLayout.addSpacing(12);
         qvblMainLayout.addStretch(1);
