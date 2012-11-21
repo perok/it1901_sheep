@@ -1,0 +1,11 @@
+Dette mangler i rapporten.
+
+Vedlegg:
+		Klassediagram (må oppdateres)
+		DIA-diagram.
+	X	Brukermanual
+		Sprint-oversikt, 
+			burndown chart, 
+			møtereferat
+		Kildekode
+		Kjørbar utgave av programmet.

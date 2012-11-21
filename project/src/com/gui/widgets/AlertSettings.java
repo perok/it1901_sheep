@@ -19,7 +19,7 @@ import com.trolltech.qt.gui.QWidget;
  */
 public class AlertSettings extends QWidget implements InputComponentHost
 {
-	public static final String CLASS_ICON = "./icons/alert.png";
+	public static final String CLASS_ICON = "classpath:res/alert.png";
 	
 	private List<ComponentConnector> lComponents = new ArrayList<ComponentConnector>();
 	

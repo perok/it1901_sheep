@@ -28,7 +28,7 @@ import core.classes.User;
  */
 public class UserSettings extends QWidget implements InputComponentHost
 {
-	public static final String CLASS_ICON = "./icons/farmer.png";
+	public static final String CLASS_ICON = "classpath:res/farmer.png";
 
 	private QComboBox qcbFarmCombo;
 	private QGroupBox qgbFarmGroup,
