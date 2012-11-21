@@ -347,8 +347,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 			
 			QDateTime d = new QDateTime();
 			d.setTime_t(msg.getTimestamp());
-			
-			
+
 			arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, msg.getGpsPosition().getLatitute(), msg.getGpsPosition().getLongditude(), d.toString() ));
 		}
 		

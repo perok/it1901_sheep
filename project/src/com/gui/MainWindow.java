@@ -83,6 +83,7 @@ public class MainWindow extends QMainWindow
         new UiLoginWindowLogic(this.uiLoginWindow, this.serverLogic);
 
         this.serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");
+        this.serverLogic.logInFailed.connect(this, "logInFailed()");
     }
     
 	/**
@@ -91,6 +92,7 @@ public class MainWindow extends QMainWindow
 	 */
 	public void setupUi_MainWindow()
 	{
+		this.serverLogic.logInFailed.disconnect();
 		/* DO NOT CHANGE ORDER, YES I'AM LOOKING AT YOU! */
 		this.uiLoginWindow = null; /* Make sure the login-widget doesn't occupy window space */
 		this.uiMainWindow = new UiMainWindow();
@@ -129,6 +131,10 @@ public class MainWindow extends QMainWindow
 	 * EVENTS
 	 */
 	
+	private void logInFailed(){
+		QMessageBox.warning(this, "Failed login", "Wrong password or username.\nIf you mean that this is a mistake, contact your system administrator.");
+	}
+	
 	/**
 	 * Gracefully close the application.
 	 * 
@@ -156,6 +162,11 @@ public class MainWindow extends QMainWindow
 	    	}
 			else /* Another keypress-event in login-window. Let Qt deal with that. */
 				super.keyPressEvent(event);
+		}
+		else if(uiMainWindow != null){
+			if (event.key() == Qt.Key.Key_F5.value()){
+				serverLogic.refreshData();
+			}
 		}
     	else /* If the login-window is NOT the active widget */
     		/* Let Qt deal with keypress-event */
