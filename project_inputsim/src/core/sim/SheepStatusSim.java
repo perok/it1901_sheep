@@ -107,9 +107,8 @@ public class SheepStatusSim {
 	public void setTimerInterval(int timerInterval) {
 		this.statusInterval = timerInterval;
 		server.display("Simulator interval set to " + timerInterval +" minutes");
-		statusTimer.stop();
-		statusTimer = new Timer(timerInterval, updateStatus);
-		statusTimer.start();
+		statusTimer.setDelay(statusInterval);
+		statusTimer.restart();
 	}
 
 	/** Starts the timer and keeps it running until the program terminates or stop is called.
