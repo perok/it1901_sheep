@@ -1,6 +1,9 @@
 package core.sim;
+import java.util.ArrayList;
 import java.util.Random; 
 import com.db.*;
+
+import core.classes.Sheep;
 import core.settings.*;
 
 
@@ -176,6 +179,19 @@ public class DatabasePopulator {
 		String res = new String();
 		for (int i = 0; i < farms.length; i++) {
 			res += "Name: " + farms[i][0]+", Id: " + farms[i][1] + "\n";
+		}
+		return res;
+	}
+	
+	/** Returns a string of all users in database with id and name.
+	 * 
+	 * @return
+	 */
+	public String listSheep() {
+		ArrayList<Sheep> sheep = sc.listSheep();
+		String res = new String();
+		for (int i = 0; i < sheep.size(); i++) {
+			res += "Name:" + sheep.get(i).getName()+", Id:" + sheep.get(i).getId() +", Farm:" + sheep.get(i).getFarmId() + "\n";
 		}
 		return res;
 	}

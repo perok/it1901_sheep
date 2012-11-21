@@ -26,7 +26,6 @@ public final class HelpPrinter {
 	 */
 	public static String printSimHelp() {
 		String help = new String("Following command are available for sim: \n");
-		help += "sim help - Sim commands \n";
 		help += "sim start - Starts the simulator \n";
 		help += "sim stop - Stops the simulator \n";
 		help += "sim interval x - Sets interval of sim to x minutes \n";
@@ -41,7 +40,7 @@ public final class HelpPrinter {
 		String help = new String("Following command are available for pop: \n");
 		help += "pop add sheep x y - Adds x number of sheep to farm with id y \n";
 		help += "pop sheep alive x y - Sets sheep with id x to status y(0/1)";
-		help += "pop add user a b c d e f - Adds a user with username a, name b, password c, phonenumber d, email e";
+		help += "pop add user a b c d e f - Adds a user with username a, name b, \n password c, phonenumber d, email e";
 		return help;
 	}
 	
@@ -61,8 +60,9 @@ public final class HelpPrinter {
 	 */
 	public static String printDbHelp() {
 		String help = new String();
-		help += "db ls farms - Lists all farms with Id \n";
-		help += "db ls users - Lists all users with name and Id \n";
+		help += "db ls farms - Lists all farms with id \n";
+		help += "db ls users - Lists all users with name and id \n";
+		help += "db ls users - Lists all sheep with name, id and farm id \n";
 		help += "db access add x y - Adds access for user id x to farm id y \n";
 		help += "db access remove x y - Removes access for user id x to farm id y \n";
 		help += "db purge sheep - Purges all sheep from database \n";

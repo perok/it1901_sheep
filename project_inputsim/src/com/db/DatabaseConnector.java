@@ -298,8 +298,7 @@ public class DatabaseConnector {
 					Integer.parseInt(r[i][7])));
 		}
 		return list;
-	}
-
+	} 
 
 	/*
 	 * SERVER SECTION

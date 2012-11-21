@@ -162,6 +162,9 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 			case("help"): 
 				appendEvent(HelpPrinter.printAlertHelp());
 			break;
+			case("invoke"): 
+				server.simulator.addAlert(Integer.parseInt(decoded[2]), 1);
+			break;
 			}
 		break;
 
@@ -193,15 +196,20 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 			case("add"):
 				if(decoded[2].equalsIgnoreCase("sheep")) {
 					populator.addSheep(Integer.parseInt(decoded[3]), Integer.parseInt(decoded[4]));
+					server.display("Added " +decoded[3]+ " sheep to farm with id "+decoded[4]);
 				}
 			break;
 			
 			case("sheep"):
 				if(decoded[2].equalsIgnoreCase("alive")) {
-					if(Integer.parseInt(decoded[4]) == 1)
+					if(Integer.parseInt(decoded[4]) == 1){
 						populator.reviveSheep(Integer.parseInt(decoded[3]));
-					else
+						server.display("Revived sheep with it" + decoded[3]);
+					}
+					else{
 						populator.killSheep(Integer.parseInt(decoded[3]));
+						server.display("Killed sheep with it" + decoded[3]);
+					}
 				}
 			break;
 
@@ -228,14 +236,20 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 				appendEvent("--List of farms-- \n");
 				appendEvent(populator.listFarms());
 			}
+			else if(decoded[2].equalsIgnoreCase("sheep")) {
+				appendEvent("--List of sheep-- \n");
+				appendEvent(populator.listSheep());
+			}
 		break;
 
 		case("access"):
 			if(decoded[2].equalsIgnoreCase("add")) {
 				populator.addAccessRights(Integer.parseInt(decoded[3]), Integer.parseInt(decoded[4]));
+				server.display("Added access for user " +decoded[3]+ " for farm with id" +decoded[4] );
 			}
 			else if(decoded[2].equalsIgnoreCase("delete")) {
 				populator.removeAccessRights(Integer.parseInt(decoded[3]), Integer.parseInt(decoded[4]));
+				server.display("Removed access for user " +decoded[3]+ " for farm with id" +decoded[4] );
 			}
 
 		break;
@@ -243,9 +257,11 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 		case("purge"):
 			if(decoded[2].equalsIgnoreCase("sheep")) {
 				populator.deleteSheep();
+				server.display("Purged all sheep from DB");
 			}
 			else if(decoded[2].equalsIgnoreCase("status")) {
 				populator.deleteStatus();
+				server.display("Purged all statuses from DB");
 			}
 
 		break;
