@@ -154,7 +154,7 @@ function setMarkers(map, locations) {
 			shape: shape,
 			animation: google.maps.Animation.DROP,
 			title: locations[i].name,
-			zIndex: 0
+			zIndex: 1
 		});
 		
 		var type;
