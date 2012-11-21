@@ -154,7 +154,7 @@ function setMarkers(map, locations) {
 			shape: shape,
 			animation: google.maps.Animation.DROP,
 			title: locations[i].name,
-			zIndex: 0
+			zIndex: 1
 		});
 		
 		var type;
@@ -185,8 +185,21 @@ function setMarkers(map, locations) {
 		
 		markers.push(marker);
     }
-
+    
     setAllMap(map);
+    AutoCenter();
+}
+
+function AutoCenter() {
+	   
+	//  Create a new viewpoint bound
+	var bounds = new google.maps.LatLngBounds();
+
+	for(var i = 0; i < markers.length; i++){
+		bounds.extend(markers[i].position);
+	}
+	
+	map.fitBounds(bounds);
 }
 
 // Make lines

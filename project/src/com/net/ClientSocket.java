@@ -104,6 +104,11 @@ public class ClientSocket  {
 	 * 
 	 */
 	public void disconnect() {
+		try {
+			sOutput.writeObject(new Request(Request.LOGOUT));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		try { 
 			if(sInput != null) sInput.close();
 		}
@@ -200,7 +205,7 @@ public class ClientSocket  {
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("userId", Integer.toString(user.getId()));
 		params.put("farmId", Integer.toString(farm.getId()));
-		sendRequest(new Request(Request.REQUEST, "removeSheep", params));
+		sendRequest(new Request(Request.REQUEST, "addAccessRights", params));
 	}
 	/**Makes a request with the given paramters and sends it to the server.
 	 * 
@@ -211,7 +216,7 @@ public class ClientSocket  {
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("userId", Integer.toString(user.getId()));
 		params.put("farmId", Integer.toString(farm.getId()));
-		sendRequest(new Request(Request.REQUEST, "removeSheep", params));
+		sendRequest(new Request(Request.REQUEST, "deleteAccessRights", params));
 	}
 
 	/**Makes a request with the given paramters and sends it to the server.

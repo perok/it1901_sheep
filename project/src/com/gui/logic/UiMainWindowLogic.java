@@ -283,7 +283,10 @@ public class UiMainWindowLogic extends QSignalEmitter
 	
 
 	//OTHER EVENTS
-	
+	/**
+	 * Delete sheeps from server and client.
+	 * @param sheeps
+	 */
 	private void sheepsDelete(ArrayList<Sheep> sheeps){
 		int currentFarm = UserStorage.getCurrentFarm();
 		for(Sheep sheep : sheeps){
@@ -303,7 +306,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		JSONArray arr = new JSONArray();
 		//Go through all the sheeps
 		for (Sheep sheep : sheeps){
-			if(sheep.getRecentStatuses() != null){
+			if(sheep.getRecentStatuses() != null && sheep.getRecentStatuses().size() > 0){
 				double lat = sheep.getRecentStatuses().get(0).getGpsPosition().getLatitute();
 				double lon = sheep.getRecentStatuses().get(0).getGpsPosition().getLongditude();
 				boolean isAlert = false;
@@ -315,14 +318,12 @@ public class UiMainWindowLogic extends QSignalEmitter
 				QDateTime d = new QDateTime();
 				d.setTime_t(((Message)sheep.getRecentStatuses().get(0)).getTimestamp());
 				
-				//arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, lat, lon));
 				arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, lat, lon, d.toString()));
 				
 			}
 		}
 		
 		if (arr.size() > 0){
-			System.out.println("to you");
 			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONMany("+ arr +")");
 		}
 	}
@@ -346,13 +347,11 @@ public class UiMainWindowLogic extends QSignalEmitter
 			
 			QDateTime d = new QDateTime();
 			d.setTime_t(msg.getTimestamp());
-			
-			
+
 			arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, msg.getGpsPosition().getLatitute(), msg.getGpsPosition().getLongditude(), d.toString() ));
 		}
-		System.out.println(arr.toJSONString());
-		if (arr.size() > 0){	
-			System.out.println("Hello");
+		
+		if (arr.size() > 0){
 			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONOne("+ arr +")");
 		}
 		else
@@ -396,16 +395,11 @@ public class UiMainWindowLogic extends QSignalEmitter
 			sheepAdd = new Sheep(mw.lEName_Add_2.text(), Integer.parseInt(mw.lEFar_Add.text()), 
 					mw.dEBirthdate_Add.dateTime().toTime_t(),
 					mw.cBAlive_Add.isChecked(), 
-					(int)mw.dSBWeight_Add_2.value()); //M� FIKSES, skal ikke v�re int
-			
-				
-			
+					(int)mw.dSBWeight_Add_2.value()); //TODO:M� FIKSES, skal ikke v�re int
 			try{
-				System.out.println("UiMainWindowLOgc pbsumbit-Add Adding ShEPPS");
 				sLogic.addSheep(sheepAdd);
 			}
 			catch(Exception e){
-				System.err.println("Sheep updating went in the toilet");
 				System.err.println(e.getStackTrace());
 			}
 		}

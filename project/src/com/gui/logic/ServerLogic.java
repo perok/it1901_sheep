@@ -11,13 +11,14 @@ import core.classes.Farm;
 import core.classes.Sheep;
 import core.classes.User;
 
-
+/**Logic for sheep server
+ */
 public class ServerLogic extends QSignalEmitter{
 	
     private static ClientSocket clientSocket;
-    private Object objectAskingForResponse = null;
 
     public Signal0 loggedIn;
+    public Signal0 logInFailed;
     public Signal0 signalFarmListCreated;
     public Signal1<ArrayList<User>> signalUserDataRecieved;
     public Signal2<ArrayList<Sheep>, Integer> signalNewSheeps;
@@ -28,6 +29,7 @@ public class ServerLogic extends QSignalEmitter{
 	public ServerLogic()
 	{
 		loggedIn = new Signal0();
+		logInFailed = new Signal0();
 		signalFarmListCreated = new Signal0();
 		this.signalUserDataRecieved = new Signal1<ArrayList<User>>();
 		this.signalNewSheeps = new Signal2<ArrayList<Sheep>, Integer>();
@@ -75,6 +77,9 @@ public class ServerLogic extends QSignalEmitter{
 	 */
 	public void handleResponse(Response response)
 	{
+		if(response == null)
+			return;
+			
 		System.out.println("Recieved response: "+ response.getType());
 		
 		/*
@@ -119,16 +124,6 @@ public class ServerLogic extends QSignalEmitter{
 					this.signalFarmListCreated.emit();
 				}
 			}
-			
-			//A object has called for a list
-			if (objectAskingForResponse != null){
-				//Sheeplist asking for information
-				//if( objectAskingForResponse instanceof SheepListWidget){
-					//objectAskingForResponse.giveResponse(response);
-					
-					//objectAskingForResponse = null;
-				//}
-			}
 			System.out.println("response 1");
 		}
 		/* Boolean */
@@ -144,7 +139,7 @@ public class ServerLogic extends QSignalEmitter{
 		else if(response.getType() == 3)
 			if(response.getUser() == null)
 				/*Koble seg til loggininterface og gi beskjed der */
-				System.out.println("Loggin failed, try again");
+				logInFailed.emit();			
 			else{
 				System.out.println("Logged in with user: " + response.getUser().getName());
 				
@@ -204,5 +199,12 @@ public class ServerLogic extends QSignalEmitter{
 	 */
 	public void deleteSheep(int id){
 		clientSocket.removeSheep(id);
+	}
+	
+	public void refreshData(){
+		System.out.println("Reloading server data");
+		for(Farm farm : UserStorage.getUser().getFarmlist()){
+			clientSocket.getSheep(farm.getId());
+		}
 	}
 }

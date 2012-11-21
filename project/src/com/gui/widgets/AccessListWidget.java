@@ -106,7 +106,10 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 		
 		return false;
 	}
-		
+	
+	/**Sets up user list
+	 * 
+	 */
 	private void setupUserList()
 	{
 		if(this.lFarms != null 
