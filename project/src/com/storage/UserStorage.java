@@ -87,12 +87,12 @@ public class UserStorage {
 	{
 		if(lFarms == null) { throw new RuntimeException("Farmlist has not been initialized"); }
 		
-		return null;
+		return lFarms;
 	}
 			
 	public static void setFarmList(ArrayList<Farm> _lFarms)
 	{
-		lFarms = lFarms;
+		lFarms = _lFarms;
 	}
 
 	/** Set the current farm in use (for the GUI, primarily

@@ -120,6 +120,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
 		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");		
 		this.slwHandler.sheepsShowOnMap.connect(this,"sheepsShowOnMap(ArrayList)");
+		this.slwHandler.sheepsDelete.connect(this, "sheepsDelete(ArrayList)");
 
 		
 		slwHandler.refreshSheepList();
@@ -282,6 +283,14 @@ public class UiMainWindowLogic extends QSignalEmitter
 	
 
 	//OTHER EVENTS
+	
+	private void sheepsDelete(ArrayList<Sheep> sheeps){
+		int currentFarm = UserStorage.getCurrentFarm();
+		for(Sheep sheep : sheeps){
+			sLogic.deleteSheep(sheep.getId());
+			UserStorage.getUser().getFarmlist().get(currentFarm).getSheepList().remove(sheep);
+		}
+	}
 	
 	/**
 	 * Event triggered when multiple sheeps are selected in the sheep list.

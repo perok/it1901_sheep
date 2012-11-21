@@ -139,7 +139,7 @@ public class ServerLogic extends QSignalEmitter{
 		/* Boolean */
 		else if(responseType == 2)
 		{
-			if(response.getInitialRequest().equals("editSheep") || response.getInitialRequest().equals("addSheep")){ //TODO:deleteSheep fjern lokalt!
+			if(response.getInitialRequest().equals("editSheep") || response.getInitialRequest().equals("addSheep")){ 
 				clientSocket.getSheep(response.getInitialRequestId());
 				System.out.println("An action on the server was accepted");
 			}
@@ -207,7 +207,7 @@ public class ServerLogic extends QSignalEmitter{
 	 * TODO: implement
 	 * @param sheep
 	 */
-	public void deleteSheep(Sheep sheep){
-		clientSocket.editSheep(sheep);
+	public void deleteSheep(int id){
+		clientSocket.removeSheep(id);
 	}
 }

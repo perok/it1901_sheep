@@ -14,7 +14,7 @@
 		center: trondheimLoc,
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 		streetViewControl: false,
-		disableDefaultUI: true,
+		//disableDefaultUI: true,
 		mapTypeControlOptions: {
 			mapTypeIds: ['statkart', google.maps.MapTypeId.ROADMAP],
 			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU

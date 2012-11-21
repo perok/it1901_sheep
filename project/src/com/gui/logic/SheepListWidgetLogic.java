@@ -183,12 +183,22 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 	 */
 	public void contextDelete_triggered(boolean vool){
 		ArrayList<Sheep> sheepSelected = new ArrayList<Sheep>();
+		ArrayList<QListWidgetItem> itemToRemove = new ArrayList<QListWidgetItem>();
 		
 		for(QListWidgetItem item : currentItems){
 			if (item.isSelected()){
 				sheepSelected.add((Sheep)item.data(Constants.QtSheepDataRole));
+				qlWidget.takeItem(qlWidget.row(item));
+				item.reenableGarbageCollection();
+				itemToRemove.add(item);
 			}
 		}
+		
+		for(QListWidgetItem item : itemToRemove){
+			currentItems.remove(item);
+		}
+		itemToRemove.clear();
+		itemToRemove = null;
 		
 		sheepsDelete.emit(sheepSelected);
 	}
@@ -208,5 +218,5 @@ public class SheepListWidgetLogic extends QSignalEmitter{
 		
 		//Only fire event when more than one sheep is selected
 		sheepsShowOnMap.emit(sheepSelected);
-	}
+	}	
 }

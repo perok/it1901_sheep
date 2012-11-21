@@ -43,6 +43,10 @@ public class UserSettings extends QWidget implements InputComponentHost
 					  qlePhone;
 	private QPushButton qpbBtnAlarm;
 	
+	private int iPreviousFarmIndex = 0;
+	
+	public int getPrevFarmIndex() { return this.iPreviousFarmIndex; } 
+	
 	private AccessListWidget alwAccessList;
 	private List<ComponentConnector> lComponents;
 	
@@ -80,6 +84,10 @@ public class UserSettings extends QWidget implements InputComponentHost
 	
 	public void notifyChild()
 	{
+		for(Farm f : com.storage.UserStorage.getFarmList())
+		{
+			this.qcbFarmCombo.addItem(tr(f.getName()));
+		}
 		this.alwAccessList.farmListRecieved();
 	}
     
@@ -136,8 +144,12 @@ public class UserSettings extends QWidget implements InputComponentHost
 	 */
 	private void farmChanged()
 	{
+		this.alwAccessList.indexPoop = this.iPreviousFarmIndex;
+		
 		com.storage.UserStorage.setCurrentFarm(this.qcbFarmCombo.currentIndex());
 		this.signalFarmUpdate.emit(); /* Notify about farm-change */
+		
+		this.iPreviousFarmIndex = this.qcbFarmCombo.currentIndex();
 	}
 	
 	/** Initialize event-driven actions
@@ -161,11 +173,7 @@ public class UserSettings extends QWidget implements InputComponentHost
 		this.qlGaardLabel = new QLabel(tr("G�rd:"));
         this.qcbFarmCombo = new QComboBox();
         this.qpbBtnAlarm = new QPushButton(tr("Simuler alarm for angitt g�rd"));
-        
-        // TODO: hardcoded info isn't that sexy.
-        this.qcbFarmCombo.addItem(tr("Gård 0"));
-        this.qcbFarmCombo.addItem(tr("Gård 1"));
-        
+               
         this.qcbFarmCombo.setCurrentIndex(com.storage.UserStorage.getCurrentFarm());
 	}
 	
@@ -287,6 +295,7 @@ public class UserSettings extends QWidget implements InputComponentHost
 			cc.writeChanges();
 		}
 		
+		this.alwAccessList.writeChange();
 		updateUser(origUser);
 	}
 	
