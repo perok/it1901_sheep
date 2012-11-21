@@ -106,36 +106,10 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 		
 		return false;
 	}
-<<<<<<< HEAD
-
-	/**Updates user lists
-	 * 
-	 */
-	private void updateUserLists()
-	{		
-		/* For each user */
-		for(User u : this.lUsers)
-		{
-			QListWidgetItem qlwiCur = new QListWidgetItem();
-			qlwiCur.setText(u.getName());
-			
-			if(isAdmin(u) == true) { this.qlwAdminList.addItem(qlwiCur); }
-			else				   { this.qlwNonadminList .addItem(qlwiCur);  }
-			
-			/* Should not be possible to edit permissions for the current user */
-			if(u.getName().equals(com.storage.UserStorage.getUser().getName()) == true) 
-			{
-				qlwiCur.blockSignals(true); 
-			}
-		}		
-	}
 	
 	/**Sets up user list
 	 * 
 	 */
-=======
-		
->>>>>>> bdf995725803c1908827000ce929e446080f8d7a
 	private void setupUserList()
 	{
 		if(this.lFarms != null 

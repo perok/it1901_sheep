@@ -152,3 +152,4 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
 
 }
 
+/* EOF */
