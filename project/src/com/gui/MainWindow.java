@@ -1,5 +1,7 @@
 package com.gui;
 
+import java.net.URL;
+
 import com.gui.logic.UiLoginWindowLogic;
 import com.gui.logic.UiMainWindowLogic;
 import com.gui.logic.ServerLogic;
@@ -23,7 +25,7 @@ import com.trolltech.qt.gui.QWidget;
  */
 public class MainWindow extends QMainWindow 
 {
-	private final String WINDOW_ICON = "sheep.png";
+	private String WINDOW_ICON = "classpath:res/sheep.png";
 	
 	/** User-interface for the login-window */
 	private UiLoginWindow uiLoginWindow;   
@@ -72,7 +74,6 @@ public class MainWindow extends QMainWindow
         
         this.serverLogic = new ServerLogic();
         this.uiLoginWindow = new UiLoginWindow();
-        
         this.setWindowIcon(new QIcon(new QPixmap(WINDOW_ICON)));
         this.setWindowTitle(Constants.title);
 
