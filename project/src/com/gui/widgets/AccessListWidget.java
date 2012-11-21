@@ -30,6 +30,8 @@ import core.classes.User;
  * @author Gruppe 10
  *
  */
+//TODO: this class is both a graphical component AND does a lot of logics,
+//		for the sake of clean code it might be worth to fix up :-/
 public class AccessListWidget extends QWidget implements InputComponentHost
 {
 	private QListWidget qlwNonadminList,
@@ -39,13 +41,18 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 				   qlAdmin;
 	private QPushButton qpbBtnAddUsers,
 						qpbBtnRemoveUsers;
+	
+	private HashMap<String, User> mUserAdmins = new HashMap<String, User>();
+	private HashMap<String, User> mUserNonadmins = new HashMap<String, User>();
 	private ArrayList<User> lUsers;
 	private ArrayList<Farm>	lFarms;
 	private List<ComponentConnector> lComponents;
 	private ArrayList<User> lAdminUsers,
 					   		lNonAdminUsers;
 	
-	public int indexPoop = 0;
+	/** Hold the index of the farm selected before the current one */
+	public int iFormerFarmIndex = 0; //Lazy fix, no time, just making it public
+	
 		
 	/** Constructor. Initialize..
 	 *
@@ -72,12 +79,14 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 		ServerLogic.getClientsocket().listFarms();
 	}
 	
+	/** Handle whenever a farm list is recieved
+	 */
 	public void farmListRecieved()
 	{
 		this.lFarms = com.storage.UserStorage.getFarmList();
-		ServerLogic.getClientsocket().listUsers();
+		ServerLogic.getClientsocket().listUsers(); /* When the farms are updated, the users might be too */
 		
-		setupUserList();
+		setupUserList(); /* Make sure to list a fresh view of the users */
 	}
 	
 	/** Return the layout used to display this widgets
@@ -90,7 +99,12 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 		return this.qhblMainLayout;
 	}
 
-	private boolean isAdmin(User uUser)	
+	/** Check if a given user is admin or not
+	 * 
+	 * @param uUser the given admin
+	 * @return true if param is has access right to the current farm, false if not
+	 */
+	private boolean hasAccessRights(User uUser)	
 	{
 		Farm fCurrentFarm = com.storage.UserStorage.getFarmList().get( ((UserSettings)super.parent()).getFarmIndex());
 		
@@ -104,19 +118,21 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 			}
 		}
 		
+		/* User does not have access rights for this farm */
 		return false;
 	}
 	
 	/**Sets up user list
-	 * 
 	 */
 	private void setupUserList()
 	{
+		/* Make sure there's valid input data */
 		if(this.lFarms != null 
 		&& this.lFarms.isEmpty() == false
 		&& this.lUsers != null
 		&& this.lUsers.isEmpty() == false)
 		{
+			/* Data is valid - update */
 			updateUserLists();
 		}
 	}
@@ -162,6 +178,8 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 		}
 	}
 	
+	/** Clear out data before applying fresh user-data.
+	 */
 	private void eraseLists()
 	{
 		/* Simply creating a new list will remove it's properties and dependencies,
@@ -180,7 +198,7 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 	private ArrayList<User> readNewAdminList()
 	{
 		ArrayList<User> lNewAdmins = new ArrayList<User>();
-		;
+		
 		/* For every user listed under admins */
 		for(int iPos = 0; iPos < this.qlwAdminList.count(); iPos++)
 		{
@@ -215,25 +233,31 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 		return lNewNonAdmins;
 	}
 	
-	private void fixFuckingNewAdmins()
+	/** From the given lists, write any updates made by the user.
+	 */
+	private void updateAccessRights()
 	{
+		/* For each user currently in the access rights list */
 		for(User u : readNewAdminList())
 		{
-			ServerLogic.getClientsocket().addAccessRights(u, this.lFarms.get(indexPoop));
+			/* ... give access rights */
+			ServerLogic.getClientsocket().addAccessRights(u, this.lFarms.get(iFormerFarmIndex));
 		}
 		
+		/* For every new user in the non-access list */
 		for(User u : readNewNonadminList())
 		{
-			ServerLogic.getClientsocket().removeAccessRights(u, this.lFarms.get(indexPoop));			
+			/** ... remove access rights */
+			ServerLogic.getClientsocket().removeAccessRights(u, this.lFarms.get(iFormerFarmIndex));			
 		}
 	}
 	
-	private HashMap<String, User> mUserAdmins = new HashMap<String, User>();
-	private HashMap<String, User> mUserNonadmins = new HashMap<String, User>();
-	
+	/** Given that there has been obtained new data, update the lists shown.
+	 * Old changes are saved before displaying data.
+	 */
 	private void updateUserLists()
 	{
-		fixFuckingNewAdmins();
+		updateAccessRights();
 		eraseLists();
 		
 		/* For each user */
@@ -244,14 +268,15 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 			
 			qlwiCur.setText(sName);
 			
-			if(isAdmin(u) == true) 
+			/* If a user has access rights */
+			if(hasAccessRights(u) == true) 
 			{
-				this.qlwAdminList.addItem(qlwiCur);
-				this.lAdminUsers.add(u);
-				this.mUserAdmins.put(sName,  u);
+				this.qlwAdminList.addItem(qlwiCur); /* Add as graphical component to list */
+				this.lAdminUsers.add(u);		 /* For later referencing */
+				this.mUserAdmins.put(sName,  u); /* Hashing so that I can quickly look up data later */
 			}
-			else
-			{
+			else /* User does not have access rights */
+			{ // @see above..
 				this.qlwNonadminList.addItem(qlwiCur);
 				this.lNonAdminUsers.add(u);
 				this.mUserNonadmins.put(sName,  u);
@@ -275,22 +300,22 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 	private void initLayout()
 	{
 		this.qhblMainLayout = new QHBoxLayout();
-		QVBoxLayout qvblNonAdminLay = new QVBoxLayout();
-		QVBoxLayout qvblAdminLay = new QVBoxLayout();
+		QVBoxLayout qvblNonAccessRightsLay = new QVBoxLayout();
+		QVBoxLayout qvblAccessRightsLay = new QVBoxLayout();
 		QVBoxLayout qvblButtonLayout = new QVBoxLayout();
 		
-		qvblAdminLay.addWidget(this.qlAdmin);
-		qvblAdminLay.addWidget(this.qlwAdminList);
+		qvblAccessRightsLay.addWidget(this.qlAdmin);
+		qvblAccessRightsLay.addWidget(this.qlwAdminList);
 		
-		qvblNonAdminLay.addWidget(this.qlNonadmin);
-		qvblNonAdminLay.addWidget(this.qlwNonadminList);
+		qvblNonAccessRightsLay.addWidget(this.qlNonadmin);
+		qvblNonAccessRightsLay.addWidget(this.qlwNonadminList);
 		
 		qvblButtonLayout.addWidget(this.qpbBtnAddUsers);
 		qvblButtonLayout.addWidget(this.qpbBtnRemoveUsers);
 		
-		this.qhblMainLayout.addLayout(qvblNonAdminLay);
+		this.qhblMainLayout.addLayout(qvblNonAccessRightsLay);
 		this.qhblMainLayout.addLayout(qvblButtonLayout);
-		this.qhblMainLayout.addLayout(qvblAdminLay);
+		this.qhblMainLayout.addLayout(qvblAccessRightsLay);
 		
 		super.setLayout(qhblMainLayout);
 	}
@@ -306,6 +331,7 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 		this.qlAdmin = new QLabel(tr("Brukerrettigheter"));
 		this.qlNonadmin = new QLabel(tr("Ikke brukerrettigheter"));
 		
+		/* Enables for single-select and/or multiple */
 		this.qlwNonadminList.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection);
 		this.qlwAdminList.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection);
 	}
@@ -313,7 +339,7 @@ public class AccessListWidget extends QWidget implements InputComponentHost
 	@Override
 	public void writeChange() 
 	{
-		fixFuckingNewAdmins();		
+		updateAccessRights();		
 	}
 }
 
