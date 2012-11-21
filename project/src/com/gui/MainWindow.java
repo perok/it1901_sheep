@@ -83,7 +83,7 @@ public class MainWindow extends QMainWindow
         new UiLoginWindowLogic(this.uiLoginWindow, this.serverLogic);
 
         this.serverLogic.loggedIn.connect(this, "setupUi_MainWindow()");
-        //this.serverLogic.logInFailed.connect(this, "logInFailed()");
+        this.serverLogic.logInFailed.connect(this, "logInFailed()");
     }
     
 	/**
@@ -103,7 +103,6 @@ public class MainWindow extends QMainWindow
 		this.slwHandler = new SheepListWidgetLogic(uiMainWindow.listWidget);		
 		this.mwLogic = new UiMainWindowLogic(uiMainWindow, slwHandler, twhandler, serverLogic);
 		
-        
 		/* Setup user-triggered events */
 		this.mwLogic.signalShowAbout.connect(this, "about()");
 		this.mwLogic.signalShowAboutQt.connect(this, "aboutQt()");

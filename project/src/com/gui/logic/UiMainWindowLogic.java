@@ -96,6 +96,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		mw.actionAbout.triggered.connect(this, "actionAbout_toggled(boolean)");
 		mw.actionAbout_Qt_Jambi.triggered.connect(this, "actionAbout_Qt_Jambi_triggerd(boolean)");
 		mw.actionExit.triggered.connect(this, "actionExit_toggled(boolean)");
+		mw.actionExit.setShortcut(this.mw.getMother().tr("Ctrl+Q"));
 		mw.actionUndo.triggered.connect(this, "actionUndo_toggled(boolean)");
 		mw.actionSettings.triggered.connect(this, "actionSettings_triggered(boolean)");
 		mw.actionSettings.setStatusTip("Show the settings for this application");
@@ -203,22 +204,26 @@ public class UiMainWindowLogic extends QSignalEmitter
 	private void actionInformation_Window_toggled(boolean toggle){
 		//mw.tableWidget.setVisible(toggle);
 		
-		if(toggle){
-			mw.tableWidget.hide();
-			//mw.tableWidget.update();
-			//mw.splitter.update();
-			//mw.splitter.updateGeometry();
-			//mw.splitter.c
+		if(toggle == false){			
+			mw.hideTable();
 		}
 		else
+		{
 			mw.tabWidget.show();
-		
-		System.out.println(toggle);
+		}
 	}
 	
 	@SuppressWarnings({ "unused", "static-method" })
 	private void actionMap_toggled(boolean trigg){
-		System.out.println(trigg);
+		if(trigg == false)
+		{
+			this.mw.hideMap();
+		}
+		
+		else
+		{
+			this.mw.MAPWIDGET.show();
+		}
 	}
 	
 	/**

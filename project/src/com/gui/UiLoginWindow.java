@@ -208,7 +208,6 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
 	    	 layout.addLayout(qhblPhoneLay);
 	    	 layout.addWidget(register);
 	    	 setLayout(layout);
-	    	 
 	    }
 	    
 
@@ -262,9 +261,9 @@ public class UiLoginWindow extends QSignalEmitter implements com.trolltech.qt.QU
 			this.phone.setValidator(qvRegexPhone);	
 			initLayout();
 	    }
-	    // få inn til databasen, med generering av ID
+	    // fï¿½ inn til databasen, med generering av ID
 	    public boolean validInput(){
-	    	
+	    	return false;	    	
 	    }
 
 	    public void main(String[] args) {
