@@ -113,21 +113,5 @@ public class Server {
 		sg.appendEvent(time + "\n");
 	}
 
-	/** Notifies client of usernames and messages
-	 * 
-	 * @param usernames
-	 * @param messages
-	 */
-	public void notifyClient(String[] usernames,ArrayList<Message> messages) {
-		if(usernames != null) {
-			for (int i = 0; i < al.size(); i++) {
-				for (int j = 0; j < usernames.length; j++) {
-					if(al.get(i).getUsername().equals(usernames[j])) {
-						al.get(i).sendUpdate(messages);
-					}
-				}
-			}
-		}
-	}
 
 }

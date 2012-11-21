@@ -23,7 +23,7 @@ import com.trolltech.qt.gui.QWidget;
  */
 public class MainWindow extends QMainWindow 
 {
-	private final String WINDOW_ICON = "res/sheep.png";
+	private final String WINDOW_ICON = "sheep.png";
 	
 	/** User-interface for the login-window */
 	private UiLoginWindow uiLoginWindow;   

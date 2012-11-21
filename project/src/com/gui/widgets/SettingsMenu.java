@@ -29,7 +29,7 @@ import core.classes.User;
  */
 public class SettingsMenu extends QDialog
 {
-	public static final String CLASS_ICON = "./icons/sheep.png";
+	public static final String CLASS_ICON = "sheep2.png";
 	
 	private AlertSettings asAlertWidget;
 	private UserSettings usUserWidget;

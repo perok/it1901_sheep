@@ -60,7 +60,6 @@ public class AlertNotifier implements Runnable{
 	private void notifyEmail(SheepAlert sheepAlert) {
 		GPSPosition gps = sheepAlert.getGpsPosition();
 		String recipient = db.getAlertResponderEmail(sheepAlert.getFarmId());
-		mail.notifyUser(recipient, gps);
 	}
 	
 	/** Method called by simulator to notify users about alerts
@@ -74,21 +73,14 @@ public class AlertNotifier implements Runnable{
 		db.alertNotified(sheepAlert.getId());
 		ArrayList<Message> list = new ArrayList<Message>();
 		list.add(sheepAlert);
-		server.notifyClient(db.getUsernames(sheepAlert.getFarmId()), list);
 	}
 	
 	/** Inserts SheepStatus into the db.
 	 * 
 	 * @param status
 	 */
-	public void recieveStatus(String[][] status, ArrayList<Message> statuses) {
+	public void recieveStatus(String[][] status) {
 		db.insertSheepStatus(status);
-		String[][] list = db.listUsers();
-		String[] res = new String[list.length];
-		for (int i = 0; i < list.length; i++) {
-			res[i] = list[i][1];
-		}
-		server.notifyClient(res, statuses);
 	}
 
 }
