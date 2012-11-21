@@ -1,7 +1,7 @@
 Dette mangler i rapporten.
 
 Vedlegg:
-		Klassediagram (må oppdateres)
+	X	Klassediagram (må oppdateres)
 		DIA-diagram.
 	X	Brukermanual
 		Sprint-oversikt, 
@@ -9,3 +9,5 @@ Vedlegg:
 			møtereferat
 		Kildekode
 		Kjørbar utgave av programmet.
+		
+E-post Lise Bulling
