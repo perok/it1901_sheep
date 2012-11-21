@@ -514,6 +514,16 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
 
         MainWindow.connectSlotsByName();
     } // setupUi
+    
+    public void hideTable()
+    {
+    	this.tabWidget.hide();
+    }
+    
+    public void hideMap()
+    {
+    	this.MAPWIDGET.hide();
+    }
 
     void retranslateUi(QMainWindow MainWindow)
     {
@@ -563,6 +573,6 @@ public class UiMainWindow implements com.trolltech.qt.QUiForm<QMainWindow>
     @Override
 	public void setupUi(QMainWindow arg0) {
 		setupUi(arg0, 800, 800);
-		
+
 	}
 }

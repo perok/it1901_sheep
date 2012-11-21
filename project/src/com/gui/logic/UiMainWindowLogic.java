@@ -28,21 +28,21 @@ import core.classes.User;
 public class UiMainWindowLogic extends QSignalEmitter
 {
 	private UiMainWindow mw;
-	
+
 	private SheepListWidgetLogic slwHandler;
 	private TableWidgetLogic twHandler;
 	private ServerLogic sLogic;
-	
+
 	private QLabel statusbarMessage;
-	
+
 	public Signal0 signalShowAbout;
 	public Signal0 signalShowAboutQt;
 	public Signal0 signalUpdateSheepList;
 	public Signal1<ArrayList<User>> signalUserListRecieved;
-	
-	
+
+
 	private Sheep currentSheep;
-	
+
 	@SuppressWarnings("unused")
 	private void sendUserData(ArrayList<User> lUsers)
 	{
@@ -62,33 +62,33 @@ public class UiMainWindowLogic extends QSignalEmitter
 		this.slwHandler = slwHandler;
 		this.twHandler = twHandler;
 		this.sLogic = sLogic;
-		
+
 		/* ServerLogic signals*/
 		this.signalUserListRecieved = new Signal1<ArrayList<User>>();		
 		sLogic.signalUserDataRecieved.connect(this, "sendUserData(ArrayList)");
 		sLogic.signalNewSheeps.connect(this, "sLogic_signalNewSheeps(ArrayList, int)");
-		
+
 		/* Setting up user information*/
 		if(UserStorage.getUser() != null)
 			for(int i = 0; i < UserStorage.getUser().getFarmlist().size(); i++)
 				mw.cmbDockFarmId.addItem(UserStorage.getUser().getFarmlist().get(i).getName());
-		
+
 		/* Setting up extra widgets*/
 		statusbarMessage = new QLabel("Ready");
 		mw.statusbar.addWidget(statusbarMessage);
 		//Fiks mapWidget her..
-		
+
 		/* Adding values to ui */
 		//Information tab defaults at open.
 		mw.tabWidget.setCurrentIndex(0);
 		mw.tabWidget.setContentsMargins(0, 0, 0, 0);
 		mw.MAPWIDGET.setUrl(new QUrl("web/index.html"));
-		
+
 		/* Setting up signals */
 		signalShowAbout = new Signal0();
 		signalShowAboutQt = new Signal0();
 		signalUpdateSheepList = new Signal0();
-		
+
 			//MainWinow
 				//MENU
 		mw.actionInformation_Window.toggled.connect(this, "actionInformation_Window_toggled(boolean)");
@@ -96,12 +96,13 @@ public class UiMainWindowLogic extends QSignalEmitter
 		mw.actionAbout.triggered.connect(this, "actionAbout_toggled(boolean)");
 		mw.actionAbout_Qt_Jambi.triggered.connect(this, "actionAbout_Qt_Jambi_triggerd(boolean)");
 		mw.actionExit.triggered.connect(this, "actionExit_toggled(boolean)");
+		mw.actionExit.setShortcut(this.mw.getMother().tr("Ctrl+Q"));
 		mw.actionUndo.triggered.connect(this, "actionUndo_toggled(boolean)");
 		mw.actionSettings.triggered.connect(this, "actionSettings_triggered(boolean)");
 		mw.actionSettings.setStatusTip("Show the settings for this application");
 
 
-		
+
 				//DOCKWIDGET
 		mw.rbAscDesc.toggled.connect(this, "rbAscDesc_toggled(boolean)");
 		mw.cmbDockFarmId.currentIndexChanged.connect(this, "cmbDockFarmId_currentIndexChanged(int)");
@@ -109,23 +110,23 @@ public class UiMainWindowLogic extends QSignalEmitter
 				//TABWIDGET
 		mw.pbTabInformationUpdate.clicked.connect(this, "pbTabInformationUpdate_clicked(boolean)");
 		mw.pbTabInformationReset.clicked.connect(this, "pbTabInformationReset_clicked(boolean)");
-		
+
 		mw.cmbTabMessages.currentIndexChanged.connect(this, "cmbTabMessages_currentIndexChanged(int)");
 		mw.pBSubmit_Add.clicked.connect(this, "pBSubmit_Add_clicked(boolean)");
-		
+
 			//tableWidgetHandler
 		//mw.ta
-		
+
 			//SheepListWidget
 		this.slwHandler.statusBarMessage.connect(this, "newStatusBarMessage(String)");
 		this.slwHandler.sheepSelected.connect(this, "populateTableWidget(Sheep)");		
 		this.slwHandler.sheepsShowOnMap.connect(this,"sheepsShowOnMap(ArrayList)");
 		this.slwHandler.sheepsDelete.connect(this, "sheepsDelete(ArrayList)");
 
-		
+
 		slwHandler.refreshSheepList();
 	}
-	
+
 	/* SERVERLOGIC*/
 	/**
 	 * Updates the UserStorage with the new sheeps and refreshes the list.
@@ -136,7 +137,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		for(Farm farm : UserStorage.getUser().getFarmlist()){
 			if(farm.getId() == farmID){
 				farm.setSheepList(sheeps);
-				
+
 				//TODO: DOES NOT WORK. CurrentFarm needs to be fixed..
 				//Only refresh sheeplist if the changed sheeps are in the row
 				//if(UserStorage.getCurrentFarm() == farmID)
@@ -146,18 +147,18 @@ public class UiMainWindowLogic extends QSignalEmitter
 				    	slwHandler.refreshSheepList();
 				    }
 				});
-				
+
 				break;
 			}
 		}
-		
-		
-		
+
+
+
 	}
-	
-	
+
+
 	/* ACTIONS */
-	
+
 	/**
 	 * Shows a popupmessage about the program
 	 * @param trigg
@@ -166,7 +167,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	private void actionAbout_toggled(boolean trigg){
 		signalShowAbout.emit();
 	}
-	
+
 	/**
 	 * Shows a popupmessage about Qt
 	 * @param trigg
@@ -176,7 +177,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	{
 		signalShowAboutQt.emit();
 	}
-	    
+
 	/**
 	 * Pops up the settings widget
 	 * @param triggered
@@ -197,30 +198,34 @@ public class UiMainWindowLogic extends QSignalEmitter
     	this.slwHandler.refreshSheepList();
     	this.mw.cmbDockFarmId.setCurrentIndex(UserStorage.getCurrentFarm());
     }
-	
+
 	//NOT WORKING FIXME:
 	@SuppressWarnings("unused")
 	private void actionInformation_Window_toggled(boolean toggle){
 		//mw.tableWidget.setVisible(toggle);
-		
-		if(toggle){
-			mw.tableWidget.hide();
-			//mw.tableWidget.update();
-			//mw.splitter.update();
-			//mw.splitter.updateGeometry();
-			//mw.splitter.c
+
+		if(toggle == false){			
+			mw.hideTable();
 		}
 		else
+		{
 			mw.tabWidget.show();
-		
-		System.out.println(toggle);
+		}
 	}
-	
+
 	@SuppressWarnings({ "unused", "static-method" })
 	private void actionMap_toggled(boolean trigg){
-		System.out.println(trigg);
+		if(trigg == false)
+		{
+			this.mw.hideMap();
+		}
+
+		else
+		{
+			this.mw.MAPWIDGET.show();
+		}
 	}
-	
+
 	/**
 	 * Closes the program
 	 * @param trigg
@@ -269,7 +274,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	private void lineEdit_textChanged(String text){
 		slwHandler.searchSheeps(text);
 	}
-	
+
 		//STATUSBAR
 	/**
 	 * Method called when some object wants to update some given text to the status bar.
@@ -279,8 +284,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 	private void newStatusBarMessage(String text){
 			statusbarMessage.setText(text);
 	}
-	
-	
+
+
 
 	//OTHER EVENTS
 	/**
@@ -294,7 +299,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 			UserStorage.getUser().getFarmlist().get(currentFarm).getSheepList().remove(sheep);
 		}
 	}
-	
+
 	/**
 	 * Event triggered when multiple sheeps are selected in the sheep list.
 	 * Used for showing the selected sheeps in the map
@@ -302,7 +307,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 */
 	@SuppressWarnings({ "unused", "unchecked" })
 	private void sheepsShowOnMap(ArrayList<Sheep> sheeps){
-		
+
 		JSONArray arr = new JSONArray();
 		//Go through all the sheeps
 		for (Sheep sheep : sheeps){
@@ -310,24 +315,24 @@ public class UiMainWindowLogic extends QSignalEmitter
 				double lat = sheep.getRecentStatuses().get(0).getGpsPosition().getLatitute();
 				double lon = sheep.getRecentStatuses().get(0).getGpsPosition().getLongditude();
 				boolean isAlert = false;
-				
+
 				//Set right alert prefix
 				if((Message)sheep.getRecentStatuses().get(0) instanceof SheepAlert)
 					isAlert = true;
-				
+
 				QDateTime d = new QDateTime();
 				d.setTime_t(((Message)sheep.getRecentStatuses().get(0)).getTimestamp());
-				
+
 				arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, lat, lon, d.toString()));
-				
+
 			}
 		}
-		
+
 		if (arr.size() > 0){
 			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONMany("+ arr +")");
 		}
 	}
-		
+
 		/**
 		 * Populates the tabWidget
 		 * @param sheep
@@ -335,37 +340,36 @@ public class UiMainWindowLogic extends QSignalEmitter
 	@SuppressWarnings({ "unused", "unchecked" })
 	private void populateTableWidget(Sheep sheep){
 		mw.tabWidget.setCurrentIndex(0);
-		
+
 		//MAP
 		JSONArray arr = new JSONArray();
-		
+
 		for (Message msg : sheep.getRecentStatuses()){
 			boolean isAlert = false;
-			
+
 			if(msg instanceof SheepAlert)
 				isAlert = true;
-			
+
 			QDateTime d = new QDateTime();
 			d.setTime_t(msg.getTimestamp());
-			
-			
+
 			arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, msg.getGpsPosition().getLatitute(), msg.getGpsPosition().getLongditude(), d.toString() ));
 		}
-		
+
 		if (arr.size() > 0){
 			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONOne("+ arr +")");
 		}
 		else
 			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONRemove()");
-		
+
 		//TABLEWIDGET	
 		currentSheep = sheep;
-		
+
 		//Sheep id, Sheep name, farmId
 		mw.lblTabMessages.setText("Sheep#: " + sheep.getId() + "\tFarm#: " + sheep.getFarmId() + "\tName: " + sheep.getName());
-		
+
 		mw.lEName.setText(sheep.getName());
-		
+
 		QDateTime d = new QDateTime();
 		d.setTime_t(sheep.getDateOfBirth());
 		mw.dEBirthdaye.setDateTime(d);
@@ -376,10 +380,10 @@ public class UiMainWindowLogic extends QSignalEmitter
 			mw.chbAlive.setChecked(true);
 		else
 			mw.chbAlive.setChecked(false);
-		
+
 		//Get messages for sheep
 		//Send them to twHandler
-			
+
 		this.twHandler.updateMessages(sheep);
 	}
 	/**
@@ -388,11 +392,11 @@ public class UiMainWindowLogic extends QSignalEmitter
 	 */
 	@SuppressWarnings({ "unused", "boxing" })
 	private void pBSubmit_Add_clicked(boolean click){
-		
+
 		Sheep sheepAdd;
-		
+
 		if(!mw.lEName_Add_2.text().equals("") && !mw.lEFar_Add.text().equals("") && Integer.parseInt(mw.lEFar_Add.text()) != 0){
-			
+
 			sheepAdd = new Sheep(mw.lEName_Add_2.text(), Integer.parseInt(mw.lEFar_Add.text()), 
 					mw.dEBirthdate_Add.dateTime().toTime_t(),
 					mw.cBAlive_Add.isChecked(), 
@@ -406,9 +410,9 @@ public class UiMainWindowLogic extends QSignalEmitter
 		}
 		else
 			statusbarMessage.setText("Some fields are blank, or not valid input..");
-	
+
 	}
-	
+
 	/**
 	 * Resets the sheep information tab
 	 * 
@@ -427,13 +431,13 @@ public class UiMainWindowLogic extends QSignalEmitter
 				mw.chbAlive.setChecked(true);
 			else
 				mw.chbAlive.setChecked(false);
-			
+
 			statusbarMessage.setText("Information reset done.");
 		}
-			
-	
+
+
 	}
-	
+
 
 	//TABWIDGET	
 	/**
@@ -449,7 +453,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 			statusbarMessage.setText("Select a sheep to update.");
 			return;
 		}
-		
+
 		Sheep sheepUpdate;
 		//Not empty
 		if(!mw.lEName.text().equals("") && !mw.lEFarmId.text().equals("") && Integer.parseInt(mw.lEFarmId.text()) != 0){
@@ -457,7 +461,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 					mw.dEBirthdaye.dateTime().toTime_t(),
 					mw.chbAlive.isChecked(), 
 					(int)mw.dSBWeight.value()); //M� FIKSES, skal ikke v�re int
-			
+
 			try{
 				sLogic.editSheep(sheepUpdate);
 			}
@@ -470,10 +474,10 @@ public class UiMainWindowLogic extends QSignalEmitter
 			statusbarMessage.setText("Some fields are blank, or not valid input..");
 	}
 
-	
-	
+
+
 	//OTHER EVENTS
-	
+
 	//DockWidget
 	/**
 	 * Method called when the ascend descend chechbox has been checked/unchecked.
@@ -486,10 +490,8 @@ public class UiMainWindowLogic extends QSignalEmitter
 			mw.rbAscDesc.setText("Ascending");
 		else
 			mw.rbAscDesc.setText("Descending");
-	
-	}
 
-	
+	}
 }
 
 /* EOF */
