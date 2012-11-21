@@ -40,7 +40,7 @@ public class SheepStatusSim {
 	private int statusInterval;
 	private DatabaseConnector sq;
 	private Random rand;
-	private Server server;
+	public Server server;
 	private Timer statusTimer, alertTimer;
 	
 	private HashMap<String,GPSPosition> lastPositions;
@@ -202,7 +202,6 @@ public class SheepStatusSim {
 	 */
 	private void addStatus() {
 		String[][] stats = new String[livingSheep.size()][7];
-		ArrayList<Message> statuses = new ArrayList<Message>();
 		
 		for (int i = 0; i < livingSheep.size(); i++) {
 			stats[i][0] = Integer.toString(livingSheep.get(i).getId());
@@ -218,11 +217,8 @@ public class SheepStatusSim {
 			doublelong /= 100000;
 			stats[i][4] = Double.toString(doublelong+map_x_min);
 			stats[i][6] = Integer.toString(livingSheep.get(i).getFarmId());
-			statuses.add(new SheepStatus(Integer.parseInt(stats[i][0]),Integer.parseInt(stats[i][1])
-			, Float.parseFloat(stats[i][2]),Integer.parseInt(stats[i][3])
-			, new GPSPosition(Double.parseDouble(stats[i][4]),Double.parseDouble(stats[i][5])),Integer.parseInt(stats[i][6])));
 		}
-		server.notifier.recieveStatus(stats,statuses);
+		server.notifier.recieveStatus(stats);
 	}
 
 	/** Action listener class that listens for the timer interval.

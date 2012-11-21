@@ -79,7 +79,7 @@ public class AlertNotifier implements Runnable{
 	 * 
 	 * @param status
 	 */
-	public void recieveStatus(String[][] status, ArrayList<Message> statuses) {
+	public void recieveStatus(String[][] status) {
 		db.insertSheepStatus(status);
 	}
 
