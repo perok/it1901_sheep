@@ -1,6 +1,6 @@
   //Variables
   var map;
-  var trondheimLoc = new google.maps.LatLng(63.430515, 10.395053);
+  var trondheimLoc = new google.maps.LatLng(62.594803, 9.691057);
   var wmsType;
   var markers = [];
   var lines = [];
