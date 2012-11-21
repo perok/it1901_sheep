@@ -65,7 +65,7 @@ public class ServerGUI extends JFrame implements ActionListener, WindowListener 
 
 		// Add listner
 		addWindowListener(this);
-		setSize(400, 600);
+		setSize(800, 600);
 		setVisible(true);
 		appendEvent("Start the server before entering commands \n");
 	}		
