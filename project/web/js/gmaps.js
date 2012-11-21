@@ -1,6 +1,6 @@
   //Variables
   var map;
-  var trondheimLoc = new google.maps.LatLng(63.430515, 10.395053);
+  var trondheimLoc = new google.maps.LatLng(62.594803, 9.691057);
   var wmsType;
   var markers = [];
   var lines = [];
@@ -154,7 +154,7 @@ function setMarkers(map, locations) {
 			shape: shape,
 			animation: google.maps.Animation.DROP,
 			title: locations[i].name,
-			zIndex: 0
+			zIndex: 1
 		});
 		
 		var type;
@@ -185,8 +185,21 @@ function setMarkers(map, locations) {
 		
 		markers.push(marker);
     }
-
+    
     setAllMap(map);
+    AutoCenter();
+}
+
+function AutoCenter() {
+	   
+	//  Create a new viewpoint bound
+	var bounds = new google.maps.LatLngBounds();
+
+	for(var i = 0; i < markers.length; i++){
+		bounds.extend(markers[i].position);
+	}
+	
+	map.fitBounds(bounds);
 }
 
 // Make lines

@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 import com.trolltech.qt.core.QObject;
 import com.trolltech.qt.core.QSize;
+import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.core.Qt.AlignmentFlag;
 import com.trolltech.qt.core.Qt.ItemFlag;
+import com.trolltech.qt.core.Qt.WindowFlags;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QIcon;
 import com.trolltech.qt.gui.QListView;
@@ -67,6 +69,8 @@ public class SettingsMenu extends QDialog
 	}
     
     
+    /** Notify children about new data availible
+     */
     private void notifyChildren()
     {
     	this.usUserWidget.notifyChild();
@@ -140,7 +144,7 @@ public class SettingsMenu extends QDialog
     	this.qlwParentcontentsWidget.currentItemChanged.connect(this,
 	            "changePage(QListWidgetItem , QListWidgetItem)");
     	
-    	this.usUserWidget.signalFarmUpdate.connect(this, "sigFarmChanged()");
+    	//this.usUserWidget.signalFarmUpdate.connect(this, "sigFarmChanged()");
 	    this.signalUserListRecieved.connect(this.usUserWidget, "processUserData(ArrayList)");
     }
     

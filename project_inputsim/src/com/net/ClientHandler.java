@@ -119,12 +119,13 @@ public class ClientHandler implements Runnable {
 
 		case("removeSheep"):
 			return new Response(Response.BOOLEAN,db.removeSheep(Integer.parseInt(request.getparameter("sheepId"))),request.getMessage());
-
+		
 		case("login"):
-			Response lol = new Response(Response.USER,db.loginQuery(request.getparameter("username"), request.getparameter("password")));
-		return lol;
+			return new Response(Response.USER,db.loginQuery(request.getparameter("username"), request.getparameter("password")));
+		
 		case("addSheep"):
 			return new Response(Response.BOOLEAN,db.insertSheep(request.getSheep()),request.getMessage(),request.getIntialRequestId());
+		
 		case("editSheep"):
 			return new Response(Response.BOOLEAN,db.editSheep(request.getSheep().getId(), request.getSheep()),request.getMessage(),request.getIntialRequestId());
 
@@ -157,5 +158,6 @@ public class ClientHandler implements Runnable {
 			e.printStackTrace();
 		}
 	}
+	
 
 }

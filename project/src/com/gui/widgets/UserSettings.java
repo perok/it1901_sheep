@@ -144,7 +144,7 @@ public class UserSettings extends QWidget implements InputComponentHost
 	 */
 	private void farmChanged()
 	{
-		this.alwAccessList.indexPoop = this.iPreviousFarmIndex;
+		this.alwAccessList.iFormerFarmIndex = this.iPreviousFarmIndex;
 		
 		com.storage.UserStorage.setCurrentFarm(this.qcbFarmCombo.currentIndex());
 		this.signalFarmUpdate.emit(); /* Notify about farm-change */
@@ -160,6 +160,10 @@ public class UserSettings extends QWidget implements InputComponentHost
 		this.qpbBtnAlarm.clicked.connect(this, "toggleAlarm()");
 	}
 	
+	/** Return the index of the current farm
+	 * 
+	 * @return the index from the combobox
+	 */
 	public int getFarmIndex()
 	{
 		return this.qcbFarmCombo.currentIndex();
@@ -190,6 +194,7 @@ public class UserSettings extends QWidget implements InputComponentHost
 		this.qlUserEmail = new QLabel(tr("Epost:"));
 		this.qlUserPhone = new QLabel(tr("Telefon"));
 		
+		/* Without userdata, there isn't much point in enabling user-editing */
 		if(UserStorage.getUser() == null)
 			return;
 		

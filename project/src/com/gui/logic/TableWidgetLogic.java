@@ -59,6 +59,9 @@ public class TableWidgetLogic {
 	 * @param selectedSheep Sheep that shall show it's data
 	 */
 	public void updateMessages(Sheep selectedSheep){
+		if(selectedSheep == null)
+			return;
+		
 		ArrayList<Message> messages = new ArrayList<Message>();
 		
 		//Not null

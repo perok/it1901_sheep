@@ -99,8 +99,10 @@ public class Response implements Serializable {
 	 */
 	public Response(int type, User user) {
 		this.type = type;
-		this.user = new User(user.getId(),user.getUsername(),user.getName(),user.getPassword(),
+		if(user!=null){
+			this.user = new User(user.getId(),user.getUsername(),user.getName(),user.getPassword(),
 				user.getMobileNumber(),user.getEmail(),user.getFarmlist());
+		}
 		}
 	
 	/**Returns type
