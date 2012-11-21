@@ -11,10 +11,13 @@ import java.lang.reflect.Method;
  */
 public class ComponentConnector
 {
-	private Object t_object;
+	private Object t_object,
+				   f_object = null;
 	private Method f_read, f_write;
 	private Object componentOrigData,
 				   componentCurrentData;
+	
+	
 	
 	/** Constructor.. Initialize
 	 * 
@@ -31,6 +34,21 @@ public class ComponentConnector
 		this.componentOrigData = retrieveObjectData(this.t_object);	
 	}
 	
+	public <T, F> ComponentConnector(T t_object, Method f_retrieveVal, F f_object, Method writeFunc)
+	{
+		this.t_object = t_object;
+		this.f_object = f_object;
+		this.f_write = writeFunc;
+		this.f_read = f_retrieveVal;
+		
+		this.componentOrigData = retrieveObjectData(this.t_object);	
+	}
+	
+	public void updateOrigdata()
+	{
+		this.componentOrigData = retrieveObjectData(this.t_object);
+	}
+	
 	/** Get input-data from given input-components and methods
 	 * 
 	 * @param o the object to obtain data from
@@ -40,7 +58,8 @@ public class ComponentConnector
 	{
 		try
 		{
-			Object oOutput =  o.getClass().getMethod(this.f_read.getName(), this.f_read.getParameterTypes()).invoke(o);
+//			Object a[] = new Object[1]; a[0] = null;
+			Object oOutput =  this.f_read.invoke(t_object, null);
 						
 			return oOutput;
 		}

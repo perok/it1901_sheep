@@ -11,6 +11,11 @@ import core.classes.Farm;
 import core.classes.Sheep;
 import core.classes.User;
 
+/**Logic for sheep server
+ * 
+ * @author Svenn
+ *
+ */
 
 public class ServerLogic extends QSignalEmitter{
 	

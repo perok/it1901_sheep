@@ -24,11 +24,9 @@ public class AlertSettings extends QWidget implements InputComponentHost
 	private List<ComponentConnector> lComponents = new ArrayList<ComponentConnector>();
 	
 	private QGroupBox qgbStyleGroup,	
-					  qgbUpdateGroup,
-					  qgbTOAlert;
+					  qgbUpdateGroup;
 	private QCheckBox qcbSmsCheckbox,
-					  qcbMailCheckbox,
-					  qcbCallCheckbox;
+					  qcbMailCheckbox;
 	private QCheckBox qcbMapSetting1;
 	private QListWidget qlwQtStyleList;
 	
@@ -36,7 +34,7 @@ public class AlertSettings extends QWidget implements InputComponentHost
 	/** Constructor. Initialize..
 	 * 
 	 * @param parent host of THIS
-	 * @param lThemes a list of strings with the currently availible themes
+	 * @param lThemes a list of strings with the currently available themes
 	 */
     public AlertSettings(SettingsMenu parent) 
     {
@@ -44,20 +42,11 @@ public class AlertSettings extends QWidget implements InputComponentHost
 
         initCheckBox(); 
         initThemeList();
-        initMapSettings();
         initWidgets();  
         initConnectEvents();
         initLayout();
         
         //TODO: add inputcomponents here
-    }
-    
-    /** Initialize the area for changing map settings
-     */
-    private void initMapSettings()
-    {
-    	this.qgbTOAlert = new QGroupBox(tr("Varsler fra Map"));
-        this.qcbMapSetting1 = new QCheckBox(tr("Setting 1"));
     }
     
     @SuppressWarnings("unused")
@@ -128,25 +117,19 @@ public class AlertSettings extends QWidget implements InputComponentHost
     	/** The layout for the theme manager */
     	QVBoxLayout qvbThemeLayout 		 = new QVBoxLayout();
     	/** The layout for map-settings area */
-    	QVBoxLayout qvbMapSettingsLayout = new QVBoxLayout();
     	
         qbvSheepSettingsLayout.addWidget(this.qcbSmsCheckbox);
         qbvSheepSettingsLayout.addWidget(this.qcbMailCheckbox);
-        qbvSheepSettingsLayout.addWidget(this.qcbCallCheckbox);
-        
-        qvbMapSettingsLayout.addWidget(this.qcbMapSetting1);        
         
         qvbThemeLayout.addWidget(this.qlwQtStyleList);
 
-        qvblMainLayout.addWidget(this.qgbUpdateGroup);
+        //qvblMainLayout.addWidget(this.qgbUpdateGroup);
         qvblMainLayout.addWidget(this.qgbStyleGroup);
-        qvblMainLayout.addWidget(this.qgbTOAlert);
         qvblMainLayout.addSpacing(12);
         qvblMainLayout.addStretch(1);
         
         this.qgbUpdateGroup .setLayout(qbvSheepSettingsLayout);
         this.qgbStyleGroup.setLayout(qvbThemeLayout);
-        this.qgbTOAlert		.setLayout(qvbMapSettingsLayout);
         super			    .setLayout(qvblMainLayout);
     }
     
@@ -160,7 +143,6 @@ public class AlertSettings extends QWidget implements InputComponentHost
         /* - Checkboxes */
         this.qcbSmsCheckbox = new QCheckBox(tr("Send SMS"));
         this.qcbMailCheckbox   = new QCheckBox(tr("Send mail"));
-        this.qcbCallCheckbox   = new QCheckBox(tr("Ring p� telefon"));
     }
 
 	@Override

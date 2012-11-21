@@ -1,5 +1,6 @@
 package com.gui.widgets;
 
+import com.gui.logic.ServerLogic;
 import com.trolltech.qt.gui.QDialog;
 import com.trolltech.qt.gui.QHBoxLayout;
 import com.trolltech.qt.gui.QLabel;
@@ -44,8 +45,8 @@ public class AlarmPromptDialog extends QDialog
 	 */
 	private void triggerAlarm()
 	{
-		//ServerLogic.getClientsocket().invokeAlert(com.storage.UserStorage.getUser().getFarmlist().get(
-			//	com.storage.UserStorage.getCurrentFarm()));
+		ServerLogic.getClientsocket().invokeAlert(com.storage.UserStorage.getUser().getFarmlist().get(
+				com.storage.UserStorage.getCurrentFarm()));
 		
 		super.close();
 	}

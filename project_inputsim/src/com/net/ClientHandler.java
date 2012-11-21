@@ -66,6 +66,7 @@ public class ClientHandler implements Runnable {
 					server.display(username + " disconnected with a LOGOUT message.");
 					keepGoing = false;
 					kill();
+					server.shutdown(this);
 					break;
 
 				default :
@@ -157,5 +158,6 @@ public class ClientHandler implements Runnable {
 			e.printStackTrace();
 		}
 	}
+	
 
 }
