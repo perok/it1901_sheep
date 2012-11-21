@@ -119,14 +119,15 @@ public class Server {
 	 * @param messages
 	 */
 	public void notifyClient(String[] usernames,ArrayList<Message> messages) {
-		for (int i = 0; i < al.size(); i++) {
-			for (int j = 0; j < usernames.length; j++) {
-				if(al.get(i).getUsername().equals(usernames[j])) {
-					al.get(i).sendUpdate(messages);
+		if(usernames != null) {
+			for (int i = 0; i < al.size(); i++) {
+				for (int j = 0; j < usernames.length; j++) {
+					if(al.get(i).getUsername().equals(usernames[j])) {
+						al.get(i).sendUpdate(messages);
+					}
 				}
 			}
 		}
-
 	}
 
 }

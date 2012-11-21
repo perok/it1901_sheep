@@ -22,7 +22,7 @@ public class PhoneNotifier {
 	
 	private String username;
 	private String password;
-	private String message = "Sau under angrep! Sist registrert på ";
+	private String message = "Your sheep are under attack! Sheep in question was last registered at ";
 	private String[] numbers;
 	private AppKeyPairMgr appKey = new AppKeyPairMgr();
 	private MySession mySession = new MySession();
@@ -182,7 +182,7 @@ public class PhoneNotifier {
 		
 		Sms sms = mySession.mySkype.createOutgoingSms();
 		
-		Sms.SetBodyResponse smsBodyResponse = sms.setBody(message + gps.getLatitute() + " lat and " + gps.getLongditude() + " long");
+		Sms.SetBodyResponse smsBodyResponse = sms.setBody(message + gps.getLatitute() + " latitude and " + gps.getLongditude() + " longditude");
 		
 		if (smsBodyResponse.result != Sms.SetBodyResult.BODY_OK) 
 		{

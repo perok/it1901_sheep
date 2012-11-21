@@ -107,9 +107,8 @@ public class SheepStatusSim {
 	public void setTimerInterval(int timerInterval) {
 		this.statusInterval = timerInterval;
 		server.display("Simulator interval set to " + timerInterval +" minutes");
-		statusTimer.stop();
-		statusTimer = new Timer(timerInterval, updateStatus);
-		statusTimer.start();
+		statusTimer.setDelay(statusInterval);
+		statusTimer.restart();
 	}
 
 	/** Starts the timer and keeps it running until the program terminates or stop is called.
@@ -226,7 +225,7 @@ public class SheepStatusSim {
 		server.notifier.recieveStatus(stats,statuses);
 	}
 
-	/**Action listener class that listens for the timer interval.
+	/** Action listener class that listens for the timer interval.
 	 * When it catches an event, it calls addStatus() to update the database.
 	 * 
 	 */
@@ -240,6 +239,14 @@ public class SheepStatusSim {
 			}
 		}
 	};
-
+	
+	/** This method is not used in this project. Instead we use the GUI to demo
+	 * Alert functionality. This method would in theory let an alarm be simulated
+	 * once every 1440 minutes.
+	 * 
+	 */
+	public void startAlertTimer() {
+		alertTimer.start();
+	}
 }
 

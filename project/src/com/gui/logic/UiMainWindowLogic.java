@@ -9,6 +9,7 @@ import com.gui.widgets.SettingsMenu;
 import com.storage.UserStorage;
 import com.trolltech.qt.QSignalEmitter;
 import com.trolltech.qt.core.QDate;
+import com.trolltech.qt.core.QDateTime;
 import com.trolltech.qt.core.QUrl;
 import com.trolltech.qt.core.Qt;
 import com.trolltech.qt.gui.QAction;
@@ -291,7 +292,6 @@ public class UiMainWindowLogic extends QSignalEmitter
 	private void sheepsShowOnMap(ArrayList<Sheep> sheeps){
 		
 		JSONArray arr = new JSONArray();
-		System.out.println("Sheep selected: " + sheeps.size());
 		//Go through all the sheeps
 		for (Sheep sheep : sheeps){
 			if(sheep.getRecentStatuses() != null){
@@ -303,14 +303,17 @@ public class UiMainWindowLogic extends QSignalEmitter
 				if((Message)sheep.getRecentStatuses().get(0) instanceof SheepAlert)
 					isAlert = true;
 				
+				QDateTime d = new QDateTime();
+				d.setTime_t(((Message)sheep.getRecentStatuses().get(0)).getTimestamp());
+				
 				//arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, lat, lon));
-				arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, lat, lon));
+				arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, lat, lon, d.toString()));
 				
 			}
 		}
 		
-		if (arr.size() > 0){	
-			System.out.println("Sending amount: " + arr.size());
+		if (arr.size() > 0){
+			System.out.println("to you");
 			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONMany("+ arr +")");
 		}
 	}
@@ -321,7 +324,6 @@ public class UiMainWindowLogic extends QSignalEmitter
 		 */
 	@SuppressWarnings({ "unused", "unchecked" })
 	private void populateTableWidget(Sheep sheep){
-		
 		mw.tabWidget.setCurrentIndex(0);
 		
 		//MAP
@@ -333,11 +335,15 @@ public class UiMainWindowLogic extends QSignalEmitter
 			if(msg instanceof SheepAlert)
 				isAlert = true;
 			
-			arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, msg.getGpsPosition().getLatitute(), msg.getGpsPosition().getLongditude() ));
+			QDateTime d = new QDateTime();
+			d.setTime_t(msg.getTimestamp());
+			
+			
+			arr.add(new SheepJS(sheep.getId(), sheep.getName(),sheep.isAlive(), isAlert, msg.getGpsPosition().getLatitute(), msg.getGpsPosition().getLongditude(), d.toString() ));
 		}
-		
+		System.out.println(arr.toJSONString());
 		if (arr.size() > 0){	
-			System.out.println("Sending amount: " + arr.size());
+			System.out.println("Hello");
 			mw.MAPWIDGET.page().mainFrame().evaluateJavaScript("receiveJSONOne("+ arr +")");
 		}
 		else
@@ -350,7 +356,11 @@ public class UiMainWindowLogic extends QSignalEmitter
 		mw.lblTabMessages.setText("Sheep#: " + sheep.getId() + "\tFarm#: " + sheep.getFarmId() + "\tName: " + sheep.getName());
 		
 		mw.lEName.setText(sheep.getName());
-		mw.dEBirthdaye.dateTime().addMSecs(sheep.getDateOfBirth());
+		
+		QDateTime d = new QDateTime();
+		d.setTime_t(sheep.getDateOfBirth());
+		mw.dEBirthdaye.setDateTime(d);
+
 		mw.dSBWeight.setValue((double)sheep.getWeight());
 		mw.lEFarmId.setText(String.valueOf(sheep.getFarmId()));
 		if(sheep.isAlive())
@@ -363,7 +373,6 @@ public class UiMainWindowLogic extends QSignalEmitter
 			
 		this.twHandler.updateMessages(sheep);
 	}
-	//mw.dEBirthdaye.dateTime().addMSecs(sheep.getDateOfBirth());
 	/**
 	 * Method for sending a new sheep to the server
 	 * @param click
@@ -376,12 +385,12 @@ public class UiMainWindowLogic extends QSignalEmitter
 		if(!mw.lEName_Add_2.text().equals("") && !mw.lEFar_Add.text().equals("") && Integer.parseInt(mw.lEFar_Add.text()) != 0){
 			
 			sheepAdd = new Sheep(mw.lEName_Add_2.text(), Integer.parseInt(mw.lEFar_Add.text()), 
-					Integer.valueOf(String.valueOf(mw.dEBirthdate_Add.date().year()) 
-							+ String.valueOf(mw.dEBirthdate_Add.date().month()) 
-							+ String.valueOf(mw.dEBirthdate_Add.date().day())),
+					mw.dEBirthdate_Add.dateTime().toTime_t(),
 					mw.cBAlive_Add.isChecked(), 
 					(int)mw.dSBWeight_Add_2.value()); //M� FIKSES, skal ikke v�re int
-				//mw.dEBirthdate_Add.date().toString(Qt.DateFormat.)
+			
+				
+			
 			try{
 				System.out.println("UiMainWindowLOgc pbsumbit-Add Adding ShEPPS");
 				sLogic.addSheep(sheepAdd);
@@ -405,7 +414,9 @@ public class UiMainWindowLogic extends QSignalEmitter
 	private void pbTabInformationReset_clicked(boolean click){
 		if(currentSheep != null){			
 			mw.lEName.setText(currentSheep.getName());
-			mw.dEBirthdaye.setDate(new QDate(1991, 02, 25));//sheep.getDateOfBirth(), m, d))
+			QDateTime d = new QDateTime();
+			d.setTime_t(currentSheep.getDateOfBirth());
+			mw.dEBirthdaye.setDateTime(d);
 			mw.dSBWeight.setValue((double)currentSheep.getWeight());
 			mw.lEFarmId.setText(String.valueOf(currentSheep.getFarmId()));
 			if(currentSheep.isAlive())
@@ -439,9 +450,7 @@ public class UiMainWindowLogic extends QSignalEmitter
 		//Not empty
 		if(!mw.lEName.text().equals("") && !mw.lEFarmId.text().equals("") && Integer.parseInt(mw.lEFarmId.text()) != 0){
 			sheepUpdate = new Sheep(currentSheep.getId(), mw.lEName.text(), Integer.parseInt(mw.lEFarmId.text()), 
-					Integer.valueOf(String.valueOf(mw.dEBirthdaye.date().year()) 
-							+ String.valueOf(mw.dEBirthdaye.date().month()) 
-							+ String.valueOf(mw.dEBirthdaye.date().day())),
+					mw.dEBirthdaye.dateTime().toTime_t(),
 					mw.chbAlive.isChecked(), 
 					(int)mw.dSBWeight.value()); //M� FIKSES, skal ikke v�re int
 			
