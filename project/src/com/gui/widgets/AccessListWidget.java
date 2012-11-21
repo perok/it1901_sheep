@@ -91,7 +91,10 @@ public class AccessListWidget extends QWidget
 		
 		return false;
 	}
-		
+
+	/**Updates user lists
+	 * 
+	 */
 	private void updateUserLists()
 	{		
 		/* For each user */
@@ -111,6 +114,9 @@ public class AccessListWidget extends QWidget
 		}		
 	}
 	
+	/**Sets up user list
+	 * 
+	 */
 	private void setupUserList()
 	{
 		if(this.lFarms != null 

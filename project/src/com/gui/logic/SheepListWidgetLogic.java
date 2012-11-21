@@ -17,6 +17,12 @@ import com.trolltech.qt.gui.QListWidgetItem;
 
 import core.classes.Sheep;
 
+/**Class for producing list of sheep in GUI
+ * 
+ * @author Svenn
+ *
+ */
+
 public class SheepListWidgetLogic extends QSignalEmitter{	
 	public QListWidget qlWidget;
 	
