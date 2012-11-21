@@ -69,6 +69,8 @@ public class SettingsMenu extends QDialog
 	}
     
     
+    /** Notify children about new data availible
+     */
     private void notifyChildren()
     {
     	this.usUserWidget.notifyChild();
